@@ -23,5 +23,9 @@ namespace MM2Randomizer
         {
             get; set;
         }
+        public bool IsWeaknessRandom
+        { get; set; }
+        public bool IsWeaknessEasy { get; set; }
+        public bool IsWeaknessHard { get; set; }
     }
 }

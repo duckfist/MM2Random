@@ -29,10 +29,13 @@ namespace MM2Randomizer
 
             ViewModel = new MainWindowViewModel()
             {
-                IsJapanese = false,
+                IsJapanese = true,
                 Is8StagesRandom = true,
                 IsWeaponsRandom = true,
                 IsItemsRandom = true,
+                IsWeaknessRandom = true,
+                IsWeaknessEasy = true,
+                IsWeaknessHard = false
             };
 
             DataContext = ViewModel;

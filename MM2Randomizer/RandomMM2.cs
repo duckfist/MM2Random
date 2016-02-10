@@ -10,6 +10,8 @@ namespace MM2Randomizer
     public static class RandomMM2
     {
         public static int Seed = -1;
+        public static Random Random;
+
         public static MainWindowViewModel Settings;
 
         public static string DestinationFileName = "";
@@ -19,7 +21,8 @@ namespace MM2Randomizer
             try
             {
                 CopyRom();
-                
+                InitializeSeed();
+
                 if (Settings.Is8StagesRandom)
                 {
                     RandomStagePtrs();
@@ -32,7 +35,10 @@ namespace MM2Randomizer
                 {
                     RandomItemNums();
                 }
-
+                if (Settings.IsWeaknessRandom)
+                {
+                    RandomWeaknesses();
+                }
 
                 string newfilename = (Settings.IsJapanese) ? "RM2" : "MM2";
                 newfilename = String.Format("{0}-RNG-{1}.nes", newfilename, Seed);
@@ -47,7 +53,6 @@ namespace MM2Randomizer
                 string str = string.Format("/select,\"{0}\\{1}\"",
                     Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location),
                 newfilename);
-                //Process.Start("explorer.exe", str);
             }
             catch (Exception ex)
             {
@@ -71,6 +76,17 @@ namespace MM2Randomizer
             File.Copy(srcFile, DestinationFileName, true);
         }
 
+        public static void InitializeSeed()
+        {
+            if (Seed < 0)
+            {
+                Random rndSeed = new Random();
+                Seed = rndSeed.Next(int.MaxValue);
+            }
+            Random = new Random(Seed);
+        }
+
+
         public static void RandomWeapons()
         {
             // StageBeat    Address    Value
@@ -85,15 +101,8 @@ namespace MM2Randomizer
             // Crash Man    0x03C290   128
 
             List<byte> newWeaponOrder = new List<byte>() { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
-
-            if (Seed < 0)
-            {
-                Random rndSeed = new Random();
-                Seed = rndSeed.Next(int.MaxValue);
-            }
-            Random rng = new Random(Seed);
-
-            newWeaponOrder.Shuffle(rng);
+            
+            newWeaponOrder.Shuffle(Random);
 
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
@@ -114,7 +123,7 @@ namespace MM2Randomizer
             }
         }
 
-
+        
         public static void RandomItemNums()
         {
             // 0x03C291 - Item # from Heat Man
@@ -132,14 +141,7 @@ namespace MM2Randomizer
             newItemOrder.Add(2);
             newItemOrder.Add(4);
 
-            if (Seed < 0)
-            {
-                Random rndSeed = new Random();
-                Seed = rndSeed.Next(int.MaxValue);
-            }
-            Random rng = new Random(Seed);
-
-            newItemOrder.Shuffle(rng);
+            newItemOrder.Shuffle(Random);
 
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
@@ -150,6 +152,111 @@ namespace MM2Randomizer
                 }
 
 
+            }
+        }
+
+
+        public static void RandomWeaknesses()
+        {
+            List<WeaponTable> Weapons = new List<WeaponTable>();
+
+            Weapons.Add(new WeaponTable()
+            {
+                Name = "Buster",
+                ID = 0,
+                Address = 0x02E933,
+                RobotMasters = new int[8] { 2,2,1,1,2,2,1,1 }
+                // Heat = 2,
+                // Air = 2,
+                // Wood = 1,
+                // Bubble = 1,
+                // Quick = 2,
+                // Flash = 2,
+                // Metal = 1,
+                // Clash = 1,
+            });
+
+            Weapons.Add(new WeaponTable()
+            {
+                Name = "Atomic Fire",
+                ID = 1,
+                Address = 0x02E941,
+                // Note: These values only affect a fully charged shot.  Partially charged shots use the Buster table.
+                RobotMasters = new int[8] { 0xFF, 6, 0x0E, 0, 0x0A, 6, 4, 6 }
+            });
+
+            Weapons.Add(new WeaponTable()
+            {
+                Name = "Air Shooter",
+                ID = 2,
+                Address = 0x02E94F,
+                RobotMasters = new int[8] {2, 0, 4, 0, 2, 0, 0, 0x0A }
+            });
+
+            Weapons.Add(new WeaponTable()
+            {
+                Name = "Leaf Shield",
+                ID = 3,
+                Address = 0x02E95D,
+                RobotMasters = new int[8] { 0, 8, 0xFF, 0, 0, 0, 0, 0 }
+            });
+
+            Weapons.Add(new WeaponTable()
+            {
+                Name = "Bubble Lead",
+                ID = 4,
+                Address = 0x02E96B,
+                RobotMasters = new int[8] { 6, 0, 0, 0xFF, 0, 2, 0, 1 }
+            });
+
+            Weapons.Add(new WeaponTable()
+            {
+                Name = "Quick Boomerang",
+                ID = 5,
+                Address = 0x02E979,
+                RobotMasters = new int[8] { 2, 2, 0, 2, 0, 0, 4, 1 }
+            });
+
+            Weapons.Add(new WeaponTable()
+            {
+                Name = "Time Stopper",
+                ID = 6,
+                Address = 0x02C049,
+                // NOTE: These values affect damage per tick
+                RobotMasters = new int[8] { 0, 0, 0, 0, 1, 0, 0, 0 }
+            });
+
+            Weapons.Add(new WeaponTable()
+            {
+                Name = "Metal Blade",
+                ID = 7,
+                Address = 0x02E995,
+                RobotMasters = new int[8] { 1, 0, 2, 4, 0, 4, 0x0E, 0 }
+            });
+
+            Weapons.Add(new WeaponTable()
+            {
+                Name = "Clash Bomber",
+                ID = 8,
+                Address = 0x02E987,
+                RobotMasters = new int[8] { 0xFF, 0, 2, 2, 4, 3, 0, 0 }
+            });
+
+            foreach (WeaponTable weapon in Weapons)
+            {
+                weapon.RobotMasters.Shuffle(Random);
+            }
+
+            using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                foreach (WeaponTable weapon in Weapons)
+                {
+                    stream.Position = weapon.Address;
+                    for (int i = 0; i < 8; i++)
+                    { 
+                        stream.WriteByte((byte)weapon.RobotMasters[i]);
+                    }
+                }
             }
         }
 
@@ -252,21 +359,13 @@ namespace MM2Randomizer
 
             List<byte> newStageOrder = new List<byte>();
             for (byte i = 0; i < 8; i++) newStageOrder.Add(i);
-            
-            if (Seed < 0)
-            {
-                Random rndSeed = new Random();
-                Seed = rndSeed.Next(int.MaxValue);
-            }
-            Random rng = new Random(Seed);
 
-            newStageOrder.Shuffle(rng);
+            newStageOrder.Shuffle(Random);
 
             for (int i = 0; i < 8; i++)
             {
                 string portrait = StageSelect[i].PortraitName;
                 StageSelect[i].PortraitDestinationNew = StageSelect[newStageOrder[i]].PortraitDestinationOriginal;
-                
                 //StageSelect[i].StageClearDestinationNew = StageSelect[newStageOrder[i]].StageClearDestinationOriginal;
             }
 

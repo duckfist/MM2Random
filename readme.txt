@@ -1,6 +1,9 @@
 Mega Man 2 Randomizer
 by duckfist
 
+Contributors:
+Binarynova
+
 -----------------------------------------------------------------------------------------------
 
 Features
@@ -46,6 +49,9 @@ Leaf Shield.
 -----------------------------------------------------------------------------------------------
   
 Changelog
+
+v0.0.5
+- Mega Man 2 (U) version is now supported.
 
 v0.0.4
 - Support for random Robot Master weaknesses, "Easy" option only.

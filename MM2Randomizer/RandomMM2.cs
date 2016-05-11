@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Diagnostics;
- 
+
 namespace MM2Randomizer
 {
     public static class RandomMM2
@@ -16,6 +13,10 @@ namespace MM2Randomizer
 
         public static string DestinationFileName = "";
 
+        /// <summary>
+        /// Perform the randomization based on the seed and user-provided settings, and then
+        /// generate the new ROM.
+        /// </summary>
         public static void Randomize()
         {
             try
@@ -63,8 +64,11 @@ namespace MM2Randomizer
                 System.Windows.MessageBox.Show(ex.ToString());
             }
         }
-                
-        public static void CopyRom()
+
+        /// <summary>
+        /// Create the modified ROM.
+        /// </summary>
+        private static void CopyRom()
         {
             string srcFile = "";
             if (Settings.IsJapanese)
@@ -80,7 +84,10 @@ namespace MM2Randomizer
             File.Copy(srcFile, DestinationFileName, true);
         }
 
-        public static void InitializeSeed()
+        /// <summary>
+        /// Create a random seed or use the user-provided seed.
+        /// </summary>
+        private static void InitializeSeed()
         {
             if (Seed < 0)
             {
@@ -90,8 +97,10 @@ namespace MM2Randomizer
             Random = new Random(Seed);
         }
 
-
-        public static void RandomWeapons()
+        /// <summary>
+        /// Shuffle which Robot Master awards which weapon.
+        /// </summary>
+        private static void RandomWeapons()
         {
             // StageBeat    Address    Value
             // -----------------------------
@@ -127,8 +136,10 @@ namespace MM2Randomizer
             }
         }
 
-        
-        public static void RandomItemNums()
+        /// <summary>
+        /// Shuffle which Robot Master awards Items 1, 2, and 3.
+        /// </summary>
+        private static void RandomItemNums()
         {
             // 0x03C291 - Item # from Heat Man
             // 0x03C292 - Item # from Air Man
@@ -159,8 +170,10 @@ namespace MM2Randomizer
             }
         }
 
-
-        public static void RandomWeaknesses()
+        /// <summary>
+        /// Modify the damage values of each weapon against each Robot Master for Rockman 2 (J).
+        /// </summary>
+        private static void RandomWeaknesses()
         {
             List<WeaponTable> Weapons = new List<WeaponTable>();
 
@@ -264,9 +277,11 @@ namespace MM2Randomizer
             }
         }
 
-        public static void RandomWeaknessesMM2()
+        /// <summary>
+        /// Identical to RandomWeaknesses() but using Mega Man 2 (U).nes offsets
+        /// </summary>
+        private static void RandomWeaknessesMM2()
         {
-            // Identical to RandomWeaknesses() but using MM2 offsets
             List<WeaponTable> Weapons = new List<WeaponTable>();
 
             Weapons.Add(new WeaponTable()
@@ -369,7 +384,10 @@ namespace MM2Randomizer
             }
         }
 
-        public static void RandomStagePtrs()
+        /// <summary>
+        /// Shuffle the Robot Master stages.  This shuffling will not be indicated by the Robot Master portraits.
+        /// </summary>
+        private static void RandomStagePtrs()
         {
             // StageSelect  Address    Value
             // -----------------------------
@@ -477,8 +495,7 @@ namespace MM2Randomizer
                 StageSelect[i].PortraitDestinationNew = StageSelect[newStageOrder[i]].PortraitDestinationOriginal;
                 //StageSelect[i].StageClearDestinationNew = StageSelect[newStageOrder[i]].StageClearDestinationOriginal;
             }
-
-
+            
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
                 foreach (StageFromSelect stage in StageSelect)
@@ -491,6 +508,12 @@ namespace MM2Randomizer
             }
         }
 
+        /// <summary>
+        /// Shuffle the elements of the provided list.
+        /// </summary>
+        /// <typeparam name="T">The Type of the elements in the list.</typeparam>
+        /// <param name="list">The object to be shuffled.</param>
+        /// <param name="rng">The seed used to perform the shuffling.</param>
         public static void Shuffle<T>(this IList<T> list, Random rng)
         {
             int n = list.Count;

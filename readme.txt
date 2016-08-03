@@ -50,8 +50,13 @@ Leaf Shield.
   
 Changelog
 
+v0.0.6
+- Bug fix: No longer softlock in Wily 5 whenever "Randomize Weapons" is enabled
+- Support for random Robot Master teleporter locations during Wily 5 refights
+
 v0.0.5
 - Mega Man 2 (U) version is now supported.
+- NOTE: Random Weaknesses will not work in the (U) version when playing on Difficult Mode
 
 v0.0.4
 - Support for random Robot Master weaknesses, "Easy" option only.

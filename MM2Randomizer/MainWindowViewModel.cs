@@ -24,6 +24,11 @@
         public bool IsItemsRandom { get; set; }
 
         /// <summary>
+        /// If true, in Wily 5, the Robot Master locations in each teleporter is randomized.
+        /// </summary>
+        public bool IsTeleportersRandom { get; set; }
+
+        /// <summary>
         /// If True, the damage each weapon does against each Robot Master is changed. The manner in
         /// which it is changed depends on if IsWeaknessEasy is True or if IsWeaknessHard is True.
         /// </summary>

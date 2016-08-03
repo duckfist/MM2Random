@@ -36,6 +36,10 @@ namespace MM2Randomizer
                 {
                     RandomItemNums();
                 }
+                if (Settings.IsTeleportersRandom)
+                {
+                    RandomTeleporters();
+                }
                 if (Settings.IsWeaknessRandom)
                 {
                     // Offsets are different in Rockman 2 and Mega Man 2
@@ -62,6 +66,45 @@ namespace MM2Randomizer
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private static void RandomTeleporters()
+        {
+            // Create list of default teleporter position values
+            List<byte[]> coords = new List<byte[]>
+            {
+                new byte[]{ 0x20, 0x3B }, // Teleporter X, Y (top-left)
+                new byte[]{ 0x20, 0x7B },
+                new byte[]{ 0x20, 0xBB },
+                new byte[]{ 0x70, 0xBB },
+                new byte[]{ 0x90, 0xBB },
+                new byte[]{ 0xE0, 0x3B },
+                new byte[]{ 0xE0, 0x7B },
+                new byte[]{ 0xE0, 0xBB }
+            };
+
+            // Randomize them
+            coords.Shuffle(Random);
+
+            using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                // Write the new x-coordinates
+                stream.Position = 0x03828f;
+                foreach (byte[] location in coords)
+                {
+                    stream.WriteByte(location[0]);
+                }
+
+                // Write the new y-coordinates
+                stream.Position = 0x038278;
+                foreach (byte[] location in coords)
+                {
+                    stream.WriteByte(location[0]);
+                }
+
+                // These values will be copied over to $04b0 (y) and $0470 (x), which will be checked
+                // for in real time to determine where Mega will teleport to
             }
         }
 
@@ -121,11 +164,30 @@ namespace MM2Randomizer
             {
                 // Create table for which weapon is awarded by which robot master
                 // This also affects which portrait is blacked out on the stage select
+                // This also affects which teleporter deactivates after defeating a Wily 5 refight boss
                 stream.Position = 0x03c289;
                 for (int i = 0; i < 8; i++)
                 {
                     stream.WriteByte((byte)newWeaponOrder[i]);
                 }
+
+                // Create a copy of the default weapon order table to be used by teleporter function
+                // This is needed to fix teleporters breaking from the new weapon order.
+                stream.Position = 0x03f2D0; // Unused space at end of bank
+                stream.WriteByte(0x01);
+                stream.WriteByte(0x02);
+                stream.WriteByte(0x04);
+                stream.WriteByte(0x08);
+                stream.WriteByte(0x10);
+                stream.WriteByte(0x20);
+                stream.WriteByte(0x40);
+                stream.WriteByte(0x80);
+
+                // Change function to call $f2c0 instead of $c279 when looking up defeated refight boss to
+                // get our default weapon table, fixing the teleporter softlock
+                stream.Position = 0x038f3b;
+                stream.WriteByte(0xc0);
+                stream.WriteByte(0xf2);
 
                 // Create table for which stage is selectable on the stage select screen (independent of it being blacked out)
                 stream.Position = 0x0346E1;

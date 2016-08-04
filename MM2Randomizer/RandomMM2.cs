@@ -522,21 +522,327 @@ namespace MM2Randomizer
                     { 0x00, 0x07, 0x10 },
                 });
 
-            ColorSet clashBorder1 = new ColorSet()
+            // TODO: Comment later, missing a color in boss corridor
+            ColorSet clashForeground = new ColorSet()
             {
-                addresses = new int[,] { { } },
+                addresses = new int[,] { { 0x01fe13 },
+                                         { 0x01fe14 },
+                                         { 0x03b63a },
+                                         { 0x03b63b },
+                                         { 0x03b642 },
+                                         { 0x03b643 },
+                                         { 0x03b646 },
+                                         { 0x03b647 },
+                                         { 0x03b64a },
+                                         { 0x03b64b },
+                                         { 0x03b64e },
+                                         { 0x03b64f },
+                                         { 0x039188 },
+                                         { 0x039189 },
+                                         { 0x03918c },
+                                         { 0x03918d },
+                }
             };
             // Clash | Border1 | Default
-            clashBorder1.ColorBytes.Add(new byte[,] { { 0x39 }, 
-                                                      { 0x18 }, });
+            clashForeground.ColorBytes.Add(new byte[,] { { 0x39 },
+                                                      { 0x18 },
+                                                      { 0x39 },
+                                                      { 0x18 },
+                                                      { 0x39 },
+                                                      { 0x18 },
+                                                      { 0x39 },
+                                                      { 0x18 },
+                                                      { 0x39 },
+                                                      { 0x18 },
+                                                      { 0x39 },
+                                                      { 0x18 },
+                                                      { 0x39 },
+                                                      { 0x18 },
+                                                      { 0x39 },
+                                                      { 0x18 },});
+
+            // Clash | Border1 | Blue
+            clashForeground.ColorBytes.Add(new byte[,] { { 0x11 },
+                                                      { 0x01 },
+                                                      { 0x11 },
+                                                      { 0x01 },
+                                                      { 0x11 },
+                                                      { 0x01 },
+                                                      { 0x11 },
+                                                      { 0x01 },
+                                                      { 0x11 },
+                                                      { 0x01 },
+                                                      { 0x11 },
+                                                      { 0x01 },
+                                                      { 0x11 },
+                                                      { 0x01 },
+                                                      { 0x11 },
+                                                      { 0x01 },});
+
+            // Clash | Border1 | Orange
+            clashForeground.ColorBytes.Add(new byte[,] { { 0x27 },
+                                                      { 0x16 },
+                                                      { 0x27 },
+                                                      { 0x16 },
+                                                      { 0x27 },
+                                                      { 0x16 },
+                                                      { 0x27 },
+                                                      { 0x16 },
+                                                      { 0x27 },
+                                                      { 0x16 },
+                                                      { 0x27 },
+                                                      { 0x16 },
+                                                      { 0x27 },
+                                                      { 0x16 },
+                                                      { 0x27 },
+                                                      { 0x16 },});
+
+            // Clash | Border1 | Green
+            clashForeground.ColorBytes.Add(new byte[,] { { 0x2b },
+                                                      { 0x0a },
+                                                      { 0x2b },
+                                                      { 0x0a },
+                                                      { 0x2b },
+                                                      { 0x0a },
+                                                      { 0x2b },
+                                                      { 0x0a },
+                                                      { 0x2b },
+                                                      { 0x0a },
+                                                      { 0x2b },
+                                                      { 0x0a },
+                                                      { 0x2b },
+                                                      { 0x0a },
+                                                      { 0x2b },
+                                                      { 0x0a },});
+
+            // Clash | Border1 | Red Black
+            clashForeground.ColorBytes.Add(new byte[,] { { 0x0f },
+                                                      { 0x06 },
+                                                      { 0x0f },
+                                                      { 0x06 },
+                                                      { 0x0f },
+                                                      { 0x06 },
+                                                      { 0x0f },
+                                                      { 0x06 },
+                                                      { 0x0f },
+                                                      { 0x06 },
+                                                      { 0x0f },
+                                                      { 0x06 },
+                                                      { 0x0f },
+                                                      { 0x06 },
+                                                      { 0x0f },
+                                                      { 0x06 },});
 
             ColorSet clashBG = new ColorSet()
             {
-                addresses = new int[,] { { } },
+                addresses = new int[,] { { 0x01fe15 },
+                                         { 0x01fe17 },
+                                         { 0x03b63c },
+                                         { 0x03b644 },
+                                         { 0x03b648 },
+                                         { 0x03b64c },
+                                         { 0x03b650 },
+                },
             };
             // Clash | Background | Default
-            clashBorder1.ColorBytes.Add(new byte[,] { { }, });
+            clashBG.ColorBytes.Add(new byte[,] { { 0x12 },
+                                                 { 0x12 },
+                                                 { 0x01 },
+                                                 { 0x01 },
+                                                 { 0x0f },
+                                                 { 0x0f },
+                                                 { 0x0f },
+            });
+            // Clash | Background | Yellow
+            clashBG.ColorBytes.Add(new byte[,] { { 0x28 },
+                                                 { 0x28 },
+                                                 { 0x08 },
+                                                 { 0x08 },
+                                                 { 0x0F },
+                                                 { 0x0F },
+                                                 { 0x0F },
+            });
+            // Clash | Background | Orange
+            clashBG.ColorBytes.Add(new byte[,] { { 0x16 },
+                                                 { 0x16 },
+                                                 { 0x06 },
+                                                 { 0x06 },
+                                                 { 0x0F },
+                                                 { 0x0F },
+                                                 { 0x0F },
+            });
+            // Clash | Background | Green
+            clashBG.ColorBytes.Add(new byte[,] { { 0x2b },
+                                                 { 0x2b },
+                                                 { 0x1b },
+                                                 { 0x1b },
+                                                 { 0x0F },
+                                                 { 0x0F },
+                                                 { 0x0F },
+            });
+            // Clash | Background | Purple
+            clashBG.ColorBytes.Add(new byte[,] { { 0x24 },
+                                                 { 0x24 },
+                                                 { 0x04 },
+                                                 { 0x04 },
+                                                 { 0x0F },
+                                                 { 0x0F },
+                                                 { 0x0F },
+            });
 
+            ColorSet clashDoodad = new ColorSet()
+            {
+                addresses = new int[,] { { 0x01fe18 },
+                                         { 0x01fe19 }, },
+            };
+            //// Clash | Doodads | Default
+            clashDoodad.ColorBytes.Add(new byte[,] { { 0x27 },
+                                                     { 0x20 },
+            });
+            // Clash | Doodads | Green
+            clashDoodad.ColorBytes.Add(new byte[,] { { 0x1A },
+                                                     { 0x20 },
+            });
+            // Clash | Doodads | Teal
+            clashDoodad.ColorBytes.Add(new byte[,] { { 0x1C },
+                                                     { 0x20 },
+            });
+            // Clash | Doodads | Purple
+            clashDoodad.ColorBytes.Add(new byte[,] { { 0x13 },
+                                                     { 0x20 },
+            });
+            // Clash | Doodads | Red
+            clashDoodad.ColorBytes.Add(new byte[,] { { 0x05 },
+                                                     { 0x20 },
+            });
+            // Clash | Doodads | Gray
+            clashDoodad.ColorBytes.Add(new byte[,] { { 0x00 },
+                                                     { 0x20 },
+            });
+
+            ColorSet woodLeaves = new ColorSet()
+            {
+                addresses = new int[,] { { 0xbe13 },
+                                         { 0xbe14 }, },
+            };
+            // Wood | Leaves | Default
+            woodLeaves.ColorBytes.Add(new byte[,] { { 0x29 },
+                                                    { 0x19 },
+            });
+            // Wood | Leaves | Blue
+            woodLeaves.ColorBytes.Add(new byte[,] { { 0x11 },
+                                                    { 0x01 },
+            });
+
+            ColorSet woodTrunks = new ColorSet()
+            {
+                addresses = new int[,] { { 0xbe17 },
+                                         { 0xbe18 }, },
+            };
+            // Wood | Trunk | Default
+            woodTrunks.ColorBytes.Add(new byte[,] { { 0x28 },
+                                                    { 0x18 },
+            });
+            // Wood | Trunk | Purple
+            woodTrunks.ColorBytes.Add(new byte[,] { { 0x23 }, { 0x13 }, });
+            // Wood | Trunk | Pink
+            woodTrunks.ColorBytes.Add(new byte[,] { { 0x25 }, { 0x15 }, });
+            // Wood | Trunk | Orange
+            woodTrunks.ColorBytes.Add(new byte[,] { { 0x27 }, { 0x17 }, });
+            // Wood | Trunk | Green
+            woodTrunks.ColorBytes.Add(new byte[,] { { 0x2A }, { 0x1A }, });
+            // Wood | Trunk | Teal
+            woodTrunks.ColorBytes.Add(new byte[,] { { 0x2C }, { 0x1C }, });
+
+            ColorSet woodFloor = new ColorSet()
+            {
+                addresses = new int[,] { { 0xbe1b },
+                                         { 0xbe1c },
+                                         { 0xbe1d },},
+            };
+            // Wood | Floor | Default
+            woodFloor.ColorBytes.Add(new byte[,] { { 0x27 },
+                                                   { 0x17 },
+                                                   { 0x07 },
+            });
+            // Wood | Floor | Yellow
+            woodFloor.ColorBytes.Add(new byte[,] { { 0x28 },
+                                                   { 0x18 },
+                                                   { 0x08 },
+            });
+            // Wood | Floor | Green
+            woodFloor.ColorBytes.Add(new byte[,] { { 0x2a },
+                                                   { 0x1a },
+                                                   { 0x0a },
+            });
+            // Wood | Floor | Teal
+            woodFloor.ColorBytes.Add(new byte[,] { { 0x2c },
+                                                   { 0x1c },
+                                                   { 0x0c },
+            });
+            // Wood | Floor | Purple
+            woodFloor.ColorBytes.Add(new byte[,] { { 0x23 },
+                                                   { 0x13 },
+                                                   { 0x03 },
+            });
+            // Wood | Floor | Gray
+            woodFloor.ColorBytes.Add(new byte[,] { { 0x20 },
+                                                   { 0x10 },
+                                                   { 0x0f },
+            });
+
+            ColorSet woodUndergroundBG = new ColorSet()
+            {
+                addresses = new int[,] { { 0xbe1f },
+                                         { 0x03a118 },},
+            };
+            // Wood | UndergroundBG | Default
+            //woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x08 }, { 0x08 },}); // TODO verify
+
+            // Wood | UndergroundBG | Dark Purple
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x04 }, { 0x04 }, });
+
+            // Wood | UndergroundBG | Dark Red
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x05 }, { 0x05 }, });
+
+            // Wood | UndergroundBG | Dark Green
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x09 }, { 0x09 }, });
+
+            // Wood | UndergroundBG | Dark Teal
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x0b }, { 0x0b }, });
+
+            // Wood | UndergroundBG | Dark Blue1
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x0c }, { 0x0c }, });
+
+            // Wood | UndergroundBG | Dark Blue2
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x01 }, { 0x01 }, });
+
+
+            ColorSet woodSkyBG = new ColorSet()
+            {
+                addresses = new int[,] { { 0xbe15 },
+                                         { 0xbe19 },},
+            };
+            // Wood | SkyBG | Default
+            //woodSkyBG.ColorBytes.Add(new byte[,] { { 0x2c }, { 0x2c }, });
+
+            // Wood | SkyBG | Light Green
+            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x2a }, { 0x2a }, });
+
+            // Wood | SkyBG | Blue
+            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x12 }, { 0x12 }, });
+
+            // Wood | SkyBG | Dark Purple
+            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x03 }, { 0x03 }, });
+
+            // Wood | SkyBG | Dark Red
+            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x05 }, { 0x05 }, });
+
+            // Wood | SkyBG | Light Yellow
+            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x38 }, { 0x38 }, });
+
+            // Wood | SkyBG | Black
+            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x0f }, { 0x0f }, });
 
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
@@ -549,6 +855,14 @@ namespace MM2Randomizer
                 airSky.RandomizeAndWrite(stream, Random);
                 flashBG.RandomizeAndWrite(stream, Random);
                 flashFG.RandomizeAndWrite(stream, Random);
+                clashForeground.RandomizeAndWrite(stream, Random);
+                clashBG.RandomizeAndWrite(stream, Random);
+                clashDoodad.RandomizeAndWrite(stream, Random);
+                woodLeaves.RandomizeAndWrite(stream, Random);
+                woodTrunks.RandomizeAndWrite(stream, Random);
+                woodUndergroundBG.RandomizeAndWrite(stream, Random);
+                woodFloor.RandomizeAndWrite(stream, Random);
+                woodSkyBG.RandomizeAndWrite(stream, Random);
             }
         }
 
@@ -583,23 +897,23 @@ namespace MM2Randomizer
                     stream.WriteByte((byte)newWeaponOrder[i]);
                 }
 
-                // Create a copy of the default weapon order table to be used by teleporter function
-                // This is needed to fix teleporters breaking from the new weapon order.
-                stream.Position = 0x03f2D0; // Unused space at end of bank
-                stream.WriteByte(0x01);
-                stream.WriteByte(0x02);
-                stream.WriteByte(0x04);
-                stream.WriteByte(0x08);
-                stream.WriteByte(0x10);
-                stream.WriteByte(0x20);
-                stream.WriteByte(0x40);
-                stream.WriteByte(0x80);
+                //// Create a copy of the default weapon order table to be used by teleporter function
+                //// This is needed to fix teleporters breaking from the new weapon order.
+                //stream.Position = 0x03f2D0; // Unused space at end of bank
+                //stream.WriteByte(0x01);
+                //stream.WriteByte(0x02);
+                //stream.WriteByte(0x04);
+                //stream.WriteByte(0x08);
+                //stream.WriteByte(0x10);
+                //stream.WriteByte(0x20);
+                //stream.WriteByte(0x40);
+                //stream.WriteByte(0x80);
 
-                // Change function to call $f2c0 instead of $c279 when looking up defeated refight boss to
-                // get our default weapon table, fixing the teleporter softlock
-                stream.Position = 0x038f3b;
-                stream.WriteByte(0xc0);
-                stream.WriteByte(0xf2);
+                //// Change function to call $f2c0 instead of $c279 when looking up defeated refight boss to
+                //// get our default weapon table, fixing the teleporter softlock
+                //stream.Position = 0x038f3b;
+                //stream.WriteByte(0xc0);
+                //stream.WriteByte(0xf2);
 
                 // Create table for which stage is selectable on the stage select screen (independent of it being blacked out)
                 stream.Position = 0x0346E1;

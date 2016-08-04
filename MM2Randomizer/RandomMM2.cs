@@ -40,6 +40,7 @@ namespace MM2Randomizer
                 {
                     RandomTeleporters();
                 }
+                RandomColors();
                 if (Settings.IsWeaknessRandom)
                 {
                     // Offsets are different in Rockman 2 and Mega Man 2
@@ -100,7 +101,7 @@ namespace MM2Randomizer
                 stream.Position = 0x038278;
                 foreach (byte[] location in coords)
                 {
-                    stream.WriteByte(location[0]);
+                    stream.WriteByte(location[1]);
                 }
 
                 // These values will be copied over to $04b0 (y) and $0470 (x), which will be checked
@@ -138,6 +139,417 @@ namespace MM2Randomizer
                 Seed = rndSeed.Next(int.MaxValue);
             }
             Random = new Random(Seed);
+        }
+
+        private static void RandomColors()
+        {
+            // Heat | Foreground
+            List<int> fgPix0ram = new List<int>() { 0x0377, 0x0387, 0x0397 };
+            List<int> fgPix1ram = new List<int>() { 0x0378, 0x0388, 0x0398 };
+            List<int> fgPix2ram = new List<int>() { 0x0379, 0x0389, 0x0399 };
+            // Heat | Foreground2
+            List<int> fg2Pix0ram = new List<int>() { 0x037b, 0x038b, 0x039b };
+            List<int> fg2Pix1ram = new List<int>() { 0x037c, 0x038c, 0x039c };
+            List<int> fg2Pix2ram = new List<int>() { 0x037d, 0x038d, 0x039d };
+            // Heat | Background
+            List<int> bgPix0ram = new List<int>() { 0x037f, 0x038f, 0x039f };
+            List<int> bgPix1ram = new List<int>() { 0x0380, 0x0390, 0x03a0 };
+            List<int> bgPix2ram = new List<int>() { 0x0381, 0x0391, 0x03a1 };
+            // ram location of river
+            List<int> pix0ram = new List<int>() { 0x0383, 0x0393, 0x03a3 };
+            List<int> pix1ram = new List<int>() { 0x0384, 0x0394, 0x03a4 };
+            List<int> pix2ram = new List<int>() { 0x0385, 0x0395, 0x03a5 };
+            
+            ColorSet heat_river = new ColorSet()
+            {
+                addresses = new int[,] { { 0x3e3f, 0x3e4f, 0x3e5f },
+                                         { 0x3e40, 0x3e50, 0x3e60 },
+                                         { 0x3e41, 0x3e51, 0x3e61 } },
+            };
+            heat_river.ColorBytes.Add(new byte[,]
+                { // Heat | River | Default Orange
+                    { 0x36, 0x26, 0x16 },
+                    { 0x26, 0x16, 0x36 },
+                    { 0x16, 0x36, 0x26 },
+                });
+            heat_river.ColorBytes.Add(new byte[,]
+                { // Heat | River | Green
+                    { 0x2a, 0x1a, 0x0a },
+                    { 0x1a, 0x0a, 0x2a },
+                    { 0x0a, 0x2a, 0x1a },
+                });
+            heat_river.ColorBytes.Add(new byte[,]
+                { // Heat | River | Yellow
+                    { 0x28, 0x18, 0x08 },
+                    { 0x18, 0x08, 0x28 },
+                    { 0x08, 0x28, 0x18 },
+                });
+            heat_river.ColorBytes.Add(new byte[,]
+                { // Heat | River | Purple
+                    { 0x24, 0x14, 0x04 },
+                    { 0x14, 0x04, 0x24 },
+                    { 0x04, 0x24, 0x14 },
+                });
+
+
+            ColorSet heat_background = new ColorSet()
+            {
+                addresses = new int[,] { { 0x3e3b, 0x3e4b, 0x3e5b },
+                                         { 0x3e3c, 0x3e4c, 0x3e5c },
+                                         { 0x3e3d, 0x3e4d, 0x3e5d } },
+            };
+            heat_background.ColorBytes.Add(new byte[,]
+                { // Heat | Background | Default Red
+                    { 0x16, 0x16, 0x16 },
+                    { 0x05, 0x05, 0x05 },
+                    { 0x07, 0x07, 0x07 },
+                });
+            heat_background.ColorBytes.Add(new byte[,]
+                { // Heat | Background | Purple 
+                    { 0x14, 0x14, 0x14 },
+                    { 0x04, 0x04, 0x04 },
+                    { 0x03, 0x03, 0x03 },
+                });
+
+            heat_background.ColorBytes.Add(new byte[,]
+                { // Heat | Background | Gold Gray 
+                    { 0x2d, 0x2d, 0x2d },
+                    { 0x18, 0x18, 0x18 },
+                    { 0x08, 0x08, 0x08 },
+                });
+            heat_background.ColorBytes.Add(new byte[,]
+                { // Heat | Background | Deep Blue 
+                    { 0x0c, 0x0c, 0x0c },
+                    { 0x01, 0x01, 0x01 },
+                    { 0x12, 0x12, 0x12 },
+                });
+            heat_background.ColorBytes.Add(new byte[,]
+                { // Heat | Background | Dark Green
+                    { 0x0b, 0x0b, 0x0b },
+                    { 0x1d, 0x1d, 0x1d },
+                    { 0x09, 0x09, 0x09 },
+                });
+
+
+            ColorSet heat_foreground = new ColorSet()
+            {
+                addresses = new int[,] { { 0x3e33, 0x3e43, 0x3e53 },
+                                         { 0x3e34, 0x3e44, 0x3e54 },
+                                         { 0x3e35, 0x3e45, 0x3e55 } },
+            };
+            heat_foreground.ColorBytes.Add(new byte[,]
+                { // Heat | Foreground | Default Pink
+                    { 0x36, 0x36, 0x36 },
+                    { 0x26, 0x26, 0x26 },
+                    { 0x15, 0x15, 0x15 },
+                });
+            heat_foreground.ColorBytes.Add(new byte[,]
+                { // Heat | Foreground | Purple 
+                    { 0x34, 0x34, 0x34 },
+                    { 0x24, 0x24, 0x24 },
+                    { 0x13, 0x13, 0x13 },
+                });
+            heat_foreground.ColorBytes.Add(new byte[,]
+                { // Heat | Foreground | Light Green 
+                    { 0x3a, 0x3a, 0x3a },
+                    { 0x2a, 0x2a, 0x2a },
+                    { 0x19, 0x19, 0x19 },
+                });
+            heat_foreground.ColorBytes.Add(new byte[,]
+                { // Heat | Foreground | Light Blue 
+                    { 0x32, 0x32, 0x32 },
+                    { 0x22, 0x22, 0x22 },
+                    { 0x11, 0x11, 0x11 },
+                });
+
+            
+            ColorSet heat_foreground2 = new ColorSet()
+            {
+                addresses = new int[,] { { 0x3e37, 0x3e47, 0x3e57 },
+                                         { 0x3e38, 0x3e48, 0x3e58 },
+                                         { 0x3e39, 0x3e49, 0x3e59 } },
+            };
+            heat_foreground2.ColorBytes.Add(new byte[,]
+                { // Heat | Foreground2 | Default Light Gray
+                    { 0x30, 0x30, 0x30 },
+                    { 0x10, 0x10, 0x10 },
+                    { 0x00, 0x00, 0x00 },
+                });
+            heat_foreground2.ColorBytes.Add(new byte[,]
+                { // Heat | Foreground2 | Light Orange
+                    { 0x30, 0x30, 0x30 },
+                    { 0x37, 0x37, 0x37 },
+                    { 0x27, 0x27, 0x27 },
+                });
+            heat_foreground2.ColorBytes.Add(new byte[,]
+                { // Heat | Foreground2 | Light Blue
+                    { 0x30, 0x30, 0x30 },
+                    { 0x31, 0x31, 0x31 },
+                    { 0x21, 0x21, 0x21 },
+                });
+            heat_foreground2.ColorBytes.Add(new byte[,]
+                { // Heat | Foreground2 | Dark
+                    { 0x10, 0x10, 0x10 },
+                    { 0x00, 0x00, 0x00 },
+                    { 0x08, 0x08, 0x08 },
+                });
+
+            ColorSet airPlatforms = new ColorSet()
+            {
+                addresses = new int[,] { { 0x7e37, 0x7e47, 0x7e57, 0x7e67 },
+                                         { 0x7e38, 0x7e48, 0x7e58, 0x7e68 },
+                                         { 0x7e39, 0x7e49, 0x7e59, 0x7e69 } },
+            };
+            airPlatforms.ColorBytes.Add(new byte[,]
+                { // Air | Platforms | Default
+                    { 0x30, 0x30, 0x30, 0x30 },
+                    { 0x15, 0x15, 0x15, 0x15 },
+                    { 0x0F, 0x0F, 0x0F, 0x0F },
+                });
+            airPlatforms.ColorBytes.Add(new byte[,]
+                { // Air | Platforms | Orange
+                    { 0x30, 0x30, 0x30, 0x30 },
+                    { 0x16, 0x16, 0x16, 0x16 },
+                    { 0x0F, 0x0F, 0x0F, 0x0F },
+                });
+            airPlatforms.ColorBytes.Add(new byte[,]
+                { // Air | Platforms | Yellow
+                    { 0x30, 0x30, 0x30, 0x30 },
+                    { 0x28, 0x28, 0x28, 0x28 },
+                    { 0x0F, 0x0F, 0x0F, 0x0F },
+                });
+            airPlatforms.ColorBytes.Add(new byte[,]
+                { // Air | Platforms | Green
+                    { 0x30, 0x30, 0x30, 0x30 },
+                    { 0x19, 0x19, 0x19, 0x19 },
+                    { 0x0F, 0x0F, 0x0F, 0x0F },
+                });
+            airPlatforms.ColorBytes.Add(new byte[,]
+                { // Air | Platforms | Blue
+                    { 0x30, 0x30, 0x30, 0x30 },
+                    { 0x22, 0x22, 0x22, 0x22 },
+                    { 0x0F, 0x0F, 0x0F, 0x0F },
+                });
+            
+            ColorSet airClouds = new ColorSet()
+            {
+                addresses = new int[,] { { 0x7e33, 0x7e43, 0x7e53, 0x7e63 },
+                                         { 0x7e34, 0x7e44, 0x7e54, 0x7e64 },
+                                         { 0x7e35, 0x7e45, 0x7e55, 0x7e65 } },
+            };
+            airClouds.ColorBytes.Add(new byte[,]
+                { // Air | Clouds | Default
+                    { 0x21, 0x31, 0x30, 0x31 },
+                    { 0x31, 0x30, 0x30, 0x30 },
+                    { 0x30, 0x30, 0x30, 0x30 },
+                });
+            airClouds.ColorBytes.Add(new byte[,]
+                { // Air | Clouds | Light Gray Dark Red
+                    { 0x10, 0x00, 0x07, 0x00 },
+                    { 0x10, 0x10, 0x00, 0x10 },
+                    { 0x10, 0x10, 0x10, 0x10 },
+                });
+            
+            ColorSet airSky = new ColorSet()
+            {
+                // $0366 only
+                addresses = new int[,] { { 0x7e22 } },
+            };
+            // Air | Sky | Default
+            airSky.ColorBytes.Add(new byte[,] { { 0x21 }, });
+            // Air | Sky | Pink
+            airSky.ColorBytes.Add(new byte[,] { { 0x23 }, });
+            // Air | Sky | Dark Orange
+            airSky.ColorBytes.Add(new byte[,] { { 0x26 }, });
+            // Air | Sky | Light Orange
+            airSky.ColorBytes.Add(new byte[,] { { 0x27 }, });
+            // Air | Sky | Yellow
+            airSky.ColorBytes.Add(new byte[,] { { 0x28 }, });
+            // Air | Sky | Light Green
+            airSky.ColorBytes.Add(new byte[,] { { 0x2B }, });
+            // Air | Sky | Blue
+            airSky.ColorBytes.Add(new byte[,] { { 0x01 }, });
+            // Air | Sky | Dark Red
+            airSky.ColorBytes.Add(new byte[,] { { 0x01 }, });
+            // Air | Sky | Dark Green
+            airSky.ColorBytes.Add(new byte[,] { { 0x0B }, });
+            // Air | Sky | Black
+            airSky.ColorBytes.Add(new byte[,] { { 0x1D }, });
+
+            // Flash RAM
+            List<int> ramFlash_FG1 = new List<int>() { 0x0378, 0x0388, 0x0398 };
+            List<int> ramFlash_FG2 = new List<int>() { 0x0379, 0x0389, 0x0399 };
+            List<int> ramFlash_BG1 = new List<int>() { 0x037b, 0x038b, 0x039b };
+            List<int> ramFlash_BG2 = new List<int>() { 0x037c, 0x038c, 0x039c };
+            List<int> ramFlash_BG3 = new List<int>() { 0x037d, 0x038d, 0x039d };
+            ColorSet flashBG = new ColorSet()
+            {
+                addresses = new int[,] { { 0x017e34, 0x017e44, 0x017e54 } ,
+                                         { 0x017e35, 0x017e45, 0x017e55 } }
+            };
+            flashBG.ColorBytes.Add(new byte[,]
+                { // Flash | Background | Default
+                    { 0x12, 0x12, 0x12 },
+                    { 0x02, 0x02, 0x02 },
+                });
+            flashBG.ColorBytes.Add(new byte[,]
+                { // Flash | Background | Magenta
+                    { 0x14, 0x14, 0x14 },
+                    { 0x04, 0x04, 0x04 },
+                });
+            flashBG.ColorBytes.Add(new byte[,]
+                { // Flash | Background | Orange
+                    { 0x16, 0x16, 0x16 },
+                    { 0x06, 0x06, 0x06 },
+                });
+            flashBG.ColorBytes.Add(new byte[,]
+                { // Flash | Background | Yellow
+                    { 0x18, 0x18, 0x18 },
+                    { 0x08, 0x08, 0x08 },
+                });
+            flashBG.ColorBytes.Add(new byte[,]
+                { // Flash | Background | Green
+                    { 0x1a, 0x1a, 0x1a },
+                    { 0x0a, 0x0a, 0x0a },
+                });
+            flashBG.ColorBytes.Add(new byte[,]
+                { // Flash | Background | Black
+                    { 0x00, 0x00, 0x00 },
+                    { 0x1d, 0x1d, 0x1d },
+                });
+            ColorSet flashFG = new ColorSet()
+            {
+                // Note: 3 color sets are used for the flashing blocks.
+                // I've kept them grouped here for common color themes.
+                addresses = new int[,] { { 0x017e37, 0x017e47, 0x017e57 } ,
+                                         { 0x017e38, 0x017e48, 0x017e58 } ,
+                                         { 0x017e39, 0x017e49, 0x017e59 } ,
+                                         { 0x017e3b, 0x017e4b, 0x017e5b } ,
+                                         { 0x017e3c, 0x017e4c, 0x017e5c } ,
+                                         { 0x017e3d, 0x017e4d, 0x017e5d } ,
+                                         { 0x017e3f, 0x017e4f, 0x017e5f } ,
+                                         { 0x017e40, 0x017e50, 0x017e60 } ,
+                                         { 0x017e41, 0x017e51, 0x017e61 } }
+            };
+
+            flashFG.ColorBytes.Add(new byte[,]
+                { // Flash | Foreground | Default
+                    { 0x30, 0x20, 0x20 },
+                    { 0x31, 0x21, 0x21 },
+                    { 0x2C, 0x11, 0x11 },
+                    { 0x20, 0x30, 0x20 },
+                    { 0x21, 0x31, 0x21 },
+                    { 0x11, 0x2C, 0x11 },
+                    { 0x20, 0x20, 0x30 },
+                    { 0x21, 0x21, 0x31 },
+                    { 0x11, 0x11, 0x2c },
+                });
+            flashFG.ColorBytes.Add(new byte[,]
+                { // Flash | Foreground | Magenta
+                    { 0x30, 0x20, 0x20 },
+                    { 0x33, 0x23, 0x23 },
+                    { 0x24, 0x13, 0x13 },
+                    { 0x20, 0x30, 0x20 },
+                    { 0x23, 0x33, 0x23 },
+                    { 0x13, 0x24, 0x13 },
+                    { 0x20, 0x20, 0x30 },
+                    { 0x23, 0x23, 0x33 },
+                    { 0x13, 0x13, 0x24 },
+                });
+
+            flashFG.ColorBytes.Add(new byte[,]
+                { // Flash | Foreground | Orange
+                    { 0x30, 0x20, 0x20 },
+                    { 0x36, 0x26, 0x16 },
+                    { 0x26, 0x16, 0x06 },
+                    { 0x20, 0x30, 0x20 },
+                    { 0x16, 0x36, 0x26 },
+                    { 0x06, 0x26, 0x16 },
+                    { 0x20, 0x20, 0x30 },
+                    { 0x26, 0x16, 0x36 },
+                    { 0x16, 0x06, 0x26 },
+                });
+
+            flashFG.ColorBytes.Add(new byte[,]
+                { // Flash | Foreground | Yellow
+                    { 0x30, 0x20, 0x20 },
+                    { 0x38, 0x28, 0x18 },
+                    { 0x28, 0x18, 0x08 },
+                    { 0x20, 0x30, 0x20 },
+                    { 0x18, 0x38, 0x28 },
+                    { 0x08, 0x28, 0x18 },
+                    { 0x20, 0x20, 0x30 },
+                    { 0x28, 0x18, 0x38 },
+                    { 0x18, 0x08, 0x28 },
+                });
+
+            flashFG.ColorBytes.Add(new byte[,]
+                { // Flash | Foreground | Green
+                    { 0x30, 0x20, 0x20 },
+                    { 0x3A, 0x2A, 0x1A },
+                    { 0x2A, 0x1A, 0x0A },
+                    { 0x20, 0x30, 0x20 },
+                    { 0x1A, 0x3A, 0x2A },
+                    { 0x0A, 0x2A, 0x1A },
+                    { 0x20, 0x20, 0x30 },
+                    { 0x2A, 0x1A, 0x3A },
+                    { 0x1A, 0x0A, 0x2A },
+                });
+
+            flashFG.ColorBytes.Add(new byte[,]
+                { // Flash | Foreground | Turquoise
+                    { 0x30, 0x20, 0x20 },
+                    { 0x3b, 0x2b, 0x1b },
+                    { 0x2b, 0x1b, 0x0b },
+                    { 0x20, 0x30, 0x20 },
+                    { 0x1b, 0x3b, 0x2b },
+                    { 0x0b, 0x2b, 0x1b },
+                    { 0x20, 0x20, 0x30 },
+                    { 0x2b, 0x1b, 0x3b },
+                    { 0x1b, 0x0b, 0x2b },
+                });
+
+            flashFG.ColorBytes.Add(new byte[,]
+                { // Flash | Foreground | Black and Red
+                    { 0x30, 0x20, 0x20 },
+                    { 0x1d, 0x1d, 0x1d },
+                    { 0x10, 0x00, 0x07 },
+                    { 0x20, 0x30, 0x20 },
+                    { 0x1d, 0x1d, 0x1d },
+                    { 0x07, 0x10, 0x00 },
+                    { 0x20, 0x20, 0x30 },
+                    { 0x1d, 0x1d, 0x1d },
+                    { 0x00, 0x07, 0x10 },
+                });
+
+            ColorSet clashBorder1 = new ColorSet()
+            {
+                addresses = new int[,] { { } },
+            };
+            // Clash | Border1 | Default
+            clashBorder1.ColorBytes.Add(new byte[,] { { 0x39 }, 
+                                                      { 0x18 }, });
+
+            ColorSet clashBG = new ColorSet()
+            {
+                addresses = new int[,] { { } },
+            };
+            // Clash | Background | Default
+            clashBorder1.ColorBytes.Add(new byte[,] { { }, });
+
+
+            using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                heat_river.RandomizeAndWrite(stream, Random);
+                heat_background.RandomizeAndWrite(stream, Random);
+                heat_foreground.RandomizeAndWrite(stream, Random);
+                heat_foreground2.RandomizeAndWrite(stream, Random);
+                airClouds.RandomizeAndWrite(stream, Random);
+                airPlatforms.RandomizeAndWrite(stream, Random);
+                airSky.RandomizeAndWrite(stream, Random);
+                flashBG.RandomizeAndWrite(stream, Random);
+                flashFG.RandomizeAndWrite(stream, Random);
+            }
         }
 
         /// <summary>

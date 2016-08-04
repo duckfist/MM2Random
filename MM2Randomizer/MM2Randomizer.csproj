@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ColorSet.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="RandomMM2.cs" />
     <Compile Include="StageFromSelect.cs" />

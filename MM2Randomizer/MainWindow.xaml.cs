@@ -17,10 +17,10 @@ namespace MM2Randomizer
             ViewModel = new MainWindowViewModel()
             {
                 IsJapanese = true,
-                Is8StagesRandom = true,
+                Is8StagesRandom = false,
                 IsWeaponsRandom = true,
                 IsItemsRandom = true,
-                IsTeleportersRandom = true,
+                IsTeleportersRandom = false,
                 IsWeaknessRandom = true,
                 IsWeaknessEasy = true,
                 IsWeaknessHard = false

@@ -50,7 +50,7 @@
         <CheckBox Grid.Row="3" Grid.Column="1" Name="chk8Stages" Content="Random Robot Master Stages" IsChecked="{Binding Path=Is8StagesRandom}"/>
         <CheckBox Grid.Row="4" Grid.Column="1" Name="chkWeapons" Content="Random Weapons" IsChecked="{Binding Path=IsWeaponsRandom}"/>
         <CheckBox Grid.Row="5" Grid.Column="1" Name="chkItems" Content="Random Items 1, 2, and 3" IsChecked="{Binding Path=IsItemsRandom}"/>
-        <CheckBox Grid.Row="6" Grid.Column="1" Name="chkTeleporters" Content="Random Wily 5 Teleporters" IsChecked="{Binding Path=IsTeleportersRandom}"/>
+        <CheckBox Grid.Row="6" Grid.Column="1" Name="chkTeleporters" Content="Random Wily 5 Teleporters" IsChecked="{Binding Path=IsTeleportersRandom}" IsEnabled="False"/>
 
         <CheckBox Grid.Row="3" Grid.Column="0" Name="chkWeakness" Content="Random Weaknesses" IsChecked="{Binding Path=IsWeaknessRandom}"/>
         <RadioButton Grid.Row="4" Grid.Column="0" Name="radWeaknessEasy" Margin="16,2,2,2" Content="Easy" 

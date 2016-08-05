@@ -7,7 +7,7 @@ namespace MM2Randomizer.Enums
 {
     public enum EMiscAddresses
     {
-        WarpXCoordinateStartAddress = 0x03828f,
+        WarpXCoordinateStartAddress = 0x038280,
         WarpYCoordinateStartAddress = 0x038278
     }
 }

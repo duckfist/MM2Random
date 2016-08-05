@@ -45,5 +45,10 @@
         /// with random values, within practical tolerances for each weapon.
         /// </summary>
         public bool IsWeaknessHard { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public bool IsColorsRandom { get;  set; }
     }
 }

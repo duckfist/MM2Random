@@ -8,9 +8,7 @@ namespace MM2Randomizer
     {
         public static int Seed = -1;
         public static Random Random;
-
         public static MainWindowViewModel Settings;
-
         public static string DestinationFileName = "";
 
         /// <summary>
@@ -40,7 +38,10 @@ namespace MM2Randomizer
                 {
                     RandomTeleporters();
                 }
-                RandomColors();
+                if (Settings.IsColorsRandom)
+                {
+                    RandomColors();
+                }
                 if (Settings.IsWeaknessRandom)
                 {
                     // Offsets are different in Rockman 2 and Mega Man 2
@@ -143,726 +144,469 @@ namespace MM2Randomizer
 
         private static void RandomColors()
         {
-            // Heat | Foreground
-            List<int> fgPix0ram = new List<int>() { 0x0377, 0x0387, 0x0397 };
-            List<int> fgPix1ram = new List<int>() { 0x0378, 0x0388, 0x0398 };
-            List<int> fgPix2ram = new List<int>() { 0x0379, 0x0389, 0x0399 };
-            // Heat | Foreground2
-            List<int> fg2Pix0ram = new List<int>() { 0x037b, 0x038b, 0x039b };
-            List<int> fg2Pix1ram = new List<int>() { 0x037c, 0x038c, 0x039c };
-            List<int> fg2Pix2ram = new List<int>() { 0x037d, 0x038d, 0x039d };
-            // Heat | Background
-            List<int> bgPix0ram = new List<int>() { 0x037f, 0x038f, 0x039f };
-            List<int> bgPix1ram = new List<int>() { 0x0380, 0x0390, 0x03a0 };
-            List<int> bgPix2ram = new List<int>() { 0x0381, 0x0391, 0x03a1 };
-            // ram location of river
-            List<int> pix0ram = new List<int>() { 0x0383, 0x0393, 0x03a3 };
-            List<int> pix1ram = new List<int>() { 0x0384, 0x0394, 0x03a4 };
-            List<int> pix2ram = new List<int>() { 0x0385, 0x0395, 0x03a5 };
-            
-            ColorSet heat_river = new ColorSet()
+            List<ColorSet> colorSets = new List<ColorSet>()
             {
-                addresses = new int[,] { { 0x3e3f, 0x3e4f, 0x3e5f },
-                                         { 0x3e40, 0x3e50, 0x3e60 },
-                                         { 0x3e41, 0x3e51, 0x3e61 } },
-            };
-            heat_river.ColorBytes.Add(new byte[,]
-                { // Heat | River | Default Orange
-                    { 0x36, 0x26, 0x16 },
-                    { 0x26, 0x16, 0x36 },
-                    { 0x16, 0x36, 0x26 },
-                });
-            heat_river.ColorBytes.Add(new byte[,]
-                { // Heat | River | Green
-                    { 0x2a, 0x1a, 0x0a },
-                    { 0x1a, 0x0a, 0x2a },
-                    { 0x0a, 0x2a, 0x1a },
-                });
-            heat_river.ColorBytes.Add(new byte[,]
-                { // Heat | River | Yellow
-                    { 0x28, 0x18, 0x08 },
-                    { 0x18, 0x08, 0x28 },
-                    { 0x08, 0x28, 0x18 },
-                });
-            heat_river.ColorBytes.Add(new byte[,]
-                { // Heat | River | Purple
-                    { 0x24, 0x14, 0x04 },
-                    { 0x14, 0x04, 0x24 },
-                    { 0x04, 0x24, 0x14 },
-                });
+                new ColorSet() {
+                    addresses = new int[] { 0x3e3f, 0x3e4f, 0x3e5f,
+                                            0x3e40, 0x3e50, 0x3e60,
+                                            0x3e41, 0x3e51, 0x3e61 },
+                    ColorBytes = new List<byte[]>() {
+                        new byte[] { // Heat | River | Default Orange
+                            0x36, 0x26, 0x16,
+                            0x26, 0x16, 0x36,
+                            0x16, 0x36, 0x26,
+                        },
+                        new byte[] { // Heat | River | Green
+                            0x2a, 0x1a, 0x0a,
+                            0x1a, 0x0a, 0x2a,
+                            0x0a, 0x2a, 0x1a,
+                        },
+                        new byte[] { // Heat | River | Yellow
+                            0x28, 0x18, 0x08,
+                            0x18, 0x08, 0x28,
+                            0x08, 0x28, 0x18,
+                        },
+                        new byte[] { // Heat | River | Purple
+                            0x24, 0x14, 0x04,
+                            0x14, 0x04, 0x24,
+                            0x04, 0x24, 0x14,
+                        }
+                    }
+                },
+                new ColorSet()
+                {
+                    addresses = new int[] { 0x3e3b, 0x3e4b, 0x3e5b,
+                                            0x3e3c, 0x3e4c, 0x3e5c,
+                                            0x3e3d, 0x3e4d, 0x3e5d },
+                    ColorBytes = new List<byte[]>() {
+                        new byte[] { // Heat | Background | Default Red
+                            0x16, 0x16, 0x16,
+                            0x05, 0x05, 0x05,
+                            0x07, 0x07, 0x07,
+                        },
+                        new byte[] { // Heat | Background | Purple 
+                            0x14, 0x14, 0x14,
+                            0x04, 0x04, 0x04,
+                            0x03, 0x03, 0x03,
+                        },
+                        new byte[] { // Heat | Background | Gold Gray 
+                            0x2d, 0x2d, 0x2d,
+                            0x18, 0x18, 0x18,
+                            0x08, 0x08, 0x08,
+                        },
+                        new byte[] { // Heat | Background | Deep Blue 
+                            0x0c, 0x0c, 0x0c,
+                            0x01, 0x01, 0x01,
+                            0x12, 0x12, 0x12,
+                        },
+                        new byte[] { // Heat | Background | Dark Green
+                            0x0b, 0x0b, 0x0b,
+                            0x1d, 0x1d, 0x1d,
+                            0x09, 0x09, 0x09,
+                        },
+                    }
+                },
+                new ColorSet() {
+                    addresses = new int[] { 0x3e33, 0x3e43, 0x3e53,
+                                            0x3e34, 0x3e44, 0x3e54,
+                                            0x3e35, 0x3e45, 0x3e55 },
+                    ColorBytes = new List<byte[]>() {
+                        new byte[] { // Heat | Foreground | Default Pink
+                            0x36, 0x36, 0x36,
+                            0x26, 0x26, 0x26,
+                            0x15, 0x15, 0x15,
+                        },
+                        new byte[] { // Heat | Foreground | Purple 
+                            0x34, 0x34, 0x34,
+                            0x24, 0x24, 0x24,
+                            0x13, 0x13, 0x13,
+                        },
+                        new byte[] { // Heat | Foreground | Light Green 
+                            0x3a, 0x3a, 0x3a,
+                            0x2a, 0x2a, 0x2a,
+                            0x19, 0x19, 0x19,
+                        },
+                        new byte[] { // Heat | Foreground | Light Blue 
+                            0x32, 0x32, 0x32,
+                            0x22, 0x22, 0x22,
+                            0x11, 0x11, 0x11,
+                        },
+                    }
+                },
+                new ColorSet() {
+                    addresses = new int[] { 0x3e37, 0x3e47, 0x3e57,
+                                            0x3e38, 0x3e48, 0x3e58,
+                                            0x3e39, 0x3e49, 0x3e59 },
+                    ColorBytes = new List<byte[]>() {
+                        new byte[] { // Heat | Foreground2 | Default Light Gray
+                            0x30, 0x30, 0x30,
+                            0x10, 0x10, 0x10,
+                            0x00, 0x00, 0x00,
+                        },
+                        new byte[] { // Heat | Foreground2 | Light Orange
+                            0x30, 0x30, 0x30,
+                            0x37, 0x37, 0x37,
+                            0x27, 0x27, 0x27,
+                        },
+                        new byte[] { // Heat | Foreground2 | Light Blue
+                            0x30, 0x30, 0x30,
+                            0x31, 0x31, 0x31,
+                            0x21, 0x21, 0x21,
+                        },
+                        new byte[] { // Heat | Foreground2 | Dark
+                            0x10, 0x10, 0x10,
+                            0x00, 0x00, 0x00,
+                            0x08, 0x08, 0x08,
+                        },
+                    }
+                },
+                new ColorSet() {
+                    addresses = new int[] { 0x7e37, 0x7e47, 0x7e57, 0x7e67,
+                                            0x7e38, 0x7e48, 0x7e58, 0x7e68,
+                                            0x7e39, 0x7e49, 0x7e59, 0x7e69 },
+                    ColorBytes = new List<byte[]>() {
+                        new byte[] { // Air | Platforms | Default
+                            0x30, 0x30, 0x30, 0x30,
+                            0x15, 0x15, 0x15, 0x15,
+                            0x0F, 0x0F, 0x0F, 0x0F,
+                        },
+                        new byte[] { // Air | Platforms | Orange
+                            0x30, 0x30, 0x30, 0x30,
+                            0x16, 0x16, 0x16, 0x16,
+                            0x0F, 0x0F, 0x0F, 0x0F,
+                        },
+                        new byte[] { // Air | Platforms | Yellow
+                            0x30, 0x30, 0x30, 0x30,
+                            0x28, 0x28, 0x28, 0x28,
+                            0x0F, 0x0F, 0x0F, 0x0F,
+                        },
+                        new byte[] { // Air | Platforms | Green
+                            0x30, 0x30, 0x30, 0x30,
+                            0x19, 0x19, 0x19, 0x19,
+                            0x0F, 0x0F, 0x0F, 0x0F,
+                        },
+                        new byte[] { // Air | Platforms | Blue
+                            0x30, 0x30, 0x30, 0x30,
+                            0x22, 0x22, 0x22, 0x22,
+                            0x0F, 0x0F, 0x0F, 0x0F,
+                        },
+                    }
+                },
+                new ColorSet() {
+                    addresses = new int[] { 0x7e33, 0x7e43, 0x7e53, 0x7e63,
+                                            0x7e34, 0x7e44, 0x7e54, 0x7e64,
+                                            0x7e35, 0x7e45, 0x7e55, 0x7e65 },
+                    ColorBytes = new List<byte[]>() {
+                        new byte[] { // Air | Clouds | Default
+                            0x21, 0x31, 0x30, 0x31,
+                            0x31, 0x30, 0x30, 0x30,
+                            0x30, 0x30, 0x30, 0x30,
+                        },
+                        new byte[] { // Air | Clouds | Light Gray Dark Red
+                            0x10, 0x00, 0x07, 0x00,
+                            0x10, 0x10, 0x00, 0x10,
+                            0x10, 0x10, 0x10, 0x10,
+                        },
+                    }
+                },
+                new ColorSet() {
+                    // $0366 only
+                    addresses = new int[] { 0x7e22 },
+                    ColorBytes = new List<byte[]>() {
+                        // Air | Sky | Default
+                        new byte[] { 0x21 },
+                        // Air | Sky | Pink
+                        new byte[] { 0x23 },
+                        // Air | Sky | Dark Orange
+                        new byte[] { 0x26 },
+                        // Air | Sky | Light Orange
+                        new byte[] { 0x27 },
+                        // Air | Sky | Yellow
+                        new byte[] { 0x28 },
+                        // Air | Sky | Light Green
+                        new byte[] { 0x2B },
+                        // Air | Sky | Blue
+                        new byte[] { 0x01 },
+                        // Air | Sky | Dark Red
+                        new byte[] { 0x01 },
+                        // Air | Sky | Dark Green
+                        new byte[] { 0x0B },
+                        // Air | Sky | Black
+                        new byte[] { 0x1D },
+                    }
+                },
+                new ColorSet() {
+                    addresses = new int[] { 0x017e34, 0x017e44, 0x017e54 ,
+                                            0x017e35, 0x017e45, 0x017e55 },
+                    ColorBytes = new List<byte[]>() {
+                        new byte[] { // Flash | Background | Default
+                            0x12, 0x12, 0x12,
+                            0x02, 0x02, 0x02,
+                        },
+                        new byte[] { // Flash | Background | Magenta
+                            0x14, 0x14, 0x14,
+                            0x04, 0x04, 0x04,
+                        },
+                        new byte[] { // Flash | Background | Orange
+                            0x16, 0x16, 0x16,
+                            0x06, 0x06, 0x06,
+                        },
+                     new byte[] { // Flash | Background | Yellow
+                            0x18, 0x18, 0x18,
+                            0x08, 0x08, 0x08,
+                        },
+                        new byte[] { // Flash | Background | Green
+                            0x1a, 0x1a, 0x1a,
+                            0x0a, 0x0a, 0x0a,
+                        },
+                        new byte[] { // Flash | Background | Black
+                            0x00, 0x00, 0x00,
+                            0x1d, 0x1d, 0x1d,
+                        },
+                    }
+                },
+                new ColorSet() {
+                    // Note: 3 color sets are used for the flashing blocks.
+                    // I've kept them grouped here for common color themes.
+                    addresses = new int[] { 0x017e37, 0x017e47, 0x017e57,
+                                            0x017e38, 0x017e48, 0x017e58,
+                                            0x017e39, 0x017e49, 0x017e59,
+                                            0x017e3b, 0x017e4b, 0x017e5b,
+                                            0x017e3c, 0x017e4c, 0x017e5c,
+                                            0x017e3d, 0x017e4d, 0x017e5d,
+                                            0x017e3f, 0x017e4f, 0x017e5f,
+                                            0x017e40, 0x017e50, 0x017e60,
+                                            0x017e41, 0x017e51, 0x017e61},
+                    ColorBytes = new List<byte[]>() {
+                         new byte[] { // Flash | Foreground | Default
+                            0x30, 0x20, 0x20,
+                            0x31, 0x21, 0x21,
+                            0x2C, 0x11, 0x11,
+                            0x20, 0x30, 0x20,
+                            0x21, 0x31, 0x21,
+                            0x11, 0x2C, 0x11,
+                            0x20, 0x20, 0x30,
+                            0x21, 0x21, 0x31,
+                            0x11, 0x11, 0x2c,
+                        },
+                        new byte[] { // Flash | Foreground | Magenta
+                            0x30, 0x20, 0x20,
+                            0x33, 0x23, 0x23,
+                            0x24, 0x13, 0x13,
+                            0x20, 0x30, 0x20,
+                            0x23, 0x33, 0x23,
+                            0x13, 0x24, 0x13,
+                            0x20, 0x20, 0x30,
+                            0x23, 0x23, 0x33,
+                            0x13, 0x13, 0x24,
+                        },
+                        new byte[] { // Flash | Foreground | Orange
+                            0x30, 0x20, 0x20,
+                            0x36, 0x26, 0x16,
+                            0x26, 0x16, 0x06,
+                            0x20, 0x30, 0x20,
+                            0x16, 0x36, 0x26,
+                            0x06, 0x26, 0x16,
+                            0x20, 0x20, 0x30,
+                            0x26, 0x16, 0x36,
+                            0x16, 0x06, 0x26,
+                        },
+                        new byte[] { // Flash | Foreground | Yellow
+                            0x30, 0x20, 0x20,
+                            0x38, 0x28, 0x18,
+                            0x28, 0x18, 0x08,
+                            0x20, 0x30, 0x20,
+                            0x18, 0x38, 0x28,
+                            0x08, 0x28, 0x18,
+                            0x20, 0x20, 0x30,
+                            0x28, 0x18, 0x38,
+                            0x18, 0x08, 0x28,
+                        },
+                        new byte[] { // Flash | Foreground | Green
+                            0x30, 0x20, 0x20,
+                            0x3A, 0x2A, 0x1A,
+                            0x2A, 0x1A, 0x0A,
+                            0x20, 0x30, 0x20,
+                            0x1A, 0x3A, 0x2A,
+                            0x0A, 0x2A, 0x1A,
+                            0x20, 0x20, 0x30,
+                            0x2A, 0x1A, 0x3A,
+                            0x1A, 0x0A, 0x2A,
+                        },
+                        new byte[] { // Flash | Foreground | Turquoise
+                            0x30, 0x20, 0x20,
+                            0x3b, 0x2b, 0x1b,
+                            0x2b, 0x1b, 0x0b,
+                            0x20, 0x30, 0x20,
+                            0x1b, 0x3b, 0x2b,
+                            0x0b, 0x2b, 0x1b,
+                            0x20, 0x20, 0x30,
+                            0x2b, 0x1b, 0x3b,
+                            0x1b, 0x0b, 0x2b,
+                        },
+                        new byte[] { // Flash | Foreground | Black and Red
+                            0x30, 0x20, 0x20,
+                            0x1d, 0x1d, 0x1d,
+                            0x10, 0x00, 0x07,
+                            0x20, 0x30, 0x20,
+                            0x1d, 0x1d, 0x1d,
+                            0x07, 0x10, 0x00,
+                            0x20, 0x20, 0x30,
+                            0x1d, 0x1d, 0x1d,
+                            0x00, 0x07, 0x10,
+                        },
+                    }
+                },
+                // TODO: Comment later, missing a color in boss corridor
+                new ColorSet() {
+                    addresses = new int[] { 0x01fe13, 0x01fe14, 0x03b63a, 0x03b63b, 0x03b642, 0x03b643, 0x03b646, 0x03b647, 0x03b64a, 0x03b64b, 0x03b64e, 0x03b64f, 0x039188, 0x039189, 0x03918c, 0x03918d, },
+                    ColorBytes = new List<byte[]>()
+                    {
+                        // Clash | Border1 | Default
+                        new byte[] { 0x39,0x18,0x39,0x18,0x39,0x18,0x39,0x18,0x39,0x18,0x39,0x18,0x39,0x18,0x39,0x18,},
 
+                        // Clash | Border1 | Blue
+                        new byte[] { 0x11,0x01,0x11,0x01,0x11,0x01,0x11,0x01,0x11,0x01,0x11,0x01,0x11,0x01,0x11,0x01,},
 
-            ColorSet heat_background = new ColorSet()
-            {
-                addresses = new int[,] { { 0x3e3b, 0x3e4b, 0x3e5b },
-                                         { 0x3e3c, 0x3e4c, 0x3e5c },
-                                         { 0x3e3d, 0x3e4d, 0x3e5d } },
-            };
-            heat_background.ColorBytes.Add(new byte[,]
-                { // Heat | Background | Default Red
-                    { 0x16, 0x16, 0x16 },
-                    { 0x05, 0x05, 0x05 },
-                    { 0x07, 0x07, 0x07 },
-                });
-            heat_background.ColorBytes.Add(new byte[,]
-                { // Heat | Background | Purple 
-                    { 0x14, 0x14, 0x14 },
-                    { 0x04, 0x04, 0x04 },
-                    { 0x03, 0x03, 0x03 },
-                });
+                        // Clash | Border1 | Orange
+                        new byte[] { 0x27,0x16,0x27,0x16,0x27,0x16,0x27,0x16,0x27,0x16,0x27,0x16,0x27,0x16,0x27,0x16,},
 
-            heat_background.ColorBytes.Add(new byte[,]
-                { // Heat | Background | Gold Gray 
-                    { 0x2d, 0x2d, 0x2d },
-                    { 0x18, 0x18, 0x18 },
-                    { 0x08, 0x08, 0x08 },
-                });
-            heat_background.ColorBytes.Add(new byte[,]
-                { // Heat | Background | Deep Blue 
-                    { 0x0c, 0x0c, 0x0c },
-                    { 0x01, 0x01, 0x01 },
-                    { 0x12, 0x12, 0x12 },
-                });
-            heat_background.ColorBytes.Add(new byte[,]
-                { // Heat | Background | Dark Green
-                    { 0x0b, 0x0b, 0x0b },
-                    { 0x1d, 0x1d, 0x1d },
-                    { 0x09, 0x09, 0x09 },
-                });
+                        // Clash | Border1 | Green
+                        new byte[] { 0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,},
 
+                        // Clash | Border1 | Red Black
+                        new byte[] { 0x0f,0x06,0x0f,0x06,0x0f,0x06,0x0f,0x06,0x0f,0x06,0x0f,0x06,0x0f,0x06,0x0f,0x06,},
+                    }
+                },
+                new ColorSet()
+                {
+                    addresses = new int[] { 0x01fe15,0x01fe17,0x03b63c,0x03b644,0x03b648,0x03b64c,0x03b650,},
+                    ColorBytes = new List<byte[]>()
+                    {
+                        // Clash | Background | Default
+                        new byte[] { 0x12,0x12,0x01,0x01,0x0f,0x0f,0x0f,},
+                        // Clash | Background | Yellow
+                        new byte[] { 0x28,0x28,0x08,0x08,0x0F,0x0F,0x0F,},
+                        // Clash | Background | Orange
+                        new byte[] { 0x16,0x16,0x06,0x06,0x0F,0x0F,0x0F,},
+                        // Clash | Background | Green
+                        new byte[] { 0x2b,0x2b,0x1b,0x1b,0x0F,0x0F,0x0F,},
+                        // Clash | Background | Purple
+                        new byte[] { 0x24,0x24,0x04,0x04,0x0F,0x0F,0x0F,}
+                    }
+                },
+                new ColorSet() {
+                    addresses = new int[] { 0x01fe18,0x01fe19, },
+                    ColorBytes = new List<byte[]>() {
+                        // Clash | Doodads | Default
+                        new byte[] { 0x27,0x20,},
+                        // Clash | Doodads | Green
+                        new byte[] { 0x1A,0x20,},
+                        // Clash | Doodads | Teal
+                        new byte[] { 0x1C,0x20,},
+                        // Clash | Doodads | Purple
+                        new byte[] { 0x13,0x20,},
+                        // Clash | Doodads | Red
+                        new byte[] { 0x05,0x20,},
+                        // Clash | Doodads | Gray
+                        new byte[] { 0x00,0x20,},
+                    }
+                },
+                new ColorSet() {
+                    addresses = new int[] { 0xbe13, 0xbe14, },
+                    ColorBytes = new List<byte[]>() {
+                        // Wood | Leaves | Default
+                        new byte[] { 0x29,0x19,},
+                        // Wood | Leaves | Blue
+                        new byte[] { 0x11,0x01,},
+                        // Wood | Leaves | Red
+                        new byte[] { 0x16,0x06,},
+                    }
+                },
 
-            ColorSet heat_foreground = new ColorSet()
-            {
-                addresses = new int[,] { { 0x3e33, 0x3e43, 0x3e53 },
-                                         { 0x3e34, 0x3e44, 0x3e54 },
-                                         { 0x3e35, 0x3e45, 0x3e55 } },
-            };
-            heat_foreground.ColorBytes.Add(new byte[,]
-                { // Heat | Foreground | Default Pink
-                    { 0x36, 0x36, 0x36 },
-                    { 0x26, 0x26, 0x26 },
-                    { 0x15, 0x15, 0x15 },
-                });
-            heat_foreground.ColorBytes.Add(new byte[,]
-                { // Heat | Foreground | Purple 
-                    { 0x34, 0x34, 0x34 },
-                    { 0x24, 0x24, 0x24 },
-                    { 0x13, 0x13, 0x13 },
-                });
-            heat_foreground.ColorBytes.Add(new byte[,]
-                { // Heat | Foreground | Light Green 
-                    { 0x3a, 0x3a, 0x3a },
-                    { 0x2a, 0x2a, 0x2a },
-                    { 0x19, 0x19, 0x19 },
-                });
-            heat_foreground.ColorBytes.Add(new byte[,]
-                { // Heat | Foreground | Light Blue 
-                    { 0x32, 0x32, 0x32 },
-                    { 0x22, 0x22, 0x22 },
-                    { 0x11, 0x11, 0x11 },
-                });
+                new ColorSet() {
+                    addresses = new int[] { 0xbe17, 0xbe18, },
+                    ColorBytes = new List<byte[]>() {
+                        // Wood | Trunk | Default
+                        new byte[] { 0x28, 0x18 },
+                        // Wood | Trunk | Purple
+                        new byte[] { 0x23, 0x13 },
+                        // Wood | Trunk | Pink
+                        new byte[] { 0x25, 0x15 },
+                        // Wood | Trunk | Orange
+                        new byte[] { 0x27, 0x17 },
+                        // Wood | Trunk | Green
+                        new byte[] { 0x2A, 0x1A },
+                        // Wood | Trunk | Teal
+                        new byte[] { 0x2C, 0x1C },
+                    }
+                },
 
-            
-            ColorSet heat_foreground2 = new ColorSet()
-            {
-                addresses = new int[,] { { 0x3e37, 0x3e47, 0x3e57 },
-                                         { 0x3e38, 0x3e48, 0x3e58 },
-                                         { 0x3e39, 0x3e49, 0x3e59 } },
-            };
-            heat_foreground2.ColorBytes.Add(new byte[,]
-                { // Heat | Foreground2 | Default Light Gray
-                    { 0x30, 0x30, 0x30 },
-                    { 0x10, 0x10, 0x10 },
-                    { 0x00, 0x00, 0x00 },
-                });
-            heat_foreground2.ColorBytes.Add(new byte[,]
-                { // Heat | Foreground2 | Light Orange
-                    { 0x30, 0x30, 0x30 },
-                    { 0x37, 0x37, 0x37 },
-                    { 0x27, 0x27, 0x27 },
-                });
-            heat_foreground2.ColorBytes.Add(new byte[,]
-                { // Heat | Foreground2 | Light Blue
-                    { 0x30, 0x30, 0x30 },
-                    { 0x31, 0x31, 0x31 },
-                    { 0x21, 0x21, 0x21 },
-                });
-            heat_foreground2.ColorBytes.Add(new byte[,]
-                { // Heat | Foreground2 | Dark
-                    { 0x10, 0x10, 0x10 },
-                    { 0x00, 0x00, 0x00 },
-                    { 0x08, 0x08, 0x08 },
-                });
+                new ColorSet() {
+                    addresses = new int[] { 0xbe1b,0xbe1c,0xbe1d,},
+                    ColorBytes = new List<byte[]>() {
+                        // Wood | Floor | Default
+                        new byte[] { 0x27,0x17,0x07,},
+                        // Wood | Floor | Yellow
+                        new byte[] { 0x28,0x18,0x08,},
+                        // Wood | Floor | Green
+                        new byte[] { 0x2a,0x1a,0x0a,},
+                        // Wood | Floor | Teal
+                        new byte[] { 0x2c,0x1c,0x0c,},
+                        // Wood | Floor | Purple
+                        new byte[] { 0x23,0x13,0x03,},
+                        // Wood | Floor | Gray
+                        new byte[] { 0x20,0x10,0x0f,},
+                    }
+                },
 
-            ColorSet airPlatforms = new ColorSet()
-            {
-                addresses = new int[,] { { 0x7e37, 0x7e47, 0x7e57, 0x7e67 },
-                                         { 0x7e38, 0x7e48, 0x7e58, 0x7e68 },
-                                         { 0x7e39, 0x7e49, 0x7e59, 0x7e69 } },
-            };
-            airPlatforms.ColorBytes.Add(new byte[,]
-                { // Air | Platforms | Default
-                    { 0x30, 0x30, 0x30, 0x30 },
-                    { 0x15, 0x15, 0x15, 0x15 },
-                    { 0x0F, 0x0F, 0x0F, 0x0F },
-                });
-            airPlatforms.ColorBytes.Add(new byte[,]
-                { // Air | Platforms | Orange
-                    { 0x30, 0x30, 0x30, 0x30 },
-                    { 0x16, 0x16, 0x16, 0x16 },
-                    { 0x0F, 0x0F, 0x0F, 0x0F },
-                });
-            airPlatforms.ColorBytes.Add(new byte[,]
-                { // Air | Platforms | Yellow
-                    { 0x30, 0x30, 0x30, 0x30 },
-                    { 0x28, 0x28, 0x28, 0x28 },
-                    { 0x0F, 0x0F, 0x0F, 0x0F },
-                });
-            airPlatforms.ColorBytes.Add(new byte[,]
-                { // Air | Platforms | Green
-                    { 0x30, 0x30, 0x30, 0x30 },
-                    { 0x19, 0x19, 0x19, 0x19 },
-                    { 0x0F, 0x0F, 0x0F, 0x0F },
-                });
-            airPlatforms.ColorBytes.Add(new byte[,]
-                { // Air | Platforms | Blue
-                    { 0x30, 0x30, 0x30, 0x30 },
-                    { 0x22, 0x22, 0x22, 0x22 },
-                    { 0x0F, 0x0F, 0x0F, 0x0F },
-                });
-            
-            ColorSet airClouds = new ColorSet()
-            {
-                addresses = new int[,] { { 0x7e33, 0x7e43, 0x7e53, 0x7e63 },
-                                         { 0x7e34, 0x7e44, 0x7e54, 0x7e64 },
-                                         { 0x7e35, 0x7e45, 0x7e55, 0x7e65 } },
-            };
-            airClouds.ColorBytes.Add(new byte[,]
-                { // Air | Clouds | Default
-                    { 0x21, 0x31, 0x30, 0x31 },
-                    { 0x31, 0x30, 0x30, 0x30 },
-                    { 0x30, 0x30, 0x30, 0x30 },
-                });
-            airClouds.ColorBytes.Add(new byte[,]
-                { // Air | Clouds | Light Gray Dark Red
-                    { 0x10, 0x00, 0x07, 0x00 },
-                    { 0x10, 0x10, 0x00, 0x10 },
-                    { 0x10, 0x10, 0x10, 0x10 },
-                });
-            
-            ColorSet airSky = new ColorSet()
-            {
-                // $0366 only
-                addresses = new int[,] { { 0x7e22 } },
-            };
-            // Air | Sky | Default
-            airSky.ColorBytes.Add(new byte[,] { { 0x21 }, });
-            // Air | Sky | Pink
-            airSky.ColorBytes.Add(new byte[,] { { 0x23 }, });
-            // Air | Sky | Dark Orange
-            airSky.ColorBytes.Add(new byte[,] { { 0x26 }, });
-            // Air | Sky | Light Orange
-            airSky.ColorBytes.Add(new byte[,] { { 0x27 }, });
-            // Air | Sky | Yellow
-            airSky.ColorBytes.Add(new byte[,] { { 0x28 }, });
-            // Air | Sky | Light Green
-            airSky.ColorBytes.Add(new byte[,] { { 0x2B }, });
-            // Air | Sky | Blue
-            airSky.ColorBytes.Add(new byte[,] { { 0x01 }, });
-            // Air | Sky | Dark Red
-            airSky.ColorBytes.Add(new byte[,] { { 0x01 }, });
-            // Air | Sky | Dark Green
-            airSky.ColorBytes.Add(new byte[,] { { 0x0B }, });
-            // Air | Sky | Black
-            airSky.ColorBytes.Add(new byte[,] { { 0x1D }, });
+                new ColorSet() {
+                    addresses = new int[] { 0xbe1f, 0x03a118, },
+                    ColorBytes = new List<byte[]>() {
+                        // Wood | UndergroundBG | Default
+                        new byte[] { 0x08, 0x08 },
+                        // Wood | UndergroundBG | Dark Purple
+                        new byte[] { 0x04, 0x04 },
+                        // Wood | UndergroundBG | Dark Red
+                        new byte[] { 0x05, 0x05 },
+                        // Wood | UndergroundBG | Dark Green
+                        new byte[] { 0x09, 0x09 },
+                        // Wood | UndergroundBG | Dark Teal
+                        new byte[] { 0x0b, 0x0b },
+                        // Wood | UndergroundBG | Dark Blue1
+                        new byte[] { 0x0c, 0x0c },
+                        // Wood | UndergroundBG | Dark Blue2
+                        new byte[] { 0x01, 0x01 },
+                    }
+                },
 
-            // Flash RAM
-            List<int> ramFlash_FG1 = new List<int>() { 0x0378, 0x0388, 0x0398 };
-            List<int> ramFlash_FG2 = new List<int>() { 0x0379, 0x0389, 0x0399 };
-            List<int> ramFlash_BG1 = new List<int>() { 0x037b, 0x038b, 0x039b };
-            List<int> ramFlash_BG2 = new List<int>() { 0x037c, 0x038c, 0x039c };
-            List<int> ramFlash_BG3 = new List<int>() { 0x037d, 0x038d, 0x039d };
-            ColorSet flashBG = new ColorSet()
-            {
-                addresses = new int[,] { { 0x017e34, 0x017e44, 0x017e54 } ,
-                                         { 0x017e35, 0x017e45, 0x017e55 } }
-            };
-            flashBG.ColorBytes.Add(new byte[,]
-                { // Flash | Background | Default
-                    { 0x12, 0x12, 0x12 },
-                    { 0x02, 0x02, 0x02 },
-                });
-            flashBG.ColorBytes.Add(new byte[,]
-                { // Flash | Background | Magenta
-                    { 0x14, 0x14, 0x14 },
-                    { 0x04, 0x04, 0x04 },
-                });
-            flashBG.ColorBytes.Add(new byte[,]
-                { // Flash | Background | Orange
-                    { 0x16, 0x16, 0x16 },
-                    { 0x06, 0x06, 0x06 },
-                });
-            flashBG.ColorBytes.Add(new byte[,]
-                { // Flash | Background | Yellow
-                    { 0x18, 0x18, 0x18 },
-                    { 0x08, 0x08, 0x08 },
-                });
-            flashBG.ColorBytes.Add(new byte[,]
-                { // Flash | Background | Green
-                    { 0x1a, 0x1a, 0x1a },
-                    { 0x0a, 0x0a, 0x0a },
-                });
-            flashBG.ColorBytes.Add(new byte[,]
-                { // Flash | Background | Black
-                    { 0x00, 0x00, 0x00 },
-                    { 0x1d, 0x1d, 0x1d },
-                });
-            ColorSet flashFG = new ColorSet()
-            {
-                // Note: 3 color sets are used for the flashing blocks.
-                // I've kept them grouped here for common color themes.
-                addresses = new int[,] { { 0x017e37, 0x017e47, 0x017e57 } ,
-                                         { 0x017e38, 0x017e48, 0x017e58 } ,
-                                         { 0x017e39, 0x017e49, 0x017e59 } ,
-                                         { 0x017e3b, 0x017e4b, 0x017e5b } ,
-                                         { 0x017e3c, 0x017e4c, 0x017e5c } ,
-                                         { 0x017e3d, 0x017e4d, 0x017e5d } ,
-                                         { 0x017e3f, 0x017e4f, 0x017e5f } ,
-                                         { 0x017e40, 0x017e50, 0x017e60 } ,
-                                         { 0x017e41, 0x017e51, 0x017e61 } }
-            };
-
-            flashFG.ColorBytes.Add(new byte[,]
-                { // Flash | Foreground | Default
-                    { 0x30, 0x20, 0x20 },
-                    { 0x31, 0x21, 0x21 },
-                    { 0x2C, 0x11, 0x11 },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x21, 0x31, 0x21 },
-                    { 0x11, 0x2C, 0x11 },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x21, 0x21, 0x31 },
-                    { 0x11, 0x11, 0x2c },
-                });
-            flashFG.ColorBytes.Add(new byte[,]
-                { // Flash | Foreground | Magenta
-                    { 0x30, 0x20, 0x20 },
-                    { 0x33, 0x23, 0x23 },
-                    { 0x24, 0x13, 0x13 },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x23, 0x33, 0x23 },
-                    { 0x13, 0x24, 0x13 },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x23, 0x23, 0x33 },
-                    { 0x13, 0x13, 0x24 },
-                });
-
-            flashFG.ColorBytes.Add(new byte[,]
-                { // Flash | Foreground | Orange
-                    { 0x30, 0x20, 0x20 },
-                    { 0x36, 0x26, 0x16 },
-                    { 0x26, 0x16, 0x06 },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x16, 0x36, 0x26 },
-                    { 0x06, 0x26, 0x16 },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x26, 0x16, 0x36 },
-                    { 0x16, 0x06, 0x26 },
-                });
-
-            flashFG.ColorBytes.Add(new byte[,]
-                { // Flash | Foreground | Yellow
-                    { 0x30, 0x20, 0x20 },
-                    { 0x38, 0x28, 0x18 },
-                    { 0x28, 0x18, 0x08 },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x18, 0x38, 0x28 },
-                    { 0x08, 0x28, 0x18 },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x28, 0x18, 0x38 },
-                    { 0x18, 0x08, 0x28 },
-                });
-
-            flashFG.ColorBytes.Add(new byte[,]
-                { // Flash | Foreground | Green
-                    { 0x30, 0x20, 0x20 },
-                    { 0x3A, 0x2A, 0x1A },
-                    { 0x2A, 0x1A, 0x0A },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x1A, 0x3A, 0x2A },
-                    { 0x0A, 0x2A, 0x1A },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x2A, 0x1A, 0x3A },
-                    { 0x1A, 0x0A, 0x2A },
-                });
-
-            flashFG.ColorBytes.Add(new byte[,]
-                { // Flash | Foreground | Turquoise
-                    { 0x30, 0x20, 0x20 },
-                    { 0x3b, 0x2b, 0x1b },
-                    { 0x2b, 0x1b, 0x0b },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x1b, 0x3b, 0x2b },
-                    { 0x0b, 0x2b, 0x1b },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x2b, 0x1b, 0x3b },
-                    { 0x1b, 0x0b, 0x2b },
-                });
-
-            flashFG.ColorBytes.Add(new byte[,]
-                { // Flash | Foreground | Black and Red
-                    { 0x30, 0x20, 0x20 },
-                    { 0x1d, 0x1d, 0x1d },
-                    { 0x10, 0x00, 0x07 },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x1d, 0x1d, 0x1d },
-                    { 0x07, 0x10, 0x00 },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x1d, 0x1d, 0x1d },
-                    { 0x00, 0x07, 0x10 },
-                });
-
-            // TODO: Comment later, missing a color in boss corridor
-            ColorSet clashForeground = new ColorSet()
-            {
-                addresses = new int[,] { { 0x01fe13 },
-                                         { 0x01fe14 },
-                                         { 0x03b63a },
-                                         { 0x03b63b },
-                                         { 0x03b642 },
-                                         { 0x03b643 },
-                                         { 0x03b646 },
-                                         { 0x03b647 },
-                                         { 0x03b64a },
-                                         { 0x03b64b },
-                                         { 0x03b64e },
-                                         { 0x03b64f },
-                                         { 0x039188 },
-                                         { 0x039189 },
-                                         { 0x03918c },
-                                         { 0x03918d },
-                }
-            };
-            // Clash | Border1 | Default
-            clashForeground.ColorBytes.Add(new byte[,] { { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },});
-
-            // Clash | Border1 | Blue
-            clashForeground.ColorBytes.Add(new byte[,] { { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },});
-
-            // Clash | Border1 | Orange
-            clashForeground.ColorBytes.Add(new byte[,] { { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },});
-
-            // Clash | Border1 | Green
-            clashForeground.ColorBytes.Add(new byte[,] { { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },});
-
-            // Clash | Border1 | Red Black
-            clashForeground.ColorBytes.Add(new byte[,] { { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },});
-
-            ColorSet clashBG = new ColorSet()
-            {
-                addresses = new int[,] { { 0x01fe15 },
-                                         { 0x01fe17 },
-                                         { 0x03b63c },
-                                         { 0x03b644 },
-                                         { 0x03b648 },
-                                         { 0x03b64c },
-                                         { 0x03b650 },
+                new ColorSet() {
+                    addresses = new int[] { 0xbe15,0xbe19,},
+                    ColorBytes = new List<byte[]>() {
+                        // Wood | SkyBG | Default
+                        new byte[] { 0x2c, 0x2c },
+                        // Wood | SkyBG | Light Green
+                        new byte[] { 0x2a,0x2a },
+                        // Wood | SkyBG | Blue
+                        new byte[] { 0x12,0x12 },
+                        // Wood | SkyBG | Dark Purple
+                        new byte[] { 0x03,0x03 },
+                        // Wood | SkyBG | Dark Red
+                        new byte[] { 0x05,0x05 },
+                        // Wood | SkyBG | Light Yellow
+                        new byte[] { 0x38,0x38 },
+                        // Wood | SkyBG | Black
+                        new byte[] { 0x0f,0x0f },
+                    }
                 },
             };
-            // Clash | Background | Default
-            clashBG.ColorBytes.Add(new byte[,] { { 0x12 },
-                                                 { 0x12 },
-                                                 { 0x01 },
-                                                 { 0x01 },
-                                                 { 0x0f },
-                                                 { 0x0f },
-                                                 { 0x0f },
-            });
-            // Clash | Background | Yellow
-            clashBG.ColorBytes.Add(new byte[,] { { 0x28 },
-                                                 { 0x28 },
-                                                 { 0x08 },
-                                                 { 0x08 },
-                                                 { 0x0F },
-                                                 { 0x0F },
-                                                 { 0x0F },
-            });
-            // Clash | Background | Orange
-            clashBG.ColorBytes.Add(new byte[,] { { 0x16 },
-                                                 { 0x16 },
-                                                 { 0x06 },
-                                                 { 0x06 },
-                                                 { 0x0F },
-                                                 { 0x0F },
-                                                 { 0x0F },
-            });
-            // Clash | Background | Green
-            clashBG.ColorBytes.Add(new byte[,] { { 0x2b },
-                                                 { 0x2b },
-                                                 { 0x1b },
-                                                 { 0x1b },
-                                                 { 0x0F },
-                                                 { 0x0F },
-                                                 { 0x0F },
-            });
-            // Clash | Background | Purple
-            clashBG.ColorBytes.Add(new byte[,] { { 0x24 },
-                                                 { 0x24 },
-                                                 { 0x04 },
-                                                 { 0x04 },
-                                                 { 0x0F },
-                                                 { 0x0F },
-                                                 { 0x0F },
-            });
-
-            ColorSet clashDoodad = new ColorSet()
-            {
-                addresses = new int[,] { { 0x01fe18 },
-                                         { 0x01fe19 }, },
-            };
-            //// Clash | Doodads | Default
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x27 },
-                                                     { 0x20 },
-            });
-            // Clash | Doodads | Green
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x1A },
-                                                     { 0x20 },
-            });
-            // Clash | Doodads | Teal
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x1C },
-                                                     { 0x20 },
-            });
-            // Clash | Doodads | Purple
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x13 },
-                                                     { 0x20 },
-            });
-            // Clash | Doodads | Red
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x05 },
-                                                     { 0x20 },
-            });
-            // Clash | Doodads | Gray
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x00 },
-                                                     { 0x20 },
-            });
-
-            ColorSet woodLeaves = new ColorSet()
-            {
-                addresses = new int[,] { { 0xbe13 },
-                                         { 0xbe14 }, },
-            };
-            // Wood | Leaves | Default
-            woodLeaves.ColorBytes.Add(new byte[,] { { 0x29 },
-                                                    { 0x19 },
-            });
-            // Wood | Leaves | Blue
-            woodLeaves.ColorBytes.Add(new byte[,] { { 0x11 },
-                                                    { 0x01 },
-            });
-
-            ColorSet woodTrunks = new ColorSet()
-            {
-                addresses = new int[,] { { 0xbe17 },
-                                         { 0xbe18 }, },
-            };
-            // Wood | Trunk | Default
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x28 },
-                                                    { 0x18 },
-            });
-            // Wood | Trunk | Purple
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x23 }, { 0x13 }, });
-            // Wood | Trunk | Pink
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x25 }, { 0x15 }, });
-            // Wood | Trunk | Orange
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x27 }, { 0x17 }, });
-            // Wood | Trunk | Green
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x2A }, { 0x1A }, });
-            // Wood | Trunk | Teal
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x2C }, { 0x1C }, });
-
-            ColorSet woodFloor = new ColorSet()
-            {
-                addresses = new int[,] { { 0xbe1b },
-                                         { 0xbe1c },
-                                         { 0xbe1d },},
-            };
-            // Wood | Floor | Default
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x27 },
-                                                   { 0x17 },
-                                                   { 0x07 },
-            });
-            // Wood | Floor | Yellow
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x28 },
-                                                   { 0x18 },
-                                                   { 0x08 },
-            });
-            // Wood | Floor | Green
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x2a },
-                                                   { 0x1a },
-                                                   { 0x0a },
-            });
-            // Wood | Floor | Teal
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x2c },
-                                                   { 0x1c },
-                                                   { 0x0c },
-            });
-            // Wood | Floor | Purple
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x23 },
-                                                   { 0x13 },
-                                                   { 0x03 },
-            });
-            // Wood | Floor | Gray
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x20 },
-                                                   { 0x10 },
-                                                   { 0x0f },
-            });
-
-            ColorSet woodUndergroundBG = new ColorSet()
-            {
-                addresses = new int[,] { { 0xbe1f },
-                                         { 0x03a118 },},
-            };
-            // Wood | UndergroundBG | Default
-            //woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x08 }, { 0x08 },}); // TODO verify
-
-            // Wood | UndergroundBG | Dark Purple
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x04 }, { 0x04 }, });
-
-            // Wood | UndergroundBG | Dark Red
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x05 }, { 0x05 }, });
-
-            // Wood | UndergroundBG | Dark Green
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x09 }, { 0x09 }, });
-
-            // Wood | UndergroundBG | Dark Teal
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x0b }, { 0x0b }, });
-
-            // Wood | UndergroundBG | Dark Blue1
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x0c }, { 0x0c }, });
-
-            // Wood | UndergroundBG | Dark Blue2
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x01 }, { 0x01 }, });
-
-
-            ColorSet woodSkyBG = new ColorSet()
-            {
-                addresses = new int[,] { { 0xbe15 },
-                                         { 0xbe19 },},
-            };
-            // Wood | SkyBG | Default
-            //woodSkyBG.ColorBytes.Add(new byte[,] { { 0x2c }, { 0x2c }, });
-
-            // Wood | SkyBG | Light Green
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x2a }, { 0x2a }, });
-
-            // Wood | SkyBG | Blue
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x12 }, { 0x12 }, });
-
-            // Wood | SkyBG | Dark Purple
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x03 }, { 0x03 }, });
-
-            // Wood | SkyBG | Dark Red
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x05 }, { 0x05 }, });
-
-            // Wood | SkyBG | Light Yellow
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x38 }, { 0x38 }, });
-
-            // Wood | SkyBG | Black
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x0f }, { 0x0f }, });
 
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
-                heat_river.RandomizeAndWrite(stream, Random);
-                heat_background.RandomizeAndWrite(stream, Random);
-                heat_foreground.RandomizeAndWrite(stream, Random);
-                heat_foreground2.RandomizeAndWrite(stream, Random);
-                airClouds.RandomizeAndWrite(stream, Random);
-                airPlatforms.RandomizeAndWrite(stream, Random);
-                airSky.RandomizeAndWrite(stream, Random);
-                flashBG.RandomizeAndWrite(stream, Random);
-                flashFG.RandomizeAndWrite(stream, Random);
-                clashForeground.RandomizeAndWrite(stream, Random);
-                clashBG.RandomizeAndWrite(stream, Random);
-                clashDoodad.RandomizeAndWrite(stream, Random);
-                woodLeaves.RandomizeAndWrite(stream, Random);
-                woodTrunks.RandomizeAndWrite(stream, Random);
-                woodUndergroundBG.RandomizeAndWrite(stream, Random);
-                woodFloor.RandomizeAndWrite(stream, Random);
-                woodSkyBG.RandomizeAndWrite(stream, Random);
+                foreach (ColorSet set in colorSets)
+                {
+                    set.RandomizeAndWrite(stream, Random);
+                }
             }
         }
 
@@ -897,23 +641,23 @@ namespace MM2Randomizer
                     stream.WriteByte((byte)newWeaponOrder[i]);
                 }
 
-                //// Create a copy of the default weapon order table to be used by teleporter function
-                //// This is needed to fix teleporters breaking from the new weapon order.
-                //stream.Position = 0x03f2D0; // Unused space at end of bank
-                //stream.WriteByte(0x01);
-                //stream.WriteByte(0x02);
-                //stream.WriteByte(0x04);
-                //stream.WriteByte(0x08);
-                //stream.WriteByte(0x10);
-                //stream.WriteByte(0x20);
-                //stream.WriteByte(0x40);
-                //stream.WriteByte(0x80);
+                // Create a copy of the default weapon order table to be used by teleporter function
+                // This is needed to fix teleporters breaking from the new weapon order.
+                stream.Position = 0x03f2D0; // Unused space at end of bank
+                stream.WriteByte(0x01);
+                stream.WriteByte(0x02);
+                stream.WriteByte(0x04);
+                stream.WriteByte(0x08);
+                stream.WriteByte(0x10);
+                stream.WriteByte(0x20);
+                stream.WriteByte(0x40);
+                stream.WriteByte(0x80);
 
-                //// Change function to call $f2c0 instead of $c279 when looking up defeated refight boss to
-                //// get our default weapon table, fixing the teleporter softlock
-                //stream.Position = 0x038f3b;
-                //stream.WriteByte(0xc0);
-                //stream.WriteByte(0xf2);
+                // Change function to call $f2c0 instead of $c279 when looking up defeated refight boss to
+                // get our default weapon table, fixing the teleporter softlock
+                stream.Position = 0x03843b;
+                stream.WriteByte(0xc0);
+                stream.WriteByte(0xf2);
 
                 // Create table for which stage is selectable on the stage select screen (independent of it being blacked out)
                 stream.Position = 0x0346E1;

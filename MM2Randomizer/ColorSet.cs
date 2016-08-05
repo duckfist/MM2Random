@@ -7,13 +7,13 @@ namespace MM2Randomizer
 {
     public class ColorSet
     {
-        public int[,] addresses;
-        public List<byte[,]> ColorBytes;
+        public int[] addresses;
+        public List<byte[]> ColorBytes;
         public int Index; 
 
         public ColorSet()
         {
-            ColorBytes = new List<byte[,]>();
+            ColorBytes = new List<byte[]>();
             Index = 0;
         }
 
@@ -21,13 +21,10 @@ namespace MM2Randomizer
         {
             Index = rand.Next(ColorBytes.Count);
 
-            for (int i = 0; i < addresses.GetLength(0); i++)
+            for (int i = 0; i < addresses.Length; i++)
             {
-                for (int j = 0; j < addresses.GetLength(1); j++)
-                {
-                    stream.Position = addresses[i, j];
-                    stream.WriteByte(ColorBytes[Index][i,j]);
-                }
+                stream.Position = addresses[i];
+                stream.WriteByte(ColorBytes[Index][i]);
             }
         }
     }

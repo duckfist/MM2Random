@@ -70,6 +70,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ColorSet.cs" />
+    <Compile Include="Enums\EItemStageAddress.cs" />
+    <Compile Include="Enums\EMiscAddresses.cs" />
+    <Compile Include="Enums\ERMPortraitAddress.cs" />
+    <Compile Include="Enums\ERMStageClearAddress.cs" />
+    <Compile Include="Enums\ERMStageSelect.cs" />
+    <Compile Include="Enums\ERMStageWeapon.cs" />
+    <Compile Include="Enums\ERMWeaponAddress.cs" />
+    <Compile Include="Enums\ERMWeaponValue.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="RandomMM2.cs" />
     <Compile Include="StageFromSelect.cs" />

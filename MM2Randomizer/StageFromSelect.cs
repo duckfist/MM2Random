@@ -1,4 +1,6 @@
-﻿namespace MM2Randomizer
+﻿using MM2Randomizer.Enums;
+
+namespace MM2Randomizer
 {
     /// <summary>
     /// This object encapsulates the relevant ROM offsets for properties of each 
@@ -7,10 +9,10 @@
     public class StageFromSelect
     {
         public string PortraitName;
-        public int PortraitAddress;
+        public ERMPortraitAddress PortraitAddress;
         public int PortraitDestinationOriginal;
         public int PortraitDestinationNew;
-        public int StageClearAddress;
+        public ERMStageClearAddress StageClearAddress;
         public int StageClearDestinationOriginal;
         public int StageClearDestinationNew;
     }

@@ -170,27 +170,27 @@ namespace MM2Randomizer
             };
             heat_river.ColorBytes.Add(new byte[,]
                 { // Heat | River | Default Orange
-                    { 0x36, 0x26, 0x16 },
-                    { 0x26, 0x16, 0x36 },
-                    { 0x16, 0x36, 0x26 },
+                    { (byte) EColorsHex.Taupe, (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange },
+                    { (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange, (byte) EColorsHex.Taupe },
+                    { (byte) EColorsHex.Orange, (byte) EColorsHex.Taupe, (byte) EColorsHex.LightOrange },
                 });
             heat_river.ColorBytes.Add(new byte[,]
                 { // Heat | River | Green
-                    { 0x2a, 0x1a, 0x0a },
-                    { 0x1a, 0x0a, 0x2a },
-                    { 0x0a, 0x2a, 0x1a },
+                    { (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green, (byte) EColorsHex.ForestGreen },
+                    { (byte) EColorsHex.Green, (byte) EColorsHex.ForestGreen, (byte) EColorsHex.LightGreen },
+                    { (byte) EColorsHex.ForestGreen, (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green },
                 });
             heat_river.ColorBytes.Add(new byte[,]
                 { // Heat | River | Yellow
-                    { 0x28, 0x18, 0x08 },
-                    { 0x18, 0x08, 0x28 },
-                    { 0x08, 0x28, 0x18 },
+                    { (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod, (byte) EColorsHex.Brown },
+                    { (byte) EColorsHex.GoldenRod, (byte) EColorsHex.Brown, (byte) EColorsHex.Yellow },
+                    { (byte) EColorsHex.Brown, (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod },
                 });
             heat_river.ColorBytes.Add(new byte[,]
                 { // Heat | River | Purple
-                    { 0x24, 0x14, 0x04 },
-                    { 0x14, 0x04, 0x24 },
-                    { 0x04, 0x24, 0x14 },
+                    { (byte) EColorsHex.LightPink, (byte) EColorsHex.Magenta, (byte) EColorsHex.DarkMagenta },
+                    { (byte) EColorsHex.Magenta, (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.LightPink },
+                    { (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.LightPink, (byte) EColorsHex.Magenta },
                 });
 
 
@@ -202,34 +202,34 @@ namespace MM2Randomizer
             };
             heat_background.ColorBytes.Add(new byte[,]
                 { // Heat | Background | Default Red
-                    { 0x16, 0x16, 0x16 },
-                    { 0x05, 0x05, 0x05 },
-                    { 0x07, 0x07, 0x07 },
+                    { (byte) EColorsHex.Orange, (byte) EColorsHex.Orange, (byte) EColorsHex.Orange },
+                    { (byte) EColorsHex.Crimson, (byte) EColorsHex.Crimson, (byte) EColorsHex.Crimson },
+                    { (byte) EColorsHex.DarkRed, (byte) EColorsHex.DarkRed, (byte) EColorsHex.DarkRed },
                 });
             heat_background.ColorBytes.Add(new byte[,]
                 { // Heat | Background | Purple 
-                    { 0x14, 0x14, 0x14 },
-                    { 0x04, 0x04, 0x04 },
-                    { 0x03, 0x03, 0x03 },
+                    { (byte) EColorsHex.Magenta, (byte) EColorsHex.Magenta, (byte) EColorsHex.Magenta },
+                    { (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.DarkMagenta },
+                    { (byte) EColorsHex.RoyalPurple, (byte) EColorsHex.RoyalPurple, (byte) EColorsHex.RoyalPurple },
                 });
 
             heat_background.ColorBytes.Add(new byte[,]
                 { // Heat | Background | Gold Gray 
-                    { 0x2d, 0x2d, 0x2d },
-                    { 0x18, 0x18, 0x18 },
-                    { 0x08, 0x08, 0x08 },
+                    { (byte) EColorsHex.MediumGray, (byte) EColorsHex.MediumGray, (byte) EColorsHex.MediumGray },
+                    { (byte) EColorsHex.GoldenRod, (byte) EColorsHex.GoldenRod, (byte) EColorsHex.GoldenRod },
+                    { (byte) EColorsHex.Brown, (byte) EColorsHex.Brown, (byte) EColorsHex.Brown },
                 });
             heat_background.ColorBytes.Add(new byte[,]
                 { // Heat | Background | Deep Blue 
-                    { 0x0c, 0x0c, 0x0c },
-                    { 0x01, 0x01, 0x01 },
-                    { 0x12, 0x12, 0x12 },
+                    { (byte) EColorsHex.DarkTeal, (byte) EColorsHex.DarkTeal, (byte) EColorsHex.DarkTeal },
+                    { (byte) EColorsHex.RoyalBlue, (byte) EColorsHex.RoyalBlue, (byte) EColorsHex.RoyalBlue },
+                    { (byte) EColorsHex.Blue, (byte) EColorsHex.Blue, (byte) EColorsHex.Blue },
                 });
             heat_background.ColorBytes.Add(new byte[,]
                 { // Heat | Background | Dark Green
-                    { 0x0b, 0x0b, 0x0b },
-                    { 0x1d, 0x1d, 0x1d },
-                    { 0x09, 0x09, 0x09 },
+                    { (byte) EColorsHex.DarkGreen, (byte) EColorsHex.DarkGreen, (byte) EColorsHex.DarkGreen },
+                    { (byte) EColorsHex.Black3, (byte) EColorsHex.Black3, (byte) EColorsHex.Black3 },
+                    { (byte) EColorsHex.Kelp, (byte) EColorsHex.Kelp, (byte) EColorsHex.Kelp },
                 });
 
 
@@ -241,27 +241,27 @@ namespace MM2Randomizer
             };
             heat_foreground.ColorBytes.Add(new byte[,]
                 { // Heat | Foreground | Default Pink
-                    { 0x36, 0x36, 0x36 },
-                    { 0x26, 0x26, 0x26 },
-                    { 0x15, 0x15, 0x15 },
+                    { (byte) EColorsHex.Taupe, (byte) EColorsHex.Taupe, (byte) EColorsHex.Taupe },
+                    { (byte) EColorsHex.LightOrange, (byte) EColorsHex.LightOrange, (byte) EColorsHex.LightOrange },
+                    { (byte) EColorsHex.VioletRed, (byte) EColorsHex.VioletRed, (byte) EColorsHex.VioletRed },
                 });
             heat_foreground.ColorBytes.Add(new byte[,]
                 { // Heat | Foreground | Purple 
-                    { 0x34, 0x34, 0x34 },
-                    { 0x24, 0x24, 0x24 },
-                    { 0x13, 0x13, 0x13 },
+                    { (byte) EColorsHex.PastelPink, (byte) EColorsHex.PastelPink, (byte) EColorsHex.PastelPink },
+                    { (byte) EColorsHex.LightPink, (byte) EColorsHex.LightPink, (byte) EColorsHex.LightPink },
+                    { (byte) EColorsHex.Purple, (byte) EColorsHex.Purple, (byte) EColorsHex.Purple },
                 });
             heat_foreground.ColorBytes.Add(new byte[,]
                 { // Heat | Foreground | Light Green 
-                    { 0x3a, 0x3a, 0x3a },
-                    { 0x2a, 0x2a, 0x2a },
-                    { 0x19, 0x19, 0x19 },
+                    { (byte) EColorsHex.PastelGreen, (byte) EColorsHex.PastelGreen, (byte) EColorsHex.PastelGreen },
+                    { (byte) EColorsHex.LightGreen, (byte) EColorsHex.LightGreen, (byte) EColorsHex.LightGreen },
+                    { (byte) EColorsHex.Grass, (byte) EColorsHex.Grass, (byte) EColorsHex.Grass },
                 });
             heat_foreground.ColorBytes.Add(new byte[,]
                 { // Heat | Foreground | Light Blue 
-                    { 0x32, 0x32, 0x32 },
-                    { 0x22, 0x22, 0x22 },
-                    { 0x11, 0x11, 0x11 },
+                    { (byte) EColorsHex.PaleBlue, (byte) EColorsHex.PaleBlue, (byte) EColorsHex.PaleBlue },
+                    { (byte) EColorsHex.SoftBlue, (byte) EColorsHex.SoftBlue, (byte) EColorsHex.SoftBlue },
+                    { (byte) EColorsHex.MediumBlue, (byte) EColorsHex.MediumBlue, (byte) EColorsHex.MediumBlue },
                 });
 
             
@@ -273,27 +273,27 @@ namespace MM2Randomizer
             };
             heat_foreground2.ColorBytes.Add(new byte[,]
                 { // Heat | Foreground2 | Default Light Gray
-                    { 0x30, 0x30, 0x30 },
-                    { 0x10, 0x10, 0x10 },
-                    { 0x00, 0x00, 0x00 },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray },
+                    { (byte) EColorsHex.Gray, (byte) EColorsHex.Gray, (byte) EColorsHex.Gray },
                 });
             heat_foreground2.ColorBytes.Add(new byte[,]
                 { // Heat | Foreground2 | Light Orange
-                    { 0x30, 0x30, 0x30 },
-                    { 0x37, 0x37, 0x37 },
-                    { 0x27, 0x27, 0x27 },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.Beige, (byte) EColorsHex.Beige, (byte) EColorsHex.Beige },
+                    { (byte) EColorsHex.YellowOrange, (byte) EColorsHex.YellowOrange, (byte) EColorsHex.YellowOrange },
                 });
             heat_foreground2.ColorBytes.Add(new byte[,]
                 { // Heat | Foreground2 | Light Blue
-                    { 0x30, 0x30, 0x30 },
-                    { 0x31, 0x31, 0x31 },
-                    { 0x21, 0x21, 0x21 },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.PastelBlue, (byte) EColorsHex.PastelBlue, (byte) EColorsHex.PastelBlue },
+                    { (byte) EColorsHex.LightBlue, (byte) EColorsHex.LightBlue, (byte) EColorsHex.LightBlue },
                 });
             heat_foreground2.ColorBytes.Add(new byte[,]
                 { // Heat | Foreground2 | Dark
-                    { 0x10, 0x10, 0x10 },
-                    { 0x00, 0x00, 0x00 },
-                    { 0x08, 0x08, 0x08 },
+                    { (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray },
+                    { (byte) EColorsHex.Gray, (byte) EColorsHex.Gray, (byte) EColorsHex.Gray },
+                    { (byte) EColorsHex.Brown, (byte) EColorsHex.Brown, (byte) EColorsHex.Brown },
                 });
 
             ColorSet airPlatforms = new ColorSet()
@@ -304,33 +304,33 @@ namespace MM2Randomizer
             };
             airPlatforms.ColorBytes.Add(new byte[,]
                 { // Air | Platforms | Default
-                    { 0x30, 0x30, 0x30, 0x30 },
-                    { 0x15, 0x15, 0x15, 0x15 },
-                    { 0x0F, 0x0F, 0x0F, 0x0F },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.VioletRed, (byte) EColorsHex.VioletRed, (byte) EColorsHex.VioletRed, (byte) EColorsHex.VioletRed },
+                    { (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2 },
                 });
             airPlatforms.ColorBytes.Add(new byte[,]
                 { // Air | Platforms | Orange
-                    { 0x30, 0x30, 0x30, 0x30 },
-                    { 0x16, 0x16, 0x16, 0x16 },
-                    { 0x0F, 0x0F, 0x0F, 0x0F },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.Orange, (byte) EColorsHex.Orange, (byte) EColorsHex.Orange, (byte) EColorsHex.Orange },
+                    { (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2 },
                 });
             airPlatforms.ColorBytes.Add(new byte[,]
                 { // Air | Platforms | Yellow
-                    { 0x30, 0x30, 0x30, 0x30 },
-                    { 0x28, 0x28, 0x28, 0x28 },
-                    { 0x0F, 0x0F, 0x0F, 0x0F },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.Yellow, (byte) EColorsHex.Yellow, (byte) EColorsHex.Yellow, (byte) EColorsHex.Yellow },
+                    { (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2 },
                 });
             airPlatforms.ColorBytes.Add(new byte[,]
                 { // Air | Platforms | Green
-                    { 0x30, 0x30, 0x30, 0x30 },
-                    { 0x19, 0x19, 0x19, 0x19 },
-                    { 0x0F, 0x0F, 0x0F, 0x0F },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.Grass, (byte) EColorsHex.Grass, (byte) EColorsHex.Grass, (byte) EColorsHex.Grass },
+                    { (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2 },
                 });
             airPlatforms.ColorBytes.Add(new byte[,]
                 { // Air | Platforms | Blue
-                    { 0x30, 0x30, 0x30, 0x30 },
-                    { 0x22, 0x22, 0x22, 0x22 },
-                    { 0x0F, 0x0F, 0x0F, 0x0F },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.SoftBlue, (byte) EColorsHex.SoftBlue, (byte) EColorsHex.SoftBlue, (byte) EColorsHex.SoftBlue },
+                    { (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2 },
                 });
             
             ColorSet airClouds = new ColorSet()
@@ -341,15 +341,15 @@ namespace MM2Randomizer
             };
             airClouds.ColorBytes.Add(new byte[,]
                 { // Air | Clouds | Default
-                    { 0x21, 0x31, 0x30, 0x31 },
-                    { 0x31, 0x30, 0x30, 0x30 },
-                    { 0x30, 0x30, 0x30, 0x30 },
+                    { (byte) EColorsHex.LightBlue, (byte) EColorsHex.PastelBlue, (byte) EColorsHex.White, (byte) EColorsHex.PastelBlue },
+                    { (byte) EColorsHex.PastelBlue, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White },
                 });
             airClouds.ColorBytes.Add(new byte[,]
                 { // Air | Clouds | Light Gray Dark Red
-                    { 0x10, 0x00, 0x07, 0x00 },
-                    { 0x10, 0x10, 0x00, 0x10 },
-                    { 0x10, 0x10, 0x10, 0x10 },
+                    { (byte) EColorsHex.LightGray, (byte) EColorsHex.Gray, (byte) EColorsHex.DarkRed, (byte) EColorsHex.Gray },
+                    { (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray, (byte) EColorsHex.Gray, (byte) EColorsHex.LightGray },
+                    { (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray },
                 });
             
             ColorSet airSky = new ColorSet()
@@ -358,25 +358,25 @@ namespace MM2Randomizer
                 addresses = new int[,] { { 0x7e22 } },
             };
             // Air | Sky | Default
-            airSky.ColorBytes.Add(new byte[,] { { 0x21 }, });
+            airSky.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightBlue }, });
             // Air | Sky | Pink
-            airSky.ColorBytes.Add(new byte[,] { { 0x23 }, });
+            airSky.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightPurple }, });
             // Air | Sky | Dark Orange
-            airSky.ColorBytes.Add(new byte[,] { { 0x26 }, });
+            airSky.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightOrange }, });
             // Air | Sky | Light Orange
-            airSky.ColorBytes.Add(new byte[,] { { 0x27 }, });
+            airSky.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.YellowOrange }, });
             // Air | Sky | Yellow
-            airSky.ColorBytes.Add(new byte[,] { { 0x28 }, });
+            airSky.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Yellow }, });
             // Air | Sky | Light Green
-            airSky.ColorBytes.Add(new byte[,] { { 0x2B }, });
+            airSky.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Lime }, });
             // Air | Sky | Blue
-            airSky.ColorBytes.Add(new byte[,] { { 0x01 }, });
+            airSky.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.RoyalBlue }, });
             // Air | Sky | Dark Red
-            airSky.ColorBytes.Add(new byte[,] { { 0x01 }, });
+            airSky.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.RoyalBlue }, });
             // Air | Sky | Dark Green
-            airSky.ColorBytes.Add(new byte[,] { { 0x0B }, });
+            airSky.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.DarkGreen }, });
             // Air | Sky | Black
-            airSky.ColorBytes.Add(new byte[,] { { 0x1D }, });
+            airSky.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Black3 }, });
 
             // Flash RAM
             List<int> ramFlash_FG1 = new List<int>() { 0x0378, 0x0388, 0x0398 };
@@ -391,33 +391,33 @@ namespace MM2Randomizer
             };
             flashBG.ColorBytes.Add(new byte[,]
                 { // Flash | Background | Default
-                    { 0x12, 0x12, 0x12 },
-                    { 0x02, 0x02, 0x02 },
+                    { (byte) EColorsHex.Blue, (byte) EColorsHex.Blue, (byte) EColorsHex.Blue },
+                    { (byte) EColorsHex.DarkBlue, (byte) EColorsHex.DarkBlue, (byte) EColorsHex.DarkBlue},
                 });
             flashBG.ColorBytes.Add(new byte[,]
                 { // Flash | Background | Magenta
-                    { 0x14, 0x14, 0x14 },
-                    { 0x04, 0x04, 0x04 },
+                    { (byte) EColorsHex.Magenta, (byte) EColorsHex.Magenta, (byte) EColorsHex.Magenta },
+                    { (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.DarkMagenta },
                 });
             flashBG.ColorBytes.Add(new byte[,]
                 { // Flash | Background | Orange
-                    { 0x16, 0x16, 0x16 },
-                    { 0x06, 0x06, 0x06 },
+                    { (byte) EColorsHex.Orange, (byte) EColorsHex.Orange, (byte) EColorsHex.Orange },
+                    { (byte) EColorsHex.Red, (byte) EColorsHex.Red, (byte) EColorsHex.Red },
                 });
             flashBG.ColorBytes.Add(new byte[,]
                 { // Flash | Background | Yellow
-                    { 0x18, 0x18, 0x18 },
-                    { 0x08, 0x08, 0x08 },
+                    { (byte) EColorsHex.GoldenRod, (byte) EColorsHex.GoldenRod, (byte) EColorsHex.GoldenRod },
+                    { (byte) EColorsHex.Brown, (byte) EColorsHex.Brown, (byte) EColorsHex.Brown },
                 });
             flashBG.ColorBytes.Add(new byte[,]
                 { // Flash | Background | Green
-                    { 0x1a, 0x1a, 0x1a },
-                    { 0x0a, 0x0a, 0x0a },
+                    { (byte) EColorsHex.Green, (byte) EColorsHex.Green, (byte) EColorsHex.Green },
+                    { (byte) EColorsHex.ForestGreen, (byte) EColorsHex.ForestGreen, (byte) EColorsHex.ForestGreen },
                 });
             flashBG.ColorBytes.Add(new byte[,]
                 { // Flash | Background | Black
-                    { 0x00, 0x00, 0x00 },
-                    { 0x1d, 0x1d, 0x1d },
+                    { (byte) EColorsHex.Gray, (byte) EColorsHex.Gray, (byte) EColorsHex.Gray },
+                    { (byte) EColorsHex.Black3, (byte) EColorsHex.Black3, (byte) EColorsHex.Black3 },
                 });
             ColorSet flashFG = new ColorSet()
             {
@@ -436,92 +436,92 @@ namespace MM2Randomizer
 
             flashFG.ColorBytes.Add(new byte[,]
                 { // Flash | Foreground | Default
-                    { 0x30, 0x20, 0x20 },
-                    { 0x31, 0x21, 0x21 },
-                    { 0x2C, 0x11, 0x11 },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x21, 0x31, 0x21 },
-                    { 0x11, 0x2C, 0x11 },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x21, 0x21, 0x31 },
-                    { 0x11, 0x11, 0x2c },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.PastelBlue, (byte) EColorsHex.LightBlue, (byte) EColorsHex.LightBlue },
+                    { (byte) EColorsHex.LightCyan, (byte) EColorsHex.MediumBlue, (byte) EColorsHex.MediumBlue },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.LightBlue, (byte) EColorsHex.PastelBlue, (byte) EColorsHex.LightBlue },
+                    { (byte) EColorsHex.MediumBlue, (byte) EColorsHex.LightCyan, (byte) EColorsHex.MediumBlue },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.LightBlue, (byte) EColorsHex.LightBlue, (byte) EColorsHex.PastelBlue },
+                    { (byte) EColorsHex.MediumBlue, (byte) EColorsHex.MediumBlue, (byte) EColorsHex.LightCyan },
                 });
             flashFG.ColorBytes.Add(new byte[,]
                 { // Flash | Foreground | Magenta
-                    { 0x30, 0x20, 0x20 },
-                    { 0x33, 0x23, 0x23 },
-                    { 0x24, 0x13, 0x13 },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x23, 0x33, 0x23 },
-                    { 0x13, 0x24, 0x13 },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x23, 0x23, 0x33 },
-                    { 0x13, 0x13, 0x24 },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.PastelPurple, (byte) EColorsHex.LightPurple, (byte) EColorsHex.LightPurple },
+                    { (byte) EColorsHex.LightPink, (byte) EColorsHex.Purple, (byte) EColorsHex.Purple },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.LightPurple, (byte) EColorsHex.PastelPurple, (byte) EColorsHex.LightPurple },
+                    { (byte) EColorsHex.Purple, (byte) EColorsHex.LightPink, (byte) EColorsHex.Purple },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.LightPurple, (byte) EColorsHex.LightPurple, (byte) EColorsHex.PastelPurple },
+                    { (byte) EColorsHex.Purple, (byte) EColorsHex.Purple, (byte) EColorsHex.LightPink },
                 });
 
             flashFG.ColorBytes.Add(new byte[,]
                 { // Flash | Foreground | Orange
-                    { 0x30, 0x20, 0x20 },
-                    { 0x36, 0x26, 0x16 },
-                    { 0x26, 0x16, 0x06 },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x16, 0x36, 0x26 },
-                    { 0x06, 0x26, 0x16 },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x26, 0x16, 0x36 },
-                    { 0x16, 0x06, 0x26 },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.Taupe, (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange },
+                    { (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange, (byte) EColorsHex.Red },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.Orange, (byte) EColorsHex.Taupe, (byte) EColorsHex.LightOrange },
+                    { (byte) EColorsHex.Red, (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange, (byte) EColorsHex.Taupe },
+                    { (byte) EColorsHex.Orange, (byte) EColorsHex.Red, (byte) EColorsHex.LightOrange },
                 });
 
             flashFG.ColorBytes.Add(new byte[,]
                 { // Flash | Foreground | Yellow
-                    { 0x30, 0x20, 0x20 },
-                    { 0x38, 0x28, 0x18 },
-                    { 0x28, 0x18, 0x08 },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x18, 0x38, 0x28 },
-                    { 0x08, 0x28, 0x18 },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x28, 0x18, 0x38 },
-                    { 0x18, 0x08, 0x28 },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.PastelYellow, (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod },
+                    { (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod, (byte) EColorsHex.Brown },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.GoldenRod, (byte) EColorsHex.PastelYellow, (byte) EColorsHex.Yellow },
+                    { (byte) EColorsHex.Brown, (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod, (byte) EColorsHex.PastelYellow },
+                    { (byte) EColorsHex.GoldenRod, (byte) EColorsHex.Brown, (byte) EColorsHex.Yellow },
                 });
 
             flashFG.ColorBytes.Add(new byte[,]
                 { // Flash | Foreground | Green
-                    { 0x30, 0x20, 0x20 },
-                    { 0x3A, 0x2A, 0x1A },
-                    { 0x2A, 0x1A, 0x0A },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x1A, 0x3A, 0x2A },
-                    { 0x0A, 0x2A, 0x1A },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x2A, 0x1A, 0x3A },
-                    { 0x1A, 0x0A, 0x2A },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.PastelGreen, (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green },
+                    { (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green, (byte) EColorsHex.ForestGreen },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.Green, (byte) EColorsHex.PastelGreen, (byte) EColorsHex.LightGreen },
+                    { (byte) EColorsHex.ForestGreen, (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green, (byte) EColorsHex.PastelGreen },
+                    { (byte) EColorsHex.Green, (byte) EColorsHex.ForestGreen, (byte) EColorsHex.LightGreen },
                 });
 
             flashFG.ColorBytes.Add(new byte[,]
                 { // Flash | Foreground | Turquoise
-                    { 0x30, 0x20, 0x20 },
-                    { 0x3b, 0x2b, 0x1b },
-                    { 0x2b, 0x1b, 0x0b },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x1b, 0x3b, 0x2b },
-                    { 0x0b, 0x2b, 0x1b },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x2b, 0x1b, 0x3b },
-                    { 0x1b, 0x0b, 0x2b },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.PastelCyan, (byte) EColorsHex.Lime, (byte) EColorsHex.Moss },
+                    { (byte) EColorsHex.Lime, (byte) EColorsHex.Moss, (byte) EColorsHex.DarkGreen },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.Moss, (byte) EColorsHex.PastelCyan, (byte) EColorsHex.Lime },
+                    { (byte) EColorsHex.DarkGreen, (byte) EColorsHex.Lime, (byte) EColorsHex.Moss },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.Lime, (byte) EColorsHex.Moss, (byte) EColorsHex.PastelCyan },
+                    { (byte) EColorsHex.Moss, (byte) EColorsHex.DarkGreen, (byte) EColorsHex.Lime },
                 });
 
             flashFG.ColorBytes.Add(new byte[,]
                 { // Flash | Foreground | Black and Red
-                    { 0x30, 0x20, 0x20 },
-                    { 0x1d, 0x1d, 0x1d },
-                    { 0x10, 0x00, 0x07 },
-                    { 0x20, 0x30, 0x20 },
-                    { 0x1d, 0x1d, 0x1d },
-                    { 0x07, 0x10, 0x00 },
-                    { 0x20, 0x20, 0x30 },
-                    { 0x1d, 0x1d, 0x1d },
-                    { 0x00, 0x07, 0x10 },
+                    { (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.Black3, (byte) EColorsHex.Black3, (byte) EColorsHex.Black3 },
+                    { (byte) EColorsHex.LightGray, (byte) EColorsHex.Gray, (byte) EColorsHex.DarkRed },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite },
+                    { (byte) EColorsHex.Black3, (byte) EColorsHex.Black3, (byte) EColorsHex.Black3 },
+                    { (byte) EColorsHex.DarkRed, (byte) EColorsHex.LightGray, (byte) EColorsHex.Gray },
+                    { (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White },
+                    { (byte) EColorsHex.Black3, (byte) EColorsHex.Black3, (byte) EColorsHex.Black3 },
+                    { (byte) EColorsHex.Gray, (byte) EColorsHex.DarkRed, (byte) EColorsHex.LightGray },
                 });
 
             // TODO: Comment later, missing a color in boss corridor
@@ -546,94 +546,94 @@ namespace MM2Randomizer
                 }
             };
             // Clash | Border1 | Default
-            clashForeground.ColorBytes.Add(new byte[,] { { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },
-                                                      { 0x39 },
-                                                      { 0x18 },});
+            clashForeground.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.PastelLemon },
+                                                      { (byte) EColorsHex.GoldenRod },
+                                                      { (byte) EColorsHex.PastelLemon },
+                                                      { (byte) EColorsHex.GoldenRod },
+                                                      { (byte) EColorsHex.PastelLemon },
+                                                      { (byte) EColorsHex.GoldenRod },
+                                                      { (byte) EColorsHex.PastelLemon },
+                                                      { (byte) EColorsHex.GoldenRod },
+                                                      { (byte) EColorsHex.PastelLemon },
+                                                      { (byte) EColorsHex.GoldenRod },
+                                                      { (byte) EColorsHex.PastelLemon },
+                                                      { (byte) EColorsHex.GoldenRod },
+                                                      { (byte) EColorsHex.PastelLemon },
+                                                      { (byte) EColorsHex.GoldenRod },
+                                                      { (byte) EColorsHex.PastelLemon },
+                                                      { (byte) EColorsHex.GoldenRod },});
 
             // Clash | Border1 | Blue
-            clashForeground.ColorBytes.Add(new byte[,] { { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },
-                                                      { 0x11 },
-                                                      { 0x01 },});
+            clashForeground.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.MediumBlue },
+                                                      { (byte) EColorsHex.RoyalBlue },
+                                                      { (byte) EColorsHex.MediumBlue },
+                                                      { (byte) EColorsHex.RoyalBlue },
+                                                      { (byte) EColorsHex.MediumBlue },
+                                                      { (byte) EColorsHex.RoyalBlue },
+                                                      { (byte) EColorsHex.MediumBlue },
+                                                      { (byte) EColorsHex.RoyalBlue },
+                                                      { (byte) EColorsHex.MediumBlue },
+                                                      { (byte) EColorsHex.RoyalBlue },
+                                                      { (byte) EColorsHex.MediumBlue },
+                                                      { (byte) EColorsHex.RoyalBlue },
+                                                      { (byte) EColorsHex.MediumBlue },
+                                                      { (byte) EColorsHex.RoyalBlue },
+                                                      { (byte) EColorsHex.MediumBlue },
+                                                      { (byte) EColorsHex.RoyalBlue },});
 
             // Clash | Border1 | Orange
-            clashForeground.ColorBytes.Add(new byte[,] { { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },
-                                                      { 0x27 },
-                                                      { 0x16 },});
+            clashForeground.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.YellowOrange },
+                                                      { (byte) EColorsHex.Orange },
+                                                      { (byte) EColorsHex.YellowOrange },
+                                                      { (byte) EColorsHex.Orange },
+                                                      { (byte) EColorsHex.YellowOrange },
+                                                      { (byte) EColorsHex.Orange },
+                                                      { (byte) EColorsHex.YellowOrange },
+                                                      { (byte) EColorsHex.Orange },
+                                                      { (byte) EColorsHex.YellowOrange },
+                                                      { (byte) EColorsHex.Orange },
+                                                      { (byte) EColorsHex.YellowOrange },
+                                                      { (byte) EColorsHex.Orange },
+                                                      { (byte) EColorsHex.YellowOrange },
+                                                      { (byte) EColorsHex.Orange },
+                                                      { (byte) EColorsHex.YellowOrange },
+                                                      { (byte) EColorsHex.Orange },});
 
             // Clash | Border1 | Green
-            clashForeground.ColorBytes.Add(new byte[,] { { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },
-                                                      { 0x2b },
-                                                      { 0x0a },});
+            clashForeground.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Lime },
+                                                      { (byte) EColorsHex.ForestGreen },
+                                                      { (byte) EColorsHex.Lime },
+                                                      { (byte) EColorsHex.ForestGreen },
+                                                      { (byte) EColorsHex.Lime },
+                                                      { (byte) EColorsHex.ForestGreen },
+                                                      { (byte) EColorsHex.Lime },
+                                                      { (byte) EColorsHex.ForestGreen },
+                                                      { (byte) EColorsHex.Lime },
+                                                      { (byte) EColorsHex.ForestGreen },
+                                                      { (byte) EColorsHex.Lime },
+                                                      { (byte) EColorsHex.ForestGreen },
+                                                      { (byte) EColorsHex.Lime },
+                                                      { (byte) EColorsHex.ForestGreen },
+                                                      { (byte) EColorsHex.Lime },
+                                                      { (byte) EColorsHex.ForestGreen },});
 
             // Clash | Border1 | Red Black
-            clashForeground.ColorBytes.Add(new byte[,] { { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },
-                                                      { 0x0f },
-                                                      { 0x06 },});
+            clashForeground.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Black2 },
+                                                      { (byte) EColorsHex.Red },
+                                                      { (byte) EColorsHex.Black2 },
+                                                      { (byte) EColorsHex.Red },
+                                                      { (byte) EColorsHex.Black2 },
+                                                      { (byte) EColorsHex.Red },
+                                                      { (byte) EColorsHex.Black2 },
+                                                      { (byte) EColorsHex.Red },
+                                                      { (byte) EColorsHex.Black2 },
+                                                      { (byte) EColorsHex.Red },
+                                                      { (byte) EColorsHex.Black2 },
+                                                      { (byte) EColorsHex.Red },
+                                                      { (byte) EColorsHex.Black2 },
+                                                      { (byte) EColorsHex.Red },
+                                                      { (byte) EColorsHex.Black2 },
+                                                      { (byte) EColorsHex.Red },});
 
             ColorSet clashBG = new ColorSet()
             {
@@ -647,49 +647,49 @@ namespace MM2Randomizer
                 },
             };
             // Clash | Background | Default
-            clashBG.ColorBytes.Add(new byte[,] { { 0x12 },
-                                                 { 0x12 },
-                                                 { 0x01 },
-                                                 { 0x01 },
-                                                 { 0x0f },
-                                                 { 0x0f },
-                                                 { 0x0f },
+            clashBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Blue },
+                                                 { (byte) EColorsHex.Blue },
+                                                 { (byte) EColorsHex.RoyalBlue },
+                                                 { (byte) EColorsHex.RoyalBlue },
+                                                 { (byte) EColorsHex.Black2 },
+                                                 { (byte) EColorsHex.Black2 },
+                                                 { (byte) EColorsHex.Black2 },
             });
             // Clash | Background | Yellow
-            clashBG.ColorBytes.Add(new byte[,] { { 0x28 },
-                                                 { 0x28 },
-                                                 { 0x08 },
-                                                 { 0x08 },
-                                                 { 0x0F },
-                                                 { 0x0F },
-                                                 { 0x0F },
+            clashBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Yellow },
+                                                 { (byte) EColorsHex.Yellow },
+                                                 { (byte) EColorsHex.Brown },
+                                                 { (byte) EColorsHex.Brown },
+                                                 { (byte) EColorsHex.Black2 },
+                                                 { (byte) EColorsHex.Black2 },
+                                                 { (byte) EColorsHex.Black2 },
             });
             // Clash | Background | Orange
-            clashBG.ColorBytes.Add(new byte[,] { { 0x16 },
-                                                 { 0x16 },
-                                                 { 0x06 },
-                                                 { 0x06 },
-                                                 { 0x0F },
-                                                 { 0x0F },
-                                                 { 0x0F },
+            clashBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Orange },
+                                                 { (byte) EColorsHex.Orange },
+                                                 { (byte) EColorsHex.Red },
+                                                 { (byte) EColorsHex.Red },
+                                                 { (byte) EColorsHex.Black2 },
+                                                 { (byte) EColorsHex.Black2 },
+                                                 { (byte) EColorsHex.Black2 },
             });
             // Clash | Background | Green
-            clashBG.ColorBytes.Add(new byte[,] { { 0x2b },
-                                                 { 0x2b },
-                                                 { 0x1b },
-                                                 { 0x1b },
-                                                 { 0x0F },
-                                                 { 0x0F },
-                                                 { 0x0F },
+            clashBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Lime },
+                                                 { (byte) EColorsHex.Lime },
+                                                 { (byte) EColorsHex.Moss },
+                                                 { (byte) EColorsHex.Moss },
+                                                 { (byte) EColorsHex.Black2 },
+                                                 { (byte) EColorsHex.Black2 },
+                                                 { (byte) EColorsHex.Black2 },
             });
             // Clash | Background | Purple
-            clashBG.ColorBytes.Add(new byte[,] { { 0x24 },
-                                                 { 0x24 },
-                                                 { 0x04 },
-                                                 { 0x04 },
-                                                 { 0x0F },
-                                                 { 0x0F },
-                                                 { 0x0F },
+            clashBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightPink },
+                                                 { (byte) EColorsHex.LightPink },
+                                                 { (byte) EColorsHex.DarkMagenta },
+                                                 { (byte) EColorsHex.DarkMagenta },
+                                                 { (byte) EColorsHex.Black2 },
+                                                 { (byte) EColorsHex.Black2 },
+                                                 { (byte) EColorsHex.Black2 },
             });
 
             ColorSet clashDoodad = new ColorSet()
@@ -698,28 +698,28 @@ namespace MM2Randomizer
                                          { 0x01fe19 }, },
             };
             //// Clash | Doodads | Default
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x27 },
-                                                     { 0x20 },
+            clashDoodad.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.YellowOrange },
+                                                     { (byte) EColorsHex.NearWhite },
             });
             // Clash | Doodads | Green
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x1A },
-                                                     { 0x20 },
+            clashDoodad.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Green },
+                                                     { (byte) EColorsHex.NearWhite },
             });
             // Clash | Doodads | Teal
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x1C },
-                                                     { 0x20 },
+            clashDoodad.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Teal },
+                                                     { (byte) EColorsHex.NearWhite },
             });
             // Clash | Doodads | Purple
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x13 },
-                                                     { 0x20 },
+            clashDoodad.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Purple },
+                                                     { (byte) EColorsHex.NearWhite },
             });
             // Clash | Doodads | Red
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x05 },
-                                                     { 0x20 },
+            clashDoodad.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Crimson },
+                                                     { (byte) EColorsHex.NearWhite },
             });
             // Clash | Doodads | Gray
-            clashDoodad.ColorBytes.Add(new byte[,] { { 0x00 },
-                                                     { 0x20 },
+            clashDoodad.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Gray },
+                                                     { (byte) EColorsHex.NearWhite },
             });
 
             ColorSet woodLeaves = new ColorSet()
@@ -728,12 +728,12 @@ namespace MM2Randomizer
                                          { 0xbe14 }, },
             };
             // Wood | Leaves | Default
-            woodLeaves.ColorBytes.Add(new byte[,] { { 0x29 },
-                                                    { 0x19 },
+            woodLeaves.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Lemon },
+                                                    { (byte) EColorsHex.Grass },
             });
             // Wood | Leaves | Blue
-            woodLeaves.ColorBytes.Add(new byte[,] { { 0x11 },
-                                                    { 0x01 },
+            woodLeaves.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.MediumBlue },
+                                                    { (byte) EColorsHex.RoyalBlue },
             });
 
             ColorSet woodTrunks = new ColorSet()
@@ -742,19 +742,19 @@ namespace MM2Randomizer
                                          { 0xbe18 }, },
             };
             // Wood | Trunk | Default
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x28 },
-                                                    { 0x18 },
+            woodTrunks.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Yellow },
+                                                    { (byte) EColorsHex.GoldenRod },
             });
             // Wood | Trunk | Purple
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x23 }, { 0x13 }, });
+            woodTrunks.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightPurple }, { (byte) EColorsHex.Purple }, });
             // Wood | Trunk | Pink
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x25 }, { 0x15 }, });
+            woodTrunks.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightVioletRed }, { (byte) EColorsHex.VioletRed }, });
             // Wood | Trunk | Orange
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x27 }, { 0x17 }, });
+            woodTrunks.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.YellowOrange }, { (byte) EColorsHex.Tangerine }, });
             // Wood | Trunk | Green
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x2A }, { 0x1A }, });
+            woodTrunks.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightGreen }, { (byte) EColorsHex.Green }, });
             // Wood | Trunk | Teal
-            woodTrunks.ColorBytes.Add(new byte[,] { { 0x2C }, { 0x1C }, });
+            woodTrunks.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightCyan }, { (byte) EColorsHex.Teal }, });
 
             ColorSet woodFloor = new ColorSet()
             {
@@ -763,34 +763,34 @@ namespace MM2Randomizer
                                          { 0xbe1d },},
             };
             // Wood | Floor | Default
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x27 },
-                                                   { 0x17 },
-                                                   { 0x07 },
+            woodFloor.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.YellowOrange },
+                                                   { (byte) EColorsHex.Tangerine },
+                                                   { (byte) EColorsHex.DarkRed },
             });
             // Wood | Floor | Yellow
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x28 },
-                                                   { 0x18 },
-                                                   { 0x08 },
+            woodFloor.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Yellow },
+                                                   { (byte) EColorsHex.GoldenRod },
+                                                   { (byte) EColorsHex.Brown },
             });
             // Wood | Floor | Green
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x2a },
-                                                   { 0x1a },
-                                                   { 0x0a },
+            woodFloor.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightGreen },
+                                                   { (byte) EColorsHex.Green },
+                                                   { (byte) EColorsHex.ForestGreen },
             });
             // Wood | Floor | Teal
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x2c },
-                                                   { 0x1c },
-                                                   { 0x0c },
+            woodFloor.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightCyan },
+                                                   { (byte) EColorsHex.Teal },
+                                                   { (byte) EColorsHex.DarkTeal },
             });
             // Wood | Floor | Purple
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x23 },
-                                                   { 0x13 },
-                                                   { 0x03 },
+            woodFloor.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightPurple },
+                                                   { (byte) EColorsHex.Purple },
+                                                   { (byte) EColorsHex.RoyalPurple },
             });
             // Wood | Floor | Gray
-            woodFloor.ColorBytes.Add(new byte[,] { { 0x20 },
-                                                   { 0x10 },
-                                                   { 0x0f },
+            woodFloor.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.NearWhite },
+                                                   { (byte) EColorsHex.LightGray },
+                                                   { (byte) EColorsHex.Black2 },
             });
 
             ColorSet woodUndergroundBG = new ColorSet()
@@ -799,25 +799,25 @@ namespace MM2Randomizer
                                          { 0x03a118 },},
             };
             // Wood | UndergroundBG | Default
-            //woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x08 }, { 0x08 },}); // TODO verify
+            //woodUndergroundBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Brown }, { (byte) EColorsHex.Brown },}); // TODO verify
 
             // Wood | UndergroundBG | Dark Purple
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x04 }, { 0x04 }, });
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.DarkMagenta }, { (byte) EColorsHex.DarkMagenta }, });
 
             // Wood | UndergroundBG | Dark Red
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x05 }, { 0x05 }, });
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { (byte)EColorsHex.Crimson }, { (byte)EColorsHex.Crimson }, });
 
             // Wood | UndergroundBG | Dark Green
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x09 }, { 0x09 }, });
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Kelp }, { (byte) EColorsHex.Kelp }, });
 
             // Wood | UndergroundBG | Dark Teal
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x0b }, { 0x0b }, });
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.DarkGreen }, { (byte) EColorsHex.DarkGreen }, });
 
             // Wood | UndergroundBG | Dark Blue1
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x0c }, { 0x0c }, });
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.DarkTeal }, { (byte) EColorsHex.DarkTeal }, });
 
             // Wood | UndergroundBG | Dark Blue2
-            woodUndergroundBG.ColorBytes.Add(new byte[,] { { 0x01 }, { 0x01 }, });
+            woodUndergroundBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.RoyalBlue }, { (byte) EColorsHex.RoyalBlue }, });
 
 
             ColorSet woodSkyBG = new ColorSet()
@@ -826,25 +826,25 @@ namespace MM2Randomizer
                                          { 0xbe19 },},
             };
             // Wood | SkyBG | Default
-            //woodSkyBG.ColorBytes.Add(new byte[,] { { 0x2c }, { 0x2c }, });
+            //woodSkyBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightCyan }, { (byte) EColorsHex.LightCyan }, });
 
             // Wood | SkyBG | Light Green
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x2a }, { 0x2a }, });
+            woodSkyBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.LightGreen }, { (byte) EColorsHex.LightGreen }, });
 
             // Wood | SkyBG | Blue
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x12 }, { 0x12 }, });
+            woodSkyBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Blue }, { (byte) EColorsHex.Blue }, });
 
             // Wood | SkyBG | Dark Purple
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x03 }, { 0x03 }, });
+            woodSkyBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.RoyalPurple }, { (byte) EColorsHex.RoyalPurple }, });
 
             // Wood | SkyBG | Dark Red
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x05 }, { 0x05 }, });
+            woodSkyBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Crimson }, { (byte) EColorsHex.Crimson }, });
 
             // Wood | SkyBG | Light Yellow
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x38 }, { 0x38 }, });
+            woodSkyBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.PastelYellow }, { (byte) EColorsHex.PastelYellow }, });
 
             // Wood | SkyBG | Black
-            woodSkyBG.ColorBytes.Add(new byte[,] { { 0x0f }, { 0x0f }, });
+            woodSkyBG.ColorBytes.Add(new byte[,] { { (byte) EColorsHex.Black2 }, { (byte) EColorsHex.Black2 }, });
 
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
@@ -951,10 +951,10 @@ namespace MM2Randomizer
             // 0x03C298 - Item # from Crash Man
 
             List<byte> newItemOrder = new List<byte>();
-            for (byte i = 0; i < 5; i++) newItemOrder.Add(0);
-            newItemOrder.Add(1);
-            newItemOrder.Add(2);
-            newItemOrder.Add(4);
+            for (byte i = 0; i < 5; i++) newItemOrder.Add((byte) EItemNumber.None);
+            newItemOrder.Add((byte) EItemNumber.One);
+            newItemOrder.Add((byte) EItemNumber.Two);
+            newItemOrder.Add((byte) EItemNumber.Three);
 
             newItemOrder.Shuffle(Random);
 

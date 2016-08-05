@@ -70,6 +70,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ColorSet.cs" />
+    <Compile Include="Enums\EColorsHex.cs" />
+    <Compile Include="Enums\EItemNumber.cs" />
     <Compile Include="Enums\EItemStageAddress.cs" />
     <Compile Include="Enums\EMiscAddresses.cs" />
     <Compile Include="Enums\ERMPortraitAddress.cs" />

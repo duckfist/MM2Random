@@ -20,7 +20,8 @@ namespace MM2Randomizer
                 Is8StagesRandom = false,
                 IsWeaponsRandom = true,
                 IsItemsRandom = true,
-                IsTeleportersRandom = false,
+                IsTeleportersRandom = true,
+                IsColorsRandom = true,
                 IsWeaknessRandom = true,
                 IsWeaknessEasy = true,
                 IsWeaknessHard = false

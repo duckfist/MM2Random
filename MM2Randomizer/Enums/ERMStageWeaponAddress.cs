@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MM2Randomizer.Enums
 {
-    public enum ERMStageWeapon
+    public enum ERMStageWeaponAddress
     {
         // StageBeat    Address    Value
         // -----------------------------

@@ -894,7 +894,7 @@ namespace MM2Randomizer
                 ERMWeaponValue.FlashMan,
                 ERMWeaponValue.MetalMan,
                 ERMWeaponValue.CrashMan
-            }.Cast<byte>().ToList();
+            }.Select(s => (byte)s).ToList();
             
             newWeaponOrder.Shuffle(Random);
 
@@ -903,7 +903,7 @@ namespace MM2Randomizer
                 // Create table for which weapon is awarded by which robot master
                 // This also affects which portrait is blacked out on the stage select
                 // This also affects which teleporter deactivates after defeating a Wily 5 refight boss
-                stream.Position = (long) ERMStageWeapon.HeatMan;// 0x03c289;
+                stream.Position = (long) ERMStageWeaponAddress.HeatMan;// 0x03c289;
                 for (int i = 0; i < 8; i++)
                 {
                     stream.WriteByte((byte)newWeaponOrder[i]);

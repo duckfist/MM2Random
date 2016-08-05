@@ -75,7 +75,7 @@
     <Compile Include="Enums\ERMPortraitAddress.cs" />
     <Compile Include="Enums\ERMStageClearAddress.cs" />
     <Compile Include="Enums\ERMStageSelect.cs" />
-    <Compile Include="Enums\ERMStageWeapon.cs" />
+    <Compile Include="Enums\ERMStageWeaponAddress.cs" />
     <Compile Include="Enums\ERMWeaponAddress.cs" />
     <Compile Include="Enums\ERMWeaponValue.cs" />
     <Compile Include="MainWindowViewModel.cs" />

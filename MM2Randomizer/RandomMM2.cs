@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MM2Randomizer.Enums;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace MM2Randomizer
 {
@@ -92,14 +94,14 @@ namespace MM2Randomizer
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
                 // Write the new x-coordinates
-                stream.Position = 0x03828f;
+                stream.Position = (long) EMiscAddresses.WarpXCoordinateStartAddress;
                 foreach (byte[] location in coords)
                 {
                     stream.WriteByte(location[0]);
                 }
 
                 // Write the new y-coordinates
-                stream.Position = 0x038278;
+                stream.Position = (long) EMiscAddresses.WarpYCoordinateStartAddress;
                 foreach (byte[] location in coords)
                 {
                     stream.WriteByte(location[1]);
@@ -626,7 +628,17 @@ namespace MM2Randomizer
             // Metal Man    0x03C28F   64
             // Crash Man    0x03C290   128
 
-            List<byte> newWeaponOrder = new List<byte>() { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
+            var newWeaponOrder = new List<ERMWeaponValue>()
+            {
+                ERMWeaponValue.HeatMan,
+                ERMWeaponValue.AirMan,
+                ERMWeaponValue.WoodMan,
+                ERMWeaponValue.BubbleMan,
+                ERMWeaponValue.QuickMan,
+                ERMWeaponValue.FlashMan,
+                ERMWeaponValue.MetalMan,
+                ERMWeaponValue.CrashMan
+            }.Select(s => (byte)s).ToList();
             
             newWeaponOrder.Shuffle(Random);
 
@@ -635,7 +647,7 @@ namespace MM2Randomizer
                 // Create table for which weapon is awarded by which robot master
                 // This also affects which portrait is blacked out on the stage select
                 // This also affects which teleporter deactivates after defeating a Wily 5 refight boss
-                stream.Position = 0x03c289;
+                stream.Position = (long) ERMStageWeaponAddress.HeatMan;// 0x03c289;
                 for (int i = 0; i < 8; i++)
                 {
                     stream.WriteByte((byte)newWeaponOrder[i]);
@@ -660,7 +672,7 @@ namespace MM2Randomizer
                 stream.WriteByte(0xf2);
 
                 // Create table for which stage is selectable on the stage select screen (independent of it being blacked out)
-                stream.Position = 0x0346E1;
+                stream.Position = (long) ERMStageSelect.FirstStageInMemory; // 0x0346E1;
                 for (int i = 0; i < 8; i++)
                 {
                     stream.WriteByte((byte)newWeaponOrder[i]);
@@ -692,7 +704,7 @@ namespace MM2Randomizer
 
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
-                stream.Position = 0x03C291;
+                stream.Position = (long) EItemStageAddress.HeatMan; //0x03C291;
                 for (int i = 0; i < 8; i++)
                 { 
                     stream.WriteByte((byte)newItemOrder[i]);
@@ -713,7 +725,7 @@ namespace MM2Randomizer
             {
                 Name = "Buster",
                 ID = 0,
-                Address = 0x02E933,
+                Address = ERMWeaponAddress.Buster,
                 RobotMasters = new int[8] { 2,2,1,1,2,2,1,1 }
                 // Heat = 2,
                 // Air = 2,
@@ -729,7 +741,7 @@ namespace MM2Randomizer
             {
                 Name = "Atomic Fire",
                 ID = 1,
-                Address = 0x02E941,
+                Address = ERMWeaponAddress.AtomicFire,
                 // Note: These values only affect a fully charged shot.  Partially charged shots use the Buster table.
                 RobotMasters = new int[8] { 0xFF, 6, 0x0E, 0, 0x0A, 6, 4, 6 }
             });
@@ -738,7 +750,7 @@ namespace MM2Randomizer
             {
                 Name = "Air Shooter",
                 ID = 2,
-                Address = 0x02E94F,
+                Address = ERMWeaponAddress.AirShooter,
                 RobotMasters = new int[8] {2, 0, 4, 0, 2, 0, 0, 0x0A }
             });
 
@@ -746,7 +758,7 @@ namespace MM2Randomizer
             {
                 Name = "Leaf Shield",
                 ID = 3,
-                Address = 0x02E95D,
+                Address = ERMWeaponAddress.LeafShield,
                 RobotMasters = new int[8] { 0, 8, 0xFF, 0, 0, 0, 0, 0 }
             });
 
@@ -754,7 +766,7 @@ namespace MM2Randomizer
             {
                 Name = "Bubble Lead",
                 ID = 4,
-                Address = 0x02E96B,
+                Address = ERMWeaponAddress.BubbleLead,
                 RobotMasters = new int[8] { 6, 0, 0, 0xFF, 0, 2, 0, 1 }
             });
 
@@ -762,7 +774,7 @@ namespace MM2Randomizer
             {
                 Name = "Quick Boomerang",
                 ID = 5,
-                Address = 0x02E979,
+                Address = ERMWeaponAddress.QuickBoomerang,
                 RobotMasters = new int[8] { 2, 2, 0, 2, 0, 0, 4, 1 }
             });
 
@@ -770,7 +782,7 @@ namespace MM2Randomizer
             {
                 Name = "Time Stopper",
                 ID = 6,
-                Address = 0x02C049,
+                Address = ERMWeaponAddress.TimeStopper,
                 // NOTE: These values affect damage per tick
                 RobotMasters = new int[8] { 0, 0, 0, 0, 1, 0, 0, 0 }
             });
@@ -779,7 +791,7 @@ namespace MM2Randomizer
             {
                 Name = "Metal Blade",
                 ID = 7,
-                Address = 0x02E995,
+                Address = ERMWeaponAddress.MetalBlade,
                 RobotMasters = new int[8] { 1, 0, 2, 4, 0, 4, 0x0E, 0 }
             });
 
@@ -787,7 +799,7 @@ namespace MM2Randomizer
             {
                 Name = "Clash Bomber",
                 ID = 8,
-                Address = 0x02E987,
+                Address = ERMWeaponAddress.ClashBomber,
                 RobotMasters = new int[8] { 0xFF, 0, 2, 2, 4, 3, 0, 0 }
             });
 
@@ -800,7 +812,7 @@ namespace MM2Randomizer
             {
                 foreach (WeaponTable weapon in Weapons)
                 {
-                    stream.Position = weapon.Address;
+                    stream.Position = (long)weapon.Address;
                     for (int i = 0; i < 8; i++)
                     { 
                         stream.WriteByte((byte)weapon.RobotMasters[i]);
@@ -820,7 +832,7 @@ namespace MM2Randomizer
             {
                 Name = "Buster",
                 ID = 0,
-                Address = 0x2e952,
+                Address = ERMWeaponAddress.Eng_Buster,
                 RobotMasters = new int[8] { 2, 2, 1, 1, 2, 2, 1, 1 }
                 // Heat = 2,
                 // Air = 2,
@@ -836,7 +848,7 @@ namespace MM2Randomizer
             {
                 Name = "Atomic Fire",
                 ID = 1,
-                Address = 0x2e960,
+                Address = ERMWeaponAddress.Eng_AtomicFire,
                 // Note: These values only affect a fully charged shot.  Partially charged shots use the Buster table.
                 RobotMasters = new int[8] { 0xFF, 6, 0x0E, 0, 0x0A, 6, 4, 6 }
             });
@@ -845,7 +857,7 @@ namespace MM2Randomizer
             {
                 Name = "Air Shooter",
                 ID = 2,
-                Address = 0x2e96e,
+                Address = ERMWeaponAddress.Eng_AirShooter,
                 RobotMasters = new int[8] { 2, 0, 4, 0, 2, 0, 0, 0x0A }
             });
 
@@ -853,7 +865,7 @@ namespace MM2Randomizer
             {
                 Name = "Leaf Shield",
                 ID = 3,
-                Address = 0x2e97c,
+                Address = ERMWeaponAddress.Eng_LeafShield,
                 RobotMasters = new int[8] { 0, 8, 0xFF, 0, 0, 0, 0, 0 }
             });
 
@@ -861,7 +873,7 @@ namespace MM2Randomizer
             {
                 Name = "Bubble Lead",
                 ID = 4,
-                Address = 0x2e98a,
+                Address = ERMWeaponAddress.Eng_BubbleLead,
                 RobotMasters = new int[8] { 6, 0, 0, 0xFF, 0, 2, 0, 1 }
             });
 
@@ -869,7 +881,7 @@ namespace MM2Randomizer
             {
                 Name = "Quick Boomerang",
                 ID = 5,
-                Address = 0x2e998,
+                Address = ERMWeaponAddress.Eng_QuickBoomerang,
                 RobotMasters = new int[8] { 2, 2, 0, 2, 0, 0, 4, 1 }
             });
 
@@ -877,7 +889,7 @@ namespace MM2Randomizer
             {
                 Name = "Time Stopper",
                 ID = 6,
-                Address = 0x2c04,
+                Address = ERMWeaponAddress.Eng_TimeStopper,
                 // NOTE: These values affect damage per tick
                 RobotMasters = new int[8] { 0, 0, 0, 0, 1, 0, 0, 0 }
             });
@@ -886,7 +898,7 @@ namespace MM2Randomizer
             {
                 Name = "Metal Blade",
                 ID = 7,
-                Address = 0x2e9b4,
+                Address = ERMWeaponAddress.Eng_MetalBlade,
                 RobotMasters = new int[8] { 1, 0, 2, 4, 0, 4, 0x0E, 0 }
             });
 
@@ -894,7 +906,7 @@ namespace MM2Randomizer
             {
                 Name = "Clash Bomber",
                 ID = 8,
-                Address = 0x2e9a6,
+                Address = ERMWeaponAddress.Eng_ClashBomber,
                 RobotMasters = new int[8] { 0xFF, 0, 2, 2, 4, 3, 0, 0 }
             });
 
@@ -907,7 +919,7 @@ namespace MM2Randomizer
             {
                 foreach (WeaponTable weapon in Weapons)
                 {
-                    stream.Position = weapon.Address;
+                    stream.Position = (long) weapon.Address;
                     for (int i = 0; i < 8; i++)
                     {
                         stream.WriteByte((byte)weapon.RobotMasters[i]);
@@ -937,80 +949,80 @@ namespace MM2Randomizer
             StageSelect.Add(new StageFromSelect()
             {
                 PortraitName = "Bubble Man",
-                PortraitAddress = 0x034670,
+                PortraitAddress = ERMPortraitAddress.BubbleMan,
                 PortraitDestinationOriginal = 3,
                 PortraitDestinationNew = 3,
-                StageClearAddress = 0x03C28C,
+                StageClearAddress = ERMStageClearAddress.BubbleMan,
                 StageClearDestinationOriginal = 8,
                 StageClearDestinationNew = 8
             });
             StageSelect.Add(new StageFromSelect()
             {
                 PortraitName = "Air Man",
-                PortraitAddress = 0x034671,
+                PortraitAddress = ERMPortraitAddress.AirMan,
                 PortraitDestinationOriginal = 1,
                 PortraitDestinationNew = 1,
-                StageClearAddress = 0x03C28A,
+                StageClearAddress = ERMStageClearAddress.AirMan,
                 StageClearDestinationOriginal = 2,
                 StageClearDestinationNew = 2
             });
             StageSelect.Add(new StageFromSelect()
             {
                 PortraitName = "Quick Man",
-                PortraitAddress = 0x034672,
+                PortraitAddress = ERMPortraitAddress.QuickMan,
                 PortraitDestinationOriginal = 4,
                 PortraitDestinationNew = 4,
-                StageClearAddress = 0x03C28D,
+                StageClearAddress = ERMStageClearAddress.QuickMan,
                 StageClearDestinationOriginal = 16,
                 StageClearDestinationNew = 16
             });
             StageSelect.Add(new StageFromSelect()
             {
                 PortraitName = "Wood Man",
-                PortraitAddress = 0x034673,
+                PortraitAddress = ERMPortraitAddress.WoodMan,
                 PortraitDestinationOriginal = 2,
                 PortraitDestinationNew = 2,
-                StageClearAddress = 0x03C28B,
+                StageClearAddress = ERMStageClearAddress.WoodMan,
                 StageClearDestinationOriginal = 4,
                 StageClearDestinationNew = 4
             });
             StageSelect.Add(new StageFromSelect()
             {
                 PortraitName = "Clash Man",
-                PortraitAddress = 0x034674,
+                PortraitAddress = ERMPortraitAddress.CrashMan,
                 PortraitDestinationOriginal = 7,
                 PortraitDestinationNew = 7,
-                StageClearAddress = 0x03C290,
+                StageClearAddress = ERMStageClearAddress.CrashMan,
                 StageClearDestinationOriginal = 128,
                 StageClearDestinationNew = 128
             });
             StageSelect.Add(new StageFromSelect()
             {
                 PortraitName = "Flash Man",
-                PortraitAddress = 0x034675,
+                PortraitAddress = ERMPortraitAddress.FlashMan,
                 PortraitDestinationOriginal = 5,
                 PortraitDestinationNew = 5,
-                StageClearAddress = 0x03C28E,
+                StageClearAddress = ERMStageClearAddress.FlashMan,
                 StageClearDestinationOriginal = 32,
                 StageClearDestinationNew = 32
             });
             StageSelect.Add(new StageFromSelect()
             {
                 PortraitName = "Metal Man",
-                PortraitAddress = 0x034676,
+                PortraitAddress = ERMPortraitAddress.MetalMan,
                 PortraitDestinationOriginal = 6,
                 PortraitDestinationNew = 6,
-                StageClearAddress = 0x03C28F,
+                StageClearAddress = ERMStageClearAddress.MetalMan,
                 StageClearDestinationOriginal = 64,
                 StageClearDestinationNew = 64
             });
             StageSelect.Add(new StageFromSelect()
             {
                 PortraitName = "Heat Man",
-                PortraitAddress = 0x034677,
+                PortraitAddress = ERMPortraitAddress.HeatMan,
                 PortraitDestinationOriginal = 0,
                 PortraitDestinationNew = 0,
-                StageClearAddress = 0x03C289,
+                StageClearAddress = ERMStageClearAddress.HeatMan,
                 StageClearDestinationOriginal = 1,
                 StageClearDestinationNew = 1
             });
@@ -1032,7 +1044,7 @@ namespace MM2Randomizer
             {
                 foreach (StageFromSelect stage in StageSelect)
                 {
-                    stream.Position = stage.PortraitAddress;
+                    stream.Position = (long)stage.PortraitAddress;
                     stream.WriteByte((byte)stage.PortraitDestinationNew);
                     //stream.Position = stage.StageClearAddress;
                     //stream.WriteByte((byte)stage.StageClearDestinationNew);

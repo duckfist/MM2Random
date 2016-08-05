@@ -1,4 +1,6 @@
-﻿namespace MM2Randomizer
+﻿using MM2Randomizer.Enums;
+
+namespace MM2Randomizer
 {
     /// <summary>
     /// This object encapsulates 
@@ -28,7 +30,7 @@
         ///   Address + 6: Metal
         ///   Address + 7: Clash
         /// </summary>
-        public int Address { get; set; }
+        public ERMWeaponAddress Address { get; set; }
 
         /// <summary>
         /// The damage values used by this weapon against each Robot Master.  They will be

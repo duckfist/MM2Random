@@ -42,7 +42,7 @@ namespace MM2Randomizer
                 }
                 if (Settings.IsColorsRandom)
                 {
-                    RandomColors();
+                RandomColors();
                 }
                 if (Settings.IsWeaknessRandom)
                 {
@@ -154,57 +154,57 @@ namespace MM2Randomizer
                                             0x3e41, 0x3e51, 0x3e61 },
                     ColorBytes = new List<byte[]>() {
                         new byte[] { // Heat | River | Default Orange
-                            0x36, 0x26, 0x16,
-                            0x26, 0x16, 0x36,
-                            0x16, 0x36, 0x26,
+                            (byte) EColorsHex.Taupe, (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange,
+                            (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange, (byte) EColorsHex.Taupe,
+                            (byte) EColorsHex.Orange, (byte) EColorsHex.Taupe, (byte) EColorsHex.LightOrange,
                         },
                         new byte[] { // Heat | River | Green
-                            0x2a, 0x1a, 0x0a,
-                            0x1a, 0x0a, 0x2a,
-                            0x0a, 0x2a, 0x1a,
+                            (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green, (byte) EColorsHex.ForestGreen,
+                            (byte) EColorsHex.Green, (byte) EColorsHex.ForestGreen, (byte) EColorsHex.LightGreen,
+                            (byte) EColorsHex.ForestGreen, (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green,
                         },
                         new byte[] { // Heat | River | Yellow
-                            0x28, 0x18, 0x08,
-                            0x18, 0x08, 0x28,
-                            0x08, 0x28, 0x18,
+                            (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod, (byte) EColorsHex.Brown,
+                            (byte) EColorsHex.GoldenRod, (byte) EColorsHex.Brown, (byte) EColorsHex.Yellow,
+                            (byte) EColorsHex.Brown, (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod,
                         },
                         new byte[] { // Heat | River | Purple
-                            0x24, 0x14, 0x04,
-                            0x14, 0x04, 0x24,
-                            0x04, 0x24, 0x14,
+                            (byte) EColorsHex.LightPink, (byte) EColorsHex.Magenta, (byte) EColorsHex.DarkMagenta,
+                            (byte) EColorsHex.Magenta, (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.LightPink,
+                            (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.LightPink, (byte) EColorsHex.Magenta,
                         }
                     }
                 },
                 new ColorSet()
-                {
+            {
                     addresses = new int[] { 0x3e3b, 0x3e4b, 0x3e5b,
                                             0x3e3c, 0x3e4c, 0x3e5c,
                                             0x3e3d, 0x3e4d, 0x3e5d },
                     ColorBytes = new List<byte[]>() {
                         new byte[] { // Heat | Background | Default Red
-                            0x16, 0x16, 0x16,
-                            0x05, 0x05, 0x05,
-                            0x07, 0x07, 0x07,
+                            (byte) EColorsHex.Orange, (byte) EColorsHex.Orange, (byte) EColorsHex.Orange,
+                            (byte) EColorsHex.Crimson, (byte) EColorsHex.Crimson, (byte) EColorsHex.Crimson,
+                            (byte) EColorsHex.DarkRed, (byte) EColorsHex.DarkRed, (byte) EColorsHex.DarkRed,
                         },
                         new byte[] { // Heat | Background | Purple 
-                            0x14, 0x14, 0x14,
-                            0x04, 0x04, 0x04,
-                            0x03, 0x03, 0x03,
+                            (byte) EColorsHex.Magenta, (byte) EColorsHex.Magenta, (byte) EColorsHex.Magenta,
+                            (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.DarkMagenta,
+                            (byte) EColorsHex.RoyalPurple, (byte) EColorsHex.RoyalPurple, (byte) EColorsHex.RoyalPurple,
                         },
                         new byte[] { // Heat | Background | Gold Gray 
-                            0x2d, 0x2d, 0x2d,
-                            0x18, 0x18, 0x18,
-                            0x08, 0x08, 0x08,
+                            (byte) EColorsHex.MediumGray, (byte) EColorsHex.MediumGray, (byte) EColorsHex.MediumGray,
+                            (byte) EColorsHex.GoldenRod, (byte) EColorsHex.GoldenRod, (byte) EColorsHex.GoldenRod,
+                            (byte) EColorsHex.Brown, (byte) EColorsHex.Brown, (byte) EColorsHex.Brown,
                         },
                         new byte[] { // Heat | Background | Deep Blue 
-                            0x0c, 0x0c, 0x0c,
-                            0x01, 0x01, 0x01,
-                            0x12, 0x12, 0x12,
+                            (byte) EColorsHex.DarkTeal, (byte) EColorsHex.DarkTeal, (byte) EColorsHex.DarkTeal,
+                            (byte) EColorsHex.RoyalBlue, (byte) EColorsHex.RoyalBlue, (byte) EColorsHex.RoyalBlue,
+                            (byte) EColorsHex.Blue, (byte) EColorsHex.Blue, (byte) EColorsHex.Blue,
                         },
                         new byte[] { // Heat | Background | Dark Green
-                            0x0b, 0x0b, 0x0b,
-                            0x1d, 0x1d, 0x1d,
-                            0x09, 0x09, 0x09,
+                            (byte) EColorsHex.DarkGreen, (byte) EColorsHex.DarkGreen, (byte) EColorsHex.DarkGreen,
+                            (byte) EColorsHex.Black3, (byte) EColorsHex.Black3, (byte) EColorsHex.Black3,
+                            (byte) EColorsHex.Kelp, (byte) EColorsHex.Kelp, (byte) EColorsHex.Kelp,
                         },
                     }
                 },
@@ -214,24 +214,24 @@ namespace MM2Randomizer
                                             0x3e35, 0x3e45, 0x3e55 },
                     ColorBytes = new List<byte[]>() {
                         new byte[] { // Heat | Foreground | Default Pink
-                            0x36, 0x36, 0x36,
-                            0x26, 0x26, 0x26,
-                            0x15, 0x15, 0x15,
+                            (byte) EColorsHex.Taupe, (byte) EColorsHex.Taupe, (byte) EColorsHex.Taupe,
+                            (byte) EColorsHex.LightOrange, (byte) EColorsHex.LightOrange, (byte) EColorsHex.LightOrange,
+                            (byte) EColorsHex.VioletRed, (byte) EColorsHex.VioletRed, (byte) EColorsHex.VioletRed,
                         },
                         new byte[] { // Heat | Foreground | Purple 
-                            0x34, 0x34, 0x34,
-                            0x24, 0x24, 0x24,
-                            0x13, 0x13, 0x13,
+                            (byte) EColorsHex.PastelPink, (byte) EColorsHex.PastelPink, (byte) EColorsHex.PastelPink,
+                            (byte) EColorsHex.LightPink, (byte) EColorsHex.LightPink, (byte) EColorsHex.LightPink,
+                            (byte) EColorsHex.Purple, (byte) EColorsHex.Purple, (byte) EColorsHex.Purple,
                         },
                         new byte[] { // Heat | Foreground | Light Green 
-                            0x3a, 0x3a, 0x3a,
-                            0x2a, 0x2a, 0x2a,
-                            0x19, 0x19, 0x19,
+                            (byte) EColorsHex.PastelGreen, (byte) EColorsHex.PastelGreen, (byte) EColorsHex.PastelGreen,
+                            (byte) EColorsHex.LightGreen, (byte) EColorsHex.LightGreen, (byte) EColorsHex.LightGreen,
+                            (byte) EColorsHex.Grass, (byte) EColorsHex.Grass, (byte) EColorsHex.Grass,
                         },
                         new byte[] { // Heat | Foreground | Light Blue 
-                            0x32, 0x32, 0x32,
-                            0x22, 0x22, 0x22,
-                            0x11, 0x11, 0x11,
+                            (byte) EColorsHex.PaleBlue, (byte) EColorsHex.PaleBlue, (byte) EColorsHex.PaleBlue,
+                            (byte) EColorsHex.SoftBlue, (byte) EColorsHex.SoftBlue, (byte) EColorsHex.SoftBlue,
+                            (byte) EColorsHex.MediumBlue, (byte) EColorsHex.MediumBlue, (byte) EColorsHex.MediumBlue,
                         },
                     }
                 },
@@ -241,24 +241,24 @@ namespace MM2Randomizer
                                             0x3e39, 0x3e49, 0x3e59 },
                     ColorBytes = new List<byte[]>() {
                         new byte[] { // Heat | Foreground2 | Default Light Gray
-                            0x30, 0x30, 0x30,
-                            0x10, 0x10, 0x10,
-                            0x00, 0x00, 0x00,
+                            (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White,
+                            (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray,
+                            (byte) EColorsHex.Gray, (byte) EColorsHex.Gray, (byte) EColorsHex.Gray,
                         },
                         new byte[] { // Heat | Foreground2 | Light Orange
-                            0x30, 0x30, 0x30,
-                            0x37, 0x37, 0x37,
-                            0x27, 0x27, 0x27,
+                            (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White,
+                            (byte) EColorsHex.Beige, (byte) EColorsHex.Beige, (byte) EColorsHex.Beige,
+                            (byte) EColorsHex.YellowOrange, (byte) EColorsHex.YellowOrange, (byte) EColorsHex.YellowOrange,
                         },
                         new byte[] { // Heat | Foreground2 | Light Blue
-                            0x30, 0x30, 0x30,
-                            0x31, 0x31, 0x31,
-                            0x21, 0x21, 0x21,
+                            (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White,
+                            (byte) EColorsHex.PastelBlue, (byte) EColorsHex.PastelBlue, (byte) EColorsHex.PastelBlue,
+                            (byte) EColorsHex.LightBlue, (byte) EColorsHex.LightBlue, (byte) EColorsHex.LightBlue,
                         },
                         new byte[] { // Heat | Foreground2 | Dark
-                            0x10, 0x10, 0x10,
-                            0x00, 0x00, 0x00,
-                            0x08, 0x08, 0x08,
+                            (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray,
+                            (byte) EColorsHex.Gray, (byte) EColorsHex.Gray, (byte) EColorsHex.Gray,
+                            (byte) EColorsHex.Brown, (byte) EColorsHex.Brown, (byte) EColorsHex.Brown,
                         },
                     }
                 },
@@ -268,29 +268,29 @@ namespace MM2Randomizer
                                             0x7e39, 0x7e49, 0x7e59, 0x7e69 },
                     ColorBytes = new List<byte[]>() {
                         new byte[] { // Air | Platforms | Default
-                            0x30, 0x30, 0x30, 0x30,
-                            0x15, 0x15, 0x15, 0x15,
-                            0x0F, 0x0F, 0x0F, 0x0F,
+                            (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White,
+                            (byte) EColorsHex.VioletRed, (byte) EColorsHex.VioletRed, (byte) EColorsHex.VioletRed, (byte) EColorsHex.VioletRed,
+                            (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2,
                         },
                         new byte[] { // Air | Platforms | Orange
-                            0x30, 0x30, 0x30, 0x30,
-                            0x16, 0x16, 0x16, 0x16,
-                            0x0F, 0x0F, 0x0F, 0x0F,
+                            (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White,
+                            (byte) EColorsHex.Orange, (byte) EColorsHex.Orange, (byte) EColorsHex.Orange, (byte) EColorsHex.Orange,
+                            (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2,
                         },
                         new byte[] { // Air | Platforms | Yellow
-                            0x30, 0x30, 0x30, 0x30,
-                            0x28, 0x28, 0x28, 0x28,
-                            0x0F, 0x0F, 0x0F, 0x0F,
+                            (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White,
+                            (byte) EColorsHex.Yellow, (byte) EColorsHex.Yellow, (byte) EColorsHex.Yellow, (byte) EColorsHex.Yellow,
+                            (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2,
                         },
                         new byte[] { // Air | Platforms | Green
-                            0x30, 0x30, 0x30, 0x30,
-                            0x19, 0x19, 0x19, 0x19,
-                            0x0F, 0x0F, 0x0F, 0x0F,
+                            (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White,
+                            (byte) EColorsHex.Grass, (byte) EColorsHex.Grass, (byte) EColorsHex.Grass, (byte) EColorsHex.Grass,
+                            (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2,
                         },
                         new byte[] { // Air | Platforms | Blue
-                            0x30, 0x30, 0x30, 0x30,
-                            0x22, 0x22, 0x22, 0x22,
-                            0x0F, 0x0F, 0x0F, 0x0F,
+                            (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White,
+                            (byte) EColorsHex.SoftBlue, (byte) EColorsHex.SoftBlue, (byte) EColorsHex.SoftBlue, (byte) EColorsHex.SoftBlue,
+                            (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2, (byte) EColorsHex.Black2,
                         },
                     }
                 },
@@ -300,41 +300,41 @@ namespace MM2Randomizer
                                             0x7e35, 0x7e45, 0x7e55, 0x7e65 },
                     ColorBytes = new List<byte[]>() {
                         new byte[] { // Air | Clouds | Default
-                            0x21, 0x31, 0x30, 0x31,
-                            0x31, 0x30, 0x30, 0x30,
-                            0x30, 0x30, 0x30, 0x30,
+                            (byte) EColorsHex.LightBlue, (byte) EColorsHex.PastelBlue, (byte) EColorsHex.White, (byte) EColorsHex.PastelBlue,
+                            (byte) EColorsHex.PastelBlue, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White,
+                            (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White, (byte) EColorsHex.White,
                         },
                         new byte[] { // Air | Clouds | Light Gray Dark Red
-                            0x10, 0x00, 0x07, 0x00,
-                            0x10, 0x10, 0x00, 0x10,
-                            0x10, 0x10, 0x10, 0x10,
+                            (byte) EColorsHex.LightGray, (byte) EColorsHex.Gray, (byte) EColorsHex.DarkRed, (byte) EColorsHex.Gray,
+                            (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray, (byte) EColorsHex.Gray, (byte) EColorsHex.LightGray,
+                            (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray, (byte) EColorsHex.LightGray,
                         },
                     }
                 },
                 new ColorSet() {
-                    // $0366 only
+                // $0366 only
                     addresses = new int[] { 0x7e22 },
                     ColorBytes = new List<byte[]>() {
-                        // Air | Sky | Default
-                        new byte[] { 0x21 },
-                        // Air | Sky | Pink
-                        new byte[] { 0x23 },
-                        // Air | Sky | Dark Orange
-                        new byte[] { 0x26 },
-                        // Air | Sky | Light Orange
-                        new byte[] { 0x27 },
-                        // Air | Sky | Yellow
-                        new byte[] { 0x28 },
-                        // Air | Sky | Light Green
-                        new byte[] { 0x2B },
-                        // Air | Sky | Blue
-                        new byte[] { 0x01 },
-                        // Air | Sky | Dark Red
-                        new byte[] { 0x01 },
-                        // Air | Sky | Dark Green
-                        new byte[] { 0x0B },
-                        // Air | Sky | Black
-                        new byte[] { 0x1D },
+            // Air | Sky | Default
+                        new byte[] { (byte) EColorsHex.LightBlue },
+            // Air | Sky | Pink
+                        new byte[] { (byte) EColorsHex.LightPurple },
+            // Air | Sky | Dark Orange
+                        new byte[] { (byte) EColorsHex.LightOrange },
+            // Air | Sky | Light Orange
+                        new byte[] { (byte) EColorsHex.YellowOrange },
+            // Air | Sky | Yellow
+                        new byte[] { (byte) EColorsHex.Yellow },
+            // Air | Sky | Light Green
+                        new byte[] { (byte) EColorsHex.Lime },
+            // Air | Sky | Blue
+                        new byte[] { (byte) EColorsHex.RoyalBlue },
+            // Air | Sky | Dark Red
+                        new byte[] { (byte) EColorsHex.RoyalBlue },
+            // Air | Sky | Dark Green
+                        new byte[] { (byte) EColorsHex.DarkGreen },
+            // Air | Sky | Black
+                        new byte[] { (byte) EColorsHex.Black3 },
                     }
                 },
                 new ColorSet() {
@@ -342,34 +342,34 @@ namespace MM2Randomizer
                                             0x017e35, 0x017e45, 0x017e55 },
                     ColorBytes = new List<byte[]>() {
                         new byte[] { // Flash | Background | Default
-                            0x12, 0x12, 0x12,
-                            0x02, 0x02, 0x02,
+                            (byte) EColorsHex.Blue, (byte) EColorsHex.Blue, (byte) EColorsHex.Blue,
+                            (byte) EColorsHex.DarkBlue, (byte) EColorsHex.DarkBlue, (byte) EColorsHex.DarkBlue,
                         },
                         new byte[] { // Flash | Background | Magenta
-                            0x14, 0x14, 0x14,
-                            0x04, 0x04, 0x04,
+                            (byte) EColorsHex.Magenta, (byte) EColorsHex.Magenta, (byte) EColorsHex.Magenta,
+                            (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.DarkMagenta,
                         },
                         new byte[] { // Flash | Background | Orange
-                            0x16, 0x16, 0x16,
-                            0x06, 0x06, 0x06,
+                            (byte) EColorsHex.Orange, (byte) EColorsHex.Orange, (byte) EColorsHex.Orange,
+                            (byte) EColorsHex.Red, (byte) EColorsHex.Red, (byte) EColorsHex.Red,
                         },
                      new byte[] { // Flash | Background | Yellow
-                            0x18, 0x18, 0x18,
-                            0x08, 0x08, 0x08,
+                            (byte) EColorsHex.GoldenRod, (byte) EColorsHex.GoldenRod, (byte) EColorsHex.GoldenRod,
+                            (byte) EColorsHex.Brown, (byte) EColorsHex.Brown, (byte) EColorsHex.Brown,
                         },
                         new byte[] { // Flash | Background | Green
-                            0x1a, 0x1a, 0x1a,
-                            0x0a, 0x0a, 0x0a,
+                            (byte) EColorsHex.Green, (byte) EColorsHex.Green, (byte) EColorsHex.Green,
+                            (byte) EColorsHex.ForestGreen, (byte) EColorsHex.ForestGreen, (byte) EColorsHex.ForestGreen,
                         },
                         new byte[] { // Flash | Background | Black
-                            0x00, 0x00, 0x00,
-                            0x1d, 0x1d, 0x1d,
+                            (byte) EColorsHex.Gray, (byte) EColorsHex.Gray, (byte) EColorsHex.Gray,
+                            (byte) EColorsHex.Black3, (byte) EColorsHex.Black3, (byte) EColorsHex.Black3,
                         },
                     }
                 },
                 new ColorSet() {
-                    // Note: 3 color sets are used for the flashing blocks.
-                    // I've kept them grouped here for common color themes.
+                // Note: 3 color sets are used for the flashing blocks.
+                // I've kept them grouped here for common color themes.
                     addresses = new int[] { 0x017e37, 0x017e47, 0x017e57,
                                             0x017e38, 0x017e48, 0x017e58,
                                             0x017e39, 0x017e49, 0x017e59,
@@ -381,224 +381,224 @@ namespace MM2Randomizer
                                             0x017e41, 0x017e51, 0x017e61},
                     ColorBytes = new List<byte[]>() {
                          new byte[] { // Flash | Foreground | Default
-                            0x30, 0x20, 0x20,
-                            0x31, 0x21, 0x21,
-                            0x2C, 0x11, 0x11,
-                            0x20, 0x30, 0x20,
-                            0x21, 0x31, 0x21,
-                            0x11, 0x2C, 0x11,
-                            0x20, 0x20, 0x30,
-                            0x21, 0x21, 0x31,
-                            0x11, 0x11, 0x2c,
+                            (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.PastelBlue, (byte) EColorsHex.LightBlue, (byte) EColorsHex.LightBlue,
+                            (byte) EColorsHex.LightCyan, (byte) EColorsHex.MediumBlue, (byte) EColorsHex.MediumBlue,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.LightBlue, (byte) EColorsHex.PastelBlue, (byte) EColorsHex.LightBlue,
+                            (byte) EColorsHex.MediumBlue, (byte) EColorsHex.LightCyan, (byte) EColorsHex.MediumBlue,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White,
+                            (byte) EColorsHex.LightBlue, (byte) EColorsHex.LightBlue, (byte) EColorsHex.PastelBlue,
+                            (byte) EColorsHex.MediumBlue, (byte) EColorsHex.MediumBlue, (byte) EColorsHex.LightCyan,
                         },
                         new byte[] { // Flash | Foreground | Magenta
-                            0x30, 0x20, 0x20,
-                            0x33, 0x23, 0x23,
-                            0x24, 0x13, 0x13,
-                            0x20, 0x30, 0x20,
-                            0x23, 0x33, 0x23,
-                            0x13, 0x24, 0x13,
-                            0x20, 0x20, 0x30,
-                            0x23, 0x23, 0x33,
-                            0x13, 0x13, 0x24,
+                            (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.PastelPurple, (byte) EColorsHex.LightPurple, (byte) EColorsHex.LightPurple,
+                            (byte) EColorsHex.LightPink, (byte) EColorsHex.Purple, (byte) EColorsHex.Purple,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.LightPurple, (byte) EColorsHex.PastelPurple, (byte) EColorsHex.LightPurple,
+                            (byte) EColorsHex.Purple, (byte) EColorsHex.LightPink, (byte) EColorsHex.Purple,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White,
+                            (byte) EColorsHex.LightPurple, (byte) EColorsHex.LightPurple, (byte) EColorsHex.PastelPurple,
+                            (byte) EColorsHex.Purple, (byte) EColorsHex.Purple, (byte) EColorsHex.LightPink,
                         },
                         new byte[] { // Flash | Foreground | Orange
-                            0x30, 0x20, 0x20,
-                            0x36, 0x26, 0x16,
-                            0x26, 0x16, 0x06,
-                            0x20, 0x30, 0x20,
-                            0x16, 0x36, 0x26,
-                            0x06, 0x26, 0x16,
-                            0x20, 0x20, 0x30,
-                            0x26, 0x16, 0x36,
-                            0x16, 0x06, 0x26,
+                            (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.Taupe, (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange,
+                            (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange, (byte) EColorsHex.Red,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.Orange, (byte) EColorsHex.Taupe, (byte) EColorsHex.LightOrange,
+                            (byte) EColorsHex.Red, (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White,
+                            (byte) EColorsHex.LightOrange, (byte) EColorsHex.Orange, (byte) EColorsHex.Taupe,
+                            (byte) EColorsHex.Orange, (byte) EColorsHex.Red, (byte) EColorsHex.LightOrange,
                         },
                         new byte[] { // Flash | Foreground | Yellow
-                            0x30, 0x20, 0x20,
-                            0x38, 0x28, 0x18,
-                            0x28, 0x18, 0x08,
-                            0x20, 0x30, 0x20,
-                            0x18, 0x38, 0x28,
-                            0x08, 0x28, 0x18,
-                            0x20, 0x20, 0x30,
-                            0x28, 0x18, 0x38,
-                            0x18, 0x08, 0x28,
+                            (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.PastelYellow, (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod,
+                            (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod, (byte) EColorsHex.Brown,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.GoldenRod, (byte) EColorsHex.PastelYellow, (byte) EColorsHex.Yellow,
+                            (byte) EColorsHex.Brown, (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White,
+                            (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod, (byte) EColorsHex.PastelYellow,
+                            (byte) EColorsHex.GoldenRod, (byte) EColorsHex.Brown, (byte) EColorsHex.Yellow,
                         },
                         new byte[] { // Flash | Foreground | Green
-                            0x30, 0x20, 0x20,
-                            0x3A, 0x2A, 0x1A,
-                            0x2A, 0x1A, 0x0A,
-                            0x20, 0x30, 0x20,
-                            0x1A, 0x3A, 0x2A,
-                            0x0A, 0x2A, 0x1A,
-                            0x20, 0x20, 0x30,
-                            0x2A, 0x1A, 0x3A,
-                            0x1A, 0x0A, 0x2A,
+                            (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.PastelGreen, (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green,
+                            (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green, (byte) EColorsHex.ForestGreen,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.Green, (byte) EColorsHex.PastelGreen, (byte) EColorsHex.LightGreen,
+                            (byte) EColorsHex.ForestGreen, (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White,
+                            (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green, (byte) EColorsHex.PastelGreen,
+                            (byte) EColorsHex.Green, (byte) EColorsHex.ForestGreen, (byte) EColorsHex.LightGreen,
                         },
                         new byte[] { // Flash | Foreground | Turquoise
-                            0x30, 0x20, 0x20,
-                            0x3b, 0x2b, 0x1b,
-                            0x2b, 0x1b, 0x0b,
-                            0x20, 0x30, 0x20,
-                            0x1b, 0x3b, 0x2b,
-                            0x0b, 0x2b, 0x1b,
-                            0x20, 0x20, 0x30,
-                            0x2b, 0x1b, 0x3b,
-                            0x1b, 0x0b, 0x2b,
+                            (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.PastelCyan, (byte) EColorsHex.Lime, (byte) EColorsHex.Moss,
+                            (byte) EColorsHex.Lime, (byte) EColorsHex.Moss, (byte) EColorsHex.DarkGreen,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.Moss, (byte) EColorsHex.PastelCyan, (byte) EColorsHex.Lime,
+                            (byte) EColorsHex.DarkGreen, (byte) EColorsHex.Lime, (byte) EColorsHex.Moss,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White,
+                            (byte) EColorsHex.Lime, (byte) EColorsHex.Moss, (byte) EColorsHex.PastelCyan,
+                            (byte) EColorsHex.Moss, (byte) EColorsHex.DarkGreen, (byte) EColorsHex.Lime,
                         },
                         new byte[] { // Flash | Foreground | Black and Red
-                            0x30, 0x20, 0x20,
-                            0x1d, 0x1d, 0x1d,
-                            0x10, 0x00, 0x07,
-                            0x20, 0x30, 0x20,
-                            0x1d, 0x1d, 0x1d,
-                            0x07, 0x10, 0x00,
-                            0x20, 0x20, 0x30,
-                            0x1d, 0x1d, 0x1d,
-                            0x00, 0x07, 0x10,
+                            (byte) EColorsHex.White, (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.Black3, (byte) EColorsHex.Black3, (byte) EColorsHex.Black3,
+                            (byte) EColorsHex.LightGray, (byte) EColorsHex.Gray, (byte) EColorsHex.DarkRed,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.White, (byte) EColorsHex.NearWhite,
+                            (byte) EColorsHex.Black3, (byte) EColorsHex.Black3, (byte) EColorsHex.Black3,
+                            (byte) EColorsHex.DarkRed, (byte) EColorsHex.LightGray, (byte) EColorsHex.Gray,
+                            (byte) EColorsHex.NearWhite, (byte) EColorsHex.NearWhite, (byte) EColorsHex.White,
+                            (byte) EColorsHex.Black3, (byte) EColorsHex.Black3, (byte) EColorsHex.Black3,
+                            (byte) EColorsHex.Gray, (byte) EColorsHex.DarkRed, (byte) EColorsHex.LightGray,
                         },
                     }
                 },
-                // TODO: Comment later, missing a color in boss corridor
+            // TODO: Comment later, missing a color in boss corridor
                 new ColorSet() {
                     addresses = new int[] { 0x01fe13, 0x01fe14, 0x03b63a, 0x03b63b, 0x03b642, 0x03b643, 0x03b646, 0x03b647, 0x03b64a, 0x03b64b, 0x03b64e, 0x03b64f, 0x039188, 0x039189, 0x03918c, 0x03918d, },
                     ColorBytes = new List<byte[]>()
-                    {
-                        // Clash | Border1 | Default
-                        new byte[] { 0x39,0x18,0x39,0x18,0x39,0x18,0x39,0x18,0x39,0x18,0x39,0x18,0x39,0x18,0x39,0x18,},
+            {
+            // Clash | Border1 | Default
+                        new byte[] { (byte) EColorsHex.PastelLemon,(byte) EColorsHex.GoldenRod,(byte) EColorsHex.PastelLemon,(byte) EColorsHex.GoldenRod,(byte) EColorsHex.PastelLemon,(byte) EColorsHex.GoldenRod,(byte) EColorsHex.PastelLemon,(byte) EColorsHex.GoldenRod,(byte) EColorsHex.PastelLemon,(byte) EColorsHex.GoldenRod,(byte) EColorsHex.PastelLemon,(byte) EColorsHex.GoldenRod,(byte) EColorsHex.PastelLemon,(byte) EColorsHex.GoldenRod,(byte) EColorsHex.PastelLemon,(byte) EColorsHex.GoldenRod,},
 
-                        // Clash | Border1 | Blue
-                        new byte[] { 0x11,0x01,0x11,0x01,0x11,0x01,0x11,0x01,0x11,0x01,0x11,0x01,0x11,0x01,0x11,0x01,},
+            // Clash | Border1 | Blue
+                        new byte[] { (byte) EColorsHex.MediumBlue,(byte) EColorsHex.RoyalBlue,(byte) EColorsHex.MediumBlue,(byte) EColorsHex.RoyalBlue,(byte) EColorsHex.MediumBlue,(byte) EColorsHex.RoyalBlue,(byte) EColorsHex.MediumBlue,(byte) EColorsHex.RoyalBlue,(byte) EColorsHex.MediumBlue,(byte) EColorsHex.RoyalBlue,(byte) EColorsHex.MediumBlue,(byte) EColorsHex.RoyalBlue,(byte) EColorsHex.MediumBlue,(byte) EColorsHex.RoyalBlue,(byte) EColorsHex.MediumBlue,(byte) EColorsHex.RoyalBlue,},
 
-                        // Clash | Border1 | Orange
-                        new byte[] { 0x27,0x16,0x27,0x16,0x27,0x16,0x27,0x16,0x27,0x16,0x27,0x16,0x27,0x16,0x27,0x16,},
+            // Clash | Border1 | Orange
+                        new byte[] { (byte) EColorsHex.YellowOrange,(byte) EColorsHex.Orange,(byte) EColorsHex.YellowOrange,(byte) EColorsHex.Orange,(byte) EColorsHex.YellowOrange,(byte) EColorsHex.Orange,(byte) EColorsHex.YellowOrange,(byte) EColorsHex.Orange,(byte) EColorsHex.YellowOrange,(byte) EColorsHex.Orange,(byte) EColorsHex.YellowOrange,(byte) EColorsHex.Orange,(byte) EColorsHex.YellowOrange,(byte) EColorsHex.Orange,(byte) EColorsHex.YellowOrange,(byte) EColorsHex.Orange,},
 
-                        // Clash | Border1 | Green
-                        new byte[] { 0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,0x2b,0x0a,},
+            // Clash | Border1 | Green
+                        new byte[] { (byte) EColorsHex.Lime,(byte) EColorsHex.ForestGreen,(byte) EColorsHex.Lime,(byte) EColorsHex.ForestGreen,(byte) EColorsHex.Lime,(byte) EColorsHex.ForestGreen,(byte) EColorsHex.Lime,(byte) EColorsHex.ForestGreen,(byte) EColorsHex.Lime,(byte) EColorsHex.ForestGreen,(byte) EColorsHex.Lime,(byte) EColorsHex.ForestGreen,(byte) EColorsHex.Lime,(byte) EColorsHex.ForestGreen,(byte) EColorsHex.Lime,(byte) EColorsHex.ForestGreen,},
 
-                        // Clash | Border1 | Red Black
-                        new byte[] { 0x0f,0x06,0x0f,0x06,0x0f,0x06,0x0f,0x06,0x0f,0x06,0x0f,0x06,0x0f,0x06,0x0f,0x06,},
+            // Clash | Border1 | Red Black
+                        new byte[] { (byte) EColorsHex.Black2,(byte) EColorsHex.Red,(byte) EColorsHex.Black2,(byte) EColorsHex.Red,(byte) EColorsHex.Black2,(byte) EColorsHex.Red,(byte) EColorsHex.Black2,(byte) EColorsHex.Red,(byte) EColorsHex.Black2,(byte) EColorsHex.Red,(byte) EColorsHex.Black2,(byte) EColorsHex.Red,(byte) EColorsHex.Black2,(byte) EColorsHex.Red,(byte) EColorsHex.Black2,(byte) EColorsHex.Red,},
                     }
                 },
                 new ColorSet()
                 {
                     addresses = new int[] { 0x01fe15,0x01fe17,0x03b63c,0x03b644,0x03b648,0x03b64c,0x03b650,},
                     ColorBytes = new List<byte[]>()
-                    {
-                        // Clash | Background | Default
-                        new byte[] { 0x12,0x12,0x01,0x01,0x0f,0x0f,0x0f,},
-                        // Clash | Background | Yellow
-                        new byte[] { 0x28,0x28,0x08,0x08,0x0F,0x0F,0x0F,},
-                        // Clash | Background | Orange
-                        new byte[] { 0x16,0x16,0x06,0x06,0x0F,0x0F,0x0F,},
-                        // Clash | Background | Green
-                        new byte[] { 0x2b,0x2b,0x1b,0x1b,0x0F,0x0F,0x0F,},
-                        // Clash | Background | Purple
-                        new byte[] { 0x24,0x24,0x04,0x04,0x0F,0x0F,0x0F,}
+            {
+            // Clash | Background | Default
+                        new byte[] { (byte) EColorsHex.Blue,(byte) EColorsHex.Blue,(byte) EColorsHex.RoyalBlue,(byte) EColorsHex.RoyalBlue,(byte) EColorsHex.Black2,(byte) EColorsHex.Black2,(byte) EColorsHex.Black2,},
+            // Clash | Background | Yellow
+                        new byte[] { (byte) EColorsHex.Yellow,(byte) EColorsHex.Yellow,(byte) EColorsHex.Brown,(byte) EColorsHex.Brown,(byte) EColorsHex.Black2,(byte) EColorsHex.Black2,(byte) EColorsHex.Black2,},
+            // Clash | Background | Orange
+                        new byte[] { (byte) EColorsHex.Orange,(byte) EColorsHex.Orange,(byte) EColorsHex.Red,(byte) EColorsHex.Red,(byte) EColorsHex.Black2,(byte) EColorsHex.Black2,(byte) EColorsHex.Black2,},
+            // Clash | Background | Green
+                        new byte[] { (byte) EColorsHex.Lime,(byte) EColorsHex.Lime,(byte) EColorsHex.Moss,(byte) EColorsHex.Moss,(byte) EColorsHex.Black2,(byte) EColorsHex.Black2,(byte) EColorsHex.Black2,},
+            // Clash | Background | Purple
+                        new byte[] { (byte) EColorsHex.LightPink,(byte) EColorsHex.LightPink,(byte) EColorsHex.DarkMagenta,(byte) EColorsHex.DarkMagenta,(byte) EColorsHex.Black2,(byte) EColorsHex.Black2,(byte) EColorsHex.Black2,}
                     }
                 },
                 new ColorSet() {
                     addresses = new int[] { 0x01fe18,0x01fe19, },
                     ColorBytes = new List<byte[]>() {
                         // Clash | Doodads | Default
-                        new byte[] { 0x27,0x20,},
-                        // Clash | Doodads | Green
-                        new byte[] { 0x1A,0x20,},
-                        // Clash | Doodads | Teal
-                        new byte[] { 0x1C,0x20,},
-                        // Clash | Doodads | Purple
-                        new byte[] { 0x13,0x20,},
-                        // Clash | Doodads | Red
-                        new byte[] { 0x05,0x20,},
-                        // Clash | Doodads | Gray
-                        new byte[] { 0x00,0x20,},
+                        new byte[] { (byte) EColorsHex.YellowOrange,(byte) EColorsHex.NearWhite,},
+            // Clash | Doodads | Green
+                        new byte[] { (byte) EColorsHex.Green,(byte) EColorsHex.NearWhite,},
+            // Clash | Doodads | Teal
+                        new byte[] { (byte) EColorsHex.Teal,(byte) EColorsHex.NearWhite,},
+            // Clash | Doodads | Purple
+                        new byte[] { (byte) EColorsHex.Purple,(byte) EColorsHex.NearWhite,},
+            // Clash | Doodads | Red
+                        new byte[] { (byte) EColorsHex.Crimson,(byte) EColorsHex.NearWhite,},
+            // Clash | Doodads | Gray
+                        new byte[] { (byte) EColorsHex.Gray,(byte) EColorsHex.NearWhite,},
                     }
                 },
                 new ColorSet() {
                     addresses = new int[] { 0xbe13, 0xbe14, },
                     ColorBytes = new List<byte[]>() {
-                        // Wood | Leaves | Default
-                        new byte[] { 0x29,0x19,},
-                        // Wood | Leaves | Blue
-                        new byte[] { 0x11,0x01,},
+            // Wood | Leaves | Default
+                        new byte[] { (byte) EColorsHex.Lemon,(byte) EColorsHex.Grass,},
+            // Wood | Leaves | Blue
+                        new byte[] { (byte) EColorsHex.MediumBlue,(byte) EColorsHex.RoyalBlue,},
                         // Wood | Leaves | Red
-                        new byte[] { 0x16,0x06,},
+                        new byte[] { (byte) EColorsHex.Orange,(byte) EColorsHex.Red,},
                     }
                 },
 
                 new ColorSet() {
                     addresses = new int[] { 0xbe17, 0xbe18, },
                     ColorBytes = new List<byte[]>() {
-                        // Wood | Trunk | Default
-                        new byte[] { 0x28, 0x18 },
-                        // Wood | Trunk | Purple
-                        new byte[] { 0x23, 0x13 },
-                        // Wood | Trunk | Pink
-                        new byte[] { 0x25, 0x15 },
-                        // Wood | Trunk | Orange
-                        new byte[] { 0x27, 0x17 },
-                        // Wood | Trunk | Green
-                        new byte[] { 0x2A, 0x1A },
-                        // Wood | Trunk | Teal
-                        new byte[] { 0x2C, 0x1C },
+            // Wood | Trunk | Default
+                        new byte[] { (byte) EColorsHex.Yellow, (byte) EColorsHex.GoldenRod },
+            // Wood | Trunk | Purple
+                        new byte[] { (byte) EColorsHex.LightPurple, (byte) EColorsHex.Purple },
+            // Wood | Trunk | Pink
+                        new byte[] { (byte) EColorsHex.LightVioletRed, (byte) EColorsHex.VioletRed },
+            // Wood | Trunk | Orange
+                        new byte[] { (byte) EColorsHex.YellowOrange, (byte) EColorsHex.Tangerine },
+            // Wood | Trunk | Green
+                        new byte[] { (byte) EColorsHex.LightGreen, (byte) EColorsHex.Green },
+            // Wood | Trunk | Teal
+                        new byte[] { (byte) EColorsHex.LightCyan, (byte) EColorsHex.Teal },
                     }
                 },
 
                 new ColorSet() {
                     addresses = new int[] { 0xbe1b,0xbe1c,0xbe1d,},
                     ColorBytes = new List<byte[]>() {
-                        // Wood | Floor | Default
-                        new byte[] { 0x27,0x17,0x07,},
-                        // Wood | Floor | Yellow
-                        new byte[] { 0x28,0x18,0x08,},
-                        // Wood | Floor | Green
-                        new byte[] { 0x2a,0x1a,0x0a,},
-                        // Wood | Floor | Teal
-                        new byte[] { 0x2c,0x1c,0x0c,},
-                        // Wood | Floor | Purple
-                        new byte[] { 0x23,0x13,0x03,},
-                        // Wood | Floor | Gray
-                        new byte[] { 0x20,0x10,0x0f,},
+            // Wood | Floor | Default
+                        new byte[] { (byte) EColorsHex.YellowOrange,(byte) EColorsHex.Tangerine,(byte) EColorsHex.DarkRed,},
+            // Wood | Floor | Yellow
+                        new byte[] { (byte) EColorsHex.Yellow,(byte) EColorsHex.GoldenRod,(byte) EColorsHex.Brown,},
+            // Wood | Floor | Green
+                        new byte[] { (byte) EColorsHex.LightGreen,(byte) EColorsHex.Green,(byte) EColorsHex.ForestGreen,},
+            // Wood | Floor | Teal
+                        new byte[] { (byte) EColorsHex.LightCyan,(byte) EColorsHex.Teal,(byte) EColorsHex.DarkTeal,},
+            // Wood | Floor | Purple
+                        new byte[] { (byte) EColorsHex.LightPurple,(byte) EColorsHex.Purple,(byte) EColorsHex.RoyalPurple,},
+            // Wood | Floor | Gray
+                        new byte[] { (byte) EColorsHex.NearWhite,(byte) EColorsHex.LightGray,(byte) EColorsHex.Black2,},
                     }
                 },
 
                 new ColorSet() {
                     addresses = new int[] { 0xbe1f, 0x03a118, },
                     ColorBytes = new List<byte[]>() {
-                        // Wood | UndergroundBG | Default
-                        new byte[] { 0x08, 0x08 },
-                        // Wood | UndergroundBG | Dark Purple
-                        new byte[] { 0x04, 0x04 },
-                        // Wood | UndergroundBG | Dark Red
-                        new byte[] { 0x05, 0x05 },
-                        // Wood | UndergroundBG | Dark Green
-                        new byte[] { 0x09, 0x09 },
-                        // Wood | UndergroundBG | Dark Teal
-                        new byte[] { 0x0b, 0x0b },
-                        // Wood | UndergroundBG | Dark Blue1
-                        new byte[] { 0x0c, 0x0c },
-                        // Wood | UndergroundBG | Dark Blue2
-                        new byte[] { 0x01, 0x01 },
+            // Wood | UndergroundBG | Default
+                        new byte[] { (byte) EColorsHex.Brown, (byte) EColorsHex.Brown },
+            // Wood | UndergroundBG | Dark Purple
+                        new byte[] { (byte) EColorsHex.DarkMagenta, (byte) EColorsHex.DarkMagenta },
+            // Wood | UndergroundBG | Dark Red
+                        new byte[] { (byte) EColorsHex.Crimson, (byte) EColorsHex.Crimson },
+            // Wood | UndergroundBG | Dark Green
+                        new byte[] { (byte) EColorsHex.Kelp, (byte) EColorsHex.Kelp },
+            // Wood | UndergroundBG | Dark Teal
+                        new byte[] { (byte) EColorsHex.DarkGreen, (byte) EColorsHex.DarkGreen },
+            // Wood | UndergroundBG | Dark Blue1
+                        new byte[] { (byte) EColorsHex.DarkTeal, (byte) EColorsHex.DarkTeal },
+            // Wood | UndergroundBG | Dark Blue2
+                        new byte[] { (byte) EColorsHex.RoyalBlue, (byte) EColorsHex.RoyalBlue },
                     }
                 },
 
                 new ColorSet() {
                     addresses = new int[] { 0xbe15,0xbe19,},
                     ColorBytes = new List<byte[]>() {
-                        // Wood | SkyBG | Default
-                        new byte[] { 0x2c, 0x2c },
-                        // Wood | SkyBG | Light Green
-                        new byte[] { 0x2a,0x2a },
-                        // Wood | SkyBG | Blue
-                        new byte[] { 0x12,0x12 },
-                        // Wood | SkyBG | Dark Purple
-                        new byte[] { 0x03,0x03 },
-                        // Wood | SkyBG | Dark Red
-                        new byte[] { 0x05,0x05 },
-                        // Wood | SkyBG | Light Yellow
-                        new byte[] { 0x38,0x38 },
-                        // Wood | SkyBG | Black
-                        new byte[] { 0x0f,0x0f },
+            // Wood | SkyBG | Default
+                        new byte[] { (byte) EColorsHex.LightCyan, (byte) EColorsHex.LightCyan },
+            // Wood | SkyBG | Light Green
+                        new byte[] { (byte) EColorsHex.LightGreen ,(byte) EColorsHex.LightGreen },
+            // Wood | SkyBG | Blue
+                        new byte[] { (byte) EColorsHex.Blue, (byte) EColorsHex.Blue },
+            // Wood | SkyBG | Dark Purple
+                        new byte[] { (byte) EColorsHex.RoyalPurple, (byte) EColorsHex.RoyalPurple },
+            // Wood | SkyBG | Dark Red
+                        new byte[] { (byte) EColorsHex.Crimson, (byte) EColorsHex.Crimson },
+            // Wood | SkyBG | Light Yellow
+                        new byte[] { (byte) EColorsHex.PastelYellow, (byte) EColorsHex.PastelYellow },
+            // Wood | SkyBG | Black
+                        new byte[] { (byte) EColorsHex.Black2, (byte) EColorsHex.Black2 },
                     }
                 },
             };
@@ -656,14 +656,14 @@ namespace MM2Randomizer
                 // Create a copy of the default weapon order table to be used by teleporter function
                 // This is needed to fix teleporters breaking from the new weapon order.
                 stream.Position = 0x03f2D0; // Unused space at end of bank
-                stream.WriteByte(0x01);
-                stream.WriteByte(0x02);
-                stream.WriteByte(0x04);
-                stream.WriteByte(0x08);
-                stream.WriteByte(0x10);
-                stream.WriteByte(0x20);
-                stream.WriteByte(0x40);
-                stream.WriteByte(0x80);
+                stream.WriteByte((byte) ERMWeaponValue.HeatMan);
+                stream.WriteByte((byte) ERMWeaponValue.AirMan);
+                stream.WriteByte((byte) ERMWeaponValue.WoodMan);
+                stream.WriteByte((byte) ERMWeaponValue.BubbleMan);
+                stream.WriteByte((byte) ERMWeaponValue.QuickMan);
+                stream.WriteByte((byte) ERMWeaponValue.FlashMan);
+                stream.WriteByte((byte) ERMWeaponValue.MetalMan);
+                stream.WriteByte((byte) ERMWeaponValue.CrashMan);
 
                 // Change function to call $f2c0 instead of $c279 when looking up defeated refight boss to
                 // get our default weapon table, fixing the teleporter softlock
@@ -695,10 +695,10 @@ namespace MM2Randomizer
             // 0x03C298 - Item # from Crash Man
 
             List<byte> newItemOrder = new List<byte>();
-            for (byte i = 0; i < 5; i++) newItemOrder.Add(0);
-            newItemOrder.Add(1);
-            newItemOrder.Add(2);
-            newItemOrder.Add(4);
+            for (byte i = 0; i < 5; i++) newItemOrder.Add((byte) EItemNumber.None);
+            newItemOrder.Add((byte) EItemNumber.One);
+            newItemOrder.Add((byte) EItemNumber.Two);
+            newItemOrder.Add((byte) EItemNumber.Three);
 
             newItemOrder.Shuffle(Random);
 

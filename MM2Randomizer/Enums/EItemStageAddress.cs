@@ -16,13 +16,13 @@ namespace MM2Randomizer.Enums
         // 0x03C297 - Item # from Metal Man
         // 0x03C298 - Item # from Crash Man
 
-        HeatMan  =0x03C291,
-        AirMan   =0x03C292,
-        WoodMan  =0x03C293,
-        BubbleMan=0x03C294,
-        QuickMan =0x03C295,
-        FlashMan =0x03C296,
-        MetalMan =0x03C297,
-        CrashMan =0x03C298
+        HeatMan   = 0x03C291,
+        AirMan    = 0x03C292,
+        WoodMan   = 0x03C293,
+        BubbleMan = 0x03C294,
+        QuickMan  = 0x03C295,
+        FlashMan  = 0x03C296,
+        MetalMan  = 0x03C297,
+        CrashMan  = 0x03C298
     }
 }

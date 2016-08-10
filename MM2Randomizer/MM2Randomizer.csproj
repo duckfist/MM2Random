@@ -70,6 +70,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ColorSet.cs" />
+    <Compile Include="Enemies\Enemy.cs" />
+    <Compile Include="Enemies\EnemyRandomizer.cs" />
+    <Compile Include="Enemies\EnemyRoom.cs" />
     <Compile Include="Enums\EColorsHex.cs" />
     <Compile Include="Enums\EItemNumber.cs" />
     <Compile Include="Enums\EItemStageAddress.cs" />

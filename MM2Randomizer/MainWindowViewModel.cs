@@ -50,5 +50,10 @@
         /// TODO
         /// </summary>
         public bool IsColorsRandom { get;  set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public bool IsEnemiesRandom { get; set; }
     }
 }

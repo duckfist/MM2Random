@@ -24,7 +24,8 @@ namespace MM2Randomizer
                 IsColorsRandom = true,
                 IsWeaknessRandom = true,
                 IsWeaknessEasy = true,
-                IsWeaknessHard = false
+                IsWeaknessHard = false,
+                IsEnemiesRandom = true,
             };
 
             DataContext = ViewModel;

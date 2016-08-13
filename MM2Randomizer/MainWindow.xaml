@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MM2Randomizer"
         mc:Ignorable="d"
-        Title="MM2 Randomizer" Height="318.011" Width="368">
+        Title="MM2 Randomizer" Height="340.245" Width="368">
     <Grid>
         <Grid.Resources>
             <Style TargetType="TextBlock">
@@ -44,8 +44,9 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Mega Man 2 Randomizer v0.0.7" TextAlignment="Center" Grid.ColumnSpan="2"/>
+        <TextBlock Text="Mega Man 2 Randomizer v0.0.8" TextAlignment="Center" Grid.ColumnSpan="2"/>
         <TextBlock Grid.Row="1" Text="Seed (blank for random):"/>
         <TextBox Grid.Row="1" Grid.Column="1" Name="tbxSeed"/>
         <CheckBox Grid.Row="2" Grid.Column="1" Name="chkJapanese" Content="J-Version (Rockman 2)" IsChecked="{Binding Path=IsJapanese}"/>
@@ -55,6 +56,7 @@
         <CheckBox Grid.Row="6" Grid.Column="1" Name="chkTeleporters" Content="Random Wily 5 Teleporters" IsChecked="{Binding Path=IsTeleportersRandom}" IsEnabled="True"/>
         <CheckBox Grid.Row="7" Grid.Column="1" Name="chkColors" Content="Random Colors" IsChecked="{Binding Path=IsColorsRandom}"/>
         <CheckBox Grid.Row="8" Grid.Column="1" Name="chkEnemies" Content="Random Enemies" IsChecked="{Binding Path=IsEnemiesRandom}"/>
+        <CheckBox Grid.Row="9" Grid.Column="1" Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}"/>
 
         <CheckBox Grid.Row="3" Grid.Column="0" Name="chkWeakness" Content="Random Weaknesses" IsChecked="{Binding Path=IsWeaknessRandom}"/>
         <RadioButton Grid.Row="4" Grid.Column="0" Name="radWeaknessEasy" Margin="16,2,2,2" Content="Easy" 
@@ -64,7 +66,7 @@
                      IsEnabled="False"
                      IsChecked="{Binding Path=IsWeaknessHard}"/>
         
-        <Button Name="btnCreateROM" Grid.Row="9" Grid.RowSpan="2" Grid.ColumnSpan="2" Click="btnCreateROM_Click">
+        <Button Name="btnCreateROM" Grid.Row="10" Grid.RowSpan="2" Grid.ColumnSpan="2" Click="btnCreateROM_Click">
             Create ROM
         </Button>
     </Grid>

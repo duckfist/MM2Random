@@ -71,9 +71,14 @@
     </ApplicationDefinition>
     <Compile Include="ColorSet.cs" />
     <Compile Include="Enemies\Enemy.cs" />
+    <Compile Include="Enemies\Enemy2.cs" />
     <Compile Include="Enemies\EnemyRandomizer.cs" />
     <Compile Include="Enemies\EnemyRoom.cs" />
+    <Compile Include="Enemies\Stage.cs" />
+    <Compile Include="Enemies\StageRoom.cs" />
     <Compile Include="Enums\EColorsHex.cs" />
+    <Compile Include="Enums\EEnemyID.cs" />
+    <Compile Include="Enums\EEnemyObjectAddress.cs" />
     <Compile Include="Enums\EItemNumber.cs" />
     <Compile Include="Enums\EItemStageAddress.cs" />
     <Compile Include="Enums\EMiscAddresses.cs" />
@@ -83,6 +88,7 @@
     <Compile Include="Enums\ERMStageWeaponAddress.cs" />
     <Compile Include="Enums\ERMWeaponAddress.cs" />
     <Compile Include="Enums\ERMWeaponValue.cs" />
+    <Compile Include="Enums\EStageID.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="RandomMM2.cs" />
     <Compile Include="StageFromSelect.cs" />

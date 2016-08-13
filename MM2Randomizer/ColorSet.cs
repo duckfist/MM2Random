@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using MM2Randomizer.Enums;
 
 namespace MM2Randomizer
 {
     public class ColorSet
     {
         public int[] addresses;
-        public List<byte[]> ColorBytes;
+        public List<EColorsHex[]> ColorBytes;
         public int Index; 
 
         public ColorSet()
         {
-            ColorBytes = new List<byte[]>();
+            ColorBytes = new List<EColorsHex[]>();
             Index = 0;
         }
 
@@ -24,7 +24,7 @@ namespace MM2Randomizer
             for (int i = 0; i < addresses.Length; i++)
             {
                 stream.Position = addresses[i];
-                stream.WriteByte(ColorBytes[Index][i]);
+                stream.WriteByte((byte)ColorBytes[Index][i]);
             }
         }
     }

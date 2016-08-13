@@ -55,5 +55,10 @@
         /// TODO
         /// </summary>
         public bool IsEnemiesRandom { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public bool BurstChaserMode { get; set; }
     }
 }

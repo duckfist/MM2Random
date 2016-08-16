@@ -130,19 +130,24 @@ namespace MM2Randomizer.Enemies
                 new List<int>() { 3 }));
             Enemies.Add(new Enemy(EEnemyID.Tanishi,
                 new List<byte>() { 0x9B, 0x03, 0x9C, 0x03 },
-                new List<int>() { 0, 1 }));
+                new List<int>() { 0, 1 }, 
+                20)); // Guess
             Enemies.Add(new Enemy(EEnemyID.Kerog,
                 new List<byte>() { 0x9B, 0x02, 0x9C, 0x02, 0x9D, 0x02 },
-                new List<int>() { 0, 1, 2 }));
+                new List<int>() { 0, 1, 2 },
+                32)); // Guess
             Enemies.Add(new Enemy(EEnemyID.Batton,
                 new List<byte>() { 0x94, 0x02, 0x93, 0x02 },
-                new List<int>() { 3, 4 }));
+                new List<int>() { 3, 4 },
+                16)); // Guess
             Enemies.Add(new Enemy(EEnemyID.Robbit,
                 new List<byte>() { 0x98, 0x02, 0x99, 0x02, 0x9A, 0x02 },
-                new List<int>() { 0, 1, 2 }));
+                new List<int>() { 0, 1, 2 },
+                32)); // Guess
             Enemies.Add(new Enemy(EEnemyID.Monking,
                 new List<byte>() { 0x98, 0x01, 0x99, 0x01, 0x9A, 0x01, 0x9B, 0x01 },
-                new List<int>() { 0, 1, 2, 3 }));
+                new List<int>() { 0, 1, 2, 3 },
+                32)); // Guess
             Enemies.Add(new Enemy(EEnemyID.Kukku_Activator,
                 new List<byte>() { 0x90, 0x01, 0x91, 0x01, 0x92, 0x01, 0x93, 0x01 },
                 new List<int>() { 0, 1, 2, 3 }));
@@ -151,7 +156,8 @@ namespace MM2Randomizer.Enemies
                 new List<int>() { 4 }));
             Enemies.Add(new Enemy(EEnemyID.Pierrobot,
                 new List<byte>() { 0x96, 0x01, 0x97, 0x01 },
-                new List<int>() { 0, 1 }));
+                new List<int>() { 0, 1 },
+                32)); // Guess
             Enemies.Add(new Enemy(EEnemyID.FlyBoy,
                 new List<byte>() { 0x94, 0x01, 0x95, 0x01 },
                 new List<int>() { 0, 1 }));
@@ -160,35 +166,43 @@ namespace MM2Randomizer.Enemies
                 new List<int>() { 3 }));
             Enemies.Add(new Enemy(EEnemyID.Blocky,
                 new List<byte>() { 0x9E, 0x03 },
-                new List<int>() { 3 }));
+                new List<int>() { 3 },
+                64)); // Guess
             Enemies.Add(new Enemy(EEnemyID.NeoMetall,
                 new List<byte>() { 0x92, 0x02, 0x9A, 0x03 },
-                new List<int>() { 2, 3 }));
+                new List<int>() { 2, 3 },
+                12)); // Guess
             Enemies.Add(new Enemy(EEnemyID.Matasaburo,
                 new List<byte>() { 0x90, 0x02, 0x91, 0x02, 0x92, 0x02 },
-                new List<int>() { 0, 1, 2 }));
+                new List<int>() { 0, 1, 2 },
+                32)); // Guess
             Enemies.Add(new Enemy(EEnemyID.Pipi_Activator,
                 new List<byte>() { 0x9C, 0x01 },
                 new List<int>() { 4 }));
             Enemies.Add(new Enemy(EEnemyID.LightningGoro,
                 new List<byte>() { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01 },
-                new List<int>() { 0, 1, 2 }));
+                new List<int>() { 0, 1, 2 },
+                20)); // Guess
             Enemies.Add(new Enemy(EEnemyID.Mole_Activator,
                 new List<byte>() { 0x90, 0x03 },
                 new List<int>() { 4 }));
             Enemies.Add(new Enemy(EEnemyID.Shotman_Left,
                 new List<byte>() { 0x98, 0x03, 0x99, 0x03 },
-                new List<int>() { 0, 1 }));
+                new List<int>() { 0, 1 },
+                20)); // Guess
             Enemies.Add(new Enemy(EEnemyID.SniperArmor,
                 new List<byte>() { 0x91, 0x03, 0x92, 0x03, 0x93, 0x03, 0x94, 0x03, 0x95, 0x03 },
-                new List<int>() { 0, 1, 2, 3, 4 }));
+                new List<int>() { 0, 1, 2, 3, 4 },
+                64)); // Guess
             Enemies.Add(new Enemy(EEnemyID.SniperJoe,
                 new List<byte>() { 0x94, 0x03, 0x95, 0x03 },
-                new List<int>() { 3, 4 }));
+                new List<int>() { 3, 4 },
+                24)); // Guess
             Enemies.Add(new Enemy(EEnemyID.Scworm,
                 new List<byte>() { 0x9E, 0x04 },
-                new List<int>() { 3 }));
-            
+                new List<int>() { 3 },
+                8)); // Guess
+
             // Copy enemy list to dictionary
             foreach (Enemy e in Enemies)
             {

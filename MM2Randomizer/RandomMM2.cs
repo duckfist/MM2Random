@@ -42,10 +42,6 @@ namespace MM2Randomizer
                 {
                     RandomTeleporters();
                 }
-                if (Settings.IsColorsRandom)
-                {
-                    RandomColors();
-                }
                 if (Settings.IsWeaknessRandom)
                 {
                     // Offsets are different in Rockman 2 and Mega Man 2
@@ -57,6 +53,14 @@ namespace MM2Randomizer
                 if (Settings.IsEnemiesRandom)
                 {
                     RandomEnemies();
+                }
+                if (Settings.IsColorsRandom)
+                {
+                    RandomColors();
+                }
+                if (Settings.IsBGMRandom)
+                {
+                    RandomBGM();
                 }
                 if (Settings.BurstChaserMode)
                 {
@@ -932,6 +936,51 @@ namespace MM2Randomizer
         }
 
         /// <summary>
+        /// TODO
+        /// </summary>
+        private static void RandomBGM()
+        {
+            List<EMusicID> newBGMOrder = new List<EMusicID>();
+            List<EMusicID> robos = new List<EMusicID>();
+
+            // Select 2 replacement tracks for the 2 extra instance of the boring W3/4/5 theme
+            robos.Add(EMusicID.Flash);
+            robos.Add(EMusicID.Heat);
+            robos.Add(EMusicID.Air);
+            robos.Add(EMusicID.Wood);
+            robos.Add(EMusicID.Quick);
+            robos.Add(EMusicID.Metal);
+            robos.Add(EMusicID.Clash);
+            robos.Add(EMusicID.Bubble);
+            robos.Shuffle(Random);
+            
+            newBGMOrder.Add(EMusicID.Flash);
+            newBGMOrder.Add(EMusicID.Heat);
+            newBGMOrder.Add(EMusicID.Air);
+            newBGMOrder.Add(EMusicID.Wood);
+            newBGMOrder.Add(EMusicID.Quick);
+            newBGMOrder.Add(EMusicID.Metal);
+            newBGMOrder.Add(EMusicID.Clash);
+            newBGMOrder.Add(EMusicID.Bubble);
+            newBGMOrder.Add(EMusicID.Wily12);
+            newBGMOrder.Add(EMusicID.Wily12);
+            newBGMOrder.Add(EMusicID.Wily345);
+            newBGMOrder.Add(robos[0]);
+            newBGMOrder.Add(robos[1]);
+
+            // Randomize tracks and write to ROM
+            newBGMOrder.Shuffle(Random);
+            using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                stream.Position = 0x0381E0; // Heatman BGM ID, both J and U
+                foreach (EMusicID bgm in newBGMOrder)
+                {
+                    stream.WriteByte((byte)bgm);
+                }
+            }
+        }
+
+        /// <summary>
         /// Shuffle which Robot Master awards which weapon.
         /// </summary>
         private static void RandomWeapons()
@@ -974,7 +1023,8 @@ namespace MM2Randomizer
 
                 // Create a copy of the default weapon order table to be used by teleporter function
                 // This is needed to fix teleporters breaking from the new weapon order.
-                stream.Position = 0x03f2D0; // Unused space at end of bank
+                //stream.Position = 0x03f2D0; // Unused space at end of bank
+                stream.Position = 0x03f310; // Unused space at end of bank
                 stream.WriteByte((byte) ERMWeaponValue.HeatMan);
                 stream.WriteByte((byte) ERMWeaponValue.AirMan);
                 stream.WriteByte((byte) ERMWeaponValue.WoodMan);
@@ -984,11 +1034,11 @@ namespace MM2Randomizer
                 stream.WriteByte((byte) ERMWeaponValue.MetalMan);
                 stream.WriteByte((byte) ERMWeaponValue.CrashMan);
 
-                // Change function to call $f2c0 instead of $c279 when looking up defeated refight boss to
+                // Change function to call $f300 instead of $c279 when looking up defeated refight boss to
                 // get our default weapon table, fixing the teleporter softlock
                 stream.Position = 0x03843b;
-                stream.WriteByte(0xc0);
-                stream.WriteByte(0xf2);
+                stream.WriteByte(0x00);
+                stream.WriteByte(0xf3);
 
                 // Create table for which stage is selectable on the stage select screen (independent of it being blacked out)
                 stream.Position = (long) ERMStageSelect.FirstStageInMemory; // 0x0346E1;
@@ -1013,11 +1063,11 @@ namespace MM2Randomizer
             // 0x03C297 - Item # from Metal Man
             // 0x03C298 - Item # from Crash Man
 
-            List<byte> newItemOrder = new List<byte>();
-            for (byte i = 0; i < 5; i++) newItemOrder.Add((byte) EItemNumber.None);
-            newItemOrder.Add((byte) EItemNumber.One);
-            newItemOrder.Add((byte) EItemNumber.Two);
-            newItemOrder.Add((byte) EItemNumber.Three);
+            List<EItemNumber> newItemOrder = new List<EItemNumber>();
+            for (byte i = 0; i < 5; i++) newItemOrder.Add(EItemNumber.None);
+            newItemOrder.Add(EItemNumber.One);
+            newItemOrder.Add(EItemNumber.Two);
+            newItemOrder.Add(EItemNumber.Three);
 
             newItemOrder.Shuffle(Random);
 

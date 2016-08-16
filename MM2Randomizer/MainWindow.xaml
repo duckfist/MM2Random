@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:MM2Randomizer"
         mc:Ignorable="d"
         Title="MM2 Randomizer" Height="340.245" Width="368">
+<Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
     <Grid>
         <Grid.Resources>
             <Style TargetType="TextBlock">
@@ -44,7 +49,6 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Text="Mega Man 2 Randomizer v0.0.8" TextAlignment="Center" Grid.ColumnSpan="2"/>
         <TextBlock Grid.Row="1" Text="Seed (blank for random):"/>
@@ -54,9 +58,10 @@
         <CheckBox Grid.Row="4" Grid.Column="1" Name="chkWeapons" Content="Random Weapon Get" IsChecked="{Binding Path=IsWeaponsRandom}"/>
         <CheckBox Grid.Row="5" Grid.Column="1" Name="chkItems" Content="Random Items 1, 2, and 3 Get" IsChecked="{Binding Path=IsItemsRandom}"/>
         <CheckBox Grid.Row="6" Grid.Column="1" Name="chkTeleporters" Content="Random Wily 5 Teleporters" IsChecked="{Binding Path=IsTeleportersRandom}" IsEnabled="True"/>
-        <CheckBox Grid.Row="7" Grid.Column="1" Name="chkColors" Content="Random Colors" IsChecked="{Binding Path=IsColorsRandom}"/>
-        <CheckBox Grid.Row="8" Grid.Column="1" Name="chkEnemies" Content="Random Enemies" IsChecked="{Binding Path=IsEnemiesRandom}"/>
-        <CheckBox Grid.Row="9" Grid.Column="1" Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}"/>
+        <CheckBox Grid.Row="7" Grid.Column="1" Name="chkEnemies" Content="Random Enemies" IsChecked="{Binding Path=IsEnemiesRandom}"/>
+        <CheckBox Grid.Row="8" Grid.Column="1" Name="chkColors" Content="Random Colors" IsChecked="{Binding Path=IsColorsRandom}"/>
+        <CheckBox Grid.Row="9" Grid.Column="1" Name="chkBGM" Content="Stage BGM" IsChecked="{Binding Path=IsBGMRandom}"/>
+        <CheckBox Grid.Row="10" Grid.Column="1" Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}"/>
 
         <CheckBox Grid.Row="3" Grid.Column="0" Name="chkWeakness" Content="Random Weaknesses" IsChecked="{Binding Path=IsWeaknessRandom}"/>
         <RadioButton Grid.Row="4" Grid.Column="0" Name="radWeaknessEasy" Margin="16,2,2,2" Content="Easy" 
@@ -65,9 +70,11 @@
         <RadioButton Grid.Row="5" Grid.Column="0" Name="radWeaknessHard" Margin="16,2,2,2" Content="Hard" 
                      IsEnabled="False"
                      IsChecked="{Binding Path=IsWeaknessHard}"/>
-        
-        <Button Name="btnCreateROM" Grid.Row="10" Grid.RowSpan="2" Grid.ColumnSpan="2" Click="btnCreateROM_Click">
+    </Grid>
+    <Grid Grid.Row="2">
+        <Button Name="btnCreateROM" Click="btnCreateROM_Click">
             Create ROM
         </Button>
+    </Grid>
     </Grid>
 </Window>

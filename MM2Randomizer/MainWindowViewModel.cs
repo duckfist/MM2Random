@@ -59,6 +59,11 @@
         /// <summary>
         /// TODO
         /// </summary>
+        public bool IsBGMRandom { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
         public bool BurstChaserMode { get; set; }
     }
 }

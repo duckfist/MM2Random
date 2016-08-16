@@ -82,6 +82,7 @@
     <Compile Include="Enums\EItemNumber.cs" />
     <Compile Include="Enums\EItemStageAddress.cs" />
     <Compile Include="Enums\EMiscAddresses.cs" />
+    <Compile Include="Enums\EMusicID.cs" />
     <Compile Include="Enums\ERMPortraitAddress.cs" />
     <Compile Include="Enums\ERMStageClearAddress.cs" />
     <Compile Include="Enums\ERMStageSelect.cs" />

@@ -4,7 +4,8 @@ using System.IO;
 using System.Linq;
 
 using MM2Randomizer.Enums;
-using MM2Randomizer.Enemies;
+using MM2Randomizer.Randomizers;
+using MM2Randomizer.Randomizers.Enemies;
 
 namespace MM2Randomizer
 {
@@ -61,6 +62,10 @@ namespace MM2Randomizer
                 if (Settings.IsBGMRandom)
                 {
                     RandomBGM();
+                }
+                if (Settings.IsWeaponNamesRandom)
+                {
+                    RandomWeaponNames();
                 }
                 if (Settings.BurstChaserMode)
                 {
@@ -978,6 +983,11 @@ namespace MM2Randomizer
                     stream.WriteByte((byte)bgm);
                 }
             }
+        }
+
+        private static void RandomWeaponNames()
+        {
+            RWeaponNames rWeaponNames = new RWeaponNames();
         }
 
         /// <summary>

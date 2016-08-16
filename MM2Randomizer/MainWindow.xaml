@@ -49,6 +49,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Text="Mega Man 2 Randomizer v0.0.8" TextAlignment="Center" Grid.ColumnSpan="2"/>
         <TextBlock Grid.Row="1" Text="Seed (blank for random):"/>
@@ -61,7 +62,8 @@
         <CheckBox Grid.Row="7" Grid.Column="1" Name="chkEnemies" Content="Random Enemies" IsChecked="{Binding Path=IsEnemiesRandom}"/>
         <CheckBox Grid.Row="8" Grid.Column="1" Name="chkColors" Content="Random Colors" IsChecked="{Binding Path=IsColorsRandom}"/>
         <CheckBox Grid.Row="9" Grid.Column="1" Name="chkBGM" Content="Stage BGM" IsChecked="{Binding Path=IsBGMRandom}"/>
-        <CheckBox Grid.Row="10" Grid.Column="1" Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}"/>
+        <CheckBox Grid.Row="10" Grid.Column="1" Name="chkWeaponNames" Content="Weapon Names" IsChecked="{Binding Path=IsWeaponNamesRandom}"/>
+        <CheckBox Grid.Row="11" Grid.Column="1" Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}"/>
 
         <CheckBox Grid.Row="3" Grid.Column="0" Name="chkWeakness" Content="Random Weaknesses" IsChecked="{Binding Path=IsWeaknessRandom}"/>
         <RadioButton Grid.Row="4" Grid.Column="0" Name="radWeaknessEasy" Margin="16,2,2,2" Content="Easy" 

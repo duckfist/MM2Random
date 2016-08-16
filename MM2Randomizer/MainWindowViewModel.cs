@@ -62,6 +62,11 @@
         public bool IsBGMRandom { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public bool IsWeaponNamesRandom { get; set; }
+
+        /// <summary>
         /// TODO
         /// </summary>
         public bool BurstChaserMode { get; set; }

@@ -2,7 +2,7 @@
 
 using MM2Randomizer.Enums;
 
-namespace MM2Randomizer.Enemies
+namespace MM2Randomizer.Randomizers.Enemies
 {
     public class EnemyRoom
     {

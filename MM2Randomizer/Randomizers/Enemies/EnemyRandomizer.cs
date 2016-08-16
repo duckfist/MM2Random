@@ -1,11 +1,9 @@
 ﻿using MM2Randomizer.Enums;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
-namespace MM2Randomizer.Enemies
+namespace MM2Randomizer.Randomizers.Enemies
 {
     public class EnemyRandomizer
     {
@@ -27,12 +25,10 @@ namespace MM2Randomizer.Enemies
 
             InitializeEnemies();
             InitializeRooms();
-            CreateRooms();
+            Randomize();
         }
 
-
-
-        private void CreateRooms()
+        private void Randomize()
         {
             foreach (EnemyRoom room in Rooms)
             {

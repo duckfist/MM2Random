@@ -2,7 +2,7 @@
 
 using MM2Randomizer.Enums;
 
-namespace MM2Randomizer.Enemies
+namespace MM2Randomizer.Randomizers.Enemies
 {
     public class Enemy
     {
@@ -22,6 +22,7 @@ namespace MM2Randomizer.Enemies
             PatternTableAddresses = patternTableAddresses;
             SpriteBankRows = spriteBankRows;
             Height = height;
+            
         }
     }
 }

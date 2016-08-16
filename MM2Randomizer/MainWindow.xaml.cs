@@ -27,6 +27,7 @@ namespace MM2Randomizer
                 IsWeaknessHard = false,
                 IsEnemiesRandom = true,
                 IsBGMRandom = true,
+                IsWeaponNamesRandom = true,
                 BurstChaserMode = false
             };
 

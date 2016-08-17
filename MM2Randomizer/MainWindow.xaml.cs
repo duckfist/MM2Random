@@ -53,5 +53,10 @@ namespace MM2Randomizer
             RandomMM2.Randomize();
             tbxSeed.Text = String.Format("{0}", RandomMM2.Seed);
         }
+
+        private void chkJapanese_Checked(object sender, RoutedEventArgs e)
+        {
+            chkWeaponNames.IsChecked = false;
+        }
     }
 }

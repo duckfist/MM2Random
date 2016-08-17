@@ -58,7 +58,7 @@
             <TextBlock Text="Mega Man 2 Randomizer v0.0.8" TextAlignment="Center" Grid.ColumnSpan="2"/>
             <TextBlock Grid.Row="1" Text="Seed (blank for random):"/>
             <TextBox Grid.Row="1" Grid.Column="1" Name="tbxSeed"/>
-            <CheckBox Grid.Row="2" Grid.Column="1" Name="chkJapanese" Content="J-Version (Rockman 2)" IsChecked="True"/>
+            <CheckBox Grid.Row="2" Grid.Column="1" Name="chkJapanese" Content="J-Version (Rockman 2)" IsChecked="False" Checked="chkJapanese_Checked"/>
             <CheckBox Grid.Row="3" Grid.Column="1" Name="chk8Stages" Content="Random Robot Master Stages" IsChecked="{Binding Path=Is8StagesRandom}"/>
             <CheckBox Grid.Row="4" Grid.Column="1" Name="chkWeapons" Content="Random Weapon Get" IsChecked="{Binding Path=IsWeaponsRandom}"/>
             <CheckBox Grid.Row="5" Grid.Column="1" Name="chkItems" Content="Random Items 1, 2, and 3 Get" IsChecked="{Binding Path=IsItemsRandom}"/>
@@ -68,7 +68,9 @@
             <CheckBox Grid.Row="9" Grid.Column="1" Name="chkBGM" Content="Stage BGM" IsChecked="{Binding Path=IsBGMRandom}"/>
             <CheckBox Grid.Row="10" Grid.Column="1" Name="chkWeaponNames" Content="Weapon Names" 
                       IsEnabled="{Binding ElementName=chkJapanese, Path=IsChecked, TargetNullValue=false, Converter={StaticResource inverseBooleanConverter}}"
-                      IsChecked="{Binding Path=IsWeaponNamesRandom}"/>
+                      IsChecked="{Binding Path=IsWeaponNamesRandom}">
+
+            </CheckBox>
             <CheckBox Grid.Row="11" Grid.Column="1" Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}"/>
 
             <CheckBox Grid.Row="3" Grid.Column="0" Name="chkWeakness" Content="Random Weaknesses" IsChecked="{Binding Path=IsWeaknessRandom}"/>

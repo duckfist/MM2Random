@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using MM2Randomizer.Enums;
 
-namespace MM2Randomizer
+namespace MM2Randomizer.Randomizers.Colors
 {
     public class ColorSet
     {

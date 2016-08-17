@@ -4,79 +4,85 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MM2Randomizer"
+        xmlns:converters="clr-namespace:MM2Randomizer.Converters"
         mc:Ignorable="d"
         Title="MM2 Randomizer" Height="340.245" Width="368">
-<Grid>
+    <Window.Resources>
+        <converters:InverseBooleanConverter x:Key="inverseBooleanConverter"/>
+    </Window.Resources>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-    <Grid>
-        <Grid.Resources>
-            <Style TargetType="TextBlock">
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="Margin" Value="4"/>
-            </Style>
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="4"/>
+                </Style>
 
-            <Style TargetType="TextBox">
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="Margin" Value="2"/>
-            </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="2"/>
+                </Style>
 
-            <Style TargetType="CheckBox">
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="Margin" Value="2"/>
-            </Style>
+                <Style TargetType="CheckBox">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="2"/>
+                </Style>
 
-            <Style TargetType="RadioButton">
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="Margin" Value="2"/>
-            </Style>
-        </Grid.Resources>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Mega Man 2 Randomizer v0.0.8" TextAlignment="Center" Grid.ColumnSpan="2"/>
-        <TextBlock Grid.Row="1" Text="Seed (blank for random):"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Name="tbxSeed"/>
-        <CheckBox Grid.Row="2" Grid.Column="1" Name="chkJapanese" Content="J-Version (Rockman 2)" IsChecked="{Binding Path=IsJapanese}"/>
-        <CheckBox Grid.Row="3" Grid.Column="1" Name="chk8Stages" Content="Random Robot Master Stages" IsChecked="{Binding Path=Is8StagesRandom}"/>
-        <CheckBox Grid.Row="4" Grid.Column="1" Name="chkWeapons" Content="Random Weapon Get" IsChecked="{Binding Path=IsWeaponsRandom}"/>
-        <CheckBox Grid.Row="5" Grid.Column="1" Name="chkItems" Content="Random Items 1, 2, and 3 Get" IsChecked="{Binding Path=IsItemsRandom}"/>
-        <CheckBox Grid.Row="6" Grid.Column="1" Name="chkTeleporters" Content="Random Wily 5 Teleporters" IsChecked="{Binding Path=IsTeleportersRandom}" IsEnabled="True"/>
-        <CheckBox Grid.Row="7" Grid.Column="1" Name="chkEnemies" Content="Random Enemies" IsChecked="{Binding Path=IsEnemiesRandom}"/>
-        <CheckBox Grid.Row="8" Grid.Column="1" Name="chkColors" Content="Random Colors" IsChecked="{Binding Path=IsColorsRandom}"/>
-        <CheckBox Grid.Row="9" Grid.Column="1" Name="chkBGM" Content="Stage BGM" IsChecked="{Binding Path=IsBGMRandom}"/>
-        <CheckBox Grid.Row="10" Grid.Column="1" Name="chkWeaponNames" Content="Weapon Names" IsChecked="{Binding Path=IsWeaponNamesRandom}"/>
-        <CheckBox Grid.Row="11" Grid.Column="1" Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}"/>
+                <Style TargetType="RadioButton">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="2"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Mega Man 2 Randomizer v0.0.8" TextAlignment="Center" Grid.ColumnSpan="2"/>
+            <TextBlock Grid.Row="1" Text="Seed (blank for random):"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="tbxSeed"/>
+            <CheckBox Grid.Row="2" Grid.Column="1" Name="chkJapanese" Content="J-Version (Rockman 2)" IsChecked="True"/>
+            <CheckBox Grid.Row="3" Grid.Column="1" Name="chk8Stages" Content="Random Robot Master Stages" IsChecked="{Binding Path=Is8StagesRandom}"/>
+            <CheckBox Grid.Row="4" Grid.Column="1" Name="chkWeapons" Content="Random Weapon Get" IsChecked="{Binding Path=IsWeaponsRandom}"/>
+            <CheckBox Grid.Row="5" Grid.Column="1" Name="chkItems" Content="Random Items 1, 2, and 3 Get" IsChecked="{Binding Path=IsItemsRandom}"/>
+            <CheckBox Grid.Row="6" Grid.Column="1" Name="chkTeleporters" Content="Random Wily 5 Teleporters" IsChecked="{Binding Path=IsTeleportersRandom}" IsEnabled="True"/>
+            <CheckBox Grid.Row="7" Grid.Column="1" Name="chkEnemies" Content="Random Enemies" IsChecked="{Binding Path=IsEnemiesRandom}"/>
+            <CheckBox Grid.Row="8" Grid.Column="1" Name="chkColors" Content="Random Colors" IsChecked="{Binding Path=IsColorsRandom}"/>
+            <CheckBox Grid.Row="9" Grid.Column="1" Name="chkBGM" Content="Stage BGM" IsChecked="{Binding Path=IsBGMRandom}"/>
+            <CheckBox Grid.Row="10" Grid.Column="1" Name="chkWeaponNames" Content="Weapon Names" 
+                      IsEnabled="{Binding ElementName=chkJapanese, Path=IsChecked, TargetNullValue=false, Converter={StaticResource inverseBooleanConverter}}"
+                      IsChecked="{Binding Path=IsWeaponNamesRandom}"/>
+            <CheckBox Grid.Row="11" Grid.Column="1" Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}"/>
 
-        <CheckBox Grid.Row="3" Grid.Column="0" Name="chkWeakness" Content="Random Weaknesses" IsChecked="{Binding Path=IsWeaknessRandom}"/>
-        <RadioButton Grid.Row="4" Grid.Column="0" Name="radWeaknessEasy" Margin="16,2,2,2" Content="Easy" 
-                     IsEnabled="{Binding ElementName=chkWeakness, Path=IsChecked, TargetNullValue=false}"
-                     IsChecked="{Binding Path=IsWeaknessEasy}"/>
-        <RadioButton Grid.Row="5" Grid.Column="0" Name="radWeaknessHard" Margin="16,2,2,2" Content="Hard" 
-                     IsEnabled="False"
-                     IsChecked="{Binding Path=IsWeaknessHard}"/>
-    </Grid>
-    <Grid Grid.Row="2">
-        <Button Name="btnCreateROM" Click="btnCreateROM_Click">
-            Create ROM
-        </Button>
-    </Grid>
+            <CheckBox Grid.Row="3" Grid.Column="0" Name="chkWeakness" Content="Random Weaknesses" IsChecked="{Binding Path=IsWeaknessRandom}"/>
+            <RadioButton Grid.Row="4" Grid.Column="0" Name="radWeaknessEasy" Margin="16,2,2,2" Content="Easy" 
+                         IsEnabled="{Binding ElementName=chkWeakness, Path=IsChecked, TargetNullValue=false}"
+                         IsChecked="{Binding Path=IsWeaknessEasy}"/>
+            <RadioButton Grid.Row="5" Grid.Column="0" Name="radWeaknessHard" Margin="16,2,2,2" Content="Hard" 
+                         IsEnabled="False"
+                         IsChecked="{Binding Path=IsWeaknessHard}"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Button Name="btnCreateROM" Click="btnCreateROM_Click">
+                Create ROM
+            </Button>
+        </Grid>
     </Grid>
 </Window>

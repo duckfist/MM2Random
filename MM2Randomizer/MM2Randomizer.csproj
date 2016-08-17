@@ -69,10 +69,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ColorSet.cs" />
-    <Compile Include="Randomizers\Enemies\Enemy.cs" />
-    <Compile Include="Randomizers\Enemies\Enemy2.cs" />
-    <Compile Include="Randomizers\Enemies\EnemyRandomizer.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Randomizers\Colors\ColorSet.cs" />
+    <Compile Include="Randomizers\Colors\RColors.cs" />
+    <Compile Include="Randomizers\Enemies\EnemyType.cs" />
+    <Compile Include="Randomizers\Enemies\EnemyInstance.cs" />
+    <Compile Include="Randomizers\Enemies\REnemies.cs" />
     <Compile Include="Randomizers\Enemies\EnemyRoom.cs" />
     <Compile Include="Randomizers\Enemies\Stage.cs" />
     <Compile Include="Randomizers\Enemies\StageRoom.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Enums\ERMWeaponValue.cs" />
     <Compile Include="Enums\EStageID.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Randomizers\Enemies\StagesTest.cs" />
     <Compile Include="Randomizers\RWeaponNames.cs" />
     <Compile Include="RandomMM2.cs" />
     <Compile Include="StageFromSelect.cs" />
@@ -126,6 +129,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="enemylist.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="j.dat" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

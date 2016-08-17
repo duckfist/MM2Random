@@ -4,7 +4,7 @@ using MM2Randomizer.Enums;
 
 namespace MM2Randomizer.Randomizers.Enemies
 {
-    public class Enemy
+    public class EnemyType
     {
         public EEnemyID ID { get; set; }
         public List<byte> PatternTableAddresses { get; set; }
@@ -16,7 +16,7 @@ namespace MM2Randomizer.Randomizers.Enemies
         /// </summary>
         public int Height { get; set; }
 
-        public Enemy(EEnemyID id, List<byte> patternTableAddresses, List<int> spriteBankRows, int height = 0)
+        public EnemyType(EEnemyID id, List<byte> patternTableAddresses, List<int> spriteBankRows, int height = 0)
         {
             ID = id;
             PatternTableAddresses = patternTableAddresses;

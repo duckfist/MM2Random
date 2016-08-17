@@ -1,15 +1,26 @@
 ﻿using MM2Randomizer.Enums;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace MM2Randomizer.Randomizers.Enemies
 {
-    public class EnemyRandomizer
+    /// <summary>
+    /// Stage Enemy Type Randomizer
+    /// </summary>
+    public class REnemies
     {
-        public List<Enemy> Enemies { get; set; }
-        public Dictionary<EEnemyID, Enemy> EnemiesByType { get; set; }
+        public List<EnemyType> EnemyTypes { get; set; }
+        public List<EnemyInstance> AEI = new List<EnemyInstance>();
+        public Dictionary<EEnemyID, EnemyType> EnemiesByType { get; set; }
         public List<EnemyRoom> Rooms { get; set; }
+
+        public static int Stage0EnemyScreenAddress = 0x3610;
+        public static int Stage0EnemyYAddress = 0x3810;
+        public static int Stage0EnemyIDAddress = 0x3910;
+        public static int StageLength = 0x4000;
 
         public static int MAX_MOLES = 2;
         public static int MAX_PIPIS = 6;
@@ -17,15 +28,37 @@ namespace MM2Randomizer.Randomizers.Enemies
         public int numMoles = 0;
         public int numPipis = 0;
 
-        public EnemyRandomizer()
+        public REnemies()
         {
-            Enemies = new List<Enemy>();
-            EnemiesByType = new Dictionary<EEnemyID, Enemy>();
+            EnemyTypes = new List<EnemyType>();
+            EnemiesByType = new Dictionary<EEnemyID, EnemyType>();
             Rooms = new List<EnemyRoom>();
 
+            ReadEnemyInstancesFromFile();
             InitializeEnemies();
             InitializeRooms();
             Randomize();
+        }
+
+        private void ReadEnemyInstancesFromFile()
+        {
+            using (StreamReader sr = new StreamReader("enemylist.csv"))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    string[] args = line.Split(new char[] { ',' });
+
+                    EnemyInstance enemy = new EnemyInstance(
+                        Convert.ToInt32(args[0], 16),
+                        Convert.ToInt32(args[1], 16),
+                        Convert.ToInt32(args[2], 16),
+                        Convert.ToInt32(args[3], 16),
+                        Int32.Parse(args[4]));
+
+                    AEI.Add(enemy);
+                }
+            }
         }
 
         private void Randomize()
@@ -37,20 +70,34 @@ namespace MM2Randomizer.Randomizers.Enemies
                     continue;
 
                 // Create valid random combination of enemies to place
-                List<Enemy> newEnemies = GenerateEnemyCombinations(room);
+                List<EnemyType> newEnemies = GenerateEnemyCombinations(room);
 
                 // Change each enemy ID for the room to a random enemy from the new enemy set
-                for (int i = 0; i < room.EnemyIDAddresses.Length; i++)
+                for (int i = 0; i < room.EnemyInstances.Length; i++)
                 {
                     int randomIndex = RandomMM2.Random.Next(newEnemies.Count);
-                    Enemy newEnemy = newEnemies[randomIndex];
+                    EnemyType newEnemyType = newEnemies[randomIndex];
 
-                    room.NewEnemyInstances.Add(newEnemies[randomIndex]);
+                    room.NewEnemyTypes.Add(newEnemies[randomIndex]);
+
+                    // TODO: Change enemy Y position for position-sensitive enemies and high spawn points
+                    if (newEnemyType.Height > 0 && room.EnemyInstances[i].YPrev < 32)
+                    {
+
+                    }
 
                     using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
                     {
-                        stream.Position = room.EnemyIDAddresses[i];
+                        // Change the enemy ID in the ROM
+                        int IDposition = Stage0EnemyIDAddress +
+                            room.EnemyInstances[i].StageNum * StageLength +
+                            room.EnemyInstances[i].Offset;
+
+                        stream.Position = IDposition;
                         stream.WriteByte((byte)newEnemies[randomIndex].ID);
+
+                        // Update object with new ID for future use
+                        room.EnemyInstances[i].EnemyID = (byte)newEnemies[randomIndex].ID;
                     }
                 }
 
@@ -58,7 +105,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
                 {
                     stream.Position = room.PatternAddressStart;
-                    foreach (Enemy e in room.NewEnemyInstances)
+                    foreach (EnemyType e in room.NewEnemyTypes)
                     {
                         for (int i = 0; i < e.SpriteBankRows.Count; i++)
                         {
@@ -71,12 +118,12 @@ namespace MM2Randomizer.Randomizers.Enemies
             }
         }
 
-        public bool CheckEnemySpriteFitInBank(List<Enemy> currentSprites, Enemy spriteToAdd)
+        public bool CheckEnemySpriteFitInBank(List<EnemyType> currentSprites, EnemyType spriteToAdd)
         {
             List<int> currentRows = new List<int>();
             List<int> currentAddresses = new List<int>();
             
-            foreach (Enemy e in currentSprites)
+            foreach (EnemyType e in currentSprites)
             {
                 // Return false if enemy is already in the list
                 if (spriteToAdd.ID == e.ID)
@@ -121,86 +168,86 @@ namespace MM2Randomizer.Randomizers.Enemies
 
         public void InitializeEnemies()
         {
-            Enemies.Add(new Enemy(EEnemyID.Claw_Activator,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Claw_Activator,
                 new List<byte>() { 0x9D, 0x03 },
                 new List<int>() { 3 }));
-            Enemies.Add(new Enemy(EEnemyID.Tanishi,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Tanishi,
                 new List<byte>() { 0x9B, 0x03, 0x9C, 0x03 },
                 new List<int>() { 0, 1 }, 
                 20)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.Kerog,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Kerog,
                 new List<byte>() { 0x9B, 0x02, 0x9C, 0x02, 0x9D, 0x02 },
                 new List<int>() { 0, 1, 2 },
                 32)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.Batton,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Batton,
                 new List<byte>() { 0x94, 0x02, 0x93, 0x02 },
                 new List<int>() { 3, 4 },
                 16)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.Robbit,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Robbit,
                 new List<byte>() { 0x98, 0x02, 0x99, 0x02, 0x9A, 0x02 },
                 new List<int>() { 0, 1, 2 },
                 32)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.Monking,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Monking,
                 new List<byte>() { 0x98, 0x01, 0x99, 0x01, 0x9A, 0x01, 0x9B, 0x01 },
                 new List<int>() { 0, 1, 2, 3 },
                 32)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.Kukku_Activator,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Kukku_Activator,
                 new List<byte>() { 0x90, 0x01, 0x91, 0x01, 0x92, 0x01, 0x93, 0x01 },
                 new List<int>() { 0, 1, 2, 3 }));
-            Enemies.Add(new Enemy(EEnemyID.Telly,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Telly,
                 new List<byte>() { 0x93, 0x01 },
                 new List<int>() { 4 }));
-            Enemies.Add(new Enemy(EEnemyID.Pierrobot,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Pierrobot,
                 new List<byte>() { 0x96, 0x01, 0x97, 0x01 },
                 new List<int>() { 0, 1 },
                 32)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.FlyBoy,
+            EnemyTypes.Add(new EnemyType(EEnemyID.FlyBoy,
                 new List<byte>() { 0x94, 0x01, 0x95, 0x01 },
                 new List<int>() { 0, 1 }));
-            Enemies.Add(new Enemy(EEnemyID.Press,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Press,
                 new List<byte>() { 0x9E, 0x04 },
                 new List<int>() { 3 }));
-            Enemies.Add(new Enemy(EEnemyID.Blocky,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Blocky,
                 new List<byte>() { 0x9E, 0x03 },
                 new List<int>() { 3 },
                 64)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.NeoMetall,
+            EnemyTypes.Add(new EnemyType(EEnemyID.NeoMetall,
                 new List<byte>() { 0x92, 0x02, 0x9A, 0x03 },
                 new List<int>() { 2, 3 },
                 12)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.Matasaburo,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Matasaburo,
                 new List<byte>() { 0x90, 0x02, 0x91, 0x02, 0x92, 0x02 },
                 new List<int>() { 0, 1, 2 },
                 32)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.Pipi_Activator,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Pipi_Activator,
                 new List<byte>() { 0x9C, 0x01 },
                 new List<int>() { 4 }));
-            Enemies.Add(new Enemy(EEnemyID.LightningGoro,
+            EnemyTypes.Add(new EnemyType(EEnemyID.LightningGoro,
                 new List<byte>() { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01 },
                 new List<int>() { 0, 1, 2 },
                 20)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.Mole_Activator,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Mole_Activator,
                 new List<byte>() { 0x90, 0x03 },
                 new List<int>() { 4 }));
-            Enemies.Add(new Enemy(EEnemyID.Shotman_Left,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Shotman_Left,
                 new List<byte>() { 0x98, 0x03, 0x99, 0x03 },
                 new List<int>() { 0, 1 },
                 20)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.SniperArmor,
+            EnemyTypes.Add(new EnemyType(EEnemyID.SniperArmor,
                 new List<byte>() { 0x91, 0x03, 0x92, 0x03, 0x93, 0x03, 0x94, 0x03, 0x95, 0x03 },
                 new List<int>() { 0, 1, 2, 3, 4 },
                 64)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.SniperJoe,
+            EnemyTypes.Add(new EnemyType(EEnemyID.SniperJoe,
                 new List<byte>() { 0x94, 0x03, 0x95, 0x03 },
                 new List<int>() { 3, 4 },
                 24)); // Guess
-            Enemies.Add(new Enemy(EEnemyID.Scworm,
+            EnemyTypes.Add(new EnemyType(EEnemyID.Scworm,
                 new List<byte>() { 0x9E, 0x04 },
                 new List<int>() { 3 },
                 8)); // Guess
 
             // Copy enemy list to dictionary
-            foreach (Enemy e in Enemies)
+            foreach (EnemyType e in EnemyTypes)
             {
                 EnemiesByType.Add(e.ID, e);
             }
@@ -212,57 +259,62 @@ namespace MM2Randomizer.Randomizers.Enemies
             // Restriction: Yoku blocks, Dragon
             Rooms.Add(new EnemyRoom(EStageID.HeatW1, 0x003470, // w1 first screen = 7
                 new int[] { 0, 12 },
-                0x003910, 0x003911, 0x003912, 0x003913, 0x003914, 0x003915, 0x003916, 0x003917, 0x003918, 0x003919, 0x00391A, 0x00391B, 0x00391C, 0x00391D, 0x00391E,
-                0x00395c, 0x00395d));
+                AEI[0], AEI[1], AEI[2], AEI[3], AEI[4], AEI[5], AEI[6], AEI[7], AEI[8], AEI[9], AEI[10], AEI[11], AEI[12], AEI[13], AEI[14],
+                AEI[40], AEI[41]));
+                //0x003910, 0x003911, 0x003912, 0x003913, 0x003914, 0x003915, 0x003916, 0x003917, 0x003918, 0x003919, 0x00391A, 0x00391B, 0x00391C, 0x00391D, 0x00391E,
+                //0x00395c, 0x00395d));
             Rooms.Add(new EnemyRoom(EStageID.HeatW1, 0x003494,
                 new int[] { 1, 2 },
                 new int[] { 3 }, new int[] { 0x97, 0x03 },
-                0x00391F, 0x003924, 0x003925, 0x003927, 0x00392A, 0x00392B, 0x00392C, 0x00392E, 0x003931, 0x003933));
+                AEI[15],
+                AEI[16], AEI[17], AEI[18], AEI[19], AEI[20], AEI[21], AEI[22], AEI[23], AEI[24]));
+                //0x00391F,
+                //0x003924, 0x003925, 0x003927, 0x00392A, 0x00392B, 0x00392C, 0x00392E, 0x003931, 0x003933));
             Rooms.Add(new EnemyRoom(EStageID.HeatW1, 0x003482,
                 new int[] { 3, 8, 9, 10 },
-                0x00394D,
-                0x003959,
-                0x00395a,
-                0x00395b));
+                AEI[25],
+                AEI[37],
+                AEI[38],
+                AEI[39]));
             Rooms.Add(new EnemyRoom(EStageID.HeatW1, 0x0034ca,
                 new int[] { 7 },
-                0x00394e, 0x00394f, 0x003950, 0x003951, 0x003952, 0x003953, 0x003954, 0x003955, 0x003956, 0x003957, 0x003958));
+                AEI[26], AEI[27], AEI[28], AEI[29], AEI[30], AEI[31], AEI[32], AEI[33], AEI[34], AEI[35], AEI[36]));
 
             // Airman & Wily 2 stage enemies
             // Restriction: Goblins, Lightning Goros
             Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x007470, 
                 new int[] { 0 },
                 new int[] { 0, 1, 2, 5 }, new int[] { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01, 0x96, 0x03 },
-                0x007919, 0x00791B));
+                AEI[42], AEI[43]));
             Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x007494,
                 new int[] { 1 },
-                0x00791C, 0x00791D));
+                AEI[44], AEI[45]));
             Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x007482,
                 new int[] { 2 },
                 new int[] { 3, 5 }, new int[] { 0x9A, 0x03, 0x96, 0x03 },
-                0x007920, 0x007921, 0x007922, 0x007923, 0x007924, 0x007925, 0x007926));
+                AEI[46], AEI[47], AEI[48], AEI[49], AEI[50], AEI[51], AEI[52]));
             Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x0074b8,
                 new int[] { 5 },
-                0x007927, 0x007928, 0x007929));
+                AEI[53], AEI[54], AEI[55]));
             Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x0074ca,
                 new int[] { 7 },
-                0x00792a, 0x00792b));
+                AEI[56], AEI[57]));
             Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x0074dc,
                 new int[] { 9 },
-                0x00792c, 0x00792d, 0x00792e, 0x00792f, 0x007930, 0x007931, 0x007932, 0x007933, 0x007934));
+                AEI[58], AEI[59], AEI[60], AEI[61], AEI[62], AEI[63], AEI[64], AEI[65], AEI[66]));
 
             // Woodman & Wily 3 stage enemies
             // Restriction: Wolves (but only used in wolf rooms)
             Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B4A6,
                 new int[] { 0, 8, 9, 10 },
-                0x00B910, 0x00B911, 0x00B912, 0x00B913, 0x00B914, 0x00B915, 0x00B916, 0x00B917, 0x00B918, 0x00B919, 0x00B910, 0x00B91A, 0x00B91B, 0x00B91C,
-                0x00B92D,
-                0x00B92E,
-                0x00B92F));
+                AEI[67], AEI[68], AEI[69], AEI[70], AEI[71], AEI[72], AEI[73], AEI[74], AEI[75], AEI[76], AEI[77], AEI[78], AEI[79],
+                AEI[93],
+                AEI[94],
+                AEI[95]));
             Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B482,
                 new int[] { 1, 6 },
-                0x00B91D, 0x00B91E, 0x00B91F,
-                0x00B923, 0x00B924));
+                AEI[80], AEI[81], AEI[82],
+                AEI[83], AEI[84]));
             // Wolf rooms. When replaced with other enemies, cannot proceed due to solid tiles
             //Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B4CA,
             //    new int[] { 2, 3, 4 },
@@ -271,126 +323,125 @@ namespace MM2Randomizer.Randomizers.Enemies
             //    0x00B922));
             Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B494,
                 new int[] { 7 },
-                0x00B925, 0x00B926, 0x00B927, 0x00B928, 0x00B929, 0x00B92A, 0x00B92B, 0x00B92C));
+                AEI[85], AEI[86], AEI[87], AEI[88], AEI[89], AEI[90], AEI[91], AEI[92]));
             Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B4B8,
                 new int[] { 11 },
-                0x00B930, 0x00B931, 0x00B932, 0x00B933));
+                AEI[96], AEI[97], AEI[98], AEI[99]));
             Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00b500,
                 new int[] { 16 },
-                0x00b934));
+                AEI[100]));
             Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00b512,
                 new int[] { 17 },
-                0x00b935, 0x00b936));
+                AEI[101], AEI[102]));
             Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00b470,
                 new int[] { 22 },
-                0x00b937, 0x00b938, 0x00b939));
+                AEI[103], AEI[104], AEI[105]));
 
             // Bubbleman & Wily 4 stage enemies
             // Restrictions: Dropping platform, Track platforms
             Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00F470,
                 new int[] { 0, 5 },
-                0x00F910, 0x00F911, 0x00F912,
-                0x00F928, 0x00F929, 0x00F92A, 0x00F92B, 0x00F92C, 0x00F92D));
+                AEI[106], AEI[107], AEI[108],
+                AEI[125], AEI[126], AEI[127], AEI[128], AEI[129], AEI[130]));
             Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00F482,
                 new int[] { 1, 2, 3 },
-                0x00F918, 0x00F919, 0x00F91A, 0x00F91B, 0x00F91C, 0x00F91D));
+                AEI[109], AEI[110], AEI[111], AEI[112], AEI[113], AEI[114]));
             Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00F494,
                 new int[] { 4 },
-                0x00F91E, 0x00F91F, 0x00F921, 0x00F922, 0x00F923, 0x00F924, 0x00F925, 0x00F926, 0x00F927));
+                AEI[115], AEI[116], AEI[117], AEI[118], AEI[119], AEI[120], AEI[121], AEI[122], AEI[123], AEI[124]));
             Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00f4b8,
                 new int[] { 9, 10, 13 },
-                0x00f92e,
-                0x00f92f,
-                0x00f930, 0x00f931));
+                AEI[131],
+                AEI[132],
+                AEI[133], AEI[134]));
             Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00f4ca, 
                 new int[] { 15, 17 },
                 new int[] { 3 }, new int[] { 0x95, 0x03 },
-                0x00f932, 0x00f933, 0x00f935,
-                0x00f937, 0x00f938, 0x00f93a));
+                AEI[135], AEI[136], AEI[137],
+                AEI[138], AEI[139], AEI[140]));
             Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00f4dc,
                 new int[] { 19 },
-                0x00f93c, 0x00f93d, 0x00f93e, 0x00f93f));
+                AEI[141], AEI[142], AEI[143], AEI[144]));
             
             // Quick
             // Empty room, unused address table
             //Rooms.Add(new EnemyRoom("Quick_01", 0x013470,//    ));
             Rooms.Add(new EnemyRoom(EStageID.QuickW5, 0x0134CA,
                 new int[] { 1, 2 },
-                0x013910, 0x013911));
+                AEI[145], AEI[146]));
             Rooms.Add(new EnemyRoom(EStageID.QuickW5, 0x0134A6,
                 new int[] { 3, 4, 5, 7, 8, 9, 10, 11, 12, 13 },
-                0x013912, 0x013916));
+                AEI[147], AEI[148]));
             Rooms.Add(new EnemyRoom(EStageID.QuickW5, 0x013482,
                 new int[] { 6 },
-                0x013917, 0x013918, 0x013919, 0x01391A, 0x01391B, 0x01391C));
+                AEI[149], AEI[150], AEI[151], AEI[152], AEI[153], AEI[154]));
             Rooms.Add(new EnemyRoom(EStageID.QuickW5, 0x013494,
                 new int[] { 14 },
-                0x013924, 0x013925));
+                AEI[155], AEI[156]));
 
             // Flash
             Rooms.Add(new EnemyRoom(EStageID.FlashW6, 0x017470,
                 new int[] { 0, 2, 3, 5 },
-                0x017910, 0x017911, 0x017912, 0x017913, 0x017914, 0x017915,
-                0x017917, // Room 4 only has a clash barrier
-                0x01791A));
+                AEI[157], AEI[158], AEI[159], AEI[160], AEI[161], AEI[162],
+                AEI[164], // Room 4 only has a clash barrier
+                AEI[167]));
             Rooms.Add(new EnemyRoom(EStageID.FlashW6, 0x017482,
                 new int[] { 1, 6, 7 },
-                0x017916,
-                0x01791B,
-                0x01791C, 0x01791D, 0x01791E));
+                AEI[163],
+                AEI[168],
+                AEI[169], AEI[170], AEI[171]));
             Rooms.Add(new EnemyRoom(EStageID.FlashW6, 0x017494,
                 new int[] { 4 },
-                0x017918, 0x017919));
+                AEI[165], AEI[166]));
 
             // Metal
             Rooms.Add(new EnemyRoom(EStageID.Metal, 0x01B470,
                 new int[] { 0, 1 },
-                0x01b910, 0x01b911, 0x01b912, 0x01b913, 0x01b914, 0x01b915, 0x01b916, 0x01b917, 0x01b918));
+                AEI[172], AEI[173], AEI[174], AEI[175], AEI[176], AEI[177], AEI[178], AEI[179], AEI[180]));
             Rooms.Add(new EnemyRoom(EStageID.Metal, 0x01B482,
                 new int[] { 2 },
-                0x01b919, 0x01b91a, 0x01b91b, 0x01b91c, 0x01b91d, 0x01b91e, 0x01b91f, 0x01b920, 0x01b921, 0x01b922, 0x01b923, 0x01b924, 0x01b925));
+                AEI[181], AEI[182], AEI[183], AEI[184], AEI[185], AEI[186], AEI[187], AEI[188], AEI[189], AEI[190], AEI[191], AEI[192], AEI[193]));
 
             // Clash
             Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f494, 
                 new int[] { 0, 1, 3, 4, 5 },
                 new int[] { 3 }, new int[] { 0x95, 0x03 },
-                0x01f910, 0x01f911, 0x01f912,
-                0x01f913, 0x01f914, 0x01f915,
-                0x01f919, 0x01f91a,
-                0x01f91c, 0x01f91d,
-                0x01f91f, 0x01f920, 0x01f921, 0x01f923, 0x01f924 // ??? on the last 3
-                ));
+                AEI[194], AEI[195], AEI[196],
+                AEI[197], AEI[198], AEI[199],
+                AEI[203], AEI[204], AEI[205],
+                AEI[206], AEI[207], AEI[208],
+                AEI[209], AEI[210], AEI[211]));
             Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f482, 
                 new int[] { 2, 8, 9 },
-                0x01f916, 0x01f917, 0x01f918,
-                0x01f927,
-                0x01f929));
+                AEI[200], AEI[201], AEI[202],
+                AEI[213],
+                AEI[214]));
             Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f4a6,
                 new int[] { 6, 7 },
-                0x01f925));
+                AEI[212]));
             Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f470,
                 new int[] { 10, 11, 12 },
-                0x01f92b,
-                0x01f92c,
-                0x01f92d, 0x01f92e));
+                AEI[215],
+                AEI[216],
+                AEI[217], AEI[218]));
             // Empty room
             //Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f4b8,
             //    new int[] { 13 },
             //    ));
             Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f4ca,
                 new int[] { 14 },
-                0x01f92f, 0x01f930, 0x01f931));
+                AEI[219], AEI[220], AEI[221]));
         }
 
-        private List<Enemy> GenerateEnemyCombinations(EnemyRoom room)
+        private List<EnemyType> GenerateEnemyCombinations(EnemyRoom room)
         {
             // Create a random enemy set
-            List<Enemy> NewEnemies = new List<Enemy>();
-            List<Enemy> PotentialEnemies = new List<Enemy>();
+            List<EnemyType> NewEnemies = new List<EnemyType>();
+            List<EnemyType> PotentialEnemies = new List<EnemyType>();
             bool done = false;
             while (!done)
             {
-                foreach (Enemy en in Enemies)
+                foreach (EnemyType en in EnemyTypes)
                 {
                     // Reject enemies that have exceeded the type's maximum
                     switch (en.ID)
@@ -419,7 +470,8 @@ namespace MM2Randomizer.Randomizers.Enemies
                             if (en.ID == EEnemyID.Mole_Activator) continue;
                             break;
                         case EStageID.BubbleW4:
-                            if (en.ID == EEnemyID.Mole_Activator) continue;
+                            if (en.ID == EEnemyID.Mole_Activator && room.RoomNums[0] < 9) continue;
+                            if (en.ID == EEnemyID.Press && room.RoomNums[0] < 9) continue;
                             break;
                         case EStageID.Clash:
                             if (en.ID == EEnemyID.Mole_Activator) continue;

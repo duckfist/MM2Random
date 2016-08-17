@@ -58,7 +58,7 @@
             <TextBlock Text="Mega Man 2 Randomizer v0.0.8" TextAlignment="Center" Grid.ColumnSpan="2"/>
             <TextBlock Grid.Row="1" Text="Seed (blank for random):"/>
             <TextBox Grid.Row="1" Grid.Column="1" Name="tbxSeed"/>
-            <CheckBox Grid.Row="2" Grid.Column="1" Name="chkJapanese" Content="J-Version (Rockman 2)" IsChecked="False" Checked="chkJapanese_Checked"/>
+            <CheckBox Grid.Row="2" Grid.Column="1" Name="chkJapanese" Content="J-Version (Rockman 2)" IsChecked="{Binding Path=IsJapanese}" Checked="chkJapanese_Checked"/>
             <CheckBox Grid.Row="3" Grid.Column="1" Name="chk8Stages" Content="Random Robot Master Stages" IsChecked="{Binding Path=Is8StagesRandom}"/>
             <CheckBox Grid.Row="4" Grid.Column="1" Name="chkWeapons" Content="Random Weapon Get" IsChecked="{Binding Path=IsWeaponsRandom}"/>
             <CheckBox Grid.Row="5" Grid.Column="1" Name="chkItems" Content="Random Items 1, 2, and 3 Get" IsChecked="{Binding Path=IsItemsRandom}"/>

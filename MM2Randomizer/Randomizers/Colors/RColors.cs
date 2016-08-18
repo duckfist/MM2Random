@@ -1,4 +1,5 @@
-﻿using MM2Randomizer.Enums;
+﻿using MM2Randomizer;
+using MM2Randomizer.Enums;
 
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace MM2Randomizer.Randomizers.Colors
         List<ColorSet> StagesColorSets { get; set; }
         List<ColorSet> WeaponColorSets { get; set; }
 
+        public static int MegaManColorAddressU = 0x03d314;
+        public static int MegaManColorAddressJ = 0x03d311;
+
         public RColors()
         {
             InitializeStageColorSets();
-            InitializeWeaponColorSets();
 
             using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
@@ -26,11 +29,61 @@ namespace MM2Randomizer.Randomizers.Colors
                     set.RandomizeAndWrite(stream, RandomMM2.Random);
                 }
             }
+
+            RandomizeWeaponColors();
         }
 
-        private void InitializeWeaponColorSets()
+        private void RandomizeWeaponColors()
         {
+            // Create lists of possible colors to choose from and shuffle them
+            List<byte> PossibleDarkColors = new List<byte>();
+            List<byte> PossibleLightColors = new List<byte>();
 
+            for (byte i = 0x01; i <= 0x0C; i++)
+            {
+                // Add first two rows of colors to dark list (except black/white/gray)
+                PossibleDarkColors.Add(i);
+                PossibleDarkColors.Add((byte)(i + 0x10));
+                // Add third and fourth rows to light list (except black/white/gray)
+                PossibleLightColors.Add((byte)(i + 0x20));
+                PossibleLightColors.Add((byte)(i + 0x30));
+            }
+            // Add black and dark-gray to dark list, white and light-gray to light list
+            PossibleDarkColors.Add(0x0F);
+            PossibleDarkColors.Add(0x00);
+            PossibleLightColors.Add(0x10);
+            PossibleLightColors.Add(0x20);
+            
+            // Randomize lists, and pick the first 9 and 8 elements to use as new colors
+            PossibleDarkColors.Shuffle(RandomMM2.Random);
+            PossibleLightColors.Shuffle(RandomMM2.Random);
+            Queue<byte> DarkColors = new Queue<byte>(PossibleDarkColors.GetRange(0, 9));
+            Queue<byte> LightColors = new Queue<byte>(PossibleLightColors.GetRange(0, 8));
+
+            // Get starting address depending on game version
+            int startAddress = (RandomMM2.Settings.IsJapanese) ? MegaManColorAddressJ : MegaManColorAddressU;
+
+            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                // Change 8 robot master weapon colors
+                for (int i = 0; i < 8; i++)
+                {
+                    byte dark = DarkColors.Dequeue();
+                    byte light = LightColors.Dequeue();
+
+                    stream.Position = startAddress + 0x04 + i * 0x04;
+                    stream.WriteByte(light);
+                    stream.WriteByte(dark);
+                }
+
+                // Change 3 Item colors
+                byte itemColor = DarkColors.Dequeue();
+                for (int i = 0; i < 3; i++)
+                {
+                    stream.Position = startAddress + 0x25 + i * 0x04;
+                    stream.WriteByte(itemColor);
+                }
+            }
         }
 
         private void InitializeStageColorSets()

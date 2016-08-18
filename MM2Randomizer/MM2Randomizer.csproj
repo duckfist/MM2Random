@@ -80,7 +80,6 @@
     <Compile Include="Randomizers\Enemies\StageRoom.cs" />
     <Compile Include="Enums\EColorsHex.cs" />
     <Compile Include="Enums\EEnemyID.cs" />
-    <Compile Include="Enums\EEnemyObjectAddress.cs" />
     <Compile Include="Enums\EItemNumber.cs" />
     <Compile Include="Enums\EItemStageAddress.cs" />
     <Compile Include="Enums\EMiscAddresses.cs" />

@@ -97,7 +97,7 @@
                                     <Setter Property="Text" Value="Randomize the enemy type for most enemy instances throughout the game."/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=chkColors, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Text" Value="Randomly change the color palettes for each stage."/>
+                                    <Setter Property="Text" Value="Randomly change the color palettes for Mega Man and each stage."/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=chkBGM, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Text" Value="Randomly change the background music used for stages."/>

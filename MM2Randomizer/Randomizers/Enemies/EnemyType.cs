@@ -9,20 +9,21 @@ namespace MM2Randomizer.Randomizers.Enemies
         public EEnemyID ID { get; set; }
         public List<byte> PatternTableAddresses { get; set; }
         public List<int> SpriteBankRows { get; set; }
+        public bool ScreenEdgeOK { get; set; }
 
         /// <summary>
         /// Helps determine y-position adjustment for spawning.  If height = 0, it can spawn at the top
         /// of the screen (pipis, deactivators, etc.)
         /// </summary>
-        public int Height { get; set; }
+        public int YAdjust { get; set; }
 
-        public EnemyType(EEnemyID id, List<byte> patternTableAddresses, List<int> spriteBankRows, int height = 0)
+        public EnemyType(EEnemyID id, List<byte> patternTableAddresses, List<int> spriteBankRows, bool isTopOfScreenOk = false, int yAdjust = 0)
         {
             ID = id;
             PatternTableAddresses = patternTableAddresses;
             SpriteBankRows = spriteBankRows;
-            Height = height;
-            
+            ScreenEdgeOK = isTopOfScreenOk;
+            YAdjust = yAdjust;
         }
     }
 }

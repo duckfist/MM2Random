@@ -76,8 +76,6 @@
     <Compile Include="Randomizers\Enemies\EnemyInstance.cs" />
     <Compile Include="Randomizers\Enemies\REnemies.cs" />
     <Compile Include="Randomizers\Enemies\EnemyRoom.cs" />
-    <Compile Include="Randomizers\Enemies\Stage.cs" />
-    <Compile Include="Randomizers\Enemies\StageRoom.cs" />
     <Compile Include="Enums\EColorsHex.cs" />
     <Compile Include="Enums\EEnemyID.cs" />
     <Compile Include="Enums\EItemNumber.cs" />
@@ -92,7 +90,6 @@
     <Compile Include="Enums\ERMWeaponValue.cs" />
     <Compile Include="Enums\EStageID.cs" />
     <Compile Include="MainWindowViewModel.cs" />
-    <Compile Include="Randomizers\Enemies\StagesTest.cs" />
     <Compile Include="Randomizers\RWeaknesses.cs" />
     <Compile Include="Randomizers\RWeaponNames.cs" />
     <Compile Include="RandomMM2.cs" />

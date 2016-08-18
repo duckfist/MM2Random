@@ -17,6 +17,8 @@ namespace MM2Randomizer.Randomizers.Enemies
         //public List<byte> PatternTableAddresses { get; set; }
         //public List<int> SpriteBankRows { get; set; }
 
+        public bool NeedYAdjust {  get { return Y != YPrev; } }
+
         public EnemyInstance(int stage, int screen, int y, int id, int offset)
         {
             StageNum = stage;

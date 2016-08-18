@@ -12,10 +12,12 @@ namespace MM2Randomizer.Randomizers.Colors
     public class RColors
     {
         List<ColorSet> StagesColorSets { get; set; }
+        List<ColorSet> WeaponColorSets { get; set; }
 
         public RColors()
         {
             InitializeStageColorSets();
+            InitializeWeaponColorSets();
 
             using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
@@ -24,6 +26,11 @@ namespace MM2Randomizer.Randomizers.Colors
                     set.RandomizeAndWrite(stream, RandomMM2.Random);
                 }
             }
+        }
+
+        private void InitializeWeaponColorSets()
+        {
+
         }
 
         private void InitializeStageColorSets()

@@ -191,8 +191,9 @@ namespace MM2Randomizer.Randomizers.Enemies
                 )); // TODO
             EnemyTypes.Add(new EnemyType(EEnemyID.Kerog,
                 new List<byte>() { 0x9B, 0x02, 0x9C, 0x02, 0x9D, 0x02 },
-                new List<int>() { 0, 1, 2 }
-                ));
+                new List<int>() { 0, 1, 2 },
+                false,
+                -4));
             EnemyTypes.Add(new EnemyType(EEnemyID.Batton,
                 new List<byte>() { 0x94, 0x02, 0x93, 0x02 },
                 new List<int>() { 3, 4 }
@@ -234,7 +235,9 @@ namespace MM2Randomizer.Randomizers.Enemies
                 new List<int>() { 2, 3 }));
             EnemyTypes.Add(new EnemyType(EEnemyID.Matasaburo,
                 new List<byte>() { 0x90, 0x02, 0x91, 0x02, 0x92, 0x02 },
-                new List<int>() { 0, 1, 2 }));
+                new List<int>() { 0, 1, 2 },
+                false,
+                -4));
             EnemyTypes.Add(new EnemyType(EEnemyID.Pipi_Activator,
                 new List<byte>() { 0x9C, 0x01 },
                 new List<int>() { 4 },
@@ -248,8 +251,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Shotman_Left,
                 new List<byte>() { 0x98, 0x03, 0x99, 0x03 },
-                new List<int>() { 0, 1 },
-                false, 4));
+                new List<int>() { 0, 1 }));
             EnemyTypes.Add(new EnemyType(EEnemyID.SniperArmor,
                 new List<byte>() { 0x91, 0x03, 0x92, 0x03, 0x93, 0x03, 0x94, 0x03, 0x95, 0x03 },
                 new List<int>() { 0, 1, 2, 3, 4 },
@@ -260,7 +262,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             EnemyTypes.Add(new EnemyType(EEnemyID.Scworm,
                 new List<byte>() { 0x9E, 0x04 },
                 new List<int>() { 3 },
-                false, 12));
+                false, 8));
 
             // Copy enemy list to dictionary
             foreach (EnemyType e in EnemyTypes)
@@ -481,6 +483,13 @@ namespace MM2Randomizer.Randomizers.Enemies
                     {
                         case EStageID.HeatW1:
                             if (en.ID == EEnemyID.Mole_Activator) continue;
+                            if (en.ID == EEnemyID.Press)
+                            {
+                                if (room.RoomNums.Last() >= 7)
+                                {
+                                    continue;
+                                }
+                            }
                             break;
                         case EStageID.AirW2:
                             if (en.ID == EEnemyID.Mole_Activator) continue;

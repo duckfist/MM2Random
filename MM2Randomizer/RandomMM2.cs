@@ -7,6 +7,7 @@ using MM2Randomizer.Enums;
 using MM2Randomizer.Randomizers;
 using MM2Randomizer.Randomizers.Enemies;
 using MM2Randomizer.Randomizers.Colors;
+using System.Diagnostics;
 
 namespace MM2Randomizer
 {
@@ -68,6 +69,10 @@ namespace MM2Randomizer
                 {
                     RandomWeaponNames();
                 }
+                if (Settings.FastText)
+                {
+                    SetFastText();
+                }
                 if (Settings.BurstChaserMode)
                 {
                     SetBurstChaser();
@@ -82,10 +87,7 @@ namespace MM2Randomizer
                 }
 
                 File.Move(DestinationFileName, newfilename);
-
-                string str = string.Format("/select,\"{0}\\{1}\"",
-                    Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location),
-                newfilename);
+                Process.Start("explorer.exe", string.Format("/select,\"{0}\"", newfilename));
             }
             catch (Exception ex)
             {
@@ -93,14 +95,28 @@ namespace MM2Randomizer
             }
         }
 
+        private static void SetFastText()
+        {
+            using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                if (Settings.IsJapanese)
+                {
+                    // Set fast weapon get text (J ONLY)
+                    stream.Position = 0x037C51;
+                }
+                else
+                {
+                    // Set fast weapon get text (U ONLY)
+                    stream.Position = 0x037D4A;
+                }
+                stream.WriteByte(0x04);
+            }
+        }
+
         private static void SetBurstChaser()
         {
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
-                // Set fast weapon get text (J ONLY)
-                stream.Position = 0x037C51;
-                stream.WriteByte(0x02);
-
                 // Set fast "ready" text
                 stream.Position = 0x038147;
                 stream.WriteByte(0x60);
@@ -121,10 +137,6 @@ namespace MM2Randomizer
                 stream.Position = 0x03892D;
                 stream.WriteByte(0x00);
 
-                // Set fast buster projectiles (J ONLY)
-                stream.Position = 0x03D4A4;
-                stream.WriteByte(0x08);
-
                 // Set fast ladder climb up
                 stream.Position = 0x0386EF;
                 stream.WriteByte(0x01);
@@ -133,6 +145,18 @@ namespace MM2Randomizer
                 stream.Position = 0x03872E;
                 stream.WriteByte(0xFE);
 
+                if (Settings.IsJapanese)
+                {
+                    // Set fast buster projectiles (J ONLY)
+                    stream.Position = 0x03D4A4;
+                    stream.WriteByte(0x08);
+                }
+                else
+                {
+                    // Set fast buster projectiles (U ONLY)
+                    stream.Position = 0x03D4A7;
+                    stream.WriteByte(0x08);
+                }
             }
         }
 

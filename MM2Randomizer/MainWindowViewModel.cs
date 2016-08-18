@@ -69,6 +69,11 @@
         /// <summary>
         /// TODO
         /// </summary>
+        public bool FastText { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
         public bool BurstChaserMode { get; set; }
     }
 }

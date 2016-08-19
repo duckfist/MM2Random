@@ -75,7 +75,7 @@
     <Compile Include="Randomizers\Enemies\EnemyType.cs" />
     <Compile Include="Randomizers\Enemies\EnemyInstance.cs" />
     <Compile Include="Randomizers\Enemies\REnemies.cs" />
-    <Compile Include="Randomizers\Enemies\EnemyRoom.cs" />
+    <Compile Include="Randomizers\Enemies\SpriteBankRoomGroup.cs" />
     <Compile Include="Enums\EColorsHex.cs" />
     <Compile Include="Enums\EEnemyID.cs" />
     <Compile Include="Enums\EItemNumber.cs" />

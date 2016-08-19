@@ -15,7 +15,7 @@ namespace MM2Randomizer.Randomizers.Enemies
         public List<EnemyType> EnemyTypes { get; set; }
         public List<EnemyInstance> AEI = new List<EnemyInstance>();
         public Dictionary<EEnemyID, EnemyType> EnemiesByType { get; set; }
-        public List<EnemyRoom> Rooms { get; set; }
+        public List<SpriteBankRoomGroup> Rooms { get; set; }
 
         public static int Stage0EnemyScreenAddress = 0x3610;
         public static int Stage0EnemyYAddress = 0x3810;
@@ -32,9 +32,10 @@ namespace MM2Randomizer.Randomizers.Enemies
         {
             EnemyTypes = new List<EnemyType>();
             EnemiesByType = new Dictionary<EEnemyID, EnemyType>();
-            Rooms = new List<EnemyRoom>();
+            Rooms = new List<SpriteBankRoomGroup>();
 
             ReadEnemyInstancesFromFile();
+            ChangeRoomSpriteBankSlots();
             InitializeEnemies();
             InitializeRooms();
             Randomize();
@@ -68,26 +69,25 @@ namespace MM2Randomizer.Randomizers.Enemies
 
         private void Randomize()
         {
-            foreach (EnemyRoom room in Rooms)
+            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
-                // Skip processing the room if every sprite bank row is taken
-                if (room.IsSpriteRestricted && room.SpriteBankRowsRestriction.Length >= 6)
-                    continue;
-
-                // Create valid random combination of enemies to place
-                List<EnemyType> newEnemies = GenerateEnemyCombinations(room);
-
-                // Change each enemy ID for the room to a random enemy from the new enemy set
-                for (int i = 0; i < room.EnemyInstances.Length; i++)
+                foreach (SpriteBankRoomGroup room in Rooms)
                 {
-                    int randomIndex = RandomMM2.Random.Next(newEnemies.Count);
-                    EnemyType newEnemyType = newEnemies[randomIndex];
+                    // Skip processing the room if every sprite bank row is taken
+                    if (room.IsSpriteRestricted && room.SpriteBankRowsRestriction.Length >= 6)
+                        continue;
 
-                    room.NewEnemyTypes.Add(newEnemies[randomIndex]);
+                    // Create valid random combination of enemies to place
+                    List<EnemyType> newEnemies = GenerateEnemyCombinations(room);
 
-
-                    using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+                    // Change each enemy ID for the room to a random enemy from the new enemy set
+                    for (int i = 0; i < room.EnemyInstances.Length; i++)
                     {
+                        int randomIndex = RandomMM2.Random.Next(newEnemies.Count);
+                        EnemyType newEnemyType = newEnemies[randomIndex];
+
+                        room.NewEnemyTypes.Add(newEnemies[randomIndex]);
+
                         // Change the enemy ID in the ROM
                         int IDposition = Stage0EnemyIDAddress +
                             room.EnemyInstances[i].StageNum * StageLength +
@@ -106,17 +106,12 @@ namespace MM2Randomizer.Randomizers.Enemies
                                 room.EnemyInstances[i].Offset;
                             stream.WriteByte((byte)newY);
                         }
-
-                        // seed 1288030571
-
+                        
                         // Update object with new ID for future use
                         room.EnemyInstances[i].EnemyID = (byte)newEnemies[randomIndex].ID;
                     }
-                }
 
-                // Change sprite banks for the room
-                using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
-                {
+                    // Change sprite banks for the room
                     stream.Position = room.PatternAddressStart;
                     foreach (EnemyType e in room.NewEnemyTypes)
                     {
@@ -271,65 +266,77 @@ namespace MM2Randomizer.Randomizers.Enemies
             }
         }
 
+        public void ChangeRoomSpriteBankSlots()
+        {
+            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                stream.Position = 0x01743e; // Flash 3rd room, change slot from 0 to 2
+                stream.WriteByte(0x24);
+                stream.Position = 0x01f43d; // Clash 2nd room, change slot from 2 to 7
+                stream.WriteByte(0x48);
+
+            }
+        }
+
         private void InitializeRooms()
         {
             // Heatman & Wily 1 stage enemies
             // Restriction: Yoku blocks, Dragon
-            Rooms.Add(new EnemyRoom(EStageID.HeatW1, 0x003470, // w1 first screen = 7
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003470, // w1 first screen = 7
                 new int[] { 0, 12 },
                 AEI[0], AEI[1], AEI[2], AEI[3], AEI[4], AEI[5], AEI[6], AEI[7], AEI[8], AEI[9], AEI[10], AEI[11], AEI[12], AEI[13], AEI[14],
                 AEI[40], AEI[41]));
                 //0x003910, 0x003911, 0x003912, 0x003913, 0x003914, 0x003915, 0x003916, 0x003917, 0x003918, 0x003919, 0x00391A, 0x00391B, 0x00391C, 0x00391D, 0x00391E,
                 //0x00395c, 0x00395d));
-            Rooms.Add(new EnemyRoom(EStageID.HeatW1, 0x003494,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003494,
                 new int[] { 1, 2 },
                 new int[] { 3 }, new int[] { 0x97, 0x03 },
                 AEI[15],
                 AEI[16], AEI[17], AEI[18], AEI[19], AEI[20], AEI[21], AEI[22], AEI[23], AEI[24]));
                 //0x00391F,
                 //0x003924, 0x003925, 0x003927, 0x00392A, 0x00392B, 0x00392C, 0x00392E, 0x003931, 0x003933));
-            Rooms.Add(new EnemyRoom(EStageID.HeatW1, 0x003482,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003482,
                 new int[] { 3, 8, 9, 10 },
                 AEI[25],
                 AEI[37],
                 AEI[38],
                 AEI[39]));
-            Rooms.Add(new EnemyRoom(EStageID.HeatW1, 0x0034ca,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x0034ca,
                 new int[] { 7 },
                 AEI[26], AEI[27], AEI[28], AEI[29], AEI[30], AEI[31], AEI[32], AEI[33], AEI[34], AEI[35], AEI[36]));
 
             // Airman & Wily 2 stage enemies
             // Restriction: Goblins, Lightning Goros
-            Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x007470, 
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007470, 
                 new int[] { 0 },
                 new int[] { 0, 1, 2, 5 }, new int[] { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01, 0x96, 0x03 },
                 AEI[42], AEI[43]));
-            Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x007494,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007494,
                 new int[] { 1 },
                 AEI[44], AEI[45]));
-            Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x007482,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007482,
                 new int[] { 2 },
                 new int[] { 3, 5 }, new int[] { 0x9A, 0x03, 0x96, 0x03 },
                 AEI[46], AEI[47], AEI[48], AEI[49], AEI[50], AEI[51], AEI[52]));
-            Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x0074b8,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074b8,
                 new int[] { 5 },
                 AEI[53], AEI[54], AEI[55]));
-            Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x0074ca,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074ca,
                 new int[] { 7 },
                 AEI[56], AEI[57]));
-            Rooms.Add(new EnemyRoom(EStageID.AirW2, 0x0074dc,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074dc,
                 new int[] { 9 },
                 AEI[58], AEI[59], AEI[60], AEI[61], AEI[62], AEI[63], AEI[64], AEI[65], AEI[66]));
 
             // Woodman & Wily 3 stage enemies
             // Restriction: Wolves (but only used in wolf rooms)
-            Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B4A6,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B4A6,
                 new int[] { 0, 8, 9, 10 },
                 AEI[67], AEI[68], AEI[69], AEI[70], AEI[71], AEI[72], AEI[73], AEI[74], AEI[75], AEI[76], AEI[77], AEI[78], AEI[79],
                 AEI[93],
                 AEI[94],
                 AEI[95]));
-            Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B482,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B482,
                 new int[] { 1, 6 },
                 AEI[80], AEI[81], AEI[82],
                 AEI[83], AEI[84]));
@@ -339,119 +346,129 @@ namespace MM2Randomizer.Randomizers.Enemies
             //    0x00B920, 
             //    0x00B921, 
             //    0x00B922));
-            Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B494,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B494,
                 new int[] { 7 },
                 AEI[85], AEI[86], AEI[87], AEI[88], AEI[89], AEI[90], AEI[91], AEI[92]));
-            Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B4B8,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B4B8,
                 new int[] { 11 },
                 AEI[96], AEI[97], AEI[98], AEI[99]));
-            Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00b500,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00b500,
                 new int[] { 16 },
                 AEI[100]));
-            Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00b512,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00b512,
                 new int[] { 17 },
                 AEI[101], AEI[102]));
-            Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00b470,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00b470,
                 new int[] { 22 },
                 AEI[103], AEI[104], AEI[105]));
 
             // Bubbleman & Wily 4 stage enemies
             // Restrictions: Dropping platform, Track platforms
-            Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00F470,
+            // Bubble Bank 3 - Bubbleman fight
+            // Bubble Bank 7 - Buebeam fight
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F470, // Bank 0
                 new int[] { 0, 5 },
                 AEI[106], AEI[107], AEI[108],
                 AEI[125], AEI[126], AEI[127], AEI[128], AEI[129], AEI[130]));
-            Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00F482,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F482, // Bank 1
                 new int[] { 1, 2, 3 },
                 AEI[109], AEI[110], AEI[111], AEI[112], AEI[113], AEI[114]));
-            Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00F494,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F494, // Bank 2
                 new int[] { 4 },
                 AEI[115], AEI[116], AEI[117], AEI[118], AEI[119], AEI[120], AEI[121], AEI[122], AEI[123], AEI[124]));
-            Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00f4b8,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4b8, // Bank 4
                 new int[] { 9, 10, 13 },
                 AEI[131],
                 AEI[132],
                 AEI[133], AEI[134]));
-            Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00f4ca, 
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4ca, // Bank 5
                 new int[] { 15, 17 },
                 new int[] { 3 }, new int[] { 0x95, 0x03 },
                 AEI[135], AEI[136], AEI[137],
                 AEI[138], AEI[139], AEI[140]));
-            Rooms.Add(new EnemyRoom(EStageID.BubbleW4, 0x00f4dc,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4dc, // Bank 6
                 new int[] { 19 },
                 AEI[141], AEI[142], AEI[143], AEI[144]));
-            
+
             // Quick
-            // Empty room, unused address table
-            //Rooms.Add(new EnemyRoom("Quick_01", 0x013470,//    ));
-            Rooms.Add(new EnemyRoom(EStageID.QuickW5, 0x0134CA,
+            // Quick Bank 0 - Used in empty room only
+            // Quick Bank 4 - Quick fight
+            // Quick Bank 6 - W5 Teleporters
+            // Quick Bank 7 - Wily Machine
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x0134CA, // Bank 5
                 new int[] { 1, 2 },
                 AEI[145], AEI[146]));
-            Rooms.Add(new EnemyRoom(EStageID.QuickW5, 0x0134A6,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x0134A6, // Bank 3
                 new int[] { 3, 4, 5, 7, 8, 9, 10, 11, 12, 13 },
                 AEI[147], AEI[148]));
-            Rooms.Add(new EnemyRoom(EStageID.QuickW5, 0x013482,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x013482, // Bank 1
                 new int[] { 6 },
                 AEI[149], AEI[150], AEI[151], AEI[152], AEI[153], AEI[154]));
-            Rooms.Add(new EnemyRoom(EStageID.QuickW5, 0x013494,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x013494, // Bank 2
                 new int[] { 14 },
                 AEI[155], AEI[156]));
 
             // Flash
-            Rooms.Add(new EnemyRoom(EStageID.FlashW6, 0x017470,
-                new int[] { 0, 2, 3, 5 },
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017470, // Bank 0
+                new int[] { 0, 3, 5 },
                 AEI[157], AEI[158], AEI[159], AEI[160], AEI[161], AEI[162],
-                AEI[164], // Room 4 only has a clash barrier
+                // Room 3 empty
                 AEI[167]));
-            Rooms.Add(new EnemyRoom(EStageID.FlashW6, 0x017482,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017482, // Bank 1
                 new int[] { 1, 6, 7 },
                 AEI[163],
                 AEI[168],
                 AEI[169], AEI[170], AEI[171]));
-            Rooms.Add(new EnemyRoom(EStageID.FlashW6, 0x017494,
-                new int[] { 4 },
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017494, // Bank 2
+                new int[] { 2, 4 }, // Moved room 2 from bank 0
+                AEI[164],
                 AEI[165], AEI[166]));
+            // Flash Bank 3: Flashman fight
+            // Flash Bank 4: W6 Alien fight
+            // Flash Bank 5: Wily defeated cutscene?
+            // Flash Bank 6: Droplets
+
 
             // Metal
-            Rooms.Add(new EnemyRoom(EStageID.Metal, 0x01B470,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.Metal, 0x01B470,
                 new int[] { 0, 1 },
                 AEI[172], AEI[173], AEI[174], AEI[175], AEI[176], AEI[177], AEI[178], AEI[179], AEI[180]));
-            Rooms.Add(new EnemyRoom(EStageID.Metal, 0x01B482,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.Metal, 0x01B482,
                 new int[] { 2 },
                 AEI[181], AEI[182], AEI[183], AEI[184], AEI[185], AEI[186], AEI[187], AEI[188], AEI[189], AEI[190], AEI[191], AEI[192], AEI[193]));
 
             // Clash
-            Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f494, 
-                new int[] { 0, 1, 3, 4, 5 },
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f494, 
+                new int[] { 0, 3, 4, 5 },
                 new int[] { 3 }, new int[] { 0x95, 0x03 },
                 AEI[194], AEI[195], AEI[196],
-                AEI[197], AEI[198], AEI[199],
                 AEI[203], AEI[204], AEI[205],
                 AEI[206], AEI[207], AEI[208],
                 AEI[209], AEI[210], AEI[211]));
-            Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f482, 
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f482, 
                 new int[] { 2, 8, 9 },
                 AEI[200], AEI[201], AEI[202],
                 AEI[213],
                 AEI[214]));
-            Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f4a6,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f4a6,
                 new int[] { 6, 7 },
                 AEI[212]));
-            Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f470,
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f470,
                 new int[] { 10, 11, 12 },
                 AEI[215],
                 AEI[216],
                 AEI[217], AEI[218]));
-            // Empty room
-            //Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f4b8,
-            //    new int[] { 13 },
-            //    ));
-            Rooms.Add(new EnemyRoom(EStageID.Clash, 0x01f4ca,
+            // Slot 4, changed from empty room 13 to room 1
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f4b8,
+                new int[] { 1 },
+                AEI[197], AEI[198], AEI[199]
+                ));
+            Rooms.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f4ca,
                 new int[] { 14 },
                 AEI[219], AEI[220], AEI[221]));
         }
 
-        private List<EnemyType> GenerateEnemyCombinations(EnemyRoom room)
+        private List<EnemyType> GenerateEnemyCombinations(SpriteBankRoomGroup room)
         {
             // Create a random enemy set
             List<EnemyType> NewEnemies = new List<EnemyType>();
@@ -483,13 +500,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                     {
                         case EStageID.HeatW1:
                             if (en.ID == EEnemyID.Mole_Activator) continue;
-                            if (en.ID == EEnemyID.Press)
-                            {
-                                if (room.RoomNums.Last() >= 7)
-                                {
-                                    continue;
-                                }
-                            }
+                            if (en.ID == EEnemyID.Press && room.RoomNums.Last() >= 7) continue;
                             break;
                         case EStageID.AirW2:
                             if (en.ID == EEnemyID.Mole_Activator) continue;
@@ -500,6 +511,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                             break;
                         case EStageID.Clash:
                             if (en.ID == EEnemyID.Mole_Activator) continue;
+                            if (en.ID == EEnemyID.Press) continue;
                             break;
                         default:
                             break;

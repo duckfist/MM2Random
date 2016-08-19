@@ -4,7 +4,7 @@ using MM2Randomizer.Enums;
 
 namespace MM2Randomizer.Randomizers.Enemies
 {
-    public class EnemyRoom
+    public class SpriteBankRoomGroup
     {
         public EStageID Stage { get; set; }
         public int[] RoomNums { get; set; }
@@ -16,7 +16,7 @@ namespace MM2Randomizer.Randomizers.Enemies
         public int[] SpriteBankRowsRestriction { get; set; }
         public int[] PatternTableAddressesRestriction { get; set; }
 
-        public EnemyRoom (EStageID stage, int patternAddressStart, int[] roomNums, params EnemyInstance[] enemyInstances)
+        public SpriteBankRoomGroup (EStageID stage, int patternAddressStart, int[] roomNums, params EnemyInstance[] enemyInstances)
         {
             this.Stage = stage;
             this.RoomNums = roomNums;
@@ -26,7 +26,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             IsSpriteRestricted = false;
         }
 
-        public EnemyRoom (EStageID stage, int patternAddressStart, int[] roomNums, int[] spriteBankRowsRestriction, int[] patternTableAddressesRestriction, params EnemyInstance[] enemyInstances)
+        public SpriteBankRoomGroup (EStageID stage, int patternAddressStart, int[] roomNums, int[] spriteBankRowsRestriction, int[] patternTableAddressesRestriction, params EnemyInstance[] enemyInstances)
             : this(stage, patternAddressStart, roomNums, enemyInstances)
         {
             SpriteBankRowsRestriction = spriteBankRowsRestriction;

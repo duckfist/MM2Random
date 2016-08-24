@@ -4,7 +4,7 @@ version 0.01 beta 1
 
 Contributors:
 Binarynova
-RaneOfSOTN
+RaneOfSotN
 
 -----------------------------------------------------------------------------------------------
 

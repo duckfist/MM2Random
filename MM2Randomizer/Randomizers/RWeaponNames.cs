@@ -37,8 +37,8 @@ namespace MM2Randomizer.Randomizers
                 }
 
                 // Erase "Boomerang" for now
-                stream.Position = 0x037f5f;
-                for (int i = 0; i < 8; i++)
+                stream.Position = 0x037f5e;
+                for (int i = 0; i < 10; i++)
                 {
                     stream.WriteByte(Convert.ToByte('@'));
                 }

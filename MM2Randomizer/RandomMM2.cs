@@ -536,20 +536,33 @@ namespace MM2Randomizer
             }
         }
 
+        /// <summary>
+        /// Enabling Random Weapons or Random Stages will cause the wrong Robot Master portrait to
+        /// be blacked out when a stage is completed. The game uses your acquired weapons to determine
+        /// which portrait to black-out. This function changes the lookup table for x and y positions
+        /// of portraits to black-out based on what was randomized.
+        /// </summary>
         private static void FixPortraits()
         {
+            // Arrays of default values for X and Y of the black square that marks out each portrait
+            // Index of arrays are stage order, e.g. Heat, Air, etc.
             byte[] portraitBG_y     = new byte[] { 0x21, 0x20, 0x21, 0x20, 0x20, 0x22, 0x22, 0x22 };
             byte[] portraitBG_x     = new byte[] { 0x86, 0x8E, 0x96, 0x86, 0x96, 0x8E, 0x86, 0x96 };
+
+            // Adjusting the sprites is not necessary because the hacked portrait graphics ("?" images)
+            // only use the background, and the sprites have been blacked out. Left in for reference.
             //byte[] portraitSprite_x = new byte[] { 0x3C, 0x0C, 0x4C, 0x00, 0x20, 0x84, 0x74, 0xA4 };
             //byte[] portraitSprite_y = new byte[] { 0x10, 0x14, 0x28, 0x0C, 0x1C, 0x20, 0x10, 0x18 };
 
+            // Apply changes to portrait arrays based on shuffled stages
             if (Settings.Is8StagesRandom)
             {
-                // Get new stage order
+                // Get the new stage order
                 int[] newOrder = new int[8];
                 foreach (StageFromSelect stage in StageSelect)
                     newOrder[stage.PortraitDestinationOriginal] = stage.PortraitDestinationNew;
 
+                // Permute portrait x/y values via the shuffled stage-order array 
                 byte[] cpy = new byte[8];
                 for (int i = 0; i < 8; i++)
                     cpy[newOrder[i]] = portraitBG_y[i];
@@ -568,9 +581,11 @@ namespace MM2Randomizer
                 //Array.Copy(cpy, portraitSprite_x, 8);
             }
 
+            // Apply changes to portrait arrays based on shuffled weapons. Only need a standard "if" with no "else",
+            // because the arrays must be permuted twice if both randomization settings are enabled.
             if (Settings.IsWeaponsRandom)
             {
-                // Get permutation of table as indexes instead of powers of two
+                // Since the acquired-weapons table's elements are powers of two, get a new array of their 0-7 index
                 int[] newWeaponIndex = new int[8];
                 for (int i = 0; i < 8; i++)
                 {
@@ -581,8 +596,18 @@ namespace MM2Randomizer
                         val = (byte)(val >> 1);
                         j++;
                     }
-                    newWeaponIndex[i] = j;
+                    newWeaponIndex[i] = j - 1;
                 }
+
+                // Permute portrait x/y values via the shuffled acquired-weapons array 
+                byte[] cpy = new byte[8];
+                for (int i = 0; i < 8; i++)
+                    cpy[newWeaponIndex[i]] = portraitBG_y[i];
+                Array.Copy(cpy, portraitBG_y, 8);
+
+                for (int i = 0; i < 8; i++)
+                    cpy[newWeaponIndex[i]] = portraitBG_x[i];
+                Array.Copy(cpy, portraitBG_x, 8);
             }
 
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))

@@ -266,6 +266,10 @@ namespace MM2Randomizer.Randomizers.Enemies
             }
         }
 
+        /// <summary>
+        /// This method makes some preliminary modifications to the Mega Man 2 ROM to increase the enemy variety
+        /// by changing the sprite banks used by certain rooms.
+        /// </summary>
         public void ChangeRoomSpriteBankSlots()
         {
             using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
@@ -280,7 +284,6 @@ namespace MM2Randomizer.Randomizers.Enemies
                 stream.WriteByte(0x24);
                 stream.Position = 0x01f43d; // Clash 2nd room, change slot from 2 to 7
                 stream.WriteByte(0x48);
-
             }
         }
 

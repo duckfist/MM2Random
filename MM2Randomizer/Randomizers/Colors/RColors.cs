@@ -14,23 +14,134 @@ namespace MM2Randomizer.Randomizers.Colors
     {
         List<ColorSet> StagesColorSets { get; set; }
         List<ColorSet> WeaponColorSets { get; set; }
+        List<ColorSet> StageSelectColorSets { get; set; }
 
         public static int MegaManColorAddressU = 0x03d314;
         public static int MegaManColorAddressJ = 0x03d311;
 
         public RColors()
         {
-            InitializeStageColorSets();
+            RandomizeStageColors();
+
+            RandomizeWeaponColors();
+
+            RandomizeStageSelectColors();
+        }
+
+        public void RandomizeStageSelectColors()
+        {
+            StageSelectColorSets = new List<ColorSet>()
+            {
+                new ColorSet() { // Stage select background color sets
+                    addresses = new int[] {
+                        0x0344ab, 0x0344ac,
+                        0x0344af, 0x0344b0,
+                        0x0344b3, 0x0344b4,
+                        0x0344b7, 0x0344b8,
+                    },
+                    ColorBytes = new List<EColorsHex[]>() {
+                        new EColorsHex[] { // Default light blue
+                            (EColorsHex)0x11,(EColorsHex)0x2C,
+                            (EColorsHex)0x11,(EColorsHex)0x2C,
+                            (EColorsHex)0x11,(EColorsHex)0x2C,
+                            (EColorsHex)0x11,(EColorsHex)0x2C,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x12,(EColorsHex)0x21,
+                            (EColorsHex)0x12,(EColorsHex)0x21,
+                            (EColorsHex)0x12,(EColorsHex)0x21,
+                            (EColorsHex)0x12,(EColorsHex)0x21,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x13,(EColorsHex)0x22,
+                            (EColorsHex)0x13,(EColorsHex)0x22,
+                            (EColorsHex)0x13,(EColorsHex)0x22,
+                            (EColorsHex)0x13,(EColorsHex)0x22,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x15,(EColorsHex)0x24,
+                            (EColorsHex)0x15,(EColorsHex)0x24,
+                            (EColorsHex)0x15,(EColorsHex)0x24,
+                            (EColorsHex)0x15,(EColorsHex)0x24,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x16,(EColorsHex)0x25,
+                            (EColorsHex)0x16,(EColorsHex)0x25,
+                            (EColorsHex)0x16,(EColorsHex)0x25,
+                            (EColorsHex)0x16,(EColorsHex)0x25,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x17,(EColorsHex)0x26,
+                            (EColorsHex)0x17,(EColorsHex)0x26,
+                            (EColorsHex)0x17,(EColorsHex)0x26,
+                            (EColorsHex)0x17,(EColorsHex)0x26,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x18,(EColorsHex)0x27,
+                            (EColorsHex)0x18,(EColorsHex)0x27,
+                            (EColorsHex)0x18,(EColorsHex)0x27,
+                            (EColorsHex)0x18,(EColorsHex)0x27,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x19,(EColorsHex)0x28,
+                            (EColorsHex)0x19,(EColorsHex)0x28,
+                            (EColorsHex)0x19,(EColorsHex)0x28,
+                            (EColorsHex)0x19,(EColorsHex)0x28,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x1b,(EColorsHex)0x2a,
+                            (EColorsHex)0x1b,(EColorsHex)0x2a,
+                            (EColorsHex)0x1b,(EColorsHex)0x2a,
+                            (EColorsHex)0x1b,(EColorsHex)0x2a,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x1c,(EColorsHex)0x2b,
+                            (EColorsHex)0x1c,(EColorsHex)0x2b,
+                            (EColorsHex)0x1c,(EColorsHex)0x2b,
+                            (EColorsHex)0x1c,(EColorsHex)0x2b,
+                        },
+
+                        new EColorsHex[] {
+                            (EColorsHex)0x01,(EColorsHex)0x1c,
+                            (EColorsHex)0x01,(EColorsHex)0x1c,
+                            (EColorsHex)0x01,(EColorsHex)0x1c,
+                            (EColorsHex)0x01,(EColorsHex)0x1c,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x03,(EColorsHex)0x16,
+                            (EColorsHex)0x03,(EColorsHex)0x16,
+                            (EColorsHex)0x03,(EColorsHex)0x16,
+                            (EColorsHex)0x03,(EColorsHex)0x16,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x0b,(EColorsHex)0x22,
+                            (EColorsHex)0x0b,(EColorsHex)0x22,
+                            (EColorsHex)0x0b,(EColorsHex)0x22,
+                            (EColorsHex)0x0b,(EColorsHex)0x22,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x00,(EColorsHex)0x0f,
+                            (EColorsHex)0x00,(EColorsHex)0x0f,
+                            (EColorsHex)0x00,(EColorsHex)0x0f,
+                            (EColorsHex)0x00,(EColorsHex)0x0f,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x0f,(EColorsHex)0x00,
+                            (EColorsHex)0x0f,(EColorsHex)0x00,
+                            (EColorsHex)0x0f,(EColorsHex)0x00,
+                            (EColorsHex)0x0f,(EColorsHex)0x00,
+                        },
+                    }
+                },
+            };
 
             using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
-                foreach (ColorSet set in StagesColorSets)
+                foreach (ColorSet set in StageSelectColorSets)
                 {
                     set.RandomizeAndWrite(stream, RandomMM2.Random);
                 }
             }
-
-            RandomizeWeaponColors();
         }
 
         private void RandomizeWeaponColors()
@@ -86,7 +197,7 @@ namespace MM2Randomizer.Randomizers.Colors
             }
         }
 
-        private void InitializeStageColorSets()
+        private void RandomizeStageColors()
         {
             StagesColorSets = new List<ColorSet>()
             {
@@ -1891,10 +2002,16 @@ namespace MM2Randomizer.Randomizers.Colors
                     }
                 },
 
-            };
             #endregion
+            };
+
+            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                foreach (ColorSet set in StagesColorSets)
+                {
+                    set.RandomizeAndWrite(stream, RandomMM2.Random);
+                }
+            }
         }
     }
-
-    
 }

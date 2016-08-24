@@ -18,6 +18,9 @@ namespace MM2Randomizer
         public static MainWindowViewModel Settings;
         public static string DestinationFileName = "";
 
+        public static List<StageFromSelect> StageSelect;
+        public static List<ERMWeaponValue> NewWeaponOrder;
+
         /// <summary>
         /// Perform the randomization based on the seed and user-provided settings, and then
         /// generate the new ROM.
@@ -65,7 +68,6 @@ namespace MM2Randomizer
                 {
                     RandomWeaponNames();
                 }
-
                 if (Settings.FastText)
                 {
                     SetFastText();
@@ -73,6 +75,10 @@ namespace MM2Randomizer
                 if (Settings.BurstChaserMode)
                 {
                     SetBurstChaser();
+                }
+                if (Settings.Is8StagesRandom || Settings.IsWeaponsRandom)
+                {
+                    FixPortraits();
                 }
 
                 string newfilename = (Settings.IsJapanese) ? "RM2" : "MM2";
@@ -319,7 +325,7 @@ namespace MM2Randomizer
             // Metal Man    0x03C28F   64
             // Crash Man    0x03C290   128
 
-            var newWeaponOrder = new List<ERMWeaponValue>()
+            NewWeaponOrder = new List<ERMWeaponValue>()
             {
                 ERMWeaponValue.HeatMan,
                 ERMWeaponValue.AirMan,
@@ -329,9 +335,9 @@ namespace MM2Randomizer
                 ERMWeaponValue.FlashMan,
                 ERMWeaponValue.MetalMan,
                 ERMWeaponValue.CrashMan
-            }.Select(s => (byte)s).ToList();
+            }.Select(s => s).ToList();
             
-            newWeaponOrder.Shuffle(Random);
+            NewWeaponOrder.Shuffle(Random);
 
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
@@ -341,7 +347,7 @@ namespace MM2Randomizer
                 stream.Position = (long) ERMStageWeaponAddress.HeatMan;// 0x03c289;
                 for (int i = 0; i < 8; i++)
                 {
-                    stream.WriteByte((byte)newWeaponOrder[i]);
+                    stream.WriteByte((byte)NewWeaponOrder[i]);
                 }
 
                 // Create a copy of the default weapon order table to be used by teleporter function
@@ -367,7 +373,7 @@ namespace MM2Randomizer
                 stream.Position = (long) ERMStageSelect.FirstStageInMemory; // 0x0346E1;
                 for (int i = 0; i < 8; i++)
                 {
-                    stream.WriteByte((byte)newWeaponOrder[i]);
+                    stream.WriteByte((byte)NewWeaponOrder[i]);
                 }
             }
         }
@@ -422,7 +428,7 @@ namespace MM2Randomizer
             // Metal Man    0x034676   6
             // Heat Man     0x034677   0
             
-            List<StageFromSelect> StageSelect = new List<StageFromSelect>();
+            StageSelect = new List<StageFromSelect>();
 
             StageSelect.Add(new StageFromSelect()
             {
@@ -499,7 +505,7 @@ namespace MM2Randomizer
                 PortraitName = "Heat Man",
                 PortraitAddress = ERMPortraitAddress.HeatMan,
                 PortraitDestinationOriginal = 0,
-                PortraitDestinationNew = 0,
+                PortraitDestinationNew = 0, // 4 = quick
                 StageClearAddress = ERMStageClearAddress.HeatMan,
                 StageClearDestinationOriginal = 1,
                 StageClearDestinationNew = 1
@@ -528,6 +534,73 @@ namespace MM2Randomizer
                     //stream.WriteByte((byte)stage.StageClearDestinationNew);
                 }
             }
+        }
+
+        private static void FixPortraits()
+        {
+            byte[] portraitBG_y     = new byte[] { 0x21, 0x20, 0x21, 0x20, 0x20, 0x22, 0x22, 0x22 };
+            byte[] portraitBG_x     = new byte[] { 0x86, 0x8E, 0x96, 0x86, 0x96, 0x8E, 0x86, 0x96 };
+            //byte[] portraitSprite_x = new byte[] { 0x3C, 0x0C, 0x4C, 0x00, 0x20, 0x84, 0x74, 0xA4 };
+            //byte[] portraitSprite_y = new byte[] { 0x10, 0x14, 0x28, 0x0C, 0x1C, 0x20, 0x10, 0x18 };
+
+            if (Settings.Is8StagesRandom)
+            {
+                // Get new stage order
+                int[] newOrder = new int[8];
+                foreach (StageFromSelect stage in StageSelect)
+                    newOrder[stage.PortraitDestinationOriginal] = stage.PortraitDestinationNew;
+
+                byte[] cpy = new byte[8];
+                for (int i = 0; i < 8; i++)
+                    cpy[newOrder[i]] = portraitBG_y[i];
+                Array.Copy(cpy, portraitBG_y, 8);
+
+                for (int i = 0; i < 8; i++)
+                    cpy[newOrder[i]] = portraitBG_x[i];
+                Array.Copy(cpy, portraitBG_x, 8);
+
+                //for (int i = 0; i < 8; i++)
+                //    cpy[i] = portraitSprite_y[newOrder[i]];
+                //Array.Copy(cpy, portraitSprite_y, 8);
+
+                //for (int i = 0; i < 8; i++)
+                //    cpy[i] = portraitSprite_x[newOrder[i]];
+                //Array.Copy(cpy, portraitSprite_x, 8);
+            }
+
+            if (Settings.IsWeaponsRandom)
+            {
+                // Get permutation of table as indexes instead of powers of two
+                int[] newWeaponIndex = new int[8];
+                for (int i = 0; i < 8; i++)
+                {
+                    int j = 0;
+                    byte val = (byte)NewWeaponOrder[i];
+                    while (val != 0)
+                    {
+                        val = (byte)(val >> 1);
+                        j++;
+                    }
+                    newWeaponIndex[i] = j;
+                }
+            }
+
+            using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    stream.Position = 0x034541 + i;
+                    stream.WriteByte(portraitBG_y[i]);
+                    stream.Position = 0x034549 + i;
+                    stream.WriteByte(portraitBG_x[i]); 
+                    // Changing this sprite table misplaces their positions by default.
+                    //stream.Position = 0x03460D + i;
+                    //stream.WriteByte(portraitSprite_y[i]);
+                    //stream.Position = 0x034615 + i;
+                    //stream.WriteByte(portraitSprite_x[i]);
+                }
+            }
+
         }
 
         /// <summary>

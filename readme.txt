@@ -1,6 +1,6 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.01 beta 1
+version 0.1.0 beta 1
 
 Contributors:
 Binarynova

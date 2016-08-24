@@ -38,8 +38,25 @@ namespace MM2Randomizer
 
         private void btnCreateROM_Click(object sender, RoutedEventArgs e)
         {
-            int seed;
-            if (Int32.TryParse(tbxSeed.Text, out seed) && seed >= 0)
+            int seed = -1;
+            bool useRandomSeed = true;
+
+            // Check if textbox contains a valid seed string
+            if (!String.IsNullOrEmpty(tbxSeed.Text))
+            {
+                try
+                {
+                    int base10 = RandomMM2.ConvertBase26To10(tbxSeed.Text);
+                    seed = base10;
+                    useRandomSeed = false;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Exception in parsing Seed. Using random seed. Message:/n" + ex.ToString());
+                }
+            }
+
+            if (!useRandomSeed)
             {
                 // Use the provided seed so that a specific ROM may be generated.
                 RandomMM2.Seed = seed;
@@ -52,7 +69,8 @@ namespace MM2Randomizer
             
             // Perform randomization based on settings, then generate the ROM.
             RandomMM2.Randomize();
-            tbxSeed.Text = String.Format("{0}", RandomMM2.Seed);
+            string seedAlpha = RandomMM2.ConvertBase10To26(RandomMM2.Seed);
+            tbxSeed.Text = String.Format("{0}", seedAlpha);
         }
 
         private void chkJapanese_Checked(object sender, RoutedEventArgs e)

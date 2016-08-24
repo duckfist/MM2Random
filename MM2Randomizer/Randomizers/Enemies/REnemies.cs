@@ -192,8 +192,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Tanishi,
                 new List<byte>() { 0x9B, 0x03, 0x9C, 0x03 },
-                new List<int>() { 0, 1 }
-                )); // TODO
+                new List<int>() { 0, 1 }));
             EnemyTypes.Add(new EnemyType(EEnemyID.Kerog,
                 new List<byte>() { 0x9B, 0x02, 0x9C, 0x02, 0x9D, 0x02 },
                 new List<int>() { 0, 1, 2 },
@@ -232,7 +231,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 new List<byte>() { 0x9E, 0x03 },
                 new List<int>() { 3 },
                 false,
-                -32)); // Guess
+                -32));
             EnemyTypes.Add(new EnemyType(EEnemyID.NeoMetall,
                 new List<byte>() { 0x92, 0x02, 0x9A, 0x03 },
                 new List<int>() { 2, 3 }));
@@ -259,7 +258,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 new List<byte>() { 0x91, 0x03, 0x92, 0x03, 0x93, 0x03, 0x94, 0x03, 0x95, 0x03 },
                 new List<int>() { 0, 1, 2, 3, 4 },
                 false, 
-                -16)); // Guess
+                -16));
             EnemyTypes.Add(new EnemyType(EEnemyID.SniperJoe,
                 new List<byte>() { 0x94, 0x03, 0x95, 0x03 },
                 new List<int>() { 3, 4 }));

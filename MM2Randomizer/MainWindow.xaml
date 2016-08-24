@@ -45,7 +45,7 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition/>            
             </Grid.RowDefinitions>
-            <TextBlock Text="Mega Man 2 Randomizer v0.0.8" FontSize="16" TextAlignment="Center" Grid.ColumnSpan="2"/>
+            <TextBlock Text="Mega Man 2 Randomizer v1.0" FontSize="16" TextAlignment="Center" Grid.ColumnSpan="2"/>
             <TextBlock Grid.Row="1" Text="Seed (blank for random):"/>
             <TextBox Grid.Row="1" Grid.Column="1" Name="tbxSeed"/>
             <GroupBox Grid.Row="2" Header="Randomize Options" BorderThickness="2" BorderBrush="DarkGray" VerticalAlignment="Top">
@@ -67,8 +67,8 @@
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
                 <GroupBox Header="Settings" BorderThickness="2" BorderBrush="DarkGray">
                     <StackPanel>
-                        <CheckBox Name="chkJapanese" Content="J-Version (Rockman 2)" IsChecked="{Binding Path=IsJapanese}" Checked="chkJapanese_Checked"/>
                         <CheckBox Name="chkFastText" Content="Faster Text" IsChecked="{Binding Path=FastText}"/>
+                        <CheckBox Name="chkJapanese" Content="J-Version (Rockman 2)" IsEnabled="False" IsChecked="{Binding Path=IsJapanese}" Checked="chkJapanese_Checked"/>
                         <CheckBox Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}"/>
                     </StackPanel>
                 </GroupBox>

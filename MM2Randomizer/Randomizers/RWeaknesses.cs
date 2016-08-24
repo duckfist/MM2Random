@@ -274,7 +274,8 @@ namespace MM2Randomizer.Randomizers
             byte[] alien     = new byte[] { 0xff, 0xff, 0xff, 1, 0xff, 0xff, 0xff };
 
             // TODO: Scale damage based on ammo count w/ weapon class instead of this hard-coded table
-            double[] ammoUsed = new double[] { 0, 2, 3, 0.5, 0.25, 0.25, 4 };
+            // Buster Air Wood Bubble Quick Clash Metal
+            double[] ammoUsed = new double[] { 0, 2, 3, 0.5, 0.25, 4, 0.25 };
 
             dragon.Shuffle(RandomMM2.Random);
             guts.Shuffle(RandomMM2.Random);
@@ -284,10 +285,10 @@ namespace MM2Randomizer.Randomizers
             using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
                 int j = 0;
-                for (int i = 0; i < 9; i++)
+                for (int i = 0; i < 8; i++) // i = Buster plus 7 weapons, Time Stopper damage is located in another table (going to ignore it anyways)
                 {
-                    // Skip Atomic Fire and Time Stopper
-                    if (i == 1 || i == 6) continue;
+                    // Skip Atomic Fire
+                    if (i == 1) continue;
 
                     stream.Position = address + 14 * i + 8;
                     stream.WriteByte(dragon[j]);

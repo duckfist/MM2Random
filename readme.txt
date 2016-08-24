@@ -1,54 +1,102 @@
 Mega Man 2 Randomizer
 by duckfist
+version 0.1.0 beta 1
 
 Contributors:
 Binarynova
+RaneOfSotN
 
 -----------------------------------------------------------------------------------------------
 
 Features
 
 - Random Robot Master Stages: The 8 robot master stages are shuffled.  The boss portraits on
-the Stage Select screen remain in the same positions, but the stages that they go to are 
-random.
+the Stage Select screen point to different stages.
 
 - Random Weapons: The weapons awarded by defeating a Robot Master are shuffled.
 
 - Random Items 1, 2, and 3: Which Robot Master awards each of the 3 Items is shuffled.
 
-- Random Weaknesses: The damage done by each weapon against each Robot Master is changed.
-There are two varieties of Random Weaknesses:
-    - Easy: The damage table for each weapon is shuffled independently of each other.  For
-    example, in Rockman 2, the Air Shooter originally does 2 damage to Heat Man and Quick Man,
-    4 damage to Wood Man, 10 damage to Clash Man, and 0 damage to everyone else.  With this
-    randomizer setting and using Air Shooter, two random bosses will take 2 damage, one random
-    boss will take 4, one will take 10, and the rest will take 0.
-    - Hard: The damage tables for all weapons against all Robot Masters are given random
-    values within practical tolerances.  For example, Air Shooter might instantly kill Metal
-    Man, deal 1 damage to Bubble Man, and fully heal all other Robot Masters.  However, the
-    Mega Buster will do 1 damage against 6 of the Robot Masters, and 2 damage against the
-    remaining 2.
+- Random Weaknesses: The damage done by each weapon against each Robot Master is changed. Wily
+bosses except Wily 2, Wily 4, and Wily 5 bosses are also changed. Some weapons that previously
+healed bosses or caused special AI behavior have not been changed yet.
+
+- Random BGM: The background music for all stages have been shuffled.
+
+- Random Weapon Names: In the Weapon Get screen, the weapon name and letter will be randomized.
+This letter is not used in the pause menu, however.
+
+- Random Wily 5 Teleporters: The Robot Masters inside of each Wily 5 teleporter has been
+shuffled.
+
+- Random Enemies: The enemy IDs for most enemy instances have been changed. Sprite banks for
+each room in each level are modified to support different enemy combinations appearing. Several
+enemies are not yet supported, and several instances are not able to be changed yet.
     
+- Fast Text: To compensate for the U version being slower, text delay is increased from 7
+frames to 4 frames.
+
+- Burst Chaser Mode: Increase Mega Man's movement speed, and reduce a few other delay timers.
+
 -----------------------------------------------------------------------------------------------
 
-Known Bugs
+Enemy Randomizer notes
 
-- You cannot beat Wily 5.  The teleporters are cleared in the wrong order as a side effect of
-randomizing the weapons.
-- In the Weapon Get screen, the wrong weapon will be shown. It just shows the original weapon
-awarded by that Robot Master.
-- On the Stage Select screen, the wrong Robot Master portraits will be marked out after
-completing a level.  The portraits are marked out according to which weapons you currently
-have. The Stage Select screen still operates normally, however, only allowing you to select
-stages you haven't played yet.
+- Yoku blocks in Heatman still appear in their ususal spots, slightly reducing enemy variety in
+Heat stage
+- Goblins still appear in Airman rooms 1 and 3, thus limiting the sprite banks used in those 
+rooms and thus enemy variety.
+- Petit Goblins have messed up graphics at the moment.
+- Lightning Goros still appear in Airman room 1 in order to make crossing the gap possible, 
+therefore all of Airman stage is rather plain.
+- Frienders (wolves) still spawn like normal, due to dependence on solid blocks in their rooms.
+- Big Fish (wily 3 fish) do not spawn anywhere yet, TODO.
+- Shrink (shrimp) do not spawn naturally anywhere yet, TODO.
+- Anko (anglers in bubble stage) still spawn normally because of some special programming in 
+the stage. Note that spawned Shrinks will have messed up graphics for now.
+- M-445 enemies (metroids on bubble stage) do not spawn anywhere. Their gfx behave strangely in
+most stages, needs more work.
+- Changkey Makers (fire guys on quick stage) do not spawn anywhere. Their dependence on palette
+changes make it difficult to implement.
+- Springer do not spawn anywhere yet. When enabled, they somtimes have a gfx issue and also 
+sometimes fail to spawn.
+- I have restricted Moles (drills), Pipis (birds), and Presses (crushers) in the number of 
+sprite banks (rooms) that they can appear in, hopefully reducing frustration.
+- Moles and Presses are rendered behind the background in some stages, so they have been 
+limited in the stages that they can appear.
+- "Deactivator" objects never spawn. Thus, infinitely spawning enemies like Moles, Pipis, and 
+Claws will continue to spawn until you leave the room.
+- If you like to do zip glitches, be careful around the Matasaburo enemy (fan guy). You can get
+stuck in the wall while one is on screen.  If you can't kill them, use Time-Stopper to resume 
+zipping.
+- Acid still appears like normal in Wily 6. Although, I could easily replace them with tons of 
+enemies. Do you really want that?
+
+-----------------------------------------------------------------------------------------------
+
+Other Known Bugs
+
+- In the Weapon Get screen, the weapon letter shown will not be the same weapon you see in the
+pause menu.
 - Bosses are still healed by the original weapons that they are healed by, regardless of the
 output of the Weaknesses Randomizer.  That is, Heat Man will continue to be healed by Atomic
 Fire and Clash Bomber, Bubble Man will be healed by Bubble Lead, and Wood Man will be healed by
-Leaf Shield.
+Leaf Shield. Alien Wily is the only exception I know of.
   
 -----------------------------------------------------------------------------------------------
   
 Changelog
+
+v0.1.0 (Beta 1)
+- Stage and weapon color randomizer
+- Enemy randomizer
+- BGM randomizer
+- Weapon Get text randomizer
+- Title Screen and Stage Select Screen graphics changed
+- Display seed and version number on Title Screen
+- Bug fix: Broken Wily 5 teleporters
+- Bug fix: Wrong portraits being blacked out on stage select
+- Bug fix: Weaknesses on (U) Difficult Mode didn't update
 
 v0.0.6
 - Bug fix: No longer softlock in Wily 5 whenever "Randomize Weapons" is enabled

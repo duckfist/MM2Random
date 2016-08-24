@@ -1902,6 +1902,7 @@ namespace MM2Randomizer.Randomizers.Colors
                         0x01be3c, 0x01be3d,
                         0x01be4c, 0x01be4d,
                         0x01be5c, 0x01be5d,
+                        0x01be6c, 0x01be6d,
                     },
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] { // Default

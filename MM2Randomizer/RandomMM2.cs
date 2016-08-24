@@ -29,9 +29,13 @@ namespace MM2Randomizer
         {
             try
             {
+                // Prepare a copy of the file for modification
                 CopyRom();
+
+                // Instantiate RNG object RandomMM2.Random based on RandomMM2.Seed
                 InitializeSeed();
 
+                // Perform randomization and file modification according to each flag
                 if (Settings.Is8StagesRandom)
                 {
                     RandomStagePtrs();
@@ -81,14 +85,17 @@ namespace MM2Randomizer
                     FixPortraits();
                 }
 
+                // Create file name based on seed and game region
                 string newfilename = (Settings.IsJapanese) ? "RM2" : "MM2";
                 newfilename = String.Format("{0}-RNG-{1}.nes", newfilename, Seed);
 
+                // If a file of the same seed already exists, delete it
                 if (File.Exists(newfilename))
                 {
                     File.Delete(newfilename);
                 }
 
+                // Finish the copy/rename and open Explorer at that location
                 File.Move(DestinationFileName, newfilename);
                 Process.Start("explorer.exe", string.Format("/select,\"{0}\"", newfilename));
             }
@@ -304,6 +311,9 @@ namespace MM2Randomizer
             }
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         private static void RandomWeaponNames()
         {
             RWeaponNames rWeaponNames = new RWeaponNames();
@@ -635,7 +645,6 @@ namespace MM2Randomizer
         {
             RWeaknesses rWeaknesses = new RWeaknesses();
         }
-
 
         /// <summary>
         /// Shuffle the elements of the provided list.

@@ -106,6 +106,16 @@ namespace MM2Randomizer.Randomizers.Enemies
                                 room.EnemyInstances[i].Offset;
                             stream.WriteByte((byte)newY);
                         }
+                        // Adjust enemy positions for position-sensitive enemies only
+                        else if (newEnemyType.YAdjust != 0)
+                        {
+                            int newY = room.EnemyInstances[i].YPrev + newEnemyType.YAdjust;
+
+                            stream.Position = Stage0EnemyYAddress +
+                                room.EnemyInstances[i].StageNum * StageLength +
+                                room.EnemyInstances[i].Offset;
+                            stream.WriteByte((byte)newY);
+                        }
                         
                         // Update object with new ID for future use
                         room.EnemyInstances[i].EnemyID = (byte)newEnemies[randomIndex].ID;
@@ -191,12 +201,10 @@ namespace MM2Randomizer.Randomizers.Enemies
                 -4));
             EnemyTypes.Add(new EnemyType(EEnemyID.Batton,
                 new List<byte>() { 0x94, 0x02, 0x93, 0x02 },
-                new List<int>() { 3, 4 }
-                ));
+                new List<int>() { 3, 4 }));
             EnemyTypes.Add(new EnemyType(EEnemyID.Robbit,
                 new List<byte>() { 0x98, 0x02, 0x99, 0x02, 0x9A, 0x02 },
-                new List<int>() { 0, 1, 2 }
-                ));
+                new List<int>() { 0, 1, 2 }));
             EnemyTypes.Add(new EnemyType(EEnemyID.Monking,
                 new List<byte>() { 0x98, 0x01, 0x99, 0x01, 0x9A, 0x01, 0x9B, 0x01 },
                 new List<int>() { 0, 1, 2, 3 }
@@ -224,7 +232,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 new List<byte>() { 0x9E, 0x03 },
                 new List<int>() { 3 },
                 false,
-                -16)); // Guess
+                -32)); // Guess
             EnemyTypes.Add(new EnemyType(EEnemyID.NeoMetall,
                 new List<byte>() { 0x92, 0x02, 0x9A, 0x03 },
                 new List<int>() { 2, 3 }));
@@ -250,14 +258,16 @@ namespace MM2Randomizer.Randomizers.Enemies
             EnemyTypes.Add(new EnemyType(EEnemyID.SniperArmor,
                 new List<byte>() { 0x91, 0x03, 0x92, 0x03, 0x93, 0x03, 0x94, 0x03, 0x95, 0x03 },
                 new List<int>() { 0, 1, 2, 3, 4 },
-                false, -16)); // Guess
+                false, 
+                -16)); // Guess
             EnemyTypes.Add(new EnemyType(EEnemyID.SniperJoe,
                 new List<byte>() { 0x94, 0x03, 0x95, 0x03 },
                 new List<int>() { 3, 4 }));
             EnemyTypes.Add(new EnemyType(EEnemyID.Scworm,
                 new List<byte>() { 0x9E, 0x04 },
                 new List<int>() { 3 },
-                false, 8));
+                false, 
+                8));
 
             // Copy enemy list to dictionary
             foreach (EnemyType e in EnemyTypes)

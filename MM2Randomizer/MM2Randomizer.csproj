@@ -93,7 +93,8 @@
     <Compile Include="Randomizers\RWeaknesses.cs" />
     <Compile Include="Randomizers\RWeaponNames.cs" />
     <Compile Include="RandomMM2.cs" />
-    <Compile Include="StageFromSelect.cs" />
+    <Compile Include="Utilities\SeedConvert.cs" />
+    <Compile Include="Randomizers\StageFromSelect.cs" />
     <Compile Include="WeaponTable.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -1,9 +1,9 @@
-﻿using MM2Randomizer.Enums;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
+using MM2Randomizer.Enums;
 
 namespace MM2Randomizer.Randomizers.Enemies
 {

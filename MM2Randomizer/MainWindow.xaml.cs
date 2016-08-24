@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 
+using MM2Randomizer.Utilities;
+
 namespace MM2Randomizer
 {
     /// <summary>
@@ -17,7 +19,7 @@ namespace MM2Randomizer
             ViewModel = new MainWindowViewModel()
             {
                 IsJapanese = false,
-                Is8StagesRandom = false,
+                Is8StagesRandom = true,
                 IsWeaponsRandom = true,
                 IsItemsRandom = true,
                 IsTeleportersRandom = true,
@@ -46,7 +48,7 @@ namespace MM2Randomizer
             {
                 try
                 {
-                    int base10 = RandomMM2.ConvertBase26To10(tbxSeed.Text);
+                    int base10 = SeedConvert.ConvertBase26To10(tbxSeed.Text);
                     seed = base10;
                     useRandomSeed = false;
                 }
@@ -69,7 +71,7 @@ namespace MM2Randomizer
             
             // Perform randomization based on settings, then generate the ROM.
             RandomMM2.Randomize();
-            string seedAlpha = RandomMM2.ConvertBase10To26(RandomMM2.Seed);
+            string seedAlpha = SeedConvert.ConvertBase10To26(RandomMM2.Seed);
             tbxSeed.Text = String.Format("{0}", seedAlpha);
         }
 

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 
 using MM2Randomizer.Enums;
 using MM2Randomizer.Randomizers;
 using MM2Randomizer.Randomizers.Enemies;
 using MM2Randomizer.Randomizers.Colors;
-using System.Diagnostics;
+using MM2Randomizer.Utilities;
 
 namespace MM2Randomizer
 {
@@ -87,9 +88,23 @@ namespace MM2Randomizer
 
                 // Create file name based on seed and game region
                 string newfilename = (Settings.IsJapanese) ? "RM2" : "MM2";
-                string seedAlpha = ConvertBase10To26(Seed);
-                int test = ConvertBase26To10(seedAlpha);
+                string seedAlpha = SeedConvert.ConvertBase10To26(Seed);
                 newfilename = String.Format("{0}-RNG-{1}.nes", newfilename, seedAlpha);
+
+                // Draw seed on title screen (U only)
+                if (!Settings.IsJapanese)
+                {
+                    using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+                    {
+                        stream.Position = 0x037387;
+                        for (int i = 0; i < seedAlpha.Length; i++)
+                        {
+                            char ch = seedAlpha.ElementAt(i);
+                            byte charIndex = (byte)(Convert.ToByte(ch) - Convert.ToByte('A'));
+                            stream.WriteByte((byte)(0xC1 + charIndex)); // 'A' starts at C1 in the pattern table
+                        }
+                    }
+                }
 
                 // If a file of the same seed already exists, delete it
                 if (File.Exists(newfilename))
@@ -667,51 +682,6 @@ namespace MM2Randomizer
             }
         }
 
-        public static string ConvertBase10To26(int n)
-        {
-            string hexavigesimal = IntToString(n,
-            Enumerable.Range('A', 26).Select(x => (char)x).ToArray());
-            return hexavigesimal;
-        }
 
-        public static int ConvertBase26To10(string n)
-        {
-            int base10 = StringToInt(n,
-                Enumerable.Range('A', 26).Select(x => (char)x).ToArray());
-            return base10;
-        }
-
-        public static string IntToString(int value, char[] baseChars)
-        {
-            string result = string.Empty;
-            int targetBase = baseChars.Length;
-
-            do
-            {
-                result = baseChars[value % targetBase] + result;
-                value = value / targetBase;
-            }
-            while (value > 0);
-
-            return result;
-        }
-
-        public static int StringToInt(string value, char[] baseChars)
-        {
-            int result = 0;
-            int targetBase = baseChars.Length;
-            List<char> baseCharsList = new List<char>(baseChars);
-            char[] valueChars = value.ToCharArray();
-            
-            for (int i = 0; i < valueChars.Length; i++)
-            {
-                // Starting from the right of the string, get the index of the character
-                int index = baseCharsList.IndexOf(valueChars[valueChars.Length - 1 - i]);
-                
-                // Add the product of each digit with its place value
-                result = result + index * (int)Math.Pow(targetBase, i);
-            }
-            return result;
-        }
     }
 }

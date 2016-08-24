@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace MM2Randomizer.Randomizers.Enemies
+﻿namespace MM2Randomizer.Randomizers.Enemies
 {
     public class EnemyInstance
     {

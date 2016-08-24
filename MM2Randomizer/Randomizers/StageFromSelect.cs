@@ -1,6 +1,6 @@
 ﻿using MM2Randomizer.Enums;
 
-namespace MM2Randomizer
+namespace MM2Randomizer.Randomizers
 {
     /// <summary>
     /// This object encapsulates the relevant ROM offsets for properties of each 

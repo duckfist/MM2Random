@@ -1,9 +1,7 @@
-﻿using MM2Randomizer;
-using MM2Randomizer.Enums;
-
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+
+using MM2Randomizer.Enums;
 
 namespace MM2Randomizer.Randomizers.Colors
 {

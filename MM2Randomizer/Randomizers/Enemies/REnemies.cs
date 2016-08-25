@@ -23,10 +23,10 @@ namespace MM2Randomizer.Randomizers.Enemies
         public static int StageLength = 0x4000;
 
         public static double CHANCE_MOLE = 0.25;
-        public static double CHANCE_PIPI = 0.5;
+        public static double CHANCE_PIPI = 0.4;
 
         public static int MAX_MOLES = 2;
-        public static int MAX_PIPIS = 6;
+        public static int MAX_PIPIS = 5;
 
         public int numMoles = 0;
         public int numPipis = 0;

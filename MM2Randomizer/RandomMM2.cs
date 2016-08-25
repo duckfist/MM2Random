@@ -311,20 +311,30 @@ namespace MM2Randomizer
             newBGMOrder.Add(EMusicID.Clash);
             newBGMOrder.Add(EMusicID.Bubble);
             newBGMOrder.Add(EMusicID.Wily12);
-            newBGMOrder.Add(EMusicID.Wily12);
-            newBGMOrder.Add(EMusicID.Wily345);
-            newBGMOrder.Add(robos[0]);
+            newBGMOrder.Add(EMusicID.Wily12);  // Wily 1/2 track will play twice
+            newBGMOrder.Add(EMusicID.Wily345); // Wily 3/4/5 track only plays once
+            newBGMOrder.Add(robos[0]);         // Add extra Robot Master tracks to the set
             newBGMOrder.Add(robos[1]);
 
-            // Randomize tracks and write to ROM
+            // Randomize tracks
             newBGMOrder.Shuffle(Random);
+
+            // Write new track order to ROM
             using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
-                stream.Position = 0x0381E0; // Heatman BGM ID, both J and U
-                foreach (EMusicID bgm in newBGMOrder)
+                // Start writing at Heatman BGM ID, both J and U
+                stream.Position = 0x0381E0; 
+
+                // Loop through BGM addresses Heatman to Wily 5 (Wily 6 still silent)
+                for (int i = 0; i < newBGMOrder.Count; i++)
                 {
+                    EMusicID bgm = newBGMOrder[i];
                     stream.WriteByte((byte)bgm);
                 }
+
+                // Finally, fix Wily 5 track when exiting a Teleporter to be the selected Wily 5 track instead of default
+                stream.Position = 0x038489;
+                stream.WriteByte((byte)newBGMOrder.Last());
             }
         }
 

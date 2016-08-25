@@ -1,6 +1,6 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.1.0 beta 1
+version 0.1.1 beta 1
 
 Contributors:
 Binarynova
@@ -74,20 +74,22 @@ enemies. Do you really want that?
 
 -----------------------------------------------------------------------------------------------
 
-Other Known Bugs
+Other Known Bugs:
 
-- In the Weapon Get screen, the weapon letter shown will not be the same weapon you see in the
-pause menu.
-- Bosses are still healed by the original weapons that they are healed by, regardless of the
-output of the Weaknesses Randomizer.  That is, Heat Man will continue to be healed by Atomic
-Fire and Clash Bomber, Bubble Man will be healed by Bubble Lead, and Wood Man will be healed by
-Leaf Shield. Alien Wily is the only exception I know of.
+https://github.com/duckfist/MM2Random/issues?q=is%3Aopen+is%3Aissue+label%3Abug
   
 -----------------------------------------------------------------------------------------------
   
 Changelog
 
-v0.1.0 (Beta 1)
+v0.1.1-beta1
+- Added a Large Weapon Capsule to Wily 6 stage
+- Balance: Removed Pipi from spawning in Heat Yoku block rooms, due to tendancy of despawning
+- Balance: Added flat chance to skip any Pipi and Mole instance
+- Bug fix: Wily 5 music now properly resumes when exiting a Robot Master teleporter
+- Bug fix: Pipi and Mole will now spawn more frequently past Airman stage
+
+v0.1.0-beta1
 - Stage and weapon color randomizer
 - Enemy randomizer
 - BGM randomizer

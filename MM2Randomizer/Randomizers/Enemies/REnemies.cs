@@ -22,6 +22,9 @@ namespace MM2Randomizer.Randomizers.Enemies
         public static int Stage0EnemyIDAddress = 0x3910;
         public static int StageLength = 0x4000;
 
+        public static double CHANCE_MOLE = 0.25;
+        public static double CHANCE_PIPI = 0.5;
+
         public static int MAX_MOLES = 2;
         public static int MAX_PIPIS = 6;
 
@@ -504,18 +507,24 @@ namespace MM2Randomizer.Randomizers.Enemies
             {
                 foreach (EnemyType en in EnemyTypes)
                 {
-                    // Reject enemies that have exceeded the type's maximum
+                    // 1. Skip enemies that have exceeded the type's maximum
+                    // 2. Reduce the overall chance of certain types appearing by randomly skipping them
+                    double chance = 0.0;
                     switch (en.ID)
                     {
                         case EEnemyID.Pipi_Activator:
                             if (numPipis >= MAX_PIPIS)
                                 continue;
-                            numPipis++;
+                            chance = RandomMM2.Random.NextDouble();
+                            if (chance > CHANCE_PIPI)
+                                continue;
                             break;
                         case EEnemyID.Mole_Activator:
                             if (numMoles >= MAX_MOLES)
                                 continue;
-                            numMoles++;
+                            chance = RandomMM2.Random.NextDouble();
+                            if (chance > CHANCE_MOLE)
+                                continue;
                             break;
                         default:
                             break;
@@ -525,18 +534,27 @@ namespace MM2Randomizer.Randomizers.Enemies
                     switch (room.Stage)
                     {
                         case EStageID.HeatW1:
+                            // Moles don't display correctly in Heat or Wily 1. Also too annoying in Heat Yoku room.
                             if (en.ID == EEnemyID.Mole_Activator) continue;
+                            // Reject Pipis appearing in Yoku block room
+                            if (en.ID == EEnemyID.Pipi_Activator && room.RoomNums.Contains(2)) continue;
+                            // Press doesn't display correctly in Wily 1
                             if (en.ID == EEnemyID.Press && room.RoomNums.Last() >= 7) continue;
                             break;
                         case EStageID.AirW2:
-                            if (en.ID == EEnemyID.Mole_Activator) continue;
+                            // Moles don't display correctly in Heat
+                            if (en.ID == EEnemyID.Mole_Activator && room.RoomNums[0] < 7) continue;
                             break;
                         case EStageID.BubbleW4:
+                            // Moles don't display correctly in Bubble
                             if (en.ID == EEnemyID.Mole_Activator && room.RoomNums[0] < 9) continue;
+                            // Press doesn't display correctly in Bubble
                             if (en.ID == EEnemyID.Press && room.RoomNums[0] < 9) continue;
                             break;
                         case EStageID.Clash:
+                            // Mole bad GFX
                             if (en.ID == EEnemyID.Mole_Activator) continue;
+                            // Press bad GFX
                             if (en.ID == EEnemyID.Press) continue;
                             break;
                         default:
@@ -574,6 +592,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                     // Check if this enemy would fit in the sprite bank, given other new enemies already added
                     if (CheckEnemySpriteFitInBank(NewEnemies, en))
                     {
+                        // Add enemy to set of possible enemies to place in 
                         PotentialEnemies.Add(en);
                     }
                 }
@@ -585,8 +604,23 @@ namespace MM2Randomizer.Randomizers.Enemies
                 }
                 else
                 {
-                    NewEnemies.Add(PotentialEnemies[RandomMM2.Random.Next(PotentialEnemies.Count)]);
+                    // Choose a new enemy to add to the set from all possible new enemies to add
+                    EnemyType newEnemy = PotentialEnemies[RandomMM2.Random.Next(PotentialEnemies.Count)];
+                    NewEnemies.Add(newEnemy);
                     PotentialEnemies.Clear();
+
+                    // Increase total count of certain enemy types to limit their appearance later
+                    switch (newEnemy.ID)
+                    {
+                        case EEnemyID.Pipi_Activator:
+                            numPipis++;
+                            break;
+                        case EEnemyID.Mole_Activator:
+                            numMoles++;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 

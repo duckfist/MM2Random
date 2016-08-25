@@ -7,6 +7,10 @@ namespace MM2Randomizer.Randomizers.Enemies
     public class SpriteBankRoomGroup
     {
         public EStageID Stage { get; set; }
+
+        /// <summary>
+        /// Room numbers in the stage that this sprite bank applies to. Will always be sorted from least to greatest.
+        /// </summary>
         public int[] RoomNums { get; set; }
         public EnemyInstance[] EnemyInstances { get; set; }
         public int PatternAddressStart { get; set; }

@@ -77,7 +77,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 foreach (SpriteBankRoomGroup room in Rooms)
                 {
                     // Skip processing the room if every sprite bank row is taken
-                    if (room.IsSpriteRestricted && room.SpriteBankRowsRestriction.Length >= 6)
+                    if (room.IsSpriteRestricted && room.SpriteBankRowsRestriction.Count >= 6)
                         continue;
 
                     // Create valid random combination of enemies to place
@@ -314,7 +314,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 //0x00395c, 0x00395d));
             Rooms.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003494, // Bank 2
                 new int[] { 1, 2 },
-                new int[] { 3 }, new int[] { 0x97, 0x03 },
+                new int[] { 3 }, new byte[] { 0x97, 0x03 },
                 AEI[15],
                 AEI[16], AEI[17], AEI[18], AEI[19], AEI[20], AEI[21], AEI[22], AEI[23], AEI[24]));
                 //0x00391F,
@@ -335,14 +335,14 @@ namespace MM2Randomizer.Randomizers.Enemies
             // Air Bank 7 - Picopico-kun fight
             Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007470, // Bank 0
                 new int[] { 0 },
-                new int[] { 0, 1, 2, 5 }, new int[] { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01, 0x96, 0x03 },
+                new int[] { 0, 1, 2, 5 }, new byte[] { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01, 0x96, 0x03 },
                 AEI[42], AEI[43]));
             Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007494, // Bank 2
                 new int[] { 1 },
                 AEI[44], AEI[45]));
             Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007482, // Bank 1
                 new int[] { 2 },
-                new int[] { 3, 5 }, new int[] { 0x9A, 0x03, 0x96, 0x03 },
+                new int[] { 3, 5 }, new byte[] { 0x9A, 0x03, 0x96, 0x03 },
                 AEI[46], AEI[47], AEI[48], AEI[49], AEI[50], AEI[51], AEI[52]));
             Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074b8, // Bank 4
                 new int[] { 5 },
@@ -397,6 +397,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             // Bubble Bank 7 - Buebeam fight
             Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F470, // Bank 0
                 new int[] { 0, 5 },
+                new int[] { 2 }, new byte[] { 0x9D, 0x02 }, // Falling platform sprite
                 AEI[106], AEI[107], AEI[108],
                 AEI[125], AEI[126], AEI[127], AEI[128], AEI[129], AEI[130]));
             Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F482, // Bank 1
@@ -412,7 +413,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 AEI[133], AEI[134]));
             Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4ca, // Bank 5
                 new int[] { 15, 17 },
-                new int[] { 3 }, new int[] { 0x95, 0x03 },
+                new int[] { 3 }, new byte[] { 0x95, 0x03 }, // Moving platform sprite
                 AEI[135], AEI[136], AEI[137],
                 AEI[138], AEI[139], AEI[140]));
             Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4dc, // Bank 6
@@ -469,7 +470,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             // Clash
             Rooms.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f494, 
                 new int[] { 0, 3, 4, 5 },
-                new int[] { 3 }, new int[] { 0x95, 0x03 },
+                new int[] { 3 }, new byte[] { 0x95, 0x03 },
                 AEI[194], AEI[195], AEI[196],
                 AEI[203], AEI[204], AEI[205],
                 AEI[206], AEI[207], AEI[208],
@@ -569,24 +570,36 @@ namespace MM2Randomizer.Randomizers.Enemies
                         List<int> commonRows = en.SpriteBankRows.Intersect(room.SpriteBankRowsRestriction).ToList();
                         if (commonRows.Count != 0)
                         {
-                            // Enemy rejected: goto next enemy without adding this one
-                            continue;
-                            // TODO: allow placing enemies that use the same pattern table addresses for restricted rows
+                            bool reject = false;
+                            for (int i = 0; i < en.SpriteBankRows.Count; i++)
+                            {
+                                int enemyRow = en.SpriteBankRows[i];
+                                int indexOfRow = room.SpriteBankRowsRestriction.IndexOf(enemyRow);
+
+                                // For a restricted sprite bank row, see if enemy uses the same sprite pattern
+                                if (indexOfRow > -1)
+                                {
+                                    if (en.PatternTableAddresses[i * 2] == room.PatternTableAddressesRestriction[indexOfRow * 2] &&
+                                        en.PatternTableAddresses[i * 2 + 1] == room.PatternTableAddressesRestriction[indexOfRow * 2 + 1])
+                                    {
+                                        // Enemy and the restricted sprite use the same pattern table, allow it
+                                        // (do nothing)
+                                    }
+                                    else
+                                    {
+                                        // Enemy draws with this row, but using a different set of graphics. reject it.
+                                        reject = true;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (reject)
+                            {
+                                continue;
+                            }
                         }
-                            // TODO: Doesn't work yet.
-                            //// If enemy uses this row, check if its sprite belongs to the same pattern table
-                            //if (en.PatternTableAddresses[rowIndex * 2] == room.PatternTableAddressesRestriction[i * 2] &&
-                            //    en.PatternTableAddresses[rowIndex * 2 + 1] == room.PatternTableAddressesRestriction[i * 2 + 1])
-                            //{
-                            //    // Enemy and the restricted sprite use the same pattern table, allow it
-                            //    break;
-                            //}
-                            //else
-                            //{
-                            //    // Enemy draws with this row, but using a different set of graphics. reject it.
-                            //    reject = true;
-                            //    break;
-                            //}
+                            
                     }
 
                     // Check if this enemy would fit in the sprite bank, given other new enemies already added

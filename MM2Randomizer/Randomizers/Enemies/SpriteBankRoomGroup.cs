@@ -17,8 +17,8 @@ namespace MM2Randomizer.Randomizers.Enemies
         public List<EnemyType> NewEnemyTypes { get; set; }
 
         public bool IsSpriteRestricted { get; set; }
-        public int[] SpriteBankRowsRestriction { get; set; }
-        public int[] PatternTableAddressesRestriction { get; set; }
+        public List<int> SpriteBankRowsRestriction { get; set; }
+        public List<byte> PatternTableAddressesRestriction { get; set; }
 
         public SpriteBankRoomGroup (EStageID stage, int patternAddressStart, int[] roomNums, params EnemyInstance[] enemyInstances)
         {
@@ -30,11 +30,11 @@ namespace MM2Randomizer.Randomizers.Enemies
             IsSpriteRestricted = false;
         }
 
-        public SpriteBankRoomGroup (EStageID stage, int patternAddressStart, int[] roomNums, int[] spriteBankRowsRestriction, int[] patternTableAddressesRestriction, params EnemyInstance[] enemyInstances)
+        public SpriteBankRoomGroup (EStageID stage, int patternAddressStart, int[] roomNums, int[] spriteBankRowsRestriction, byte[] patternTableAddressesRestriction, params EnemyInstance[] enemyInstances)
             : this(stage, patternAddressStart, roomNums, enemyInstances)
         {
-            SpriteBankRowsRestriction = spriteBankRowsRestriction;
-            PatternTableAddressesRestriction = patternTableAddressesRestriction;
+            SpriteBankRowsRestriction = new List<int>(spriteBankRowsRestriction);
+            PatternTableAddressesRestriction = new List<byte>(patternTableAddressesRestriction);
             IsSpriteRestricted = true;
         }
     }

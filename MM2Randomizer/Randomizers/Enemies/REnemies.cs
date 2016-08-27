@@ -335,7 +335,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             // Air Bank 7 - Picopico-kun fight
             Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007470, // Bank 0
                 new int[] { 0 },
-                new int[] { 0, 1, 2, 5 }, new byte[] { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01, 0x96, 0x03 },
+                new int[] { 0, 1, 2, 3, 5 }, new byte[] { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01, 0x9A, 0x03, 0x96, 0x03 },
                 AEI[42], AEI[43]));
             Rooms.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007494, // Bank 2
                 new int[] { 1 },
@@ -405,6 +405,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 AEI[109], AEI[110], AEI[111], AEI[112], AEI[113], AEI[114]));
             Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F494, // Bank 2
                 new int[] { 4 },
+                new int[] { 0, 1 }, new byte[] { 0x9E, 0x02, 0x9F, 0x02 }, // Shrimp sprites
                 AEI[115], AEI[116], AEI[117], AEI[118], AEI[119], AEI[120], AEI[121], AEI[122], AEI[123], AEI[124]));
             Rooms.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4b8, // Bank 4
                 new int[] { 9, 10, 13 },
@@ -470,7 +471,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             // Clash
             Rooms.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f494, 
                 new int[] { 0, 3, 4, 5 },
-                new int[] { 3 }, new byte[] { 0x95, 0x03 },
+                new int[] { 3 }, new byte[] { 0x95, 0x03 }, // Moving platform sprites
                 AEI[194], AEI[195], AEI[196],
                 AEI[203], AEI[204], AEI[205],
                 AEI[206], AEI[207], AEI[208],
@@ -545,6 +546,10 @@ namespace MM2Randomizer.Randomizers.Enemies
                         case EStageID.AirW2:
                             // Moles don't display correctly in Heat
                             if (en.ID == EEnemyID.Mole_Activator && room.RoomNums[0] < 7) continue;
+                            break;
+                        case EStageID.WoodW3:
+                            // Moles don't display in Wood outside room
+                            if (en.ID == EEnemyID.Mole_Activator && room.RoomNums.Contains(6)) continue;
                             break;
                         case EStageID.BubbleW4:
                             // Moles don't display correctly in Bubble

@@ -24,6 +24,7 @@ namespace MM2Randomizer.Randomizers.Enemies
 
         public static double CHANCE_MOLE = 0.25;
         public static double CHANCE_PIPI = 0.4;
+        public static double CHANCE_SHRINKSPAWNER = 0.25;
 
         public static int MAX_MOLES = 2;
         public static int MAX_PIPIS = 5;
@@ -83,13 +84,30 @@ namespace MM2Randomizer.Randomizers.Enemies
                     // Create valid random combination of enemies to place
                     List<EnemyType> newEnemies = GenerateEnemyCombinations(room);
 
+                    // No enemy can fit in this room for some reason, skip this room (GFX will be glitched)
+                    if (newEnemies.Count == 0)
+                        continue;
+
                     // Change each enemy ID for the room to a random enemy from the new enemy set
                     for (int i = 0; i < room.EnemyInstances.Length; i++)
                     {
                         int randomIndex = RandomMM2.Random.Next(newEnemies.Count);
                         EnemyType newEnemyType = newEnemies[randomIndex];
-
                         room.NewEnemyTypes.Add(newEnemies[randomIndex]);
+                        byte newId = (byte)newEnemies[randomIndex].ID;
+
+                        // Last-minute adjustments to certain enemy spawns
+                        switch ((EEnemyID)newId)
+                        {
+                            case EEnemyID.Shrink:
+                                double randomSpawner = RandomMM2.Random.NextDouble();
+                                if (randomSpawner < CHANCE_SHRINKSPAWNER)
+                                {
+                                    newId = (byte)EEnemyID.Shrink_Spawner;
+                                }
+                                break;
+                            default: break;
+                        }
 
                         // Change the enemy ID in the ROM
                         int IDposition = Stage0EnemyIDAddress +
@@ -97,7 +115,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                             room.EnemyInstances[i].Offset;
 
                         stream.Position = IDposition;
-                        stream.WriteByte((byte)newEnemies[randomIndex].ID);
+                        stream.WriteByte(newId);
 
                         // Change enemy Y position for position-sensitive enemies and high spawn points
                         if (!newEnemyType.ScreenEdgeOK && room.EnemyInstances[i].NeedYAdjust)
@@ -119,9 +137,9 @@ namespace MM2Randomizer.Randomizers.Enemies
                                 room.EnemyInstances[i].Offset;
                             stream.WriteByte((byte)newY);
                         }
-                        
+
                         // Update object with new ID for future use
-                        room.EnemyInstances[i].EnemyID = (byte)newEnemies[randomIndex].ID;
+                        room.EnemyInstances[i].EnemyID = newId;
                     }
 
                     // Change sprite banks for the room
@@ -260,7 +278,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             EnemyTypes.Add(new EnemyType(EEnemyID.SniperArmor,
                 new List<byte>() { 0x91, 0x03, 0x92, 0x03, 0x93, 0x03, 0x94, 0x03, 0x95, 0x03 },
                 new List<int>() { 0, 1, 2, 3, 4 },
-                false, 
+                false,
                 -16));
             EnemyTypes.Add(new EnemyType(EEnemyID.SniperJoe,
                 new List<byte>() { 0x94, 0x03, 0x95, 0x03 },
@@ -268,8 +286,25 @@ namespace MM2Randomizer.Randomizers.Enemies
             EnemyTypes.Add(new EnemyType(EEnemyID.Scworm,
                 new List<byte>() { 0x9E, 0x04 },
                 new List<int>() { 3 },
-                false, 
+                false,
                 8));
+            EnemyTypes.Add(new EnemyType(EEnemyID.Springer,
+                new List<byte>() { 0x9F, 0x03 },
+                new List<int>() { 5 },
+                false,
+                4));
+            //EnemyTypes.Add(new EnemyType(EEnemyID.PetitGoblin,
+            //    new List<byte>() { 0x96, 0x03 },
+            //    new List<int>() { 5 }));
+            EnemyTypes.Add(new EnemyType(EEnemyID.Shrink,
+                new List<byte>() { 0x9E, 0x02, 0x9F, 0x02 },
+                new List<int>() { 0, 1 }));
+            //EnemyTypes.Add(new EnemyType(EEnemyID.BigFish,
+            //    new List<byte>() { 0x94, 0x04, 0x95, 0x04, 0x96, 0x04, 0x97, 0x04 },
+            //    new List<int>() { 0, 1, 2, 3 }));
+            //EnemyTypes.Add(new EnemyType(EEnemyID.M445_Activator,
+            //    new List<byte>() { 0x97, 0x02 },
+            //    new List<int>() { 2 }));
 
             // Copy enemy list to dictionary
             foreach (EnemyType e in EnemyTypes)

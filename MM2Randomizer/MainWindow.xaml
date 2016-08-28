@@ -45,7 +45,7 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition/>            
             </Grid.RowDefinitions>
-            <TextBlock Text="Mega Man 2 Randomizer Beta 1.0" FontSize="16" TextAlignment="Center" Grid.ColumnSpan="2"/>
+            <TextBlock Text="Mega Man 2 Randomizer 0.1.2" FontSize="16" TextAlignment="Center" Grid.ColumnSpan="2"/>
             <TextBlock Grid.Row="1" Text="Seed (blank for random):"/>
             <TextBox Grid.Row="1" Grid.Column="1" Name="tbxSeed"/>
             <GroupBox Grid.Row="2" Header="Randomize Options" BorderThickness="2" BorderBrush="DarkGray" VerticalAlignment="Top">

@@ -1121,46 +1121,51 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Bubble | Water
-                    addresses = new int[] { 0xfe22, },
+                    addresses = new int[] { 0xfe22,
+                        0xfe1b, 0xfe1c, 0xfe1d,
+                        0xfe3b, 0xfe3c, 0xfe3d,
+                        0xfe4b, 0xfe4c, 0xfe4d,
+                        0xfe5b, 0xfe5c, 0xfe5d,
+                    },
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] {
-                            (EColorsHex)0x11, // original color
+                            (EColorsHex)0x11,(EColorsHex)0x11,(EColorsHex)0x11,(EColorsHex)0x11,(EColorsHex)0x11,(EColorsHex)0x11,(EColorsHex)0x11,(EColorsHex)0x11,(EColorsHex)0x11,(EColorsHex)0x11,(EColorsHex)0x11,(EColorsHex)0x11,(EColorsHex)0x11,
                         },
                         new EColorsHex[] {
-                            (EColorsHex)0x01,
+                            (EColorsHex)0x01,(EColorsHex)0x01,(EColorsHex)0x01,(EColorsHex)0x01,(EColorsHex)0x01,(EColorsHex)0x01,(EColorsHex)0x01,(EColorsHex)0x01,(EColorsHex)0x01,(EColorsHex)0x01,(EColorsHex)0x01,(EColorsHex)0x01,(EColorsHex)0x01,
                         },
                         new EColorsHex[] {
-                            EColorsHex.Black3,
+                            EColorsHex.Black3,EColorsHex.Black3,EColorsHex.Black3,EColorsHex.Black3,EColorsHex.Black3,EColorsHex.Black3,EColorsHex.Black3,EColorsHex.Black3,EColorsHex.Black3,EColorsHex.Black3,EColorsHex.Black3,EColorsHex.Black3,EColorsHex.Black3,
                         },
                         new EColorsHex[] {
-                            (EColorsHex)0x13,
+                            (EColorsHex)0x13,(EColorsHex)0x13,(EColorsHex)0x13,(EColorsHex)0x13,(EColorsHex)0x13,(EColorsHex)0x13,(EColorsHex)0x13,(EColorsHex)0x13,(EColorsHex)0x13,(EColorsHex)0x13,(EColorsHex)0x13,(EColorsHex)0x13,(EColorsHex)0x13,
                         },
                         new EColorsHex[] {
-                            (EColorsHex)0x04,
+                            (EColorsHex)0x04,(EColorsHex)0x04,(EColorsHex)0x04,(EColorsHex)0x04,(EColorsHex)0x04,(EColorsHex)0x04,(EColorsHex)0x04,(EColorsHex)0x04,(EColorsHex)0x04,(EColorsHex)0x04,(EColorsHex)0x04,(EColorsHex)0x04,(EColorsHex)0x04,
                         },
                         new EColorsHex[] {
-                            (EColorsHex)0x05,
+                            (EColorsHex)0x05,(EColorsHex)0x05,(EColorsHex)0x05,(EColorsHex)0x05,(EColorsHex)0x05,(EColorsHex)0x05,(EColorsHex)0x05,(EColorsHex)0x05,(EColorsHex)0x05,(EColorsHex)0x05,(EColorsHex)0x05,(EColorsHex)0x05,(EColorsHex)0x05,
                         },
                         new EColorsHex[] {
-                            (EColorsHex)0x16,
+                            (EColorsHex)0x16,(EColorsHex)0x16,(EColorsHex)0x16,(EColorsHex)0x16,(EColorsHex)0x16,(EColorsHex)0x16,(EColorsHex)0x16,(EColorsHex)0x16,(EColorsHex)0x16,(EColorsHex)0x16,(EColorsHex)0x16,(EColorsHex)0x16,(EColorsHex)0x16,
                         },
                         new EColorsHex[] {
-                            (EColorsHex)0x07,
+                            (EColorsHex)0x07,(EColorsHex)0x07,(EColorsHex)0x07,(EColorsHex)0x07,(EColorsHex)0x07,(EColorsHex)0x07,(EColorsHex)0x07,(EColorsHex)0x07,(EColorsHex)0x07,(EColorsHex)0x07,(EColorsHex)0x07,(EColorsHex)0x07,(EColorsHex)0x07,
                         },
                         new EColorsHex[] {
-                            (EColorsHex)0x17,
+                            (EColorsHex)0x17,(EColorsHex)0x17,(EColorsHex)0x17,(EColorsHex)0x17,(EColorsHex)0x17,(EColorsHex)0x17,(EColorsHex)0x17,(EColorsHex)0x17,(EColorsHex)0x17,(EColorsHex)0x17,(EColorsHex)0x17,(EColorsHex)0x17,(EColorsHex)0x17,
                         },
                         new EColorsHex[] {
-                            (EColorsHex)0x09,
+                            (EColorsHex)0x09,(EColorsHex)0x09,(EColorsHex)0x09,(EColorsHex)0x09,(EColorsHex)0x09,(EColorsHex)0x09,(EColorsHex)0x09,(EColorsHex)0x09,(EColorsHex)0x09,(EColorsHex)0x09,(EColorsHex)0x09,(EColorsHex)0x09,(EColorsHex)0x09,
                         },
                         new EColorsHex[] {
-                            (EColorsHex)0x2b,
+                            (EColorsHex)0x2b,(EColorsHex)0x2b,(EColorsHex)0x2b,(EColorsHex)0x2b,(EColorsHex)0x2b,(EColorsHex)0x2b,(EColorsHex)0x2b,(EColorsHex)0x2b,(EColorsHex)0x2b,(EColorsHex)0x2b,(EColorsHex)0x2b,(EColorsHex)0x2b,(EColorsHex)0x2b,
                         },
                         new EColorsHex[] {
-                            (EColorsHex)0x0b,
+                            (EColorsHex)0x0b,(EColorsHex)0x0b,(EColorsHex)0x0b,(EColorsHex)0x0b,(EColorsHex)0x0b,(EColorsHex)0x0b,(EColorsHex)0x0b,(EColorsHex)0x0b,(EColorsHex)0x0b,(EColorsHex)0x0b,(EColorsHex)0x0b,(EColorsHex)0x0b,(EColorsHex)0x0b,
                         },
                         new EColorsHex[] {
-                            (EColorsHex)0x0c,
+                            (EColorsHex)0x0c,(EColorsHex)0x0c,(EColorsHex)0x0c,(EColorsHex)0x0c,(EColorsHex)0x0c,(EColorsHex)0x0c,(EColorsHex)0x0c,(EColorsHex)0x0c,(EColorsHex)0x0c,(EColorsHex)0x0c,(EColorsHex)0x0c,(EColorsHex)0x0c,(EColorsHex)0x0c,
                         },
                     }
                 },
@@ -1811,47 +1816,47 @@ namespace MM2Randomizer.Randomizers.Colors
                             (EColorsHex)0x38, (EColorsHex)0x2a, (EColorsHex)0x17,
                             (EColorsHex)0x38, (EColorsHex)0x2a, (EColorsHex)0x17,},
                         new EColorsHex[] { // Turquoise
-                            (EColorsHex)0x3c, (EColorsHex)0x22, (EColorsHex)0x1b,
-                            (EColorsHex)0x3c, (EColorsHex)0x22, (EColorsHex)0x1b,
-                            (EColorsHex)0x3c, (EColorsHex)0x22, (EColorsHex)0x1b,
-                            (EColorsHex)0x3c, (EColorsHex)0x22, (EColorsHex)0x1b,
-                            (EColorsHex)0x3c, (EColorsHex)0x22, (EColorsHex)0x1b,},
+                            (EColorsHex)0x3c, (EColorsHex)0x22, (EColorsHex)0x1d,
+                            (EColorsHex)0x3c, (EColorsHex)0x22, (EColorsHex)0x1d,
+                            (EColorsHex)0x3c, (EColorsHex)0x22, (EColorsHex)0x1d,
+                            (EColorsHex)0x3c, (EColorsHex)0x22, (EColorsHex)0x1d,
+                            (EColorsHex)0x3c, (EColorsHex)0x22, (EColorsHex)0x1d,},
                         new EColorsHex[] { // Pink
-                            (EColorsHex)0x32, (EColorsHex)0x24, (EColorsHex)0x11,
-                            (EColorsHex)0x32, (EColorsHex)0x24, (EColorsHex)0x11,
-                            (EColorsHex)0x32, (EColorsHex)0x24, (EColorsHex)0x11,
-                            (EColorsHex)0x32, (EColorsHex)0x24, (EColorsHex)0x11,
-                            (EColorsHex)0x32, (EColorsHex)0x24, (EColorsHex)0x11,},
+                            (EColorsHex)0x32, (EColorsHex)0x24, (EColorsHex)0x13,
+                            (EColorsHex)0x32, (EColorsHex)0x24, (EColorsHex)0x13,
+                            (EColorsHex)0x32, (EColorsHex)0x24, (EColorsHex)0x13,
+                            (EColorsHex)0x32, (EColorsHex)0x24, (EColorsHex)0x13,
+                            (EColorsHex)0x32, (EColorsHex)0x24, (EColorsHex)0x13,},
                         new EColorsHex[] { // Purple
-                            (EColorsHex)0x34, (EColorsHex)0x26, (EColorsHex)0x13,
-                            (EColorsHex)0x34, (EColorsHex)0x26, (EColorsHex)0x13,
-                            (EColorsHex)0x34, (EColorsHex)0x26, (EColorsHex)0x13,
-                            (EColorsHex)0x34, (EColorsHex)0x26, (EColorsHex)0x13,
-                            (EColorsHex)0x34, (EColorsHex)0x26, (EColorsHex)0x13,},
+                            (EColorsHex)0x34, (EColorsHex)0x26, (EColorsHex)0x15,
+                            (EColorsHex)0x34, (EColorsHex)0x26, (EColorsHex)0x15,
+                            (EColorsHex)0x34, (EColorsHex)0x26, (EColorsHex)0x15,
+                            (EColorsHex)0x34, (EColorsHex)0x26, (EColorsHex)0x15,
+                            (EColorsHex)0x34, (EColorsHex)0x26, (EColorsHex)0x15,},
                         new EColorsHex[] { // Yellow
-                            (EColorsHex)0x36, (EColorsHex)0x28, (EColorsHex)0x15,
-                            (EColorsHex)0x36, (EColorsHex)0x28, (EColorsHex)0x15,
-                            (EColorsHex)0x36, (EColorsHex)0x28, (EColorsHex)0x15,
-                            (EColorsHex)0x36, (EColorsHex)0x28, (EColorsHex)0x15,
-                            (EColorsHex)0x36, (EColorsHex)0x28, (EColorsHex)0x15,},
+                            (EColorsHex)0x36, (EColorsHex)0x28, (EColorsHex)0x17,
+                            (EColorsHex)0x36, (EColorsHex)0x28, (EColorsHex)0x17,
+                            (EColorsHex)0x36, (EColorsHex)0x28, (EColorsHex)0x17,
+                            (EColorsHex)0x36, (EColorsHex)0x28, (EColorsHex)0x17,
+                            (EColorsHex)0x36, (EColorsHex)0x28, (EColorsHex)0x17,},
                         new EColorsHex[] { // White
                             (EColorsHex)0x20, (EColorsHex)0x10, (EColorsHex)0x0f,
                             (EColorsHex)0x20, (EColorsHex)0x10, (EColorsHex)0x0f,
                             (EColorsHex)0x20, (EColorsHex)0x10, (EColorsHex)0x0f,
                             (EColorsHex)0x20, (EColorsHex)0x10, (EColorsHex)0x0f,
                             (EColorsHex)0x20, (EColorsHex)0x10, (EColorsHex)0x0f,},
-                        new EColorsHex[] { // Dark Purple/Orange
-                            (EColorsHex)0x1c, (EColorsHex)0x04, (EColorsHex)0x17,
-                            (EColorsHex)0x1c, (EColorsHex)0x04, (EColorsHex)0x17,
-                            (EColorsHex)0x1c, (EColorsHex)0x04, (EColorsHex)0x17,
-                            (EColorsHex)0x1c, (EColorsHex)0x04, (EColorsHex)0x17,
-                            (EColorsHex)0x1c, (EColorsHex)0x04, (EColorsHex)0x17,},
-                        new EColorsHex[] { // Yellow/Blue
-                            (EColorsHex)0x2c, (EColorsHex)0x22, (EColorsHex)0x28,
-                            (EColorsHex)0x2c, (EColorsHex)0x22, (EColorsHex)0x28,
-                            (EColorsHex)0x2c, (EColorsHex)0x22, (EColorsHex)0x28,
-                            (EColorsHex)0x2c, (EColorsHex)0x22, (EColorsHex)0x28,
-                            (EColorsHex)0x2c, (EColorsHex)0x22, (EColorsHex)0x28,},
+                        new EColorsHex[] { // Dark Blue/Orange
+                            (EColorsHex)0x1c, (EColorsHex)0x0b, (EColorsHex)0x07,
+                            (EColorsHex)0x1c, (EColorsHex)0x0b, (EColorsHex)0x07,
+                            (EColorsHex)0x1c, (EColorsHex)0x0b, (EColorsHex)0x07,
+                            (EColorsHex)0x1c, (EColorsHex)0x0b, (EColorsHex)0x07,
+                            (EColorsHex)0x1c, (EColorsHex)0x0b, (EColorsHex)0x07,},
+                        new EColorsHex[] { // Blue
+                            (EColorsHex)0x2c, (EColorsHex)0x22, (EColorsHex)0x11,
+                            (EColorsHex)0x2c, (EColorsHex)0x22, (EColorsHex)0x11,
+                            (EColorsHex)0x2c, (EColorsHex)0x22, (EColorsHex)0x11,
+                            (EColorsHex)0x2c, (EColorsHex)0x22, (EColorsHex)0x11,
+                            (EColorsHex)0x2c, (EColorsHex)0x22, (EColorsHex)0x11,},
 
                     }
                 },

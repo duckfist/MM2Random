@@ -91,6 +91,7 @@
     <Compile Include="Enums\ERMWeaponValue.cs" />
     <Compile Include="Enums\EStageID.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Randomizers\RTilemap.cs" />
     <Compile Include="Randomizers\RWeaknesses.cs" />
     <Compile Include="Randomizers\RWeaponNames.cs" />
     <Compile Include="RandomMM2.cs" />

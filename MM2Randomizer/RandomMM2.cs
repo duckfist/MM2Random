@@ -61,6 +61,7 @@ namespace MM2Randomizer
                 {
                     RandomEnemies();
                 }
+                RandomTilemapChanges();
                 if (Settings.IsColorsRandom)
                 {
                     RandomColors();
@@ -85,6 +86,7 @@ namespace MM2Randomizer
                 {
                     FixPortraits();
                 }
+                
 
                 // Create file name based on seed and game region
                 string newfilename = (Settings.IsJapanese) ? "RM2" : "MM2";
@@ -199,6 +201,14 @@ namespace MM2Randomizer
         private static void RandomEnemies()
         {
             REnemies er = new REnemies();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static void RandomTilemapChanges()
+        {
+            RTilemap rTilemap = new RTilemap();
         }
 
         /// <summary>

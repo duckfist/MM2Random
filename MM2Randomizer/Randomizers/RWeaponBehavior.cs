@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MM2Randomizer.Enums;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,8 +9,41 @@ namespace MM2Randomizer.Randomizers
 {
     public class RWeaponBehavior
     {
+        public List<ESoundID> Sounds;
+
         public RWeaponBehavior(Random r)
         {
+            Sounds = new List<ESoundID>(new ESoundID[] {
+                ESoundID.WeaponF,
+                ESoundID.HeatmanUnused,
+                ESoundID.WeaponM,
+                ESoundID.WeaponP,
+                ESoundID.Shotman,
+                ESoundID.TakeDamage,
+                ESoundID.QuickBeam,
+                ESoundID.Refill,
+                ESoundID.MegaLand,
+                ESoundID.DamageEnemy,
+                ESoundID.Dragon,
+                ESoundID.Tink,
+                ESoundID.ClashAttach,
+                ESoundID.Cursor,
+                ESoundID.TeleportIn,
+                ESoundID.WeaponW,
+                ESoundID.Pause,
+                ESoundID.WeaponH_Charge0,
+                ESoundID.WeaponH_Shoot,
+                ESoundID.FlyBoy,
+                ESoundID.TeleportOut,
+                ESoundID.Splash,
+                ESoundID.Yoku,
+                ESoundID.Droplet1,
+                ESoundID.WeaponA,
+                ESoundID.Unknown1,
+                ESoundID.Death,
+                ESoundID.OneUp,
+            });
+
             using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
                 ChangeHeat(r, stream);
@@ -23,54 +57,205 @@ namespace MM2Randomizer.Randomizers
             }
         }
 
+        /// <summary>
+        /// Get a random unique sound for a weapon to use
+        /// </summary>
+        /// <param name="r"></param>
+        /// <returns>Sound ID byte</returns>
+        private ESoundID GetRandomSound(Random r)
+        {
+            int i = r.Next(Sounds.Count);
+            ESoundID sound = Sounds.ElementAt(i);
+            Sounds.RemoveAt(i);
+
+            // Pick a random charge level if charge sound is chosen
+            if (sound == ESoundID.WeaponH_Charge0)
+            {
+                i = r.Next(3);
+                sound = (ESoundID)(ESoundID.WeaponH_Charge0 + i);
+            }
+
+            return sound;
+        }
+
         public void ChangeHeat(Random r, FileStream stream)
         {
-            // TODO: Find ammo use
+            //0x03DE55 - H L1 Ammo use(01)
+            //0x03DE56 - H L2 Ammo use(06)
+            //0x03DE57 - H L3 Ammo use(0A)
+            // 50% chance for L1 to be free
+            // L2 and L3 will cost 1-5 more each
+            double rTestL1Ammo = r.NextDouble();
+            if (rTestL1Ammo > 0.5)
+            {
+                stream.Position = 0x03DE55;
+                stream.WriteByte(0x00);
+            }
+            stream.Position = 0x03DE56;
+            int ammoMax = 0;
+            for (int i = 0; i < 2; i++)
+            {
+                int ammoUse = r.Next(0x05) + 0x01;
+                ammoMax += ammoUse;
+                stream.WriteByte((byte)ammoMax);
+            }
 
             //0x03DDEC - H shot sound effect(38)
-            //0x03DDF1 - H x - speed(04, all levels)
+            stream.Position = 0x03DDEC;
+            stream.WriteByte((byte)GetRandomSound(r));
+
+            //0x03DDF1 - H x - speed (04, all levels)
             //    Do from 02 to 08
-            //0x03DE45 - H charge sound 1(35)
+            int xVel = r.Next(0x07) + 0x02;
+            stream.Position = 0x03DDF1;
+            stream.WriteByte((byte)xVel);
+
+            //0x03DE45 - H charge sound 1(35) Unused
             //0x03DE46 - H charge sound 2(35)
+            stream.Position = 0x03DE46;
+            stream.WriteByte((byte)GetRandomSound(r));
             //0x03DE47 - H charge sound 3(36)
+            stream.Position = 0x03DE47;
+            stream.WriteByte((byte)GetRandomSound(r));
             //0x03DE48 - H charge sound 4(37)
+            stream.Position = 0x03DE48;
+            stream.WriteByte((byte)GetRandomSound(r));
         }
 
         public void ChangeAir(Random r, FileStream stream)
         {
             //0x03DAD6 - A num projectiles, default 0x04
             //  Values 0x02 and 0x03 work, but larger values behave strangely
+            int numProjectiles = 0x04;
+            double rTestNumProjectiles = r.NextDouble();
+            if (rTestNumProjectiles > 0.80)
+                numProjectiles = 0x03;
+            else if (rTestNumProjectiles > 0.60)
+                numProjectiles = 0x02;
+            stream.Position = 0x03DAD6;
+            stream.WriteByte((byte)numProjectiles);
+
             //0x03DADA - A projectile type, default 0x02
             //  Can use this to change behavior completely!Buggy though.
+
             //0x03DAE6 - A sound effect (0x3F)
+            stream.Position = 0x03DAE6;
+            stream.WriteByte((byte)GetRandomSound(r));
+
             //0x03DAEE - A ammo used(0x02)
+            int ammoUse = r.Next(0x02) + 0x01;
+            stream.Position = 0x03DAEE;
+            stream.WriteByte((byte)ammoUse);
+
             //0x03DE6E - A projectile y-acceleration fraction(10)
+            // Do 0x02 to 0x32, where values above 0x10 are less common
+            int yAccFrac = r.Next(0x17) + 0x02;
+            if (yAccFrac > 0x10)
+            {
+                // double the addition of any acceleration value chosen above 0x10
+                yAccFrac += (yAccFrac - 0x10) * 2; 
+            }
+            stream.Position = 0x03DE6E;
+            stream.WriteByte((byte)yAccFrac);
+
             //0x03DE76 - A projectile y-acceleration integer(00)
+            // 15% chance to be significantly faster
+            int yAccInt = 0x00;
+            double rYAcc = r.NextDouble();
+            if (rYAcc > 0.85)
+                yAccInt = 0x01;
+            stream.Position = 0x03DE76;
+            stream.WriteByte((byte)yAccInt);
+
             //0x03DE7E - A x - speed fraction projectile 1(19)
             //0x03DE7F - A x - speed fraction projectile 2(99)
             //0x03DE80 - A x - speed fraction projectile 3(33)
+            int xFracSpeed = r.Next(0xFF) + 0x01;
+            stream.Position = 0x03DE7E;
+            for (int i = 0; i < 3; i++)
+            {
+                stream.WriteByte((byte)ammoUse);
+            }
+
             //0x03DE81 - A x - speed integer projectile 1(01)
             //0x03DE82 - A x - speed integer projectile 2(01)
             //0x03DE83 - A x - speed integer projectile 3(02)
+            int[] xIntSpeeds = new int[] {
+                0x00, 0x01, 0x02, 0x04, 0x06
+            };
+            int rIndex = 0;
+            int deployDelay = 0;
+            stream.Position = 0x03DE81;
+            for (int i = 0; i < 3; i++)
+            {
+                rIndex = r.Next(xIntSpeeds.Length);
+                deployDelay = xIntSpeeds[rIndex];
+                stream.WriteByte((byte)deployDelay);
+            }
         }
 
         public void ChangeWood(Random r, FileStream stream)
         {
             //0x03DEDA - W deploy time (0C)
             //    Can change from 06 to 12
-            //0x03DF0D - W spin sound effect
+            //    Note: Shield glitches on odd numbers.  Use evens only.
+            int[] deployDelays = new int[] {
+                0x00, 0x02, 0x04, 0x06, 0x08, 0x0A, 0x0C, 0x10, 0x14, 0x1C, 0x22
+            };
+            int rIndex = r.Next(deployDelays.Length);
+            int deployDelay = deployDelays[rIndex];
+            stream.Position = 0x03DEDA;
+            stream.WriteByte((byte)deployDelay);
+
+            //0x03DF0D - W spin animation? (01)
+
             //0x03DF1B - W delay between sounds(07)
+            // TODO
+
             //0x03DF1F - W deploy sound effect
+            stream.Position = 0x03DF1F;
+            stream.WriteByte((byte)GetRandomSound(r));
+
             //0x03DF41 - W which directions the shield is allowed to launch in (F0)
             //    Can prevent launching left / right, up / down, etc
+
             //0x03DF4D - W launch directions (C0)
             //    Don't use this one
-            //0x03DF52 - W launch x - direction(40)
-            //    Can't figure this out.
-            //0x03DF59 - W x - speed(04)
+
+            //0x03DF50 - W launch x - direction subroutine
+            //    50% chance to have inverted x controls
+            //    Change "LSR AND #40" (4A 29 40) to simply "AND #40" to implement
+            double rTestReverseX = r.NextDouble();
+            if (rTestReverseX > 0.5)
+            {
+                stream.Position = 0x03DF50;
+                stream.WriteByte(0x29); // AND
+                stream.WriteByte(0x40); // #$40
+                stream.WriteByte(0xEA); // NOP (best thing i could find to simply "skip" a line)
+            }
+
+            //0x03DF59 - W x - speed(04) (do 0x02-0x08)
+            int launchVel = r.Next(0x06) + 0x02;
+            stream.Position = 0x03DF59;
+            stream.WriteByte((byte)launchVel);
+
             //0x03DF64 - W launch y - direction(10)
-            //    Change to 0x20 to reverse y - direction
+            //  Change to 0x20 to reverse, 50% chance
+            int reverseY = 0x10;
+            double rTestReverseY = r.NextDouble();
+            if (rTestReverseY > 0.5)
+                reverseY = 0x20;
+            stream.Position = 0x03DF64;
+            stream.WriteByte((byte)reverseY);
+
+            //0x03DF72 - W ammo usage (3) (do from 1 to 3)
+            int ammoUse = r.Next(0x03) + 0x01;
+            stream.Position = 0x03DF72;
+            stream.WriteByte((byte)ammoUse);
+
             //0x03DF7D - W y - speed(04)
+            stream.Position = 0x03DF7D;
+            stream.WriteByte((byte)launchVel);
         }
 
         public void ChangeBubble(Random r, FileStream stream)
@@ -95,7 +280,8 @@ namespace MM2Randomizer.Randomizers
             // Don't do
 
             //0x03DB34 - B sound effect
-            // TODO
+            stream.Position = 0x03DB34;
+            stream.WriteByte((byte)GetRandomSound(r));
 
             //0x03DB3D - B shots per ammo tick (0x02) (do 1-4)
             int magSize = r.Next(0x04) + 0x01;
@@ -114,7 +300,7 @@ namespace MM2Randomizer.Randomizers
             //0x03DFC0 - B x - speed after falling from ledge (0x00)
             //      Make 50% chance to be 0, or 1-5
             int xVelFall = 0x00;
-            double rTestXFallSpeed = r.Next();
+            double rTestXFallSpeed = r.NextDouble();
             if (rTestXFallSpeed > 0.5)
                 xVelFall = r.Next(0x05) + 0x01;
             stream.Position = 0x03DFC0;
@@ -144,6 +330,8 @@ namespace MM2Randomizer.Randomizers
             stream.WriteByte((byte)maxShots);
 
             // 0x03DB6F - Q sound effect
+            stream.Position = 0x03DB6F;
+            stream.WriteByte((byte)GetRandomSound(r));
 
             // Q shots per ammo tick, default 0x08
             //    Do from 0x04 to 0x0A ?
@@ -197,37 +385,215 @@ namespace MM2Randomizer.Randomizers
 
         public void ChangeFlash(Random r, FileStream stream)
         {
-            // TODO
+            //0x03DC59 - F sound (21)
+            stream.Position = 0x03DC59;
+            stream.WriteByte((byte)GetRandomSound(r));
+
+            //0x03E172 - F custom subroutine for reusable weapon
+            // 75% chance to occur
+            double rTestFChange = r.NextDouble();
+            if (rTestFChange > 0.25)
+            {
+                // 0x03E175 - New ammo-usage address.
+                byte[] ammos = new byte[] { 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+                int rIndex = r.Next(7);
+                byte ammo = ammos[rIndex];
+
+                // Change ammo-tick subroutine into one that resumes time
+                stream.Position = 0x03E172;
+                byte[] sub = new byte[]
+                {
+                    0xA5, 0xA1,         // LDA ammoFlash = #$0A
+                    0xE9, ammo,         // SBC {ammo use}
+                    0x85, 0xA1,         // STA ammoFlash = #$0A
+                    0x5E, 0x20, 0x04,   // LSR megaXDir, X @ megaXDir = #$C0
+                    0xA9, 0x00,         // LDA #$00
+                    0x85, 0xAA,         // STA $00AA = #$00
+                    0x85, 0x50,         // STA $0050 = #$00 ; we erased LDA #$01, but doesn't seem to hurt 
+                };
+                stream.Write(sub, 0, sub.Length);
+
+                // 0x03E16E and 0x03D49D is the new duration, in frames. They must both be the same value.
+                int duration = 0x01;
+                switch (ammo)
+                {
+                    case 0x02:
+                        duration = r.Next(70) + 20;
+                        break;
+                    case 0x03:
+                        duration = r.Next(60) + 40;
+                        break;
+                    case 0x04:
+                        duration = r.Next(60) + 60;
+                        break;
+                    case 0x05:
+                        duration = r.Next(60) + 80;
+                        break;
+                    case 0x06:
+                        duration = r.Next(60) + 100;
+                        break;
+                    case 0x07:
+                        duration = r.Next(85) + 120;
+                        break;
+                    case 0x08:
+                        duration = r.Next(115) + 140;
+                        break;
+                    default: break;
+                }
+                stream.Position = 0x03E16E;
+                stream.WriteByte((byte)duration);
+                stream.Position = 0x03D49D;
+                stream.WriteByte((byte)duration);
+
+                // Finally, a fix is needed to prevent ammo underflow
+                // 0x03DC41 - WpnMove_FStart
+                stream.Position = 0x03DC41;
+                sub = new byte[]
+                {
+                    0xA2, 0x02,         // LDX #$02
+                    0xAD, 0x22, 0x04,   // LDA $0422 = #$61
+                    0x30, 0x1E,         // BMI WpnMove_Done    
+                    0xA5, 0xA1,         // LDA ammoFlash = #$02
+                    0xC9, 0x07,         // CMP #$07            
+                    0x90, 0x18,         // BCC WpnMove_Done    
+                };
+                stream.Write(sub, 0, sub.Length);
+            }
+            else
+            {
+                // Standard Time Stopper, but modify the tick frequency
+                // Default 0x0F. For 28 ticks, that's 7 seconds. Modify to be 4-10 seconds, which is about 0x09 to 0x16
+                int tickDelay = r.Next(0x13) + 9;
+                stream.Position = 0x03E16E;
+                stream.WriteByte((byte)tickDelay);
+                stream.Position = 0x03D49D;
+                stream.WriteByte((byte)tickDelay);
+            }
         }
 
         public void ChangeMetal(Random r, FileStream stream)
         {
-            //0x03DBB6 - M max shots (04)
+            //0x03DBB6 - M max shots (04) (change to 0x02-0x05, or 1-4)
+            int maxShots = r.Next(0x04) + 0x02;
+            stream.Position = 0x03DBB6;
+            stream.WriteByte((byte)maxShots);
+
             //0x03DBC9 - M sound effect(23)
-            //0x03DBD2 - M shots per ammo tick(04)
+            stream.Position = 0x03DBC9;
+            stream.WriteByte((byte)GetRandomSound(r));
+
+            //0x03DBD2 - M shots per ammo tick(04) (change to 1-5)
+            int magSize = r.Next(0x05) + 0x01;
+            stream.Position = 0x03DBD2;
+            stream.WriteByte((byte)magSize);
+
+            // Speeds.  Change each to be 2-7.  Diagonal will be half each, rounded up.
+            int velX = r.Next(0x06) + 0x02;
+            int velY = r.Next(0x06) + 0x02;
+            int halfY = (int)Math.Ceiling((double)velY / 2d);
+            int halfX = (int)Math.Ceiling((double)velX / 2d);
+
             //0x03DC12 - M y - speed, holding up(04)
-            //0x03DC13 - M y - speed, holding down(FC)
-            //0x03DC16 - M y - speed, holding up + left(02)
-            //0x03DC17 - M y - speed, holding down + left(FD)
-            //0x03DC1A - M y - speed, holding up + right(02)
-            //0x03DC1B - M y - speed, holding down + right(FD)
+            stream.Position = 0x03DC12;
+            stream.WriteByte((byte)velY);
 
             //0x03DC31 - M x - speed, no direction(04)
+            stream.Position = 0x03DC31;
+            stream.WriteByte((byte)velX);
+
             //0x03DC35 - M x - speed, holding left(04)
-            //0x03DC36 - M x - speed, holding up + left(02)
-            //0x03DC37 - M x - speed, holding down + left(02)
+            stream.Position = 0x03DC35;
+            stream.WriteByte((byte)velX);
+
             //0x03DC39 - M x - speed, holding right(04)
+            stream.Position = 0x03DC39;
+            stream.WriteByte((byte)velX);
+
+            //0x03DC13 - M y - speed, holding down(FC)
+            stream.Position = 0x03DC13;
+            stream.WriteByte((byte)((byte)0x00 - (byte)velY));
+
+            //0x03DC16 - M y - speed, holding up + left(02)
+            stream.Position = 0x03DC16;
+            stream.WriteByte((byte)halfY);
+
+            //0x03DC17 - M y - speed, holding down + left(FD)
+            stream.Position = 0x03DC17;
+            stream.WriteByte((byte)(0x00 - (byte)halfY));
+
+            //0x03DC1A - M y - speed, holding up + right(02)
+            stream.Position = 0x03DC1A;
+            stream.WriteByte((byte)halfY);
+
+            //0x03DC1B - M y - speed, holding down + right(FD)
+            stream.Position = 0x03DC1B;
+            stream.WriteByte((byte)((byte)0x00 - (byte)halfY));
+
+            //0x03DC36 - M x - speed, holding up + left(02)
+            stream.Position = 0x03DC36;
+            stream.WriteByte((byte)halfX);
+
+            //0x03DC37 - M x - speed, holding down + left(02)
+            stream.Position = 0x03DC37;
+            stream.WriteByte((byte)halfX);
+
             //0x03DC3A - M x - speed, holding up + right(02)
+            stream.Position = 0x03DC3A;
+            stream.WriteByte((byte)halfX);
+
             //0x03DC3B - M x - speed, holding down + right(02)
+            stream.Position = 0x03DC3B;
+            stream.WriteByte((byte)halfX);
         }
 
         public void ChangeClash(Random r, FileStream stream)
         {
-            // TODO
+            //0x03D4AD - C x-speed on shoot (04) (do 2-7)
+            int xVel = r.Next(0x06) + 0x02;
+            stream.Position = 0x03D4AD;
+            stream.WriteByte((byte)xVel);
 
-            //0x03DB99 - C ammo per shot
-            //0x03E089 - C attach sound effect
+            //0x03D4D7 - C y-speed integer for explosion (up only) (0)
+            // TODO: Figure how this works more to apply in all directions
+            // For now, 25% chance to make this move upward at 2px/fr
+            int yVelExplode = 0x00;
+            double rTestYVelExplode = r.NextDouble();
+            if (rTestYVelExplode > 0.75)
+                yVelExplode = r.Next(2) + 0x01;
+            stream.Position = 0x03D4D7;
+            stream.WriteByte((byte)yVelExplode);
+
+            //0x03DB99 - C ammo per shot (04) (do 1-4)
+            int ammoUse = r.Next(0x04) + 0x01;
+            stream.Position = 0x03DB99;
+            stream.WriteByte((byte)ammoUse);
+
+            // 0x03DB9F - C explosion type? (02)
+            // Change to 03 to "single explosion" type. Most other values break the game.
+            // For now, 50% chance to change
+            int multiExplode = 0x02;
+            double rTestMultiExplode = r.NextDouble();
+            if (rTestMultiExplode > 0.50)
+                multiExplode = 0x03;
+            stream.Position = 0x03DB9F;
+            stream.WriteByte((byte)multiExplode);
+
+            //0x03DBA6 - C shoot sound effect (24)
+            stream.Position = 0x03DBA6;
+            stream.WriteByte((byte)GetRandomSound(r));
+
+            //0x03E089 - C attach sound effect (2E)
+            stream.Position = 0x03E089;
+            stream.WriteByte((byte)GetRandomSound(r));
+
+            //0x03E09C - C delay before explosion (7E) (do 01 to C0)
+            int delayExplosion = r.Next(0xBF) + 0x01;
+            stream.Position = 0x03E09C;
+            stream.WriteByte((byte)delayExplosion);
+
             //0x03E0DA - C explode sound effect
+            stream.Position = 0x03E0DA;
+            stream.WriteByte((byte)GetRandomSound(r));
         }
     }
 }

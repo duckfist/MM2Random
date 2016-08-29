@@ -61,6 +61,7 @@ namespace MM2Randomizer
                 {
                     RandomEnemies();
                 }
+                RandomWeaponBehavior();
                 RandomTilemapChanges();
                 if (Settings.IsColorsRandom)
                 {
@@ -209,6 +210,15 @@ namespace MM2Randomizer
         private static void RandomTilemapChanges()
         {
             RTilemap rTilemap = new RTilemap();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static void RandomWeaponBehavior()
+        {
+            RWeaponBehavior rWeaponBehavior = new RWeaponBehavior(Random);
         }
 
         /// <summary>

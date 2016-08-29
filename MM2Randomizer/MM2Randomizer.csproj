@@ -93,6 +93,7 @@
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Randomizers\RTilemap.cs" />
     <Compile Include="Randomizers\RWeaknesses.cs" />
+    <Compile Include="Randomizers\RWeaponBehavior.cs" />
     <Compile Include="Randomizers\RWeaponNames.cs" />
     <Compile Include="RandomMM2.cs" />
     <Compile Include="Utilities\SeedConvert.cs" />

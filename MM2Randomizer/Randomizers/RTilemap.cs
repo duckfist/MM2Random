@@ -62,7 +62,6 @@ namespace MM2Randomizer.Randomizers
                     {
                         stream.WriteByte(0x9D); // Solid tile
                     }
-
                     
                 }
             }

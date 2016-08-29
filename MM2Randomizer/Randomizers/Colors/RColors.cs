@@ -183,6 +183,13 @@ namespace MM2Randomizer.Randomizers.Colors
                     stream.Position = startAddress + 0x04 + i * 0x04;
                     stream.WriteByte(light);
                     stream.WriteByte(dark);
+
+                    // TODO: Change additonal colors for Heat
+                    //0x03DE49 - H charge colors
+                    //    0F 15 - flash neutral color (15 = weapon color)
+                    //    31 15 - flash lv 1(outline only; keep 15 from weapon color)
+                    //    35 2C - flash lv 2
+                    //    30 30 - flash lv 3
                 }
 
                 // Change 3 Item colors

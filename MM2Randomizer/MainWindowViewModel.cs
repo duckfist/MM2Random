@@ -75,5 +75,6 @@
         /// TODO
         /// </summary>
         public bool BurstChaserMode { get; set; }
+        public bool IsWeaponBehaviorRandom { get; set; }
     }
 }

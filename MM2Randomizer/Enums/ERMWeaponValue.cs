@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MM2Randomizer.Enums
 {
-    public enum ERMWeaponValue
+    public enum ERMWeaponValueBit
     {
         // StageBeat    Address    Value
         // -----------------------------
@@ -18,19 +18,23 @@ namespace MM2Randomizer.Enums
         // Metal Man    0x03C28F   64
         // Crash Man    0x03C290   128
         HeatMan = 0x01,
-        
         AirMan = 0x02,
-        
         WoodMan = 0x04,
-
         BubbleMan = 0x08,
-
         QuickMan = 0x10,
-
         FlashMan = 0x20,
-
         MetalMan = 0x40,
-
         CrashMan = 0x80
+    }
+
+    public enum EWeaponIndex
+    {
+        Heat = 0x01,
+        Air = 0x02,
+        Wood = 0x03,
+        Bubble = 0x04,
+        Quick = 0x05,
+        Clash = 0x06,
+        Metal = 0x07,
     }
 }

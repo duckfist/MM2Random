@@ -25,8 +25,13 @@ namespace MM2Randomizer.Enums
         Eng_LeafShield      = 0x2e97c,
         Eng_BubbleLead      = 0x2e98a,
         Eng_QuickBoomerang  = 0x2e998,
-        Eng_TimeStopper     = 0x2c04,
+        Eng_TimeStopper     = 0x2C049,
         Eng_MetalBlade      = 0x2e9b4,
-        Eng_ClashBomber     = 0x2e9a6
+        Eng_ClashBomber     = 0x2e9a6,
+
+        Offset_Dragon = 0x08,
+        Offset_Guts = 0x0A,
+        Offset_Machine = 0x0C,
+        Offset_Alien = 0x0D,
     }
 }

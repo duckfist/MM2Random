@@ -11,6 +11,9 @@ namespace MM2Randomizer.Randomizers
     {
         public List<ESoundID> Sounds;
 
+        // Buster Heat Air Wood Bubble Quick Metal Clash
+        public static List<double> AmmoUsage = new List<double>();
+
         public RWeaponBehavior(Random r)
         {
             Sounds = new List<ESoundID>(new ESoundID[] {
@@ -44,6 +47,8 @@ namespace MM2Randomizer.Randomizers
                 ESoundID.OneUp,
             });
 
+            AmmoUsage.Add(0); // Buster is free
+
             using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
                 ChangeHeat(r, stream);
@@ -55,6 +60,12 @@ namespace MM2Randomizer.Randomizers
                 ChangeMetal(r, stream);
                 ChangeClash(r, stream);
             }
+
+            foreach (double w in AmmoUsage)
+            {
+                Console.Write("{0:0.00} ", w);
+            }
+            Console.WriteLine("\n");
         }
 
         /// <summary>
@@ -99,6 +110,7 @@ namespace MM2Randomizer.Randomizers
                 ammoMax += ammoUse;
                 stream.WriteByte((byte)ammoMax);
             }
+            AmmoUsage.Add(ammoMax);
 
             //0x03DDEC - H shot sound effect(38)
             stream.Position = 0x03DDEC;
@@ -146,6 +158,7 @@ namespace MM2Randomizer.Randomizers
             int ammoUse = r.Next(0x02) + 0x01;
             stream.Position = 0x03DAEE;
             stream.WriteByte((byte)ammoUse);
+            AmmoUsage.Add(ammoUse);
 
             //0x03DE6E - A projectile y-acceleration fraction(10)
             // Do 0x02 to 0x32, where values above 0x10 are less common
@@ -252,6 +265,7 @@ namespace MM2Randomizer.Randomizers
             int ammoUse = r.Next(0x03) + 0x01;
             stream.Position = 0x03DF72;
             stream.WriteByte((byte)ammoUse);
+            AmmoUsage.Add(ammoUse);
 
             //0x03DF7D - W y - speed(04)
             stream.Position = 0x03DF7D;
@@ -287,6 +301,7 @@ namespace MM2Randomizer.Randomizers
             int magSize = r.Next(0x04) + 0x01;
             stream.Position = 0x03DB3D;
             stream.WriteByte((byte)magSize);
+            AmmoUsage.Add(1d / (double)magSize);
 
             //0x03DFA4 - B y - pos to embed in surface(0xFF)
             // Dumb
@@ -338,6 +353,7 @@ namespace MM2Randomizer.Randomizers
             int magSize = r.Next(0x06) + 0x04;
             stream.Position = 0x03DB78;
             stream.WriteByte((byte)magSize);
+            AmmoUsage.Add(1d / (double)magSize);
 
             // Q behavior, distance, default 0x12
             //    Do from 0x0A to 0x20 ?
@@ -486,6 +502,7 @@ namespace MM2Randomizer.Randomizers
             int magSize = r.Next(0x05) + 0x01;
             stream.Position = 0x03DBD2;
             stream.WriteByte((byte)magSize);
+            AmmoUsage.Add(1d / (double)magSize);
 
             // Speeds.  Change each to be 2-7.  Diagonal will be half each, rounded up.
             int velX = r.Next(0x06) + 0x02;
@@ -567,6 +584,7 @@ namespace MM2Randomizer.Randomizers
             int ammoUse = r.Next(0x04) + 0x01;
             stream.Position = 0x03DB99;
             stream.WriteByte((byte)ammoUse);
+            AmmoUsage.Add(ammoUse);
 
             // 0x03DB9F - C explosion type? (02)
             // Change to 03 to "single explosion" type. Most other values break the game.

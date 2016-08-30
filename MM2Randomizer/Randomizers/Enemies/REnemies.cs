@@ -533,7 +533,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                             break;
                         case EStageID.WoodW3:
                             // Moles don't display in Wood outside room
-                            if (en.ID == EEnemyID.Mole_Activator && room.RoomNums.Contains(6)) continue;
+                            if (en.ID == EEnemyID.Mole_Activator && room.RoomNums.Contains(7)) continue;
                             // Don't spawn Springer or Blocky underwater
                             if (en.ID == EEnemyID.Springer && (room.RoomNums.Contains(11))) continue;
                             if (en.ID == EEnemyID.Blocky && (room.RoomNums.Contains(11))) continue;

@@ -24,6 +24,7 @@ namespace MM2Randomizer
                 IsItemsRandom = true,
                 IsTeleportersRandom = true,
                 IsColorsRandom = true,
+                IsWeaponBehaviorRandom = true,
                 IsWeaknessRandom = true,
                 IsWeaknessEasy = true,
                 IsWeaknessHard = false,

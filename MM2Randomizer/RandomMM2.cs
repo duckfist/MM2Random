@@ -20,7 +20,7 @@ namespace MM2Randomizer
         public static string DestinationFileName = "";
 
         public static List<StageFromSelect> StageSelect;
-        public static List<ERMWeaponValue> NewWeaponOrder;
+        public static List<ERMWeaponValueBit> NewWeaponOrder;
 
         /// <summary>
         /// Perform the randomization based on the seed and user-provided settings, and then
@@ -41,13 +41,17 @@ namespace MM2Randomizer
                 {
                     RandomStagePtrs();
                 }
-                if (Settings.IsWeaknessRandom)
-                {
-                    RandomWeaknesses();
-                }
                 if (Settings.IsWeaponsRandom)
                 {
                     RandomWeapons();
+                }
+                if (Settings.IsWeaponBehaviorRandom)
+                {
+                    RandomWeaponBehavior();
+                }
+                if (Settings.IsWeaknessRandom)
+                {
+                    RandomWeaknesses();
                 }
                 if (Settings.IsItemsRandom)
                 {
@@ -61,7 +65,6 @@ namespace MM2Randomizer
                 {
                     RandomEnemies();
                 }
-                RandomWeaponBehavior();
                 RandomTilemapChanges();
                 if (Settings.IsColorsRandom)
                 {
@@ -382,16 +385,16 @@ namespace MM2Randomizer
             // Metal Man    0x03C28F   64
             // Crash Man    0x03C290   128
 
-            NewWeaponOrder = new List<ERMWeaponValue>()
+            NewWeaponOrder = new List<ERMWeaponValueBit>()
             {
-                ERMWeaponValue.HeatMan,
-                ERMWeaponValue.AirMan,
-                ERMWeaponValue.WoodMan,
-                ERMWeaponValue.BubbleMan,
-                ERMWeaponValue.QuickMan,
-                ERMWeaponValue.FlashMan,
-                ERMWeaponValue.MetalMan,
-                ERMWeaponValue.CrashMan
+                ERMWeaponValueBit.HeatMan,
+                ERMWeaponValueBit.AirMan,
+                ERMWeaponValueBit.WoodMan,
+                ERMWeaponValueBit.BubbleMan,
+                ERMWeaponValueBit.QuickMan,
+                ERMWeaponValueBit.FlashMan,
+                ERMWeaponValueBit.MetalMan,
+                ERMWeaponValueBit.CrashMan
             }.Select(s => s).ToList();
             
             NewWeaponOrder.Shuffle(Random);
@@ -411,14 +414,14 @@ namespace MM2Randomizer
                 // This is needed to fix teleporters breaking from the new weapon order.
                 //stream.Position = 0x03f2D0; // Unused space at end of bank
                 stream.Position = 0x03f310; // Unused space at end of bank
-                stream.WriteByte((byte) ERMWeaponValue.HeatMan);
-                stream.WriteByte((byte) ERMWeaponValue.AirMan);
-                stream.WriteByte((byte) ERMWeaponValue.WoodMan);
-                stream.WriteByte((byte) ERMWeaponValue.BubbleMan);
-                stream.WriteByte((byte) ERMWeaponValue.QuickMan);
-                stream.WriteByte((byte) ERMWeaponValue.FlashMan);
-                stream.WriteByte((byte) ERMWeaponValue.MetalMan);
-                stream.WriteByte((byte) ERMWeaponValue.CrashMan);
+                stream.WriteByte((byte) ERMWeaponValueBit.HeatMan);
+                stream.WriteByte((byte) ERMWeaponValueBit.AirMan);
+                stream.WriteByte((byte) ERMWeaponValueBit.WoodMan);
+                stream.WriteByte((byte) ERMWeaponValueBit.BubbleMan);
+                stream.WriteByte((byte) ERMWeaponValueBit.QuickMan);
+                stream.WriteByte((byte) ERMWeaponValueBit.FlashMan);
+                stream.WriteByte((byte) ERMWeaponValueBit.MetalMan);
+                stream.WriteByte((byte) ERMWeaponValueBit.CrashMan);
 
                 // Change function to call $f300 instead of $c279 when looking up defeated refight boss to
                 // get our default weapon table, fixing the teleporter softlock

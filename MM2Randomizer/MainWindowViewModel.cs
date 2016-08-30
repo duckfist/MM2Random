@@ -1,4 +1,7 @@
-﻿namespace MM2Randomizer
+﻿using System;
+using System.Reflection;
+
+namespace MM2Randomizer
 {
     public class MainWindowViewModel
     {
@@ -76,5 +79,13 @@
         /// </summary>
         public bool BurstChaserMode { get; set; }
         public bool IsWeaponBehaviorRandom { get; set; }
+
+        public Version AssemblyVersion
+        {
+            get
+            {
+                return Assembly.GetEntryAssembly().GetName().Version;
+            }
+        }
     }
 }

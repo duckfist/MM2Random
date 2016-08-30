@@ -41,11 +41,15 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition/>            
             </Grid.RowDefinitions>
-            <TextBlock Text="Mega Man 2 Randomizer 0.1.2" FontSize="16" TextAlignment="Center" Grid.ColumnSpan="2"/>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
+                <TextBlock Text="Mega Man 2 Randomizer" FontSize="16" TextAlignment="Center" />
+                <TextBlock Text="{Binding Path=AssemblyVersion}" TextAlignment="Center" FontSize="10" Margin="-4"/>
+
+            </StackPanel>
             <TextBlock Grid.Row="1" Text="Seed (blank for random):"/>
             <TextBox Grid.Row="1" Grid.Column="1" Name="tbxSeed"/>
             <GroupBox Grid.Row="2" Header="Randomize Options" BorderThickness="2" BorderBrush="DarkGray" VerticalAlignment="Top">

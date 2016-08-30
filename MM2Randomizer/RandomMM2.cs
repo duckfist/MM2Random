@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Diagnostics;
+using System.Reflection;
 
 using MM2Randomizer.Enums;
 using MM2Randomizer.Randomizers;
@@ -14,6 +15,7 @@ namespace MM2Randomizer
 {
     public static class RandomMM2
     {
+        public static string BuildNumber = "0.1.2.1";
         public static int Seed = -1;
         public static Random Random;
         public static MainWindowViewModel Settings;
@@ -51,7 +53,7 @@ namespace MM2Randomizer
                 }
                 if (Settings.IsWeaknessRandom)
                 {
-                    RandomWeaknesses();
+                    RandomWeaknesses(Settings.IsWeaknessHard);
                 }
                 if (Settings.IsItemsRandom)
                 {
@@ -97,11 +99,23 @@ namespace MM2Randomizer
                 string seedAlpha = SeedConvert.ConvertBase10To26(Seed);
                 newfilename = String.Format("{0}-RNG-{1}.nes", newfilename, seedAlpha);
 
-                // Draw seed on title screen (U only)
+                // Draw version number and seed on title screen (U only)
                 if (!Settings.IsJapanese)
                 {
                     using (var stream = new FileStream(DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
                     {
+                        // Draw version number
+                        Assembly assembly = Assembly.GetExecutingAssembly();
+                        string version = assembly.GetName().Version.ToString();
+
+                        stream.Position = 0x0373C7;
+                        for (int i = 0; i < version.Length; i++)
+                        {
+                            byte value = TitleChars.GetChar(version[i]).ID;
+                            stream.WriteByte(value);
+                        }
+
+                        // Draw seed
                         stream.Position = 0x037387;
                         for (int i = 0; i < seedAlpha.Length; i++)
                         {
@@ -214,7 +228,6 @@ namespace MM2Randomizer
         {
             RTilemap rTilemap = new RTilemap();
         }
-
 
         /// <summary>
         /// 
@@ -691,9 +704,9 @@ namespace MM2Randomizer
         /// <summary>
         /// TODO
         /// </summary>
-        private static void RandomWeaknesses()
+        private static void RandomWeaknesses(bool isChaos)
         {
-            RWeaknesses rWeaknesses = new RWeaknesses();
+            RWeaknesses rWeaknesses = new RWeaknesses(isChaos);
         }
 
         /// <summary>

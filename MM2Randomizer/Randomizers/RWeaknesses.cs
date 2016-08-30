@@ -12,8 +12,10 @@ namespace MM2Randomizer.Randomizers
         public static int[,] BotWeaknesses = new int[8, 9];
         public static int[,] WilyWeaknesses = new int[4, 8];
 
-        public RWeaknesses()
+        public RWeaknesses(bool isChaos)
         {
+            IsChaos = isChaos;
+
             if (RandomMM2.Settings.IsJapanese)
             {
                 RandomizeJ();
@@ -155,6 +157,11 @@ namespace MM2Randomizer.Randomizers
                     List<ERMWeaponAddress> primaryWeaknessesShuffled = new List<ERMWeaponAddress>(primaryWeaknesses);
                     primaryWeaknessesShuffled.Shuffle(RandomMM2.Random);
 
+                    // Preparation: Disable redundant Atomic Fire healing code
+                    // (Note that 0xFF in any weakness table is sufficient to heal a boss)
+                    stream.Position = 0x02EE6D;
+                    stream.WriteByte(0xFF); // Normally "00" to indicate Heatman.
+
                     // Select 2 robots to be weak against Buster
                     int busterI1 = RandomMM2.Random.Next(8);
                     int busterI2 = busterI1;
@@ -171,11 +178,15 @@ namespace MM2Randomizer.Randomizers
                             byte damage = 0;
                             if (rTestImmune > 0.5)
                             {
-                                if (primaryWeaknesses[j] == ERMWeaponAddress.AtomicFire)
+                                if (primaryWeaknesses[j] == ERMWeaponAddress.Eng_AtomicFire)
                                 {
                                     // ...except for Atomic Fire, which will do some more damage
                                     damage = (byte)(RWeaponBehavior.AmmoUsage[1] / 2);
                                 }   
+                                else if (primaryWeaknesses[j] == ERMWeaponAddress.Eng_TimeStopper)
+                                {
+                                    damage = 0x00;
+                                }
                                 else
                                 {
                                     damage = 0x01;
@@ -192,14 +203,26 @@ namespace MM2Randomizer.Randomizers
                         byte dmgPrimary = GetRoboDamagePrimary(primaryWeaknessesShuffled[i]);
                         stream.WriteByte(dmgPrimary);
 
-                        // Write the secondary weakness for this boss (next element in list, will always do 2 damage, or 4 if atomic fire)
+                        // Write the secondary weakness for this boss (next element in list)
+                        // Secondary weakness will either do 2 damage or 4 if it is Atomic Fire
+                        // Time Stopper cannot be a secondary weakness. Instead it will heal that boss.
+                        // As a result, one Robot Master will not have a secondary weakness
                         int i2 = (i + 1 >= 8) ? 0 : i + 1;
                         ERMWeaponAddress weakWeap2 = primaryWeaknessesShuffled[i2];
                         stream.Position = (int)weakWeap2 + i;
                         byte dmgSecondary = 0x02;
-                        if (weakWeap2 == ERMWeaponAddress.AtomicFire)
+                        if (weakWeap2 == ERMWeaponAddress.Eng_AtomicFire)
                         {
                             dmgSecondary = 0x04;
+                        }
+                        else if (weakWeap2 == ERMWeaponAddress.Eng_TimeStopper)
+                        {
+                            dmgSecondary = 0x00;
+                            long prevStreamPos = stream.Position;
+                            stream.Position = 0x02C08F; // Address in Time-Stopper code that normally heals Flashman
+                            stream.WriteByte((byte)i);  // Change to this Robot Master's byte
+
+                            stream.Position = prevStreamPos;
                         }
                         stream.WriteByte(dmgSecondary);
                         
@@ -223,13 +246,14 @@ namespace MM2Randomizer.Randomizers
                         BotWeaknesses[i, weapIndexSecondary] = dmgSecondary;
                     }
 
+                    Console.WriteLine("Weaknesses:");
                     for (int i = 0; i < 8; i++)
                     {
                         for (int j = 0; j < 9; j++)
                         {
                             Console.Write("{0} ", BotWeaknesses[i, j]);
                         }
-                        Console.WriteLine();
+                        Console.WriteLine("< " + ((ERMWeaponAddress)i).ToString());
                     }
                 }
             }
@@ -365,6 +389,7 @@ namespace MM2Randomizer.Randomizers
 
         /// <summary>
         /// Do 3 damage for high-ammo weapons, and ammo-damage + 1 for the others
+        /// Time Stopper will always do 1 damage.
         /// </summary>
         /// <param name="eRMWeaponAddress"></param>
         /// <returns></returns>
@@ -393,8 +418,8 @@ namespace MM2Randomizer.Randomizers
                     break;
                 case ERMWeaponAddress.Eng_QuickBoomerang:
                     break;
-                //case ERMWeaponAddress.Eng_TimeStopper:
-                //    break;
+                case ERMWeaponAddress.Eng_TimeStopper:
+                    return 1;
                 case ERMWeaponAddress.Eng_MetalBlade:
                     break;
                 case ERMWeaponAddress.Eng_ClashBomber:
@@ -459,7 +484,7 @@ namespace MM2Randomizer.Randomizers
                         busterDmg = 0x01;
                     stream.Position = (int)ERMWeaponAddress.Eng_Buster + (int)ERMWeaponAddress.Offset_Dragon;
                     stream.WriteByte(busterDmg);
-                    Console.Write(busterDmg);
+                    Console.Write(busterDmg + " ");
 
                     // Choose 2 special weapon weaknesses
                     List<ERMWeaponAddress> dragon = new List<ERMWeaponAddress>(Weapons);
@@ -487,17 +512,17 @@ namespace MM2Randomizer.Randomizers
                                 damage = (tryDamage < 2) ? (byte)0x02 : (byte)tryDamage;
                             }
                             stream.WriteByte(damage);
-                            Console.Write(damage);
+                            Console.Write(damage + " ");
                         }
                         // Dragon immune
                         else
                         {
                             stream.WriteByte(0x00);
-                            Console.Write(0x00);
+                            Console.Write(0x00 + " ");
                         }
                     }
 
-                    Console.WriteLine(" < dragon");
+                    Console.WriteLine("< dragon");
 
                     // Guts
                     // 25% chance to have a buster vulnerability
@@ -507,7 +532,7 @@ namespace MM2Randomizer.Randomizers
                         busterDmg = 0x01;
                     stream.Position = (int)ERMWeaponAddress.Eng_Buster + (int)ERMWeaponAddress.Offset_Guts;
                     stream.WriteByte(busterDmg);
-                    Console.Write(busterDmg);
+                    Console.Write(busterDmg + " ");
 
                     // Choose 2 special weapon weaknesses
                     List<ERMWeaponAddress> guts = new List<ERMWeaponAddress>(Weapons);
@@ -535,17 +560,17 @@ namespace MM2Randomizer.Randomizers
                                 damage = (tryDamage < 2) ? (byte)0x02 : (byte)tryDamage;
                             }
                             stream.WriteByte(damage);
-                            Console.Write(damage);
+                            Console.Write(damage + " ");
                         }
                         // Guts immune
                         else
                         {
                             stream.WriteByte(0x00);
-                            Console.Write(0x00);
+                            Console.Write(0x00 + " ");
                         }
                     }
 
-                    Console.WriteLine(" < guts");
+                    Console.WriteLine("< guts");
 
                     // Machine
                     // 75% chance to have a buster vulnerability
@@ -555,15 +580,18 @@ namespace MM2Randomizer.Randomizers
                         busterDmg = 0x01;
                     stream.Position = (int)ERMWeaponAddress.Eng_Buster + (int)ERMWeaponAddress.Offset_Machine;
                     stream.WriteByte(busterDmg);
-                    Console.Write(busterDmg);
+                    Console.Write(busterDmg + " ");
 
-                    // Choose 2 special weapon weaknesses
+                    // Choose 3 special weapon weaknesses
                     List<ERMWeaponAddress> machine = new List<ERMWeaponAddress>(Weapons);
                     rInt = RandomMM2.Random.Next(machine.Count);
                     weakness1 = machine[rInt];
                     machine.RemoveAt(rInt);
                     rInt = RandomMM2.Random.Next(machine.Count);
                     weakness2 = machine[rInt];
+                    machine.RemoveAt(rInt);
+                    rInt = RandomMM2.Random.Next(machine.Count);
+                    ERMWeaponAddress weakness3 = machine[rInt];
 
                     for (int i = 0; i < Weapons.Count; i++)
                     {
@@ -571,7 +599,7 @@ namespace MM2Randomizer.Randomizers
                         stream.Position = (int)weapon + (int)ERMWeaponAddress.Offset_Machine;
 
                         // Machine weak
-                        if (weapon == weakness1 || weapon == weakness2)
+                        if (weapon == weakness1 || weapon == weakness2 || weapon == weakness3)
                         {
                             // Deal 1 damage with weapons that cost 1 or less ammo
                             byte damage = 0x01;
@@ -582,17 +610,17 @@ namespace MM2Randomizer.Randomizers
                                 damage = (byte)RWeaponBehavior.AmmoUsage[i+1];
                             }
                             stream.WriteByte(damage);
-                            Console.Write(damage);
+                            Console.Write(damage + " ");
                         }
                         // Machine immune
                         else
                         {
                             stream.WriteByte(0x00);
-                            Console.Write(0x00);
+                            Console.Write(0x00 + " ");
                         }
                     }
 
-                    Console.WriteLine(" < machine");
+                    Console.WriteLine("< machine");
 
                     // Alien
                     // Buster Heat Air Wood Bubble Quick Clash Metal
@@ -629,16 +657,16 @@ namespace MM2Randomizer.Randomizers
                         if (i == rWeaponIndex)
                         {
                             stream.WriteByte(alienDamage);
-                            Console.Write(alienDamage);
+                            Console.Write(alienDamage + " ");
                         }
                         else
                         {
                             stream.WriteByte(0xFF);
-                            Console.Write(0xFF);
+                            Console.Write(0x00 + " ");
                         }
                     }
 
-                    Console.WriteLine(" < alien");
+                    Console.WriteLine("< alien");
 
                 }
                 else

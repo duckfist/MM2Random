@@ -26,8 +26,8 @@ namespace MM2Randomizer
                 IsColorsRandom = true,
                 IsWeaponBehaviorRandom = true,
                 IsWeaknessRandom = true,
-                IsWeaknessEasy = true,
-                IsWeaknessHard = false,
+                IsWeaknessEasy = false,
+                IsWeaknessHard = true,
                 IsEnemiesRandom = true,
                 IsBGMRandom = true,
                 IsWeaponNamesRandom = true,
@@ -69,11 +69,13 @@ namespace MM2Randomizer
                 // A random seed will be chosen later.
                 RandomMM2.Seed = -1;
             }
-            
+
             // Perform randomization based on settings, then generate the ROM.
             RandomMM2.Randomize();
+
             string seedAlpha = SeedConvert.ConvertBase10To26(RandomMM2.Seed);
             tbxSeed.Text = String.Format("{0}", seedAlpha);
+            Console.WriteLine("\nSeed: " + seedAlpha + "\n");
         }
 
         private void chkJapanese_Checked(object sender, RoutedEventArgs e)

@@ -23,10 +23,12 @@ namespace MM2Randomizer.Randomizers.Colors
 
             RandomizeWeaponColors();
 
+            RandomizeRobotMasterColors();
+
             RandomizeStageSelectColors();
         }
 
-        public void RandomizeStageSelectColors()
+        private void RandomizeStageSelectColors()
         {
             StageSelectColorSets = new List<ColorSet>()
             {
@@ -206,6 +208,26 @@ namespace MM2Randomizer.Randomizers.Colors
                     stream.WriteByte(itemColor);
                 }
             }
+        }
+
+        private void RandomizeRobotMasterColors()
+        {
+            // Colors for bosses with 1 solid color and 1 white
+            List<byte> goodSolidColors = new List<byte>()
+            {
+                0x0F,0x20,0x31,0x22,0x03,0x23,0x14,0x05,0x15,0x16,0x07,0x27,0x28,0x09,0x1A,0x2A,0x0B,0x2B,0x0C,0x1C,
+            };
+
+            // Colors for bosses with a dark and a light color
+            List<byte> goodDarkColors = new List<byte>()
+            {
+            };
+
+            List<byte> goodLightColors = new List<byte>()
+            {
+            };
+
+
         }
 
         private void RandomizeStageColors()

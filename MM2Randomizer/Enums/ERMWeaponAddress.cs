@@ -33,5 +33,14 @@ namespace MM2Randomizer.Enums
         Offset_Guts = 0x0A,
         Offset_Machine = 0x0C,
         Offset_Alien = 0x0D,
+
+        Offset_Heat = 0x00,
+        Offset_Air = 0x01,
+        Offset_Wood = 0x02,
+        Offset_Bubble = 0x03,
+        Offset_Quick = 0x04,
+        Offset_Flash = 0x05,
+        Offset_Metal = 0x06,
+        Offset_Clash = 0x07,
     }
 }

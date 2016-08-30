@@ -61,6 +61,7 @@ namespace MM2Randomizer.Randomizers
                 ChangeClash(r, stream);
             }
 
+            Console.WriteLine("Ammo Usage:");
             foreach (double w in AmmoUsage)
             {
                 Console.Write("{0:0.00} ", w);

@@ -212,6 +212,39 @@ namespace MM2Randomizer.Randomizers.Colors
 
         private void RandomizeRobotMasterColors()
         {
+            //// Robot Master Color Palettes
+            //0x00B4EA - Wood leaf color 0x29
+            //0x01B4A1 - Metal blade color 0x30
+
+            //0x0034B3 - Heat projectile yellow color 0x28
+            //0x0034B4 - Heat projectile red color 0x15
+            //0x0034B6 - Heat yellow color 0x28
+            //0x0034B7 - Heat red color 0x15
+            //0x0074B6 - Air yellow color 0x28
+            //0x0074B7 - Air blue color 0x11
+            //0x00F4B6 - Bubble white & projectile color 0x30
+            //0x00F4B7 - Bubble green color 0x19
+            //0x01B4A4 - Metal yellow color 0x28
+            //0x01B4A5 - Metal red color 0x15
+            //0x0134C5 - Quick intro color 1
+            //0x0134C6 - Quick intro color 2
+            //0x0134C8 - Quick yellow color
+            //0x0134C9 - Quick red color
+
+            List<int> SolidColorPairMain = new List<int> {
+                0x01F4ED, // Clash red color 0x16
+                0x0174B7, // Flash blue color 0x12
+                0x0074B4, // Air projectile blue color 0x11
+                0x00B4ED, // Wood orange color 0x17
+            };
+
+            List<int> SolidColorPairWhite = new List<int> {
+                0x01F4EC, // Clash white color 0x30
+                0x0174B6, // Flash white color 0x30
+                0x0074B3, // Air projectile white color 0x30
+                0x00B4EC, // Wood white color 0x36
+            };
+
             // Colors for bosses with 1 solid color and 1 white
             List<byte> goodSolidColors = new List<byte>()
             {

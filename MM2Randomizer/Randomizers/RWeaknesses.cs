@@ -10,7 +10,7 @@ namespace MM2Randomizer.Randomizers
     {
         public static bool IsChaos = true;
         public static int[,] BotWeaknesses = new int[8, 9];
-        public static int[,] WilyWeaknesses = new int[4, 8];
+        public static int[,] WilyWeaknesses = new int[5, 8];
 
         public RWeaknesses(bool isChaos)
         {
@@ -38,7 +38,7 @@ namespace MM2Randomizer.Randomizers
             {
                 Name = "Buster",
                 ID = 0,
-                Address = ERMWeaponAddress.Buster,
+                Address = EDmgVsBoss.Buster,
                 RobotMasters = new int[8] { 2, 2, 1, 1, 2, 2, 1, 1 }
                 // Heat = 2,
                 // Air = 2,
@@ -54,7 +54,7 @@ namespace MM2Randomizer.Randomizers
             {
                 Name = "Atomic Fire",
                 ID = 1,
-                Address = ERMWeaponAddress.AtomicFire,
+                Address = EDmgVsBoss.AtomicFire,
                 // Note: These values only affect a fully charged shot.  Partially charged shots use the Buster table.
                 RobotMasters = new int[8] { 0xFF, 6, 0x0E, 0, 0x0A, 6, 4, 6 }
             });
@@ -63,7 +63,7 @@ namespace MM2Randomizer.Randomizers
             {
                 Name = "Air Shooter",
                 ID = 2,
-                Address = ERMWeaponAddress.AirShooter,
+                Address = EDmgVsBoss.AirShooter,
                 RobotMasters = new int[8] { 2, 0, 4, 0, 2, 0, 0, 0x0A }
             });
 
@@ -71,7 +71,7 @@ namespace MM2Randomizer.Randomizers
             {
                 Name = "Leaf Shield",
                 ID = 3,
-                Address = ERMWeaponAddress.LeafShield,
+                Address = EDmgVsBoss.LeafShield,
                 RobotMasters = new int[8] { 0, 8, 0xFF, 0, 0, 0, 0, 0 }
             });
 
@@ -79,7 +79,7 @@ namespace MM2Randomizer.Randomizers
             {
                 Name = "Bubble Lead",
                 ID = 4,
-                Address = ERMWeaponAddress.BubbleLead,
+                Address = EDmgVsBoss.BubbleLead,
                 RobotMasters = new int[8] { 6, 0, 0, 0xFF, 0, 2, 0, 1 }
             });
 
@@ -87,7 +87,7 @@ namespace MM2Randomizer.Randomizers
             {
                 Name = "Quick Boomerang",
                 ID = 5,
-                Address = ERMWeaponAddress.QuickBoomerang,
+                Address = EDmgVsBoss.QuickBoomerang,
                 RobotMasters = new int[8] { 2, 2, 0, 2, 0, 0, 4, 1 }
             });
 
@@ -95,7 +95,7 @@ namespace MM2Randomizer.Randomizers
             {
                 Name = "Time Stopper",
                 ID = 6,
-                Address = ERMWeaponAddress.TimeStopper,
+                Address = EDmgVsBoss.TimeStopper,
                 // NOTE: These values affect damage per tick
                 RobotMasters = new int[8] { 0, 0, 0, 0, 1, 0, 0, 0 }
             });
@@ -104,7 +104,7 @@ namespace MM2Randomizer.Randomizers
             {
                 Name = "Metal Blade",
                 ID = 7,
-                Address = ERMWeaponAddress.MetalBlade,
+                Address = EDmgVsBoss.MetalBlade,
                 RobotMasters = new int[8] { 1, 0, 2, 4, 0, 4, 0x0E, 0 }
             });
 
@@ -112,7 +112,7 @@ namespace MM2Randomizer.Randomizers
             {
                 Name = "Clash Bomber",
                 ID = 8,
-                Address = ERMWeaponAddress.ClashBomber,
+                Address = EDmgVsBoss.ClashBomber,
                 RobotMasters = new int[8] { 0xFF, 0, 2, 2, 4, 3, 0, 0 }
             });
 
@@ -139,23 +139,14 @@ namespace MM2Randomizer.Randomizers
         /// </summary>
         private static void RandomizeU()
         {
-
+            // Chaos Mode Weaknesses
             if (IsChaos)
             {
                 using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
                 {
-                    List<ERMWeaponAddress> primaryWeaknesses = new List<ERMWeaponAddress>(new ERMWeaponAddress[] {
-                        ERMWeaponAddress.Eng_AtomicFire,
-                        ERMWeaponAddress.Eng_AirShooter,
-                        ERMWeaponAddress.Eng_LeafShield,
-                        ERMWeaponAddress.Eng_BubbleLead,
-                        ERMWeaponAddress.Eng_QuickBoomerang,
-                        ERMWeaponAddress.Eng_TimeStopper,
-                        ERMWeaponAddress.Eng_MetalBlade,
-                        ERMWeaponAddress.Eng_ClashBomber
-                    });
-                    List<ERMWeaponAddress> primaryWeaknessesShuffled = new List<ERMWeaponAddress>(primaryWeaknesses);
-                    primaryWeaknessesShuffled.Shuffle(RandomMM2.Random);
+                    List<EDmgVsBoss> bossPrimaryWeaknessAddresses = EDmgVsBoss.GetTables(false, true);
+                    List<EDmgVsBoss> bossShuffled = new List<EDmgVsBoss>(bossPrimaryWeaknessAddresses);
+                    bossShuffled.Shuffle(RandomMM2.Random);
 
                     // Preparation: Disable redundant Atomic Fire healing code
                     // (Note that 0xFF in any weakness table is sufficient to heal a boss)
@@ -172,18 +163,18 @@ namespace MM2Randomizer.Randomizers
                     for (int i = 0; i < 8; i++)
                     {
                         // First, fill in special weapon tables with a 50% chance to block or do 1 damage
-                        for (int j = 0; j < primaryWeaknesses.Count; j++)
+                        for (int j = 0; j < bossPrimaryWeaknessAddresses.Count; j++)
                         {
                             double rTestImmune = RandomMM2.Random.NextDouble();
                             byte damage = 0;
                             if (rTestImmune > 0.5)
                             {
-                                if (primaryWeaknesses[j] == ERMWeaponAddress.Eng_AtomicFire)
+                                if (bossPrimaryWeaknessAddresses[j] == EDmgVsBoss.U_DamageH)
                                 {
                                     // ...except for Atomic Fire, which will do some more damage
                                     damage = (byte)(RWeaponBehavior.AmmoUsage[1] / 2);
                                 }   
-                                else if (primaryWeaknesses[j] == ERMWeaponAddress.Eng_TimeStopper)
+                                else if (bossPrimaryWeaknessAddresses[j] == EDmgVsBoss.U_DamageF)
                                 {
                                     damage = 0x00;
                                 }
@@ -192,15 +183,15 @@ namespace MM2Randomizer.Randomizers
                                     damage = 0x01;
                                 }
                             }
-                            stream.Position = (int)primaryWeaknesses[j] + i;
+                            stream.Position = bossPrimaryWeaknessAddresses[j] + i;
                             stream.WriteByte(damage);
 
                             BotWeaknesses[i, j + 1] = damage;
                         }
 
                         // Write the primary weakness for this boss
-                        stream.Position = (int)primaryWeaknessesShuffled[i] + i;
-                        byte dmgPrimary = GetRoboDamagePrimary(primaryWeaknessesShuffled[i]);
+                        stream.Position = bossShuffled[i] + i;
+                        byte dmgPrimary = GetRoboDamagePrimary(bossShuffled[i]);
                         stream.WriteByte(dmgPrimary);
 
                         // Write the secondary weakness for this boss (next element in list)
@@ -208,14 +199,14 @@ namespace MM2Randomizer.Randomizers
                         // Time Stopper cannot be a secondary weakness. Instead it will heal that boss.
                         // As a result, one Robot Master will not have a secondary weakness
                         int i2 = (i + 1 >= 8) ? 0 : i + 1;
-                        ERMWeaponAddress weakWeap2 = primaryWeaknessesShuffled[i2];
-                        stream.Position = (int)weakWeap2 + i;
+                        EDmgVsBoss weakWeap2 = bossShuffled[i2];
+                        stream.Position = weakWeap2 + i;
                         byte dmgSecondary = 0x02;
-                        if (weakWeap2 == ERMWeaponAddress.Eng_AtomicFire)
+                        if (weakWeap2 == EDmgVsBoss.U_DamageH)
                         {
                             dmgSecondary = 0x04;
                         }
-                        else if (weakWeap2 == ERMWeaponAddress.Eng_TimeStopper)
+                        else if (weakWeap2 == EDmgVsBoss.U_DamageF)
                         {
                             dmgSecondary = 0x00;
                             long prevStreamPos = stream.Position;
@@ -227,7 +218,7 @@ namespace MM2Randomizer.Randomizers
                         stream.WriteByte(dmgSecondary);
                         
                         // Add buster damage
-                        stream.Position = (int)ERMWeaponAddress.Eng_Buster + i;
+                        stream.Position = EDmgVsBoss.U_DamageP + i;
                         if (i == busterI1 || i == busterI2)
                         {
                             stream.WriteByte(0x02);
@@ -240,23 +231,28 @@ namespace MM2Randomizer.Randomizers
                         }
 
                         // Save info
-                        int weapIndexPrimary = GetWeaponIndexFromAddress(primaryWeaknessesShuffled[i]);
+                        int weapIndexPrimary = GetWeaponIndexFromAddress(bossShuffled[i]);
                         BotWeaknesses[i, weapIndexPrimary] = dmgPrimary;
                         int weapIndexSecondary = GetWeaponIndexFromAddress(weakWeap2);
                         BotWeaknesses[i, weapIndexSecondary] = dmgSecondary;
                     }
 
-                    Console.WriteLine("Weaknesses:");
+                    Console.WriteLine("Robot Master Weaknesses:");
+                    Console.WriteLine("P\tH\tA\tW\tB\tQ\tF\tM\tC:");
+                    Console.WriteLine("--------------------------------------------");
                     for (int i = 0; i < 8; i++)
                     {
                         for (int j = 0; j < 9; j++)
                         {
-                            Console.Write("{0} ", BotWeaknesses[i, j]);
+                            Console.Write("{0}\t", BotWeaknesses[i, j]);
                         }
-                        Console.WriteLine("< " + ((ERMWeaponAddress)i).ToString());
+                        Console.WriteLine("< " + ((EDmgVsBoss.Offset)i).ToString());
                     }
+                    Console.WriteLine();
                 }
             }
+
+            // Easy Mode Weaknesses
             else
             {
                 List<WeaponTable> Weapons = new List<WeaponTable>();
@@ -265,7 +261,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     Name = "Buster",
                     ID = 0,
-                    Address = ERMWeaponAddress.Eng_Buster,
+                    Address = EDmgVsBoss.U_DamageP,
                     RobotMasters = new int[8] { 2, 2, 1, 1, 2, 2, 1, 1 }
                     // Heat = 2,
                     // Air = 2,
@@ -285,7 +281,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     Name = "Atomic Fire",
                     ID = 1,
-                    Address = ERMWeaponAddress.Eng_AtomicFire,
+                    Address = EDmgVsBoss.U_DamageH,
                     // Note: These values only affect a fully charged shot.  Partially charged shots use the Buster table.
                     RobotMasters = new int[8] { 0xFF, 6, 0x0E, 0, 0x0A, 6, 4, 6 }
                     // Dragon = 8
@@ -296,7 +292,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     Name = "Air Shooter",
                     ID = 2,
-                    Address = ERMWeaponAddress.Eng_AirShooter,
+                    Address = EDmgVsBoss.U_DamageA,
                     RobotMasters = new int[8] { 2, 0, 4, 0, 2, 0, 0, 0x0A }
                     // Dragon = 0
                     // Gutsdozer = 0
@@ -306,7 +302,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     Name = "Leaf Shield",
                     ID = 3,
-                    Address = ERMWeaponAddress.Eng_LeafShield,
+                    Address = EDmgVsBoss.U_DamageW,
                     RobotMasters = new int[8] { 0, 8, 0xFF, 0, 0, 0, 0, 0 }
                     // Dragon = 0
                     // Unused = 0
@@ -317,7 +313,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     Name = "Bubble Lead",
                     ID = 4,
-                    Address = ERMWeaponAddress.Eng_BubbleLead,
+                    Address = EDmgVsBoss.U_DamageB,
                     RobotMasters = new int[8] { 6, 0, 0, 0xFF, 0, 2, 0, 1 }
                     // Dragon = 0
                     // Unused = 0
@@ -328,7 +324,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     Name = "Quick Boomerang",
                     ID = 5,
-                    Address = ERMWeaponAddress.Eng_QuickBoomerang,
+                    Address = EDmgVsBoss.U_DamageQ,
                     RobotMasters = new int[8] { 2, 2, 0, 2, 0, 0, 4, 1 }
                     // Dragon = 1
                     // Unused = 0
@@ -339,7 +335,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     Name = "Time Stopper",
                     ID = 6,
-                    Address = ERMWeaponAddress.Eng_TimeStopper,
+                    Address = EDmgVsBoss.U_DamageF,
                     // NOTE: These values affect damage per tick
                     // NOTE: This table only has robot masters, no wily bosses
                     RobotMasters = new int[8] { 0, 0, 0, 0, 1, 0, 0, 0 }
@@ -350,7 +346,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     Name = "Metal Blade",
                     ID = 7,
-                    Address = ERMWeaponAddress.Eng_MetalBlade,
+                    Address = EDmgVsBoss.U_DamageM,
                     RobotMasters = new int[8] { 1, 0, 2, 4, 0, 4, 0x0E, 0 }
                     // Dragon = 0
                     // Unused = 0
@@ -361,7 +357,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     Name = "Clash Bomber",
                     ID = 8,
-                    Address = ERMWeaponAddress.Eng_ClashBomber,
+                    Address = EDmgVsBoss.U_DamageC,
                     RobotMasters = new int[8] { 0xFF, 0, 2, 2, 4, 3, 0, 0 }
                     // Dragon = 1
                     // Unused = 0
@@ -391,9 +387,9 @@ namespace MM2Randomizer.Randomizers
         /// Do 3 damage for high-ammo weapons, and ammo-damage + 1 for the others
         /// Time Stopper will always do 1 damage.
         /// </summary>
-        /// <param name="eRMWeaponAddress"></param>
+        /// <param name="weapon"></param>
         /// <returns></returns>
-        private static byte GetRoboDamagePrimary(ERMWeaponAddress eRMWeaponAddress)
+        private static byte GetRoboDamagePrimary(EDmgVsBoss weapon)
         {
             // Flat 25% chance to do 2 extra damage
             byte damage = 0;
@@ -403,57 +399,42 @@ namespace MM2Randomizer.Randomizers
                 damage = 2;
             }
 
-            switch (eRMWeaponAddress)
-            {
-                case ERMWeaponAddress.Eng_AtomicFire:
-                    damage += (byte)(RWeaponBehavior.AmmoUsage[1] + 1);
-                    break;
-                case ERMWeaponAddress.Eng_AirShooter:
-                    damage += (byte)(RWeaponBehavior.AmmoUsage[2] + 1);
-                    break;
-                case ERMWeaponAddress.Eng_LeafShield:
-                    damage += (byte)(RWeaponBehavior.AmmoUsage[3] + 1);
-                    break;
-                case ERMWeaponAddress.Eng_BubbleLead:
-                    break;
-                case ERMWeaponAddress.Eng_QuickBoomerang:
-                    break;
-                case ERMWeaponAddress.Eng_TimeStopper:
-                    return 1;
-                case ERMWeaponAddress.Eng_MetalBlade:
-                    break;
-                case ERMWeaponAddress.Eng_ClashBomber:
-                    damage += (byte)(RWeaponBehavior.AmmoUsage[7] + 1);
-                    break;
-            }
+            if (weapon == EDmgVsBoss.U_DamageH)
+                damage += (byte)(RWeaponBehavior.AmmoUsage[1] + 1);
+            else if (weapon == EDmgVsBoss.U_DamageA)
+                damage += (byte)(RWeaponBehavior.AmmoUsage[2] + 1);
+            else if (weapon == EDmgVsBoss.U_DamageW)
+                damage += (byte)(RWeaponBehavior.AmmoUsage[3] + 1);
+            else if (weapon == EDmgVsBoss.U_DamageF)
+                return 1;
+            else if (weapon == EDmgVsBoss.U_DamageC)
+                damage += (byte)(RWeaponBehavior.AmmoUsage[7] + 1);
+            
             if (damage < 3) damage = 3;
             return damage;
         }
 
-        private static int GetWeaponIndexFromAddress(ERMWeaponAddress weaponAddress)
+        private static int GetWeaponIndexFromAddress(EDmgVsBoss weaponAddress)
         {
-            switch (weaponAddress)
-            {
-                case ERMWeaponAddress.Eng_Buster:
-                    return 0;
-                case ERMWeaponAddress.Eng_AtomicFire:
-                    return 1;
-                case ERMWeaponAddress.Eng_AirShooter:
-                    return 2;
-                case ERMWeaponAddress.Eng_LeafShield:
-                    return 3;
-                case ERMWeaponAddress.Eng_BubbleLead:
-                    return 4;
-                case ERMWeaponAddress.Eng_QuickBoomerang:
-                    return 5;
-                case ERMWeaponAddress.Eng_TimeStopper:
-                    return 6;
-                case ERMWeaponAddress.Eng_MetalBlade:
-                    return 7;
-                case ERMWeaponAddress.Eng_ClashBomber:
-                    return 8;
-                default: return -1;
-            }
+            if      (weaponAddress == EDmgVsBoss.U_DamageP)
+                return 0;
+            else if (weaponAddress == EDmgVsBoss.U_DamageH)
+                return 1;
+            else if (weaponAddress == EDmgVsBoss.U_DamageA)
+                return 2;
+            else if (weaponAddress == EDmgVsBoss.U_DamageW)
+                return 3;
+            else if (weaponAddress == EDmgVsBoss.U_DamageB)
+                return 4;
+            else if (weaponAddress == EDmgVsBoss.U_DamageQ)
+                return 5;
+            else if (weaponAddress == EDmgVsBoss.U_DamageF)
+                return 6;
+            else if (weaponAddress == EDmgVsBoss.U_DamageM)
+                return 7;
+            else if (weaponAddress == EDmgVsBoss.U_DamageC)
+                return 8;
+            else return -1;
         }
 
         /// <summary>
@@ -465,42 +446,45 @@ namespace MM2Randomizer.Randomizers
             {
                 if (IsChaos)
                 {
-                    // List of special weapons
-                    List<ERMWeaponAddress> Weapons = new List<ERMWeaponAddress>(new ERMWeaponAddress[] {
-                        ERMWeaponAddress.Eng_AtomicFire,
-                        ERMWeaponAddress.Eng_AirShooter,
-                        ERMWeaponAddress.Eng_LeafShield,
-                        ERMWeaponAddress.Eng_BubbleLead,
-                        ERMWeaponAddress.Eng_QuickBoomerang,
-                        ERMWeaponAddress.Eng_MetalBlade,
-                        ERMWeaponAddress.Eng_ClashBomber
-                    });
-                    
+                    // List of special weapon damage tables for enemies
+                    List<EDmgVsEnemy> dmgPtrEnemies = EDmgVsEnemy.GetTables(false);
+                    EDmgVsEnemy enemyWeak1;
+                    EDmgVsEnemy enemyWeak2;
+                    EDmgVsEnemy enemyWeak3;
+
+                    // List of special weapon damage tables for bosses (no flash or buster)
+                    List<EDmgVsBoss> dmgPtrBosses = EDmgVsBoss.GetTables(false, false);
+                    EDmgVsBoss bossWeak1;
+                    EDmgVsBoss bossWeak2;
+
+                    #region Dragon
+
                     // Dragon
                     // 25% chance to have a buster vulnerability
                     double rBuster = RandomMM2.Random.NextDouble();
                     byte busterDmg = 0x00;
                     if (rBuster > 0.75)
                         busterDmg = 0x01;
-                    stream.Position = (int)ERMWeaponAddress.Eng_Buster + (int)ERMWeaponAddress.Offset_Dragon;
+                    stream.Position = EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Dragon;
                     stream.WriteByte(busterDmg);
-                    Console.Write(busterDmg + " ");
+                    WilyWeaknesses[0, 0] = busterDmg;
 
                     // Choose 2 special weapon weaknesses
-                    List<ERMWeaponAddress> dragon = new List<ERMWeaponAddress>(Weapons);
+                    List<EDmgVsBoss> dragon = new List<EDmgVsBoss>(dmgPtrBosses);
                     int rInt = RandomMM2.Random.Next(dragon.Count);
-                    ERMWeaponAddress weakness1 = dragon[rInt];
+                    bossWeak1 = dragon[rInt];
                     dragon.RemoveAt(rInt);
                     rInt = RandomMM2.Random.Next(dragon.Count);
-                    ERMWeaponAddress weakness2 = dragon[rInt];
+                    bossWeak2 = dragon[rInt];
 
-                    for (int i = 0; i < Weapons.Count; i++)
+                    // For each weapon, apply the weaknesses and immunities
+                    for (int i = 0; i < dmgPtrBosses.Count; i++)
                     {
-                        ERMWeaponAddress weapon = Weapons[i];
-                        stream.Position = (int)weapon + (int)ERMWeaponAddress.Offset_Dragon;
+                        EDmgVsBoss weapon = dmgPtrBosses[i];
+                        stream.Position = weapon + EDmgVsBoss.Offset.Dragon;
 
                         // Dragon weak
-                        if (weapon == weakness1 || weapon == weakness2)
+                        if (weapon == bossWeak1 || weapon == bossWeak2)
                         {
                             // Deal 1 damage with weapons that cost 1 or less ammo
                             byte damage = 0x01;
@@ -512,17 +496,84 @@ namespace MM2Randomizer.Randomizers
                                 damage = (tryDamage < 2) ? (byte)0x02 : (byte)tryDamage;
                             }
                             stream.WriteByte(damage);
-                            Console.Write(damage + " ");
+                            WilyWeaknesses[0, i + 1] = damage;
                         }
                         // Dragon immune
                         else
                         {
                             stream.WriteByte(0x00);
-                            Console.Write(0x00 + " ");
+                            WilyWeaknesses[0, i + 1] = 0x00;
                         }
                     }
 
-                    Console.WriteLine("< dragon");
+                    #endregion
+
+                    #region Picopico-kun
+
+                    // Picopico-kun
+                    // 20 HP each
+                    // 25% chance for buster to deal 3-7 damage
+                    rBuster = RandomMM2.Random.NextDouble();
+                    busterDmg = 0x00;
+                    if (rBuster > 0.75)
+                    {
+                        busterDmg = (byte)(RandomMM2.Random.Next(5) + 3);
+                    }
+                    stream.Position = EDmgVsEnemy.DamageP + EDmgVsEnemy.Offset.PicopicoKun;
+                    stream.WriteByte(busterDmg);
+                    WilyWeaknesses[1, 0] = busterDmg;
+
+                    // Deal ammoUse x 6 for the main weakness
+                    // Deal ammoUse x 2 for another
+                    // Deal ammoUse x 1 for another
+                    List<EDmgVsEnemy> pico = new List<EDmgVsEnemy>(dmgPtrEnemies);
+                    rInt = RandomMM2.Random.Next(pico.Count);
+                    enemyWeak1 = pico[rInt];
+                    pico.RemoveAt(rInt);
+                    rInt = RandomMM2.Random.Next(pico.Count);
+                    enemyWeak2 = pico[rInt];
+                    pico.RemoveAt(rInt);
+                    rInt = RandomMM2.Random.Next(pico.Count);
+                    enemyWeak3 = pico[rInt];
+                    for (int i = 0; i < dmgPtrEnemies.Count; i++)
+                    {
+                        EDmgVsEnemy weapon = dmgPtrEnemies[i];
+                        stream.Position = weapon + EDmgVsEnemy.Offset.PicopicoKun;
+                        byte damage = 0x00;
+
+                        // Pico weakness 1, deal ammoUse x6 damage
+                        if (weapon == enemyWeak1)
+                        {
+                            damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 6);
+                            if (damage < 2) damage = 2;
+                        }
+                        // weakness 2, deal ammoUse x2 damage
+                        else if (weapon == enemyWeak2)
+                        {
+                            damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 2);
+                            if (damage < 2) damage = 2;
+                        }
+                        // weakness 3, deal ammoUse x1 damage
+                        else if (weapon == enemyWeak3)
+                        {
+                            damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1]);
+                            if (damage < 2) damage = 2;
+                        }
+
+                        // If any weakness is Atomic Fire, deal either 10 or 20 damage (1 shot or 2 shot)
+                        if (weapon == EDmgVsEnemy.DamageH && ( enemyWeak1 == weapon || enemyWeak2 == weapon || enemyWeak3 == weapon ))
+                        {
+                            double rPicoHeat = RandomMM2.Random.Next(pico.Count);
+                            damage = (rPicoHeat > 0.5) ? (byte)0x0A : (byte)0x14;
+                        }
+
+                        stream.WriteByte(damage);
+                        WilyWeaknesses[1, i + 1] = damage;
+                    }
+
+                    #endregion
+
+                    #region Guts
 
                     // Guts
                     // 25% chance to have a buster vulnerability
@@ -530,25 +581,25 @@ namespace MM2Randomizer.Randomizers
                     busterDmg = 0x00;
                     if (rBuster > 0.75)
                         busterDmg = 0x01;
-                    stream.Position = (int)ERMWeaponAddress.Eng_Buster + (int)ERMWeaponAddress.Offset_Guts;
+                    stream.Position = EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Guts;
                     stream.WriteByte(busterDmg);
-                    Console.Write(busterDmg + " ");
+                    WilyWeaknesses[2, 0] = busterDmg;
 
                     // Choose 2 special weapon weaknesses
-                    List<ERMWeaponAddress> guts = new List<ERMWeaponAddress>(Weapons);
+                    List<EDmgVsBoss> guts = new List<EDmgVsBoss>(dmgPtrBosses);
                     rInt = RandomMM2.Random.Next(guts.Count);
-                    weakness1 = guts[rInt];
+                    bossWeak1 = guts[rInt];
                     guts.RemoveAt(rInt);
                     rInt = RandomMM2.Random.Next(guts.Count);
-                    weakness2 = guts[rInt];
+                    bossWeak2 = guts[rInt];
 
-                    for (int i = 0; i < Weapons.Count; i++)
+                    for (int i = 0; i < dmgPtrBosses.Count; i++)
                     {
-                        ERMWeaponAddress weapon = Weapons[i];
-                        stream.Position = (int)weapon + (int)ERMWeaponAddress.Offset_Guts;
+                        EDmgVsBoss weapon = dmgPtrBosses[i];
+                        stream.Position = weapon + EDmgVsBoss.Offset.Guts;
 
                         // Guts weak
-                        if (weapon == weakness1 || weapon == weakness2)
+                        if (weapon == bossWeak1 || weapon == bossWeak2)
                         {
                             // Deal 1 damage with weapons that cost 1 or less ammo
                             byte damage = 0x01;
@@ -560,17 +611,19 @@ namespace MM2Randomizer.Randomizers
                                 damage = (tryDamage < 2) ? (byte)0x02 : (byte)tryDamage;
                             }
                             stream.WriteByte(damage);
-                            Console.Write(damage + " ");
+                            WilyWeaknesses[2, i + 1] = damage;
                         }
                         // Guts immune
                         else
                         {
                             stream.WriteByte(0x00);
-                            Console.Write(0x00 + " ");
+                            WilyWeaknesses[2, i + 1] = 0x00;
                         }
                     }
 
-                    Console.WriteLine("< guts");
+                    #endregion
+
+                    #region Wily Machine
 
                     // Machine
                     // 75% chance to have a buster vulnerability
@@ -578,28 +631,28 @@ namespace MM2Randomizer.Randomizers
                     busterDmg = 0x00;
                     if (rBuster > 0.25)
                         busterDmg = 0x01;
-                    stream.Position = (int)ERMWeaponAddress.Eng_Buster + (int)ERMWeaponAddress.Offset_Machine;
+                    stream.Position = EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Machine;
                     stream.WriteByte(busterDmg);
-                    Console.Write(busterDmg + " ");
+                    WilyWeaknesses[2, 0] = busterDmg;
 
                     // Choose 3 special weapon weaknesses
-                    List<ERMWeaponAddress> machine = new List<ERMWeaponAddress>(Weapons);
+                    List<EDmgVsBoss> machine = new List<EDmgVsBoss>(dmgPtrBosses);
                     rInt = RandomMM2.Random.Next(machine.Count);
-                    weakness1 = machine[rInt];
+                    bossWeak1 = machine[rInt];
                     machine.RemoveAt(rInt);
                     rInt = RandomMM2.Random.Next(machine.Count);
-                    weakness2 = machine[rInt];
+                    bossWeak2 = machine[rInt];
                     machine.RemoveAt(rInt);
                     rInt = RandomMM2.Random.Next(machine.Count);
-                    ERMWeaponAddress weakness3 = machine[rInt];
+                    EDmgVsBoss weakness3 = machine[rInt];
 
-                    for (int i = 0; i < Weapons.Count; i++)
+                    for (int i = 0; i < dmgPtrBosses.Count; i++)
                     {
-                        ERMWeaponAddress weapon = Weapons[i];
-                        stream.Position = (int)weapon + (int)ERMWeaponAddress.Offset_Machine;
+                        EDmgVsBoss weapon = dmgPtrBosses[i];
+                        stream.Position = weapon + EDmgVsBoss.Offset.Machine;
 
                         // Machine weak
-                        if (weapon == weakness1 || weapon == weakness2 || weapon == weakness3)
+                        if (weapon == bossWeak1 || weapon == bossWeak2 || weapon == weakness3)
                         {
                             // Deal 1 damage with weapons that cost 1 or less ammo
                             byte damage = 0x01;
@@ -610,31 +663,24 @@ namespace MM2Randomizer.Randomizers
                                 damage = (byte)RWeaponBehavior.AmmoUsage[i+1];
                             }
                             stream.WriteByte(damage);
-                            Console.Write(damage + " ");
+                            WilyWeaknesses[3, i + 1] = damage;
                         }
                         // Machine immune
                         else
                         {
                             stream.WriteByte(0x00);
-                            Console.Write(0x00 + " ");
+                            WilyWeaknesses[3, i + 1] = 0x00;
                         }
                     }
 
-                    Console.WriteLine("< machine");
+                    #endregion
+
+                    #region Alien
 
                     // Alien
                     // Buster Heat Air Wood Bubble Quick Clash Metal
                     byte alienDamage = 1;
-                    List<ERMWeaponAddress> alienWeapons = new List<ERMWeaponAddress>(new ERMWeaponAddress[] {
-                        ERMWeaponAddress.Eng_Buster,
-                        ERMWeaponAddress.Eng_AtomicFire,
-                        ERMWeaponAddress.Eng_AirShooter,
-                        ERMWeaponAddress.Eng_LeafShield,
-                        ERMWeaponAddress.Eng_BubbleLead,
-                        ERMWeaponAddress.Eng_QuickBoomerang,
-                        ERMWeaponAddress.Eng_MetalBlade,
-                        ERMWeaponAddress.Eng_ClashBomber
-                    });
+                    List<EDmgVsBoss> alienWeapons = EDmgVsBoss.GetTables(true, false);
                     int rWeaponIndex = RandomMM2.Random.Next(alienWeapons.Count);
 
                     // Deal two damage for 1-ammo weapons (or buster)
@@ -648,31 +694,68 @@ namespace MM2Randomizer.Randomizers
                         alienDamage = (byte)Math.Ceiling(RWeaponBehavior.AmmoUsage[rWeaponIndex] * 1.2);
                     }
                     
-                    // Apply weakness and erase others
+                    // Apply weakness and erase others (flash will remain 0xFF)
                     for (int i = 0; i < alienWeapons.Count; i++)
                     {
-                        ERMWeaponAddress weapon = alienWeapons[i];
+                        EDmgVsBoss weapon = alienWeapons[i];
 
-                        stream.Position = (int)weapon + (int)ERMWeaponAddress.Offset_Alien;
+                        stream.Position = weapon + EDmgVsBoss.Offset.Alien;
                         if (i == rWeaponIndex)
                         {
                             stream.WriteByte(alienDamage);
-                            Console.Write(alienDamage + " ");
+                            WilyWeaknesses[4, i] = alienDamage;
                         }
                         else
                         {
                             stream.WriteByte(0xFF);
-                            Console.Write(0x00 + " ");
+                            WilyWeaknesses[4, i] = 0xFF;
                         }
                     }
 
-                    Console.WriteLine("< alien");
+                    #endregion
 
-                }
+                    Console.WriteLine("Wily Boss Weaknesses:");
+                    Console.WriteLine("P\tH\tA\tW\tB\tQ\tF\tM\tC:");
+                    Console.WriteLine("--------------------------------------------");
+                    for (int i = 0; i < WilyWeaknesses.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < WilyWeaknesses.GetLength(1); j++)
+                        {
+                            Console.Write("{0}\t", WilyWeaknesses[i, j]);
+                            if (j == 5) Console.Write("X\t"); // skip flash
+                        }
+
+                        string bossName = "";
+                        switch (i)
+                        {
+                            case 0:
+                                bossName = "dragon";
+                                break;
+                            case 1:
+                                bossName = "picopico-kun";
+                                break;
+                            case 2:
+                                bossName = "guts";
+                                break;
+                            case 3:
+                                bossName = "machine";
+                                break;
+                            case 4:
+                                bossName = "alien";
+                                break;
+                            default: break;
+                        }
+                        Console.WriteLine("< " + bossName);
+                    }
+
+                } // end if
+
+                #region Easy Weakness
+
                 else
                 {
                     // First address for damage (buster v heatman)
-                    int address = (RandomMM2.Settings.IsJapanese) ? (int)ERMWeaponAddress.Buster : (int)ERMWeaponAddress.Eng_Buster;
+                    int address = (RandomMM2.Settings.IsJapanese) ? (int)EDmgVsBoss.Buster : (int)EDmgVsBoss.U_DamageP;
 
                     // Skip Time Stopper
                     // Buster Air Wood Bubble Quick Clash Metal
@@ -715,7 +798,11 @@ namespace MM2Randomizer.Randomizers
                         j++;
                     }
                 }
-            }
+
+                #endregion
+
+            } // End method RandomizeWilyUJ
+            
         }
     }
 }

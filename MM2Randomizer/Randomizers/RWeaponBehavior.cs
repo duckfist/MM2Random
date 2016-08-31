@@ -12,7 +12,7 @@ namespace MM2Randomizer.Randomizers
         public List<ESoundID> Sounds;
 
         // Buster Heat Air Wood Bubble Quick Metal Clash
-        public static List<double> AmmoUsage = new List<double>();
+        public static List<double> AmmoUsage;
 
         public RWeaponBehavior(Random r)
         {
@@ -47,6 +47,7 @@ namespace MM2Randomizer.Randomizers
                 ESoundID.OneUp,
             });
 
+            AmmoUsage = new List<double>();
             AmmoUsage.Add(0); // Buster is free
 
             using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
@@ -62,9 +63,11 @@ namespace MM2Randomizer.Randomizers
             }
 
             Console.WriteLine("Ammo Usage:");
+            Console.WriteLine("P     H     A     W     B     Q     M     C");
+            Console.WriteLine("-----------------------------------------------");
             foreach (double w in AmmoUsage)
             {
-                Console.Write("{0:0.00} ", w);
+                Console.Write("{0:0.00}  ", w);
             }
             Console.WriteLine("\n");
         }

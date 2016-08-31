@@ -30,7 +30,7 @@ namespace MM2Randomizer
         ///   Address + 6: Metal
         ///   Address + 7: Clash
         /// </summary>
-        public ERMWeaponAddress Address { get; set; }
+        public EDmgVsBoss Address { get; set; }
 
         /// <summary>
         /// The damage values used by this weapon against each Robot Master.  They will be

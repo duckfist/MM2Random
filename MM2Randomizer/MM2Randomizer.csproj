@@ -85,6 +85,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Enums\EDmgVsEnemy.cs" />
     <Compile Include="Enums\ESoundID.cs" />
     <Compile Include="Randomizers\Colors\ColorSet.cs" />
     <Compile Include="Randomizers\Colors\RColors.cs" />
@@ -102,7 +103,7 @@
     <Compile Include="Enums\ERMStageClearAddress.cs" />
     <Compile Include="Enums\ERMStageSelect.cs" />
     <Compile Include="Enums\ERMStageWeaponAddress.cs" />
-    <Compile Include="Enums\ERMWeaponAddress.cs" />
+    <Compile Include="Enums\EDmgVsBoss.cs" />
     <Compile Include="Enums\ERMWeaponValue.cs" />
     <Compile Include="Enums\EStageID.cs" />
     <Compile Include="MainWindowViewModel.cs" />

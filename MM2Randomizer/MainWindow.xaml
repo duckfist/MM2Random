@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MM2Randomizer"
         xmlns:converters="clr-namespace:MM2Randomizer.Converters"
         mc:Ignorable="d"
-        Title="MM2 Randomizer" Height="386" Width="403.259">
+        Title="MM2 Randomizer" Height="400" Width="403.259">
     <Window.Resources>
         <converters:InverseBooleanConverter x:Key="inverseBooleanConverter"/>
     </Window.Resources>

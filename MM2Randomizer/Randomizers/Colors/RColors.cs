@@ -213,36 +213,44 @@ namespace MM2Randomizer.Randomizers.Colors
         private void RandomizeRobotMasterColors()
         {
             //// Robot Master Color Palettes
-            //0x00B4EA - Wood leaf color 0x29
-            //0x01B4A1 - Metal blade color 0x30
+            List<int> SolidColorSolo = new List<int>
+            {
+                0x00B4EA, // Wood leaf color 0x29
+                0x01B4A1, // Metal blade color 0x30
+            };
 
-            //0x0034B3 - Heat projectile yellow color 0x28
-            //0x0034B4 - Heat projectile red color 0x15
-            //0x0034B6 - Heat yellow color 0x28
-            //0x0034B7 - Heat red color 0x15
-            //0x0074B6 - Air yellow color 0x28
-            //0x0074B7 - Air blue color 0x11
-            //0x00F4B6 - Bubble white & projectile color 0x30
-            //0x00F4B7 - Bubble green color 0x19
-            //0x01B4A4 - Metal yellow color 0x28
-            //0x01B4A5 - Metal red color 0x15
-            //0x0134C5 - Quick intro color 1
-            //0x0134C6 - Quick intro color 2
-            //0x0134C8 - Quick yellow color
-            //0x0134C9 - Quick red color
-
-            List<int> SolidColorPairMain = new List<int> {
+            List<int> SolidColorPair1Main = new List<int> {
                 0x01F4ED, // Clash red color 0x16
                 0x0174B7, // Flash blue color 0x12
                 0x0074B4, // Air projectile blue color 0x11
                 0x00B4ED, // Wood orange color 0x17
             };
 
-            List<int> SolidColorPairWhite = new List<int> {
+            List<int> SolidColorPair1White = new List<int> {
                 0x01F4EC, // Clash white color 0x30
                 0x0174B6, // Flash white color 0x30
                 0x0074B3, // Air projectile white color 0x30
                 0x00B4EC, // Wood white color 0x36
+            };
+
+            List<int> SolidColorPair2Dark = new List<int> {
+                0x0034B4, // Heat projectile red color 0x15
+                0x0034B7, // Heat red color 0x15
+                0x0074B7, // Air blue color 0x11
+                0x0134C6, // Quick intro color 2 0x28
+                0x0134C9, // Quick red color 0x15
+                0x01B4A5, // Metal red color 0x15
+                0x00F4B7, // Bubble green color 0x19
+            };
+
+            List<int> SolidColorPair2Light = new List<int> {
+                0x0034B3, // Heat projectile yellow color 0x28
+                0x0034B6, // Heat yellow color 0x28
+                0x0074B6, // Air yellow color 0x28
+                0x0134C5, // Quick intro color 1 0x30
+                0x0134C8, // Quick yellow color 0x28
+                0x01B4A4, // Metal yellow color 0x28
+                0x00F4B6, // Bubble white & projectile color 0x30
             };
 
             // Colors for bosses with 1 solid color and 1 white
@@ -254,13 +262,103 @@ namespace MM2Randomizer.Randomizers.Colors
             // Colors for bosses with a dark and a light color
             List<byte> goodDarkColors = new List<byte>()
             {
+                0x01,0x12,0x03,0x04,0x05,0x16,0x07,0x18,0x09,0x1A,0x0B,0x0C,0x0F,0x00,
             };
-
             List<byte> goodLightColors = new List<byte>()
             {
+                0x21,0x32,0x23,0x34,0x15,0x26,0x27,0x28,0x29,0x3A,0x1B,0x2C,0x10,0x20,
+            };
+
+            // Dark colors only
+            List<byte> darkOnly = new List<byte>()
+            {
+                0x0F,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C
+            };
+            // Medium colors only
+            List<byte> mediumOnly = new List<byte>()
+            {
+                0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,0x1A,0x1B,0x1C
             };
 
 
+            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                int rColor = 0;
+                for (int i = 0; i < SolidColorSolo.Count; i++)
+                {
+                    stream.Position = SolidColorSolo[i];
+                    rColor = RandomMM2.Random.Next(goodSolidColors.Count);
+                    stream.WriteByte(goodSolidColors[rColor]);
+                }
+
+                for (int i = 0; i < SolidColorPair1Main.Count; i++)
+                {
+                    rColor = RandomMM2.Random.Next(goodSolidColors.Count);
+                    stream.Position = SolidColorPair1Main[i];
+                    stream.WriteByte(goodSolidColors[rColor]);
+                    
+                    // Make 2nd color brighter. If already bright, make white.
+                    rColor = RandomMM2.Random.Next(goodSolidColors.Count);
+                    int lightColor = goodSolidColors[rColor] + 0x10;
+                    if (lightColor > 0x3C)
+                    {
+                        lightColor = 0x30;
+                    }
+                    stream.Position = SolidColorPair1White[i];
+                    stream.WriteByte((byte)lightColor);
+
+                }
+
+                for (int i = 0; i < SolidColorPair2Dark.Count; i++)
+                {
+                    stream.Position = SolidColorPair2Dark[i];
+                    rColor = RandomMM2.Random.Next(SolidColorPair2Dark.Count);
+                    stream.WriteByte(goodDarkColors[rColor]);
+
+                    stream.Position = SolidColorPair2Light[i];
+                    rColor = RandomMM2.Random.Next(SolidColorPair2Light.Count);
+                    stream.WriteByte(goodLightColors[rColor]);
+                }
+
+                // Wily Machine
+                // choose main body color
+                rColor = RandomMM2.Random.Next(darkOnly.Count);
+                byte shade0 = darkOnly[rColor];
+                byte shade1 = (byte)(shade0 + 0x10);
+                if (shade0 == 0x0F)
+                    shade1 = 0x00; // Dark gray up from black
+                byte shade2 = (byte)(shade1 + 0x10);
+
+                stream.Position = 0x02D7D5; // Wily Machine light gold      0x27
+                stream.WriteByte(shade2);
+                stream.Position = 0x02D7D2; // Wily Machine gold 1          0x17
+                stream.WriteByte(shade1);
+                stream.Position = 0x02D7D6; // Wily Machine gold 2          0x17
+                stream.WriteByte(shade1);
+                stream.Position = 0x02D7DA; // Wily Machine gold 3          0x17
+                stream.WriteByte(shade1);
+                stream.Position = 0x02D7D7; // Wily Machine dark gold 1     0x07
+                stream.WriteByte(shade0);
+                stream.Position = 0x02D7DB; // Wily Machine dark gold 2     0x07
+                stream.WriteByte(shade0);
+
+                // choose front color
+                rColor = RandomMM2.Random.Next(mediumOnly.Count);
+                shade0 = mediumOnly[rColor];
+                shade1 = (byte)(shade0 + 0x20);
+
+                stream.Position = 0x02D7D1; // Wily Machine red 1           0x15
+                stream.WriteByte(shade0);
+                stream.Position = 0x02D7D9; // Wily Machine red 2           0x15
+                stream.WriteByte(shade0);
+                stream.Position = 0x02D7D3; // Wily Machine lightest red 1  0x35
+                stream.WriteByte(shade1);
+
+                // Alien
+                //0x02DC74(3 bytes) Alien Body, static   0x16 0x29 0x19
+                //0x02DC78(3 bytes) Alien Head, static   0x16 0x29 0x19
+                // Looks good as 4 separate color groups, should be easy. Save the animations for later.
+            }
         }
 
         private void RandomizeStageColors()

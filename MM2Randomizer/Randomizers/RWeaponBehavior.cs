@@ -187,11 +187,11 @@ namespace MM2Randomizer.Randomizers
             //0x03DE7E - A x - speed fraction projectile 1(19)
             //0x03DE7F - A x - speed fraction projectile 2(99)
             //0x03DE80 - A x - speed fraction projectile 3(33)
-            int xFracSpeed = r.Next(0xFF) + 0x01;
             stream.Position = 0x03DE7E;
             for (int i = 0; i < 3; i++)
             {
-                stream.WriteByte((byte)ammoUse);
+                int xFracSpeed = r.Next(0xFF) + 0x01;
+                stream.WriteByte((byte)xFracSpeed);
             }
 
             //0x03DE81 - A x - speed integer projectile 1(01)
@@ -201,13 +201,13 @@ namespace MM2Randomizer.Randomizers
                 0x00, 0x01, 0x02, 0x04, 0x06
             };
             int rIndex = 0;
-            int deployDelay = 0;
+            int xIntSpeed = 0;
             stream.Position = 0x03DE81;
             for (int i = 0; i < 3; i++)
             {
                 rIndex = r.Next(xIntSpeeds.Length);
-                deployDelay = xIntSpeeds[rIndex];
-                stream.WriteByte((byte)deployDelay);
+                xIntSpeed = xIntSpeeds[rIndex];
+                stream.WriteByte((byte)xIntSpeed);
             }
         }
 

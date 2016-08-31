@@ -279,6 +279,11 @@ namespace MM2Randomizer.Randomizers.Colors
             {
                 0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,0x1A,0x1B,0x1C
             };
+            // Light colors only
+            List<byte> lightOnly = new List<byte>()
+            {
+                0x21,0x22,0x23,0x24,0x25,0x26,0x27,0x28,0x29,0x2A,0x2B,0x2C
+            };
 
 
             using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
@@ -358,6 +363,34 @@ namespace MM2Randomizer.Randomizers.Colors
                 //0x02DC74(3 bytes) Alien Body, static   0x16 0x29 0x19
                 //0x02DC78(3 bytes) Alien Head, static   0x16 0x29 0x19
                 // Looks good as 4 separate color groups, should be easy. Save the animations for later.
+                List<byte> mediumAndLight = new List<byte>(mediumOnly);
+                mediumAndLight.AddRange(lightOnly);
+
+                rColor = RandomMM2.Random.Next(mediumAndLight.Count);
+                shade0 = mediumAndLight[rColor];
+                stream.Position = 0x02DC74;
+                stream.WriteByte(shade0); // body solid color
+
+                rColor = RandomMM2.Random.Next(mediumAndLight.Count);
+                shade1 = mediumAndLight[rColor];
+                stream.Position = 0x02DC78;
+                stream.WriteByte(shade1); // head solid color
+
+                rColor = RandomMM2.Random.Next(mediumOnly.Count);
+                shade0 = mediumOnly[rColor];
+                stream.Position = 0x02DC76;
+                stream.WriteByte(shade0); // body dark color
+                shade1 = (byte)(shade0 + 0x10);
+                stream.Position = 0x02DC75;
+                stream.WriteByte(shade1); // body light color
+
+                rColor = RandomMM2.Random.Next(mediumOnly.Count);
+                shade0 = mediumOnly[rColor];
+                stream.Position = 0x02DC7A;
+                stream.WriteByte(shade0); // head dark color
+                shade1 = (byte)(shade0 + 0x10);
+                stream.Position = 0x02DC79;
+                stream.WriteByte(shade1); // head light color
             }
         }
 

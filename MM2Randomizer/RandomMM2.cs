@@ -239,6 +239,7 @@ namespace MM2Randomizer
         private static void RandomWeaponBehavior()
         {
             RWeaponBehavior rWeaponBehavior = new RWeaponBehavior(Random);
+            Debug.WriteLine(rWeaponBehavior);
         }
 
         /// <summary>
@@ -711,11 +712,13 @@ namespace MM2Randomizer
         private static void RandomWeaknesses(bool isChaos)
         {
             RWeaknesses rWeaknesses = new RWeaknesses(isChaos);
+            Debug.WriteLine(rWeaknesses);
         }
 
         private static void RandomBossAI()
         {
             RBossAI randomBossAI = new RBossAI(Random);
+            Debug.WriteLine(randomBossAI);
         }
 
 

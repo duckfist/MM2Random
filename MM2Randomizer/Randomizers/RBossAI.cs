@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace MM2Randomizer.Randomizers
@@ -13,10 +12,20 @@ namespace MM2Randomizer.Randomizers
             Randomize(r);
         }
 
+        private StringBuilder debug;
+        public override string ToString()
+        {
+            return debug.ToString();
+        }
+
         private void Randomize(Random r)
         {
+            debug = new StringBuilder();
+
             using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
+                debug.AppendLine("Boss AI");
+
                 ChangeHeat(r, stream);
                 ChangeAir(r, stream);
                 ChangeWood(r, stream);
@@ -30,6 +39,8 @@ namespace MM2Randomizer.Randomizers
 
         public void ChangeHeat(Random r, FileStream stream)
         {
+            debug.AppendLine("---------- Heatman -----------");
+
             int rChargeVel = 0;
             int rDistance = 0;
             int rDelay = 0;
@@ -43,12 +54,15 @@ namespace MM2Randomizer.Randomizers
             rDistance = r.Next(6) + 0x03;
             stream.Position = 0x02C207;
             stream.WriteByte((byte)rDistance);
+            debug.AppendLine(String.Format("(H) | Projectile 1 Y-Distance:  {0:X2}", rDistance));
             rDistance = r.Next(4) + 0x04;
             stream.Position = 0x02C208;
             stream.WriteByte((byte)rDistance);
+            debug.AppendLine(String.Format("(H) | Projectile 2 Y-Distance:  {0:X2}", rDistance));
             rDistance = r.Next(3) + 0x03;
             stream.Position = 0x02C209;
             stream.WriteByte((byte)rDistance);
+            debug.AppendLine(String.Format("(H) | Projectile 3 Y-Distance:  {0:X2}", rDistance));
 
             // projectile x-distances, 0x3A 0x2E 0x1C
             // - The lower value, the faster speed. Different for each fireball.
@@ -58,12 +72,15 @@ namespace MM2Randomizer.Randomizers
             rDistance = r.Next(0x80 - 0x30 + 1) + 0x30;
             stream.Position = 0x02C20A;
             stream.WriteByte((byte)rDistance);
+            debug.AppendLine(String.Format("(H) | Projectile 1 X-Distance:  {0:X2}", rDistance));
             rDistance = r.Next(0x40 - 0x22 + 1) + 0x22;
             stream.Position = 0x02C20B;
             stream.WriteByte((byte)rDistance);
+            debug.AppendLine(String.Format("(H) | Projectile 2 X-Distance:  {0:X2}", rDistance));
             rDistance = r.Next(0x30 - 0x10 + 1) + 0x10;
             stream.Position = 0x02C20C;
             stream.WriteByte((byte)rDistance);
+            debug.AppendLine(String.Format("(H) | Projectile 3 X-Distance:  {0:X2}", rDistance));
 
             // 30/60/90 frame delay
             //0x02C29D - Delay 1 0x1F
@@ -73,19 +90,25 @@ namespace MM2Randomizer.Randomizers
             rDelay = r.Next(31) + 10;
             stream.Position = 0x02C29D;
             stream.WriteByte((byte)rDelay);
+            debug.AppendLine(String.Format("(H) | Invuln Delay 1:  {0:X2}", rDelay));
             stream.Position = 0x02C29E;
             stream.WriteByte((byte)(rDelay * 2));
+            debug.AppendLine(String.Format("(H) | Invuln Delay 2:  {0:X2}", rDelay * 2));
             stream.Position = 0x02C29F;
             stream.WriteByte((byte)(rDelay * 3));
+            debug.AppendLine(String.Format("(H) | Invuln Delay 3:  {0:X2}", rDelay * 3));
 
             //0x02C253 - Charge velocity(0x04, 0x08 or more usually puts him on side of screen)
             rChargeVel = r.Next(4) + 0x02;
             stream.Position = 0x02C253;
             stream.WriteByte((byte)rChargeVel);
+            debug.AppendLine(String.Format("(H) | Charge Velocity: {0:X2}\n", rChargeVel));
         }
 
         public void ChangeAir(Random r, FileStream stream)
         {
+            debug.AppendLine("---------- Airman -----------");
+
             int rIndex = 0;
             int rFraction = 0;
             double rChance = 0;
@@ -106,15 +129,19 @@ namespace MM2Randomizer.Randomizers
             int A_tornadoTableLength = 0x1E;
 
             // Write y-vel fractions: 00-FF
+            debug.Append("(A) | Tornado Y-Vel Frac: ");
             stream.Position = 0x02C393;
             for (int i = 0; i < A_tornadoTableLength; i++)
             {
                 rFraction = r.Next(256);
                 stream.WriteByte((byte)rFraction);
+                debug.Append(String.Format(" {0:X2}", rFraction));
             }
+            debug.AppendLine();
 
             // Write y-vel integers: FF-03, rare 04
             stream.Position = 0x02C3B1;
+            debug.Append("(A) | Tornado Y-Vel Ints: ");
             for (int i = 0; i < A_tornadoTableLength; i++)
             {
                 byte A_yVelInt = 0;
@@ -130,18 +157,24 @@ namespace MM2Randomizer.Randomizers
                     A_yVelInt = A_yVelInts[rIndex];
                 }
                 stream.WriteByte(A_yVelInt);
+                debug.Append(String.Format(" {0:X2}", A_yVelInt));
             }
+            debug.AppendLine();
 
             // Write x-vel fractions: 00-FF
             stream.Position = 0x02C3CF;
+            debug.Append("(A) | Tornado X-Vel Frac: ");
             for (int i = 0; i < A_tornadoTableLength; i++)
             {
                 rFraction = r.Next(256);
                 stream.WriteByte((byte)rFraction);
+                debug.Append(String.Format(" {0:X2}", rFraction));
             }
+            debug.AppendLine();
 
             // Write x-vel integers: 00-04, rare 04, common 03
             stream.Position = 0x02C3ED;
+            debug.Append("(A) | Tornado X-Vel Ints: ");
             for (int i = 0; i < A_tornadoTableLength; i++)
             {
                 byte A_xVelInt = 0;
@@ -161,21 +194,27 @@ namespace MM2Randomizer.Randomizers
                     A_xVelInt = A_xVelInts[rIndex];
                 }
                 stream.WriteByte(A_xVelInt);
+                debug.Append(String.Format(" {0:X2}", A_xVelInt));
             }
+            debug.AppendLine();
 
             // Write delays: 05-2A
             stream.Position = 0x02C40B;
+            debug.Append("(A) | Tornado Delay Time: ");
             int rDelay = 0;
             for (int i = 0; i < A_tornadoTableLength; i++)
             {
                 rDelay = r.Next(0x25) + 0x05;
                 stream.WriteByte((byte)rDelay);
+                debug.Append(String.Format(" {0:X2}", rDelay));
             }
+            debug.AppendLine();
 
             // 0x02C30C - Num patterns before jumping 0x03 (do 1-4)
             int rNumPatterns = r.Next(4) + 1;
             stream.Position = 0x02C30C;
             stream.WriteByte((byte)rNumPatterns);
+            debug.AppendLine(String.Format("(A) | Patterns Before Jump: {0:X2}", rNumPatterns));
 
             //0x02C4DD - First Jump y-vel frac, 0xE6
             //0x02C4DE - Second Jump y-vel frac, 0x76
@@ -191,8 +230,11 @@ namespace MM2Randomizer.Randomizers
             int jump2x = rSum - jump1x;
             stream.Position = 0x02C4E6;
             stream.WriteByte((byte)jump1x);
+            debug.AppendLine(String.Format("(A) | X-Velocity Integer Jump 1: {0:X2}", jump1x));
             stream.Position = 0x02C4E7;
             stream.WriteByte((byte)jump2x);
+            debug.AppendLine(String.Format("(A) | X-Velocity Integer Jump 2: {0:X2}", jump2x));
+
             // If a jump's x-int is 0, its corresponding y-int must be 6-7
             // If a jump's x-int is 1, its corresponding y-int must be 4-7
             // If a jump's x-int is 2, its corresponding y-int must be 3-5
@@ -201,22 +243,28 @@ namespace MM2Randomizer.Randomizers
             int jump2y = AirmanGetJumpYVelocity(jump2x, r);
             stream.Position = 0x02C4E0;
             stream.WriteByte((byte)jump1y);
+            debug.AppendLine(String.Format("(A) | Y-Velocity Integer Jump 1: {0:X2}", jump1y));
             stream.Position = 0x02C4E1;
             stream.WriteByte((byte)jump2y);
+            debug.AppendLine(String.Format("(A) | Y-Velocity Integer Jump 1: {0:X2}", jump2y));
 
             // Random x and y-vel fractions for both jumps
             stream.Position = 0x02C4DD; // 1st jump y-vel frac
             rFraction = r.Next(0xF1); // If jump is 7 and fraction is > 0xF0, Airman gets stuck!
             stream.WriteByte((byte)rFraction);
+            debug.AppendLine(String.Format("(A) | Y-Velocity Fraction Jump 1: {0:X2}", rFraction));
             stream.Position = 0x02C4DE; // 2nd jump y-vel frac
             rFraction = r.Next(0xF1);
             stream.WriteByte((byte)rFraction);
+            debug.AppendLine(String.Format("(A) | Y-Velocity Fraction Jump 2: {0:X2}", rFraction));
             stream.Position = 0x02C4E3; // 1st jump x-vel frac
             rFraction = r.Next(256);
             stream.WriteByte((byte)rFraction);
+            debug.AppendLine(String.Format("(A) | X-Velocity Fraction Jump 1: {0:X2}", rFraction));
             stream.Position = 0x02C4E4; // 2nd jump x-vel frac
             rFraction = r.Next(256);
             stream.WriteByte((byte)rFraction);
+            debug.AppendLine(String.Format("(A) | X-Velocity Fraction Jump 2: {0:X2}\n", rFraction));
         }
 
         private byte AirmanGetJumpYVelocity(int xVelInt, Random r)
@@ -250,6 +298,8 @@ namespace MM2Randomizer.Randomizers
 
         public void ChangeWood(Random r, FileStream stream)
         {
+            debug.AppendLine("---------- Woodman -----------");
+
             int rIndex = 0;
             int rByte = 0;
             double rChance = 0.0;
@@ -265,21 +315,25 @@ namespace MM2Randomizer.Randomizers
             rByte = r.Next(0x20 - 0x06 + 1) + 0x06;
             stream.Position = 0x02C537;
             stream.WriteByte((byte)rByte);
+            debug.AppendLine(String.Format("(W) | Leaf Spacing Delay: {0:X2}", rByte));
 
             //0x02C5DD - Jump height, 0x04. Do 0x03 to 0x08.
             rByte = r.Next(0x08 - 0x03 + 1) + 0x03;
             stream.Position = 0x02C5DD;
             stream.WriteByte((byte)rByte);
+            debug.AppendLine(String.Format("(W) | Jump Y-Velocity: {0:X2}", rByte));
 
             //0x02C5E2 - Jump distance, 0x01. Do 0x01 to 0x04.
             rByte = r.Next(0x04 - 0x01 + 1) + 0x01;
             stream.Position = 0x02C5E2;
             stream.WriteByte((byte)rByte);
+            debug.AppendLine(String.Format("(W) | Jump X-Velocity: {0:X2}", rByte));
 
             //0x02C5A9 - Shield launch speed, 0x04. Do 0x01 to 0x08.
             rByte = r.Next(0x08 - 0x01 + 1) + 0x01;
             stream.Position = 0x02C5A9;
             stream.WriteByte((byte)rByte);
+            debug.AppendLine(String.Format("(W) | Shield Launch X-Velocity: {0:X2}", rByte));
 
             //0x02C553 - Number of falling leaves, 0x03. Do 0x02 20% of the time.
             rChance = r.NextDouble();
@@ -287,6 +341,7 @@ namespace MM2Randomizer.Randomizers
             {
                 stream.Position = 0x02C553;
                 stream.WriteByte(0x02);
+                debug.AppendLine(String.Format("(W) | Falling Leaf Quantity: {0:X2}", 0x02));
             }
 
             //0x02C576 - Falling leaf x-vel, 0x02. Do 0x01 or 0x02, but with a 10% chance for 0x00 and 10% for 0x03
@@ -299,24 +354,31 @@ namespace MM2Randomizer.Randomizers
             rIndex = r.Next(xVels.Length);
             stream.Position = 0x02C576;
             stream.WriteByte(xVels[rIndex]);
+            debug.AppendLine(String.Format("(W) | Falling Leaf X-Velocity: {0:X2}", xVels[rIndex]));
 
             //0x03D8F6 - 0x02, change to 0x06 for an interesting leaf shield pattern 25% of the time
+            debug.Append("(W) | Leaf Shield Pattern: ");
             rChance = r.NextDouble();
             if (rChance > 0.75)
             {
                 stream.Position = 0x02C553;
                 stream.WriteByte(0x06);
+                debug.AppendLine(String.Format("{0:X2}", 0x06));
+            }
+            else
+            {
+                debug.AppendLine("Normal");
             }
 
             //0x03B855 - Leaf fall speed(sort of ?) 0x20. 
             // Decrease value to increase speed. At 0x40, it doesn't fall. 
             // 20% of the time, change to a high number to instantly despawn leaves for a fast pattern. 
             // Do from 0x00 to 0x24.  Make less than 0x1A a lower chance.
-            int xVel;
+            int yVel;
             rChance = r.NextDouble();
             if (rChance > 0.8)
             {
-                xVel = 0xA0; // Leaves go upwards
+                yVel = 0xA0; // Leaves go upwards
             }
             else
             {
@@ -326,14 +388,17 @@ namespace MM2Randomizer.Randomizers
                     0x1D, 0x1E, 0x20, 0x21, 0x22, 0x23, 0x24        // Fall slower
                 };
                 rIndex = r.Next(xVels.Length);
-                xVel = xVels[rIndex];
+                yVel = xVels[rIndex];
             }
             stream.Position = 0x03B855;
-            stream.WriteByte((byte)xVel);
+            stream.WriteByte((byte)yVel);
+            debug.AppendLine(String.Format("(W) | Falling Leaf Y-Velocity: {0:X2}\n", yVel));
         }
 
         public void ChangeBubble(Random r, FileStream stream)
         {
+            debug.AppendLine("---------- Bubbleman -----------");
+
             byte[] yVels;
             int rIndex;
 
@@ -344,16 +409,20 @@ namespace MM2Randomizer.Randomizers
             rIndex = r.Next(yVels.Length);
             stream.Position = 0x02C70B;
             stream.WriteByte(yVels[rIndex]);
+            debug.AppendLine(String.Format("(B) | Y-Velocity Falling: {0:X2}", yVels[rIndex]));
 
             //0x02C6D3 - Rising speed integer, 0x01.
             yVels = new byte[] { 0x01, 0x02, 0x03, 0x05 };
             rIndex = r.Next(yVels.Length);
             stream.Position = 0x02C6D3;
             stream.WriteByte(yVels[rIndex]);
+            debug.AppendLine(String.Format("(B) | Y-Velocity Rising: {0:X2}\n", yVels[rIndex]));
         }
 
         public void ChangeQuick(Random r, FileStream stream)
         {
+            debug.AppendLine("---------- Quickman -----------");
+
             int rInt;
 
             // Other addresses with potential:
@@ -364,51 +433,62 @@ namespace MM2Randomizer.Randomizers
             rInt = r.Next(0x0B) + 0x01;
             stream.Position = 0x02C86E;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(Q) | Num Boomerangs: {0:X2}", rInt));
 
             //0x02C882 - Boomerang: delay before arc 0x25. 0 for no arc, or above like 0x35. do from 5 to 0x35.
             rInt = r.Next(0x35 - 0x05 + 1) + 0x05;
             stream.Position = 0x02C882;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(Q) | Boomerang Delay 1: {0:X2}", rInt));
 
             //0x02C887 - Boomerang speed when appearing, 0x04, do from 0x01 to 0x07
             rInt = r.Next(0x07 - 0x01 + 1) + 0x01;
             stream.Position = 0x02C887;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(Q) | Boomerang Velocity 1: {0:X2}", rInt));
 
             //0x03B726 - Boomerang speed secondary, 0x04, does this affect anything else?
             rInt = r.Next(0x07 - 0x01 + 1) + 0x01;
             stream.Position = 0x03B726;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(Q) | Boomerang Velocity 2: {0:X2}", rInt));
 
             // For all jumps, choose randomly from 0x02 to 0x0A
             //0x02C8A3 - Middle jump, 0x07
             rInt = r.Next(0x0A - 0x02 + 1) + 0x02;
             stream.Position = 0x02C8A3;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(Q) | Jump Height 1: {0:X2}", rInt));
 
             //0x02C8A4 - High jump, 0x08
             rInt = r.Next(0x0A - 0x02 + 1) + 0x02;
             stream.Position = 0x02C8A4;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(Q) | Jump Height 2: {0:X2}", rInt));
 
             //0x02C8A5 - Low jump, 0x04
             rInt = r.Next(0x0A - 0x02 + 1) + 0x02;
             stream.Position = 0x02C8A5;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(Q) | Jump Height 3: {0:X2}", rInt));
 
             //0x02C8E4 - Running time, 0x3E, do from 0x18 to 0x50
             rInt = r.Next(0x50 - 0x18 + 1) + 0x18;
             stream.Position = 0x02C8E4;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(Q) | Running Time: {0:X2}", rInt));
 
             //0x02C8DF - Running speed, 0x02, do from 0x05 to 0x01
             rInt = r.Next(0x05 - 0x01 + 1) + 0x01;
             stream.Position = 0x02C8DF;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(Q) | Running Velocity: {0:X2}\n", rInt));
         }
 
         public void ChangeFlash(Random r, FileStream stream)
         {
+            debug.AppendLine("---------- Quickman -----------");
+
             int rInt;
 
             // Unused addresses
@@ -421,41 +501,50 @@ namespace MM2Randomizer.Randomizers
             rInt = r.Next(0x04);
             stream.Position = 0x02C982;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(F) | Walk Velocity Integer: {0:X2}", rInt));
 
             //0x02C97D - Walk velocity fraction 0x06, do 0x00-0xFF
             rInt = r.Next(256);
             stream.Position = 0x02C97D;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(F) | Walk Velocity Fraction: {0:X2}", rInt));
 
             //0x02C98B - Delay before time stopper 0xBB (187 frames). Do from 30 frames to 240 frames
             rInt = r.Next(211) + 30;
             stream.Position = 0x02C98B;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(F) | Delay Before Time Stopper: {0:X2}", rInt));
 
             //0x02CAC6 - Jump distance integer 0x00, do 0 to 3
             // TODO do fraction also
             rInt = r.Next(4);
             stream.Position = 0x02CAC6;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(F) | Jump X-Velocity: {0:X2}", rInt));
 
             //0x02CACE - Jump height 0x04, do 3 - 8
             rInt = r.Next(6) + 3;
             stream.Position = 0x02CACE;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(F) | Jump Y-Velocity: {0:X2}", rInt));
 
             //0x02CA81 - Projectile speed 0x08, do 2 - 0A
             rInt = r.Next(0x0A - 0x02 + 1) + 0x02;
             stream.Position = 0x02CA81;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(F) | Projectile Velocity: {0:X2}", rInt));
 
             //0x02CA09 - Number of projectiles to shoot 0x06, do 3 - 0x10
             rInt = r.Next(0x10 - 0x03 + 1) + 0x03;
             stream.Position = 0x02CA09;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(F) | Num Projectiles: {0:X2}\n", rInt));
         }
 
         public void ChangeMetal(Random r, FileStream stream)
         {
+            debug.AppendLine("---------- Metalman -----------");
+
             int rInt;
             double rDbl;
 
@@ -469,13 +558,20 @@ namespace MM2Randomizer.Randomizers
             rInt = r.Next(8) + 2;
             stream.Position = 0x02CC3F;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(M) | Projectile Velocity: {0:X2}", rInt));
 
             //0x02CC1D - Odd change to attack behavior, 0x06, only if different than 6. Give 25% chance.
             rDbl = r.NextDouble();
+            debug.Append("(M) | Alternate Attack Behavior: ");
             if (rDbl > 0.75)
             {
                 stream.Position = 0x02CC3F;
                 stream.WriteByte((byte)0x05);
+                debug.AppendLine(String.Format("{0:X2}", 0x05));
+            }
+            else
+            {
+                debug.AppendLine("No");
             }
 
             //0x02CBB5 - Jump Height 1 0x06, do from 03 - 07 ? higher than 7 bonks ceiling
@@ -488,12 +584,16 @@ namespace MM2Randomizer.Randomizers
                 // Pick a height at random and remove from list to get 3 different heights
                 rInt = r.Next(jumpHeight.Count);
                 stream.WriteByte((byte)jumpHeight[rInt]);
+                debug.AppendLine(String.Format("(M) | Jump {0} Y-Velocity: {1:X2}", i + 1, jumpHeight[rInt]));
                 jumpHeight.RemoveAt(rInt);
             }
+            debug.AppendLine();
         }
 
         public void ChangeClash(Random r, FileStream stream)
         {
+            debug.AppendLine("---------- Clashman -----------");
+
             int rInt;
             double rDbl;
 
@@ -507,11 +607,13 @@ namespace MM2Randomizer.Randomizers
             rInt = r.Next(256);
             stream.Position = 0x02CCf2;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(C) | Walk X-Velocity Fraction: {0:X2}", rInt));
 
             //0x02CCF7 - Walk x-vel integer 0x01, do 0 to 3
             rInt = r.Next(4);
             stream.Position = 0x02CCF7;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(C) | Walk X-Velocity Integer: {0:X2}", rInt));
 
             //0x02CD07 - Jump behavior 0x27. 0x17 = always jumping, any other value = doesn't react with a jump.
             // Give 25% chance for each unique behavior, and 50% for default.
@@ -527,24 +629,33 @@ namespace MM2Randomizer.Randomizers
             }
             stream.Position = 0x02CD07;
             stream.WriteByte(jumpType);
+            debug.AppendLine(String.Format("(C) | Special Jump Behavior: {0:X2}", jumpType));
 
             //0x02CD2A - Jump y-vel intger, 0x06, do from 0x02 to 0x0A
             rInt = r.Next(0x0A - 0x02 + 1) + 0x02;
             stream.Position = 0x02CD2A;
             stream.WriteByte((byte)rInt);
-            
+            debug.AppendLine(String.Format("(C) | Jump Y-Velocity Integer: {0:X2}", rInt));
+
             //0x02CDD3 - Shot behavior, 0x5E, change to have him always shoot when jumping, 20% chance
             rDbl = r.NextDouble();
+            debug.Append("(C) | One Shot at a Time: ");
             if (rDbl > 0.20)
             {
                 stream.Position = 0x02CDD3;
                 stream.WriteByte(0x50);
+                debug.AppendLine("No");
+            }
+            else
+            {
+                debug.AppendLine("Yes");
             }
 
             //0x02CDEE - Clash Bomber velocity, 0x06, do from 2 to 8
             rInt = r.Next(7) + 2;
             stream.Position = 0x02CD2A;
             stream.WriteByte((byte)rInt);
+            debug.AppendLine(String.Format("(C) | Clash Bomber X-Velocity: {0:X2}\n", rInt));
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Windows;
 
 using MM2Randomizer.Utilities;
+using System.Diagnostics;
 
 namespace MM2Randomizer
 {
@@ -76,7 +77,7 @@ namespace MM2Randomizer
 
             string seedAlpha = SeedConvert.ConvertBase10To26(RandomMM2.Seed);
             tbxSeed.Text = String.Format("{0}", seedAlpha);
-            Console.WriteLine("\nSeed: " + seedAlpha + "\n");
+            Debug.WriteLine("\nSeed: " + seedAlpha + "\n");
         }
 
         private void chkJapanese_Checked(object sender, RoutedEventArgs e)

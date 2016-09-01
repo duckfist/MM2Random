@@ -99,6 +99,7 @@ Changelog
 v0.2.0-beta
 - Weakness Randomizer "Chaos Mode"
 - Weapon Behavior Randomizer
+- Robot Master AI Randomizer
 - Randomized false-floors in Wily 4
 - (Enemy) Added several more potential spawn locations
 - (Enemy) Added alternate spawn locations for certain enemy types

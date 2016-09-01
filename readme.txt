@@ -105,7 +105,7 @@ v0.2.0-beta
 - (Enemy) Added alternate spawn locations for certain enemy types
 - (Enemy) Added "Facing direction" to each spawn location
 - (Enemy) Removed Goblins from first room of Airman stage
-- (Enemy) Overall improved the algorithm and ncreased variety.
+- (Enemy) Overall improved the algorithm and increased variety.
 - (Enemy) Added Shrink, Shrink Spawner, and Springer spawns.
 - (Enemy) Reduced Telly and Springer spawn rate
 - (Color) Robot Masters, Picopico-kun, Wily Machine, and Alien now have color

@@ -55,6 +55,10 @@ namespace MM2Randomizer
                 {
                     RandomWeaknesses(Settings.IsWeaknessHard);
                 }
+                if (Settings.IsBossAIRandom)
+                {
+                    RandomBossAI();
+                }
                 if (Settings.IsItemsRandom)
                 {
                     RandomItemNums();
@@ -708,6 +712,12 @@ namespace MM2Randomizer
         {
             RWeaknesses rWeaknesses = new RWeaknesses(isChaos);
         }
+
+        private static void RandomBossAI()
+        {
+            RBossAI randomBossAI = new RBossAI(Random);
+        }
+
 
         /// <summary>
         /// Shuffle the elements of the provided list.

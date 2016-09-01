@@ -43,11 +43,15 @@ namespace MM2Randomizer
         public bool IsWeaknessEasy { get; set; }
 
         /// <summary>
-        /// NOT IMPLEMENTED
         /// If True, and if IsWeaknessRandom is True, the damage tables for each weapon are filled
         /// with random values, within practical tolerances for each weapon.
         /// </summary>
         public bool IsWeaknessHard { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsBossAIRandom { get; set; }
 
         /// <summary>
         /// TODO

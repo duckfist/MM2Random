@@ -107,6 +107,7 @@
     <Compile Include="Enums\ERMWeaponValue.cs" />
     <Compile Include="Enums\EStageID.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Randomizers\RBossAI.cs" />
     <Compile Include="Randomizers\RTilemap.cs" />
     <Compile Include="Randomizers\RWeaknesses.cs" />
     <Compile Include="Randomizers\RWeaponBehavior.cs" />

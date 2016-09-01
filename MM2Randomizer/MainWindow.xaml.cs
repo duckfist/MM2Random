@@ -28,6 +28,7 @@ namespace MM2Randomizer
                 IsWeaknessRandom = true,
                 IsWeaknessEasy = false,
                 IsWeaknessHard = true,
+                IsBossAIRandom = true,
                 IsEnemiesRandom = true,
                 IsBGMRandom = true,
                 IsWeaponNamesRandom = true,

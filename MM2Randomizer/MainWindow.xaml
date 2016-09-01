@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MM2Randomizer"
         xmlns:converters="clr-namespace:MM2Randomizer.Converters"
         mc:Ignorable="d"
-        Title="MM2 Randomizer" Height="400" Width="403.259">
+        Title="MM2 Randomizer" Height="424" Width="403.259">
     <Window.Resources>
         <converters:InverseBooleanConverter x:Key="inverseBooleanConverter"/>
     </Window.Resources>
@@ -63,13 +63,14 @@
                     <RadioButton Name="radWeaknessHard" Margin="16,2,2,2" Content="Chaos" 
                          IsEnabled="{Binding ElementName=chkWeakness, Path=IsChecked, TargetNullValue=false}"
                          IsChecked="{Binding Path=IsWeaknessHard}"/>
-                    <CheckBox Grid.Row="6" Grid.Column="0" Name="chkWeapons" Content="Weapon Get" IsChecked="{Binding Path=IsWeaponsRandom}"/>
-                    <CheckBox Grid.Row="7" Grid.Column="0" Name="chkItems" Content="Items 1, 2, and 3 Get" IsChecked="{Binding Path=IsItemsRandom}"/>
-                    <CheckBox Grid.Row="8" Grid.Column="0" Name="chkTeleporters" Content="Wily 5 Teleporters" IsChecked="{Binding Path=IsTeleportersRandom}" IsEnabled="True"/>
-                    <CheckBox Grid.Row="9" Grid.Column="0" Name="chkEnemies" Content="Enemies" IsChecked="{Binding Path=IsEnemiesRandom}"/>
-                    <CheckBox Grid.Row="10" Grid.Column="0" Name="chkColors" Content="Colors" IsChecked="{Binding Path=IsColorsRandom}"/>
-                    <CheckBox Grid.Row="11" Grid.Column="0" Name="chkBGM" Content="Stage BGM" IsChecked="{Binding Path=IsBGMRandom}"/>
-                    <CheckBox Grid.Row="12" Grid.Column="0" Name="chkWeaponNames" Content="Weapon Names" 
+                    <CheckBox Name="chkBossAI" Content="Boss AI" IsChecked="{Binding Path=IsBossAIRandom}"/>
+                    <CheckBox Name="chkWeapons" Content="Weapon Get" IsChecked="{Binding Path=IsWeaponsRandom}"/>
+                    <CheckBox Name="chkItems" Content="Items 1, 2, and 3 Get" IsChecked="{Binding Path=IsItemsRandom}"/>
+                    <CheckBox Name="chkTeleporters" Content="Wily 5 Teleporters" IsChecked="{Binding Path=IsTeleportersRandom}" IsEnabled="True"/>
+                    <CheckBox Name="chkEnemies" Content="Enemies" IsChecked="{Binding Path=IsEnemiesRandom}"/>
+                    <CheckBox Name="chkColors" Content="Colors" IsChecked="{Binding Path=IsColorsRandom}"/>
+                    <CheckBox Name="chkBGM" Content="Stage BGM" IsChecked="{Binding Path=IsBGMRandom}"/>
+                    <CheckBox Name="chkWeaponNames" Content="Weapon Names" 
                       IsEnabled="{Binding ElementName=chkJapanese, Path=IsChecked, TargetNullValue=false, Converter={StaticResource inverseBooleanConverter}}"
                       IsChecked="{Binding Path=IsWeaponNamesRandom}">
                     </CheckBox>

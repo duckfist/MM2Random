@@ -14,8 +14,16 @@ namespace MM2Randomizer.Randomizers
         // Buster Heat Air Wood Bubble Quick Metal Clash
         public static List<double> AmmoUsage;
 
+        private StringBuilder debug;
+        public override string ToString()
+        {
+            return debug.ToString();
+        }
+
         public RWeaponBehavior(Random r)
         {
+            debug = new StringBuilder();
+
             Sounds = new List<ESoundID>(new ESoundID[] {
                 ESoundID.WeaponF,
                 ESoundID.HeatmanUnused,
@@ -46,7 +54,7 @@ namespace MM2Randomizer.Randomizers
                 ESoundID.Death,
                 ESoundID.OneUp,
             });
-
+            
             AmmoUsage = new List<double>();
             AmmoUsage.Add(0); // Buster is free
 
@@ -63,14 +71,15 @@ namespace MM2Randomizer.Randomizers
                 ChangeItem1(r, stream);
             }
 
-            Console.WriteLine("Ammo Usage:");
-            Console.WriteLine("P     H     A     W     B     Q     M     C");
-            Console.WriteLine("-----------------------------------------------");
+            debug.AppendLine("Ammo Usage:");
+            debug.AppendLine("P     H     A     W     B     Q     M     C");
+            debug.AppendLine("-----------------------------------------------");
             foreach (double w in AmmoUsage)
             {
-                Console.Write("{0:0.00}  ", w);
+                debug.Append(String.Format("{0:0.00}  ", w));
             }
-            Console.WriteLine("\n");
+            debug.AppendLine("\n");
+            Console.WriteLine(debug);
         }
 
         /// <summary>
@@ -88,14 +97,17 @@ namespace MM2Randomizer.Randomizers
             if (sound == ESoundID.WeaponH_Charge0)
             {
                 i = r.Next(3);
-                sound = (ESoundID)(ESoundID.WeaponH_Charge0 + i);
+                sound = ESoundID.WeaponH_Charge0 + i;
             }
 
+            debug.AppendLine(Enum.GetName(typeof(ESoundID), sound));
             return sound;
         }
 
         public void ChangeHeat(Random r, FileStream stream)
         {
+            debug.AppendLine("-------- Atomic Fire ---------");
+
             //0x03DE55 - H L1 Ammo use(01)
             //0x03DE56 - H L2 Ammo use(06)
             //0x03DE57 - H L3 Ammo use(0A)
@@ -104,8 +116,13 @@ namespace MM2Randomizer.Randomizers
             double rTestL1Ammo = r.NextDouble();
             if (rTestL1Ammo > 0.5)
             {
+                debug.AppendLine("(H) | Shot L1 Ammo Cost: 0");
                 stream.Position = 0x03DE55;
                 stream.WriteByte(0x00);
+            }
+            else
+            {
+                debug.AppendLine("(H) | Shot L1 Ammo Cost: 1");
             }
             stream.Position = 0x03DE56;
             int ammoMax = 0;
@@ -114,33 +131,43 @@ namespace MM2Randomizer.Randomizers
                 int ammoUse = r.Next(0x05) + 0x01;
                 ammoMax += ammoUse;
                 stream.WriteByte((byte)ammoMax);
+                debug.AppendLine(String.Format("(H) | Shot L{0} Ammo Cost: {1}", i + 2, ammoMax));
             }
             AmmoUsage.Add(ammoMax);
 
             //0x03DDEC - H shot sound effect(38)
+            debug.Append("(H) | Shot Sound: ");
             stream.Position = 0x03DDEC;
             stream.WriteByte((byte)GetRandomSound(r));
 
             //0x03DDF1 - H x - speed (04, all levels)
             //    Do from 02 to 08
             int xVel = r.Next(0x07) + 0x02;
+            debug.AppendLine("(H) | X-Velocity : " + xVel);
             stream.Position = 0x03DDF1;
             stream.WriteByte((byte)xVel);
 
             //0x03DE45 - H charge sound 1(35) Unused
             //0x03DE46 - H charge sound 2(35)
             stream.Position = 0x03DE46;
+            debug.Append("(H) | L1 Sound: ");
             stream.WriteByte((byte)GetRandomSound(r));
             //0x03DE47 - H charge sound 3(36)
             stream.Position = 0x03DE47;
+            debug.Append("(H) | L2 Sound: ");
             stream.WriteByte((byte)GetRandomSound(r));
             //0x03DE48 - H charge sound 4(37)
             stream.Position = 0x03DE48;
+            debug.Append("(H) | L3 Sound: ");
             stream.WriteByte((byte)GetRandomSound(r));
+
+            debug.AppendLine();
         }
 
         public void ChangeAir(Random r, FileStream stream)
         {
+            debug.AppendLine("-------- Air Shooter ---------");
+
             //0x03DAD6 - A num projectiles, default 0x04
             //  Values 0x02 and 0x03 work, but larger values behave strangely
             int numProjectiles = 0x04;
@@ -149,6 +176,7 @@ namespace MM2Randomizer.Randomizers
                 numProjectiles = 0x03;
             else if (rTestNumProjectiles > 0.60)
                 numProjectiles = 0x02;
+            debug.AppendLine("(A) | Projectiles: " + numProjectiles);
             stream.Position = 0x03DAD6;
             stream.WriteByte((byte)numProjectiles);
 
@@ -157,10 +185,12 @@ namespace MM2Randomizer.Randomizers
 
             //0x03DAE6 - A sound effect (0x3F)
             stream.Position = 0x03DAE6;
+            debug.Append("(A) | Sound: ");
             stream.WriteByte((byte)GetRandomSound(r));
 
             //0x03DAEE - A ammo used(0x02)
             int ammoUse = r.Next(0x02) + 0x01;
+            debug.AppendLine("(A) | Ammo Use: " + ammoUse);
             stream.Position = 0x03DAEE;
             stream.WriteByte((byte)ammoUse);
             AmmoUsage.Add(ammoUse);
@@ -173,6 +203,7 @@ namespace MM2Randomizer.Randomizers
                 // double the addition of any acceleration value chosen above 0x10
                 yAccFrac += (yAccFrac - 0x10) * 2; 
             }
+            debug.AppendLine("(A) | Y-Acceleration (fraction): " + yAccFrac);
             stream.Position = 0x03DE6E;
             stream.WriteByte((byte)yAccFrac);
 
@@ -182,6 +213,7 @@ namespace MM2Randomizer.Randomizers
             double rYAcc = r.NextDouble();
             if (rYAcc > 0.85)
                 yAccInt = 0x01;
+            debug.AppendLine("(A) | Y-Acceleration (integer): " + yAccInt);
             stream.Position = 0x03DE76;
             stream.WriteByte((byte)yAccInt);
 
@@ -192,6 +224,7 @@ namespace MM2Randomizer.Randomizers
             for (int i = 0; i < 3; i++)
             {
                 int xFracSpeed = r.Next(0xFF) + 0x01;
+                debug.AppendLine(String.Format("(A) | Projectile {0} X-Velocity (fraction): {1}", i, xFracSpeed));
                 stream.WriteByte((byte)xFracSpeed);
             }
 
@@ -208,8 +241,11 @@ namespace MM2Randomizer.Randomizers
             {
                 rIndex = r.Next(xIntSpeeds.Length);
                 xIntSpeed = xIntSpeeds[rIndex];
+                debug.AppendLine(String.Format("(A) | Projectile {0} X-Velocity (integer): {1}", i, xIntSpeed));
                 stream.WriteByte((byte)xIntSpeed);
             }
+
+            debug.AppendLine();
         }
 
         public void ChangeWood(Random r, FileStream stream)

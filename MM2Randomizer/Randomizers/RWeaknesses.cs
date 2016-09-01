@@ -3,6 +3,7 @@ using System.IO;
 
 using MM2Randomizer.Enums;
 using System;
+using System.Text;
 
 namespace MM2Randomizer.Randomizers
 {
@@ -12,8 +13,16 @@ namespace MM2Randomizer.Randomizers
         public static int[,] BotWeaknesses = new int[8, 9];
         public static int[,] WilyWeaknesses = new int[5, 8];
 
+        private StringBuilder debug;
+        public override string ToString()
+        {
+            return debug.ToString();
+        }
+
         public RWeaknesses(bool isChaos)
         {
+            debug = new StringBuilder();
+
             IsChaos = isChaos;
 
             if (RandomMM2.Settings.IsJapanese)
@@ -30,7 +39,7 @@ namespace MM2Randomizer.Randomizers
         /// <summary>
         /// Modify the damage values of each weapon against each Robot Master for Rockman 2 (J).
         /// </summary>
-        private static void RandomizeJ()
+        private void RandomizeJ()
         {
             List<WeaponTable> Weapons = new List<WeaponTable>();
 
@@ -137,7 +146,7 @@ namespace MM2Randomizer.Randomizers
         /// <summary>
         /// Identical to RandomWeaknesses() but using Mega Man 2 (U).nes offsets
         /// </summary>
-        private static void RandomizeU()
+        private void RandomizeU()
         {
             // Chaos Mode Weaknesses
             if (IsChaos)
@@ -237,18 +246,18 @@ namespace MM2Randomizer.Randomizers
                         BotWeaknesses[i, weapIndexSecondary] = dmgSecondary;
                     }
 
-                    Console.WriteLine("Robot Master Weaknesses:");
-                    Console.WriteLine("P\tH\tA\tW\tB\tQ\tF\tM\tC:");
-                    Console.WriteLine("--------------------------------------------");
+                    debug.AppendLine("Robot Master Weaknesses:");
+                    debug.AppendLine("P\tH\tA\tW\tB\tQ\tF\tM\tC:");
+                    debug.AppendLine("--------------------------------------------");
                     for (int i = 0; i < 8; i++)
                     {
                         for (int j = 0; j < 9; j++)
                         {
-                            Console.Write("{0}\t", BotWeaknesses[i, j]);
+                            debug.Append(String.Format("{0}\t", BotWeaknesses[i, j]));
                         }
-                        Console.WriteLine("< " + ((EDmgVsBoss.Offset)i).ToString());
+                        debug.AppendLine("< " + ((EDmgVsBoss.Offset)i).ToString());
                     }
-                    Console.WriteLine();
+                    debug.AppendLine();
                 }
             }
 
@@ -440,7 +449,7 @@ namespace MM2Randomizer.Randomizers
         /// <summary>
         /// TODO
         /// </summary>
-        private static void RandomizeWilyUJ()
+        private void RandomizeWilyUJ()
         {
             using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
             {
@@ -714,17 +723,16 @@ namespace MM2Randomizer.Randomizers
 
                     #endregion
 
-                    Console.WriteLine("Wily Boss Weaknesses:");
-                    Console.WriteLine("P\tH\tA\tW\tB\tQ\tF\tM\tC:");
-                    Console.WriteLine("--------------------------------------------");
+                    debug.AppendLine("Wily Boss Weaknesses:");
+                    debug.AppendLine("P\tH\tA\tW\tB\tQ\tF\tM\tC:");
+                    debug.AppendLine("--------------------------------------------");
                     for (int i = 0; i < WilyWeaknesses.GetLength(0); i++)
                     {
                         for (int j = 0; j < WilyWeaknesses.GetLength(1); j++)
                         {
-                            Console.Write("{0}\t", WilyWeaknesses[i, j]);
-                            if (j == 5) Console.Write("X\t"); // skip flash
+                            debug.Append(String.Format("{0}\t", WilyWeaknesses[i, j]));
+                            if (j == 5) debug.Append("X\t"); // skip flash
                         }
-
                         string bossName = "";
                         switch (i)
                         {
@@ -745,9 +753,9 @@ namespace MM2Randomizer.Randomizers
                                 break;
                             default: break;
                         }
-                        Console.WriteLine("< " + bossName);
+                        debug.AppendLine("< " + bossName);
                     }
-
+                    debug.AppendLine();
                 } // end if
 
                 #region Easy Weakness

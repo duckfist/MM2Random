@@ -60,6 +60,7 @@ namespace MM2Randomizer.Randomizers
                 ChangeFlash(r, stream);
                 ChangeMetal(r, stream);
                 ChangeClash(r, stream);
+                ChangeItem1(r, stream);
             }
 
             Console.WriteLine("Ammo Usage:");
@@ -616,6 +617,33 @@ namespace MM2Randomizer.Randomizers
             //0x03E0DA - C explode sound effect
             stream.Position = 0x03E0DA;
             stream.WriteByte((byte)GetRandomSound(r));
+        }
+
+        public void ChangeItem1(Random r, FileStream stream)
+        {
+            int rInt;
+
+            //0x03E1A0(0F:E190) - Item 1 Update Subroutine
+
+            //0x03E1AC - Delay before Item 1 starts flashing 0xBB (make 0x00 for infinite) (do from 0x30 to 0xFF)
+            rInt = r.Next(0xFF - 0x30 + 1) + 0x30;
+            stream.Position = 0x03E1AC;
+            stream.WriteByte((byte)rInt);
+
+            //0x03E1BF - Delay before Item 1 disappears after flashing 0x3E (make 0x00 for infinite) (do from 0x20 to 0x70)
+            rInt = r.Next(0x70 - 0x20 + 1) + 0x20;
+            stream.Position = 0x03E1BF;
+            stream.WriteByte((byte)rInt);
+
+            //0x03E1E2 - y-pos offset for Mega Man once standing on Item 1(0x04)
+            //0x03E1E7 - width of Item 1 surface for Mega Man to stand on(0x14)
+            //0x03E1F0 - Distance above Item to check for despawning(0x1D)
+
+            //0x03D4C2 - y-vel fraction(0x41)
+            int[] rXVelFracs = new int[] { 0x00, 0x20, 0x41, 0x50 };
+            rInt = r.Next(rXVelFracs.Length);
+            stream.Position = 0x03D4C2;
+            stream.WriteByte((byte)rXVelFracs[rInt]);
         }
     }
 }

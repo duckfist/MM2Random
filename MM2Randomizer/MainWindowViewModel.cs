@@ -1,10 +1,46 @@
 ﻿using System;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace MM2Randomizer
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
+        private string seedString;
+        /// <summary>
+        /// Alphabetical string representation of the RandomMM2.Seed integer of the most
+        /// recently generated ROM.
+        /// </summary>
+        public string SeedString
+        {
+            get { return seedString; }
+            set
+            {
+                if (seedString != value)
+                {
+                    seedString = value;
+                    OnPropertyChanged("SeedString");
+                }
+            }
+        }
+
+        private string sourcePath;
+        /// <summary>
+        /// Full path to user-provided ROM to apply patch.
+        /// </summary>
+        public string SourcePath
+        {
+            get { return sourcePath; }
+            set
+            {
+                if (sourcePath != value)
+                {
+                    sourcePath = value;
+                    OnPropertyChanged("SourcePath");
+                }
+            }
+        }
+
         /// <summary>
         /// Use ROM Rockman 2 (J).nes if true, Mega Man 2 (U).nes if false.
         /// </summary>
@@ -83,12 +119,30 @@ namespace MM2Randomizer
         /// </summary>
         public bool BurstChaserMode { get; set; }
         public bool IsWeaponBehaviorRandom { get; set; }
-
+        
+        /// <summary>
+        /// Get this assembly version as a bindable property.
+        /// </summary>
         public Version AssemblyVersion
         {
             get
             {
                 return Assembly.GetEntryAssembly().GetName().Version;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Raise event to update bound GUI controls
+        /// </summary>
+        /// <param name="name">Name of updated property.</param>
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
             }
         }
     }

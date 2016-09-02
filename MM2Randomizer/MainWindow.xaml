@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:MM2Randomizer"
         xmlns:converters="clr-namespace:MM2Randomizer.Converters"
         mc:Ignorable="d"
-        Title="MM2 Randomizer" Height="424" Width="403.259">
+        AllowDrop="True"
+        Title="MM2 Randomizer" Height="480" Width="403.259" Drop="Window_Drop" DragEnter="Window_DragEnter" DragLeave="Window_DragLeave">
     <Window.Resources>
         <converters:InverseBooleanConverter x:Key="inverseBooleanConverter"/>
     </Window.Resources>
@@ -24,6 +25,7 @@
                 <Style TargetType="TextBox">
                     <Setter Property="VerticalAlignment" Value="Center"/>
                     <Setter Property="Margin" Value="2"/>
+                    <Setter Property="Background" Value="#CCDDDD"/>
                 </Style>
 
                 <Style TargetType="CheckBox">
@@ -35,6 +37,9 @@
                     <Setter Property="VerticalAlignment" Value="Center"/>
                     <Setter Property="Margin" Value="2"/>
                 </Style>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="3"/>
+                </Style>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="180"/>
@@ -43,18 +48,31 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition/>            
             </Grid.RowDefinitions>
+            
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
                 <TextBlock Text="Mega Man 2 Randomizer" FontSize="16" TextAlignment="Center" />
                 <TextBlock Text="{Binding Path=AssemblyVersion}" TextAlignment="Center" FontSize="10" Margin="-4"/>
             </StackPanel>
-            <DockPanel Grid.Row="1" HorizontalAlignment="Stretch">
-                <TextBlock Text="Seed:" DockPanel.Dock="Left"/>
-                <TextBox HorizontalAlignment="Stretch" Name="tbxSeed" Background="LightGray"/>
-            </DockPanel>
             
-            <GroupBox Grid.Row="2" Header="Randomize Options" BorderThickness="2" BorderBrush="DarkGray" VerticalAlignment="Top">
+            <DockPanel Grid.Row="2" HorizontalAlignment="Stretch">
+                <TextBlock Text="Seed:" DockPanel.Dock="Left"/>
+                <TextBox HorizontalAlignment="Stretch" Name="tbxSeed" Text="{Binding Path=SeedString}" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
+            </DockPanel>
+
+            <Border Name="border" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" BorderThickness="3">
+                <DockPanel >
+                    <Button Width="24" Margin="5,6" Name="btnBrowse" Click="btnBrowse_Click">
+                        <TextBlock Text="..."/>
+                    </Button>
+                    <TextBox HorizontalAlignment="Stretch" Name="tbxSource" AllowDrop="True" Text="{Binding Path=SourcePath}" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
+                </DockPanel>
+            </Border>
+
+            
+            <GroupBox Grid.Row="3" Header="Randomize Options" BorderThickness="2" BorderBrush="DarkGray" VerticalAlignment="Top">
                 <StackPanel Orientation="Vertical" Margin="4">
                     <CheckBox Name="chk8Stages" Content="Robot Master Stages" IsChecked="{Binding Path=Is8StagesRandom}"/>
                     <CheckBox Name="chkWeaponBehave" Content="Weapon Behavior" IsChecked="{Binding Path=IsWeaponBehaviorRandom}"/>
@@ -78,14 +96,14 @@
                     </CheckBox>
                 </StackPanel>
             </GroupBox>
-            <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical">
+            <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical">
                 <Button Name="btnCreateROM" Click="btnCreateROM_Click" Height="30" Margin="3,8,3,3">
                     Create From Given Seed
                 </Button>
-                <Button Name="btnCreateRandom" Click="btnCreateRandom_Click" Height="30" Margin="3">
+                <Button Name="btnCreateRandom" Click="btnCreateRandom_Click" Height="30">
                     Create From Random Seed
                 </Button>
-                <Button Name="btnOpenFolder" Click="btnOpenFolder_Click" Height="30" Margin="3">
+                <Button Name="btnOpenFolder" Click="btnOpenFolder_Click" Height="30">
                     Open Containing Folder
                 </Button>
                 <GroupBox Header="Settings" BorderThickness="2" BorderBrush="DarkGray">

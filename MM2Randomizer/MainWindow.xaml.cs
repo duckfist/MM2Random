@@ -3,6 +3,9 @@ using System.Windows;
 
 using MM2Randomizer.Utilities;
 using System.Diagnostics;
+using Microsoft.Win32;
+using System.IO;
+using System.Windows.Media;
 
 namespace MM2Randomizer
 {
@@ -19,6 +22,8 @@ namespace MM2Randomizer
 
             ViewModel = new MainWindowViewModel()
             {
+                SeedString = "",
+                SourcePath = "",
                 IsJapanese = false,
                 Is8StagesRandom = true,
                 IsWeaponsRandom = true,
@@ -64,9 +69,13 @@ namespace MM2Randomizer
 
             // Perform randomization based on settings, then generate the ROM.
             RandomMM2.Randomize();
+            UpdateSeedString();
+        }
 
+        private void UpdateSeedString()
+        {
             string seedAlpha = SeedConvert.ConvertBase10To26(RandomMM2.Seed);
-            tbxSeed.Text = String.Format("{0}", seedAlpha);
+            ViewModel.SeedString = String.Format("{0}", seedAlpha);
             Debug.WriteLine("\nSeed: " + seedAlpha + "\n");
         }
 
@@ -79,10 +88,7 @@ namespace MM2Randomizer
         {
             RandomMM2.Seed = -1;
             RandomMM2.Randomize();
-
-            string seedAlpha = SeedConvert.ConvertBase10To26(RandomMM2.Seed);
-            tbxSeed.Text = String.Format("{0}", seedAlpha);
-            Debug.WriteLine("\nSeed: " + seedAlpha + "\n");
+            UpdateSeedString();
         }
 
         private void btnOpenFolder_Click(object sender, RoutedEventArgs e)
@@ -103,6 +109,88 @@ namespace MM2Randomizer
             {
                 Process.Start("explorer.exe", string.Format("/select,\"{0}\"", System.Reflection.Assembly.GetExecutingAssembly().Location));
             }
+        }
+
+        private void btnBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "ROM image (.nes)|*.nes";
+
+            // Call the ShowDialog method to show the dialog box.
+            string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string exeDir = Path.GetDirectoryName(exePath);
+            dlg.InitialDirectory = exeDir;
+
+            bool? userClickedOK = dlg.ShowDialog();
+
+            // Process input if the user clicked OK.
+            if (userClickedOK == true)
+            {
+                trySetSourcePath(dlg.FileName);
+            }
+        }
+        
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                trySetSourcePath(files[0]);
+            }
+            BorderShowHandler(false, e);
+        }
+
+        private void TextBox_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                trySetSourcePath(files[0]);
+            }
+            BorderShowHandler(false, e);
+        }
+
+        private void Window_DragEnter(object sender, DragEventArgs e)
+        {
+            BorderShowHandler(true, e);
+        }
+        
+        private void Window_DragLeave(object sender, DragEventArgs e)
+        {
+            BorderShowHandler(false, e);
+        }
+
+        private void TextBox_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Handled = true;
+            BorderShowHandler(true, e);
+        }
+
+        private void BorderShowHandler(bool show, DragEventArgs e)
+        {
+            if (!show)
+            {
+                border.BorderBrush = new SolidColorBrush(Colors.Transparent);
+                return;
+            }
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                border.BorderBrush = new SolidColorBrush(Colors.Red);
+            }
+            else
+            {
+                new SolidColorBrush(Colors.Transparent);
+            }
+        }
+
+        private void trySetSourcePath(string path)
+        {
+            // TODO error handling
+            ViewModel.SourcePath = path;
+
+            tbxSource.Focus();
+            tbxSource.SelectionStart = tbxSource.Text.Length;
         }
     }
 }

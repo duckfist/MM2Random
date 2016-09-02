@@ -12,6 +12,7 @@ namespace MM2Randomizer.Randomizers
         public static bool IsChaos = true;
         public static int[,] BotWeaknesses = new int[8, 9];
         public static int[,] WilyWeaknesses = new int[5, 8];
+        public static char[,] WilyWeaknessInfo = new char[5, 8];
 
         private StringBuilder debug;
         public override string ToString()
@@ -549,35 +550,44 @@ namespace MM2Randomizer.Randomizers
                         EDmgVsEnemy weapon = dmgPtrEnemies[i];
                         stream.Position = weapon + EDmgVsEnemy.Offset.PicopicoKun;
                         byte damage = 0x00;
+                        char level = ' ';
 
-                        // Pico weakness 1, deal ammoUse x6 damage
+                        // Pico weakness 1, deal ammoUse x8 damage
                         if (weapon == enemyWeak1)
                         {
-                            damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 6);
-                            if (damage < 2) damage = 2;
+                            damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 10);
+                            if (damage < 2) damage = 3;
+                            level = '^';
                         }
-                        // weakness 2, deal ammoUse x2 damage
+                        // weakness 2, deal ammoUse x5 damage
                         else if (weapon == enemyWeak2)
+                        {
+                            damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 5);
+                            if (damage < 2) damage = 2;
+                            level = '*';
+                        }
+                        // weakness 3, deal ammoUse x2 damage
+                        else if (weapon == enemyWeak3)
                         {
                             damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 2);
                             if (damage < 2) damage = 2;
                         }
-                        // weakness 3, deal ammoUse x1 damage
-                        else if (weapon == enemyWeak3)
-                        {
-                            damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1]);
-                            if (damage < 2) damage = 2;
-                        }
 
-                        // If any weakness is Atomic Fire, deal either 10 or 20 damage (1 shot or 2 shot)
+                        // If any weakness is Atomic Fire, deal 20 damage
                         if (weapon == EDmgVsEnemy.DamageH && ( enemyWeak1 == weapon || enemyWeak2 == weapon || enemyWeak3 == weapon ))
                         {
-                            double rPicoHeat = RandomMM2.Random.Next(pico.Count);
-                            damage = (rPicoHeat > 0.5) ? (byte)0x0A : (byte)0x14;
+                            damage = 20;
+                        }
+
+                        // Bump up already high damage values to 20
+                        if (damage >= 14)
+                        {
+                            damage = 20;
                         }
 
                         stream.WriteByte(damage);
                         WilyWeaknesses[1, i + 1] = damage;
+                        WilyWeaknessInfo[1, i + 1] = level;
                     }
 
                     #endregion

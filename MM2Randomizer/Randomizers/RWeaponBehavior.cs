@@ -129,7 +129,7 @@ namespace MM2Randomizer.Randomizers
             int ammoMax = 0;
             for (int i = 0; i < 2; i++)
             {
-                int ammoUse = r.Next(0x05) + 0x01;
+                int ammoUse = r.Next(0x04) + 0x01;
                 ammoMax += ammoUse;
                 stream.WriteByte((byte)ammoMax);
                 debug.AppendLine(String.Format("(H) | Shot L{0} Ammo Cost: {1}", i + 2, ammoMax));
@@ -691,8 +691,8 @@ namespace MM2Randomizer.Randomizers
             stream.WriteByte((byte)yVelExplode);
             debug.AppendLine(String.Format("(C) | Y-Velocity (Explosion): {0:X2}", yVelExplode));
 
-            //0x03DB99 - C ammo per shot (04) (do 1-4)
-            int ammoUse = r.Next(0x04) + 0x01;
+            //0x03DB99 - C ammo per shot (04) (do 1-3)
+            int ammoUse = r.Next(0x03) + 0x01;
             stream.Position = 0x03DB99;
             stream.WriteByte((byte)ammoUse);
             AmmoUsage.Add(ammoUse);

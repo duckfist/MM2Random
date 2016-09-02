@@ -48,10 +48,12 @@
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
                 <TextBlock Text="Mega Man 2 Randomizer" FontSize="16" TextAlignment="Center" />
                 <TextBlock Text="{Binding Path=AssemblyVersion}" TextAlignment="Center" FontSize="10" Margin="-4"/>
-
             </StackPanel>
-            <TextBlock Grid.Row="1" Text="Seed (blank for random):"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Name="tbxSeed"/>
+            <DockPanel Grid.Row="1" HorizontalAlignment="Stretch">
+                <TextBlock Text="Seed:" DockPanel.Dock="Left"/>
+                <TextBox HorizontalAlignment="Stretch" Name="tbxSeed" Background="LightGray"/>
+            </DockPanel>
+            
             <GroupBox Grid.Row="2" Header="Randomize Options" BorderThickness="2" BorderBrush="DarkGray" VerticalAlignment="Top">
                 <StackPanel Orientation="Vertical" Margin="4">
                     <CheckBox Name="chk8Stages" Content="Robot Master Stages" IsChecked="{Binding Path=Is8StagesRandom}"/>
@@ -76,7 +78,16 @@
                     </CheckBox>
                 </StackPanel>
             </GroupBox>
-            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+            <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical">
+                <Button Name="btnCreateROM" Click="btnCreateROM_Click" Height="30" Margin="3,8,3,3">
+                    Create From Given Seed
+                </Button>
+                <Button Name="btnCreateRandom" Click="btnCreateRandom_Click" Height="30" Margin="3">
+                    Create From Random Seed
+                </Button>
+                <Button Name="btnOpenFolder" Click="btnOpenFolder_Click" Height="30" Margin="3">
+                    Open Containing Folder
+                </Button>
                 <GroupBox Header="Settings" BorderThickness="2" BorderBrush="DarkGray">
                     <StackPanel>
                         <CheckBox Name="chkFastText" Content="Faster Text" IsChecked="{Binding Path=FastText}"/>
@@ -85,7 +96,7 @@
                     </StackPanel>
                 </GroupBox>
                 <Border Background="DarkGray" Margin="3">
-                    <TextBlock Height="80" Margin="3" TextWrapping="WrapWithOverflow">
+                    <TextBlock Height="118" Margin="3" TextWrapping="WrapWithOverflow">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Setter Property="Text" Value=""/>
@@ -132,16 +143,8 @@
                     </TextBlock.Style>
                 </TextBlock>
                 </Border>
-                <Button Name="btnCreateROM" Click="btnCreateROM_Click" Height="30" Margin="3">
-                    Create ROM
-                </Button>
+
             </StackPanel>
-            
-            
-
-
         </Grid>
-
-            
     </Grid>
 </Window>

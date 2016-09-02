@@ -20,6 +20,7 @@ namespace MM2Randomizer
         public static Random Random;
         public static MainWindowViewModel Settings;
         public static string DestinationFileName = "";
+        public static string RecentlyCreatedFileName = "";
 
         public static List<StageFromSelect> StageSelect;
         public static List<ERMWeaponValueBit> NewWeaponOrder;
@@ -138,7 +139,7 @@ namespace MM2Randomizer
 
                 // Finish the copy/rename and open Explorer at that location
                 File.Move(DestinationFileName, newfilename);
-                Process.Start("explorer.exe", string.Format("/select,\"{0}\"", newfilename));
+                RecentlyCreatedFileName = newfilename;
             }
             catch (Exception ex)
             {
@@ -718,7 +719,7 @@ namespace MM2Randomizer
         private static void RandomBossAI()
         {
             RBossAI randomBossAI = new RBossAI(Random);
-            Debug.WriteLine(randomBossAI);
+            //Debug.WriteLine(randomBossAI);
         }
 
 

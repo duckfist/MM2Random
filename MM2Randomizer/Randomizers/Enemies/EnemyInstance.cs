@@ -1,7 +1,14 @@
-﻿namespace MM2Randomizer.Randomizers.Enemies
+﻿using MM2Randomizer.Enums;
+
+namespace MM2Randomizer.Randomizers.Enemies
 {
     public class EnemyInstance
     {
+        public bool HasIDChanged
+        {
+            get { return EnemyID != EnemyIDPrev; }
+        }
+
         public int Offset { get; set; }
         public int StageNum { get; set; }
         public int RoomNum { get; set; }
@@ -33,6 +40,24 @@
             YAir = yAir;
             YGround = yGround;
             IsFaceRight = faceRight;
+        }
+
+        public bool HasNewActivator()
+        {
+            if (!HasIDChanged) return false;
+
+            switch ((EEnemyID)EnemyID)
+            {
+                case EEnemyID.Pipi_Activator:
+                    return true;
+                case EEnemyID.Mole_Activator:
+                    return true;
+                case EEnemyID.Claw_Activator:
+                    return true;
+                case EEnemyID.Kukku_Activator:
+                    return true;
+                default: return false;
+            }
         }
     }
 }

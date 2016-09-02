@@ -10,6 +10,7 @@ namespace MM2Randomizer.Randomizers.Enemies
         public List<byte> PatternTableAddresses { get; set; }
         public List<int> SpriteBankRows { get; set; }
         public bool IsYPosAir { get; set; }
+        public bool IsActivator { get; set; }
 
         /// <summary>
         /// Helps determine y-position adjustment for spawning.  If height = 0, it can spawn at the top
@@ -17,13 +18,35 @@ namespace MM2Randomizer.Randomizers.Enemies
         /// </summary>
         public int YAdjust { get; set; }
 
-        public EnemyType(EEnemyID id, List<byte> patternTableAddresses, List<int> spriteBankRows, bool isYPosAir = false, int yAdjust = 0)
+        public EnemyType(EEnemyID id, List<byte> patternTableAddresses, List<int> spriteBankRows, bool isActivator, bool isYPosAir = false, int yAdjust = 0)
         {
             ID = id;
             PatternTableAddresses = patternTableAddresses;
             SpriteBankRows = spriteBankRows;
+            IsActivator = isActivator;
             IsYPosAir = isYPosAir;
             YAdjust = yAdjust;
+        }
+
+        public static EEnemyID GetCorrespondingDeactivator(EEnemyID activator)
+        {
+            switch (activator)
+            {
+                case EEnemyID.Pipi_Activator:
+                    return EEnemyID.Pipi_Deactivator;
+                case EEnemyID.Mole_Activator:
+                    return EEnemyID.Mole_Deactivator;
+                case EEnemyID.Claw_Activator:
+                    return EEnemyID.Claw_Deactivator;
+                case EEnemyID.Kukku_Activator:
+                    return EEnemyID.Kukku_Deactivator;
+                default: return activator;
+            }
+        }
+
+        public static EEnemyID GetCorrespondingDeactivator(int deactivator)
+        {
+            return GetCorrespondingDeactivator((EEnemyID)deactivator);
         }
     }
 }

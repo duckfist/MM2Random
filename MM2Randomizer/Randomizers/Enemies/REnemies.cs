@@ -95,51 +95,81 @@ namespace MM2Randomizer.Randomizers.Enemies
                     if (newEnemies.Count == 0)
                         continue;
 
-                    // Change each enemy ID for the room to a random enemy from the new enemy set
-                    for (int i = 0; i < sbrg.EnemyInstances.Count; i++)
+                    // For each enemy ID (in the room, in the room-group), change to a random enemy from the new set
+                    for (int i = 0; i < sbrg.Rooms.Count; i++)
                     {
-                        int randomIndex = RandomMM2.Random.Next(newEnemies.Count);
-                        EnemyType newEnemyType = newEnemies[randomIndex];
-                        sbrg.NewEnemyTypes.Add(newEnemies[randomIndex]);
-                        byte newId = (byte)newEnemies[randomIndex].ID;
-
-                        // Last-minute adjustments to certain enemy spawns
-                        switch ((EEnemyID)newId)
+                        Room room = sbrg.Rooms[i];
+                        for (int j = 0; j < room.EnemyInstances.Count; j++)
                         {
-                            case EEnemyID.Shrink:
-                                double randomSpawner = RandomMM2.Random.NextDouble();
-                                if (randomSpawner < CHANCE_SHRINKSPAWNER)
+                            EnemyInstance instance = room.EnemyInstances[j];
+
+                            int randomIndex = RandomMM2.Random.Next(newEnemies.Count);
+                            EnemyType newEnemyType = newEnemies[randomIndex];
+                            sbrg.NewEnemyTypes.Add(newEnemies[randomIndex]);
+                            byte newId = (byte)newEnemies[randomIndex].ID;
+
+                            // When placing the last enemy, If room contains an activator, manually change the last spawn in the room to be its deactivator
+                            if (j == room.EnemyInstances.Count - 1)
+                            {
+                                EEnemyID? activator = room.GetActivatorIfOneHasBeenAdded();
+                                if (activator != null)
                                 {
-                                    newId = (byte)EEnemyID.Shrink_Spawner;
+                                    newId = (byte)EnemyType.GetCorrespondingDeactivator((EEnemyID)activator);
                                 }
-                                break;
-                            case EEnemyID.Shotman_Left:
-                                if (sbrg.EnemyInstances[i].IsFaceRight)
+
+                                // Also, if this last instance is an activator, try to replace it
+                                if (instance.HasNewActivator())
                                 {
-                                    newId = (byte)EEnemyID.Shotman_Right;
+                                    newId = TryReplaceActivator(newEnemies, newId);
                                 }
-                                break;
-                            default: break;
+                            }
+                            
+                            // If room contains only this one enemy and it is an activator
+                            // TODO: How does Clash stage work with the Pipis? They don't break normally.
+                            if ((room.EnemyInstances.Count == 1 && instance.HasNewActivator()))
+                            {
+                                // Try to replace it with a non-activator enemy
+                                newId = TryReplaceActivator(newEnemies, newId);
+                            }
+
+                            // Last-minute adjustments to certain enemy spawns
+                            switch ((EEnemyID)newId)
+                            {
+                                case EEnemyID.Shrink:
+                                    double randomSpawner = RandomMM2.Random.NextDouble();
+                                    if (randomSpawner < CHANCE_SHRINKSPAWNER)
+                                    {
+                                        newId = (byte)EEnemyID.Shrink_Spawner;
+                                    }
+                                    break;
+                                case EEnemyID.Shotman_Left:
+                                    if (instance.IsFaceRight)
+                                    {
+                                        newId = (byte)EEnemyID.Shotman_Right;
+                                    }
+                                    break;
+                                default: break;
+                            }
+
+                            // Update object with new ID for future use
+                            room.EnemyInstances[j].EnemyID = newId;
+
+                            // Change the enemy ID in the ROM
+                            int IDposition = Stage0EnemyIDAddress +
+                                instance.StageNum * StageLength +
+                                instance.Offset;
+
+                            stream.Position = IDposition;
+                            stream.WriteByte(newId);
+
+                            // Change the enemy Y pos based on Air or Ground category
+                            int newY = newEnemyType.YAdjust;
+                            newY += (newEnemyType.IsYPosAir) ? instance.YAir : instance.YGround;
+                            stream.Position = Stage0EnemyYAddress +
+                                instance.StageNum * StageLength +
+                                instance.Offset;
+                            stream.WriteByte((byte)newY);
                         }
-
-                        // Update object with new ID for future use
-                        sbrg.EnemyInstances[i].EnemyID = newId;
-
-                        // Change the enemy ID in the ROM
-                        int IDposition = Stage0EnemyIDAddress +
-                            sbrg.EnemyInstances[i].StageNum * StageLength +
-                            sbrg.EnemyInstances[i].Offset;
-
-                        stream.Position = IDposition;
-                        stream.WriteByte(newId);
-
-                        // Change the enemy Y pos based on Air or Ground category
-                        int newY = newEnemyType.YAdjust;
-                        newY += (newEnemyType.IsYPosAir) ? sbrg.EnemyInstances[i].YAir : sbrg.EnemyInstances[i].YGround;
-                        stream.Position = Stage0EnemyYAddress +
-                            sbrg.EnemyInstances[i].StageNum * StageLength +
-                            sbrg.EnemyInstances[i].Offset;
-                        stream.WriteByte((byte)newY);
                     }
 
                     // Change sprite banks for the room
@@ -155,6 +185,29 @@ namespace MM2Randomizer.Randomizers.Enemies
                     }
                 } // end foreach sbrg
             }
+        }
+
+        public byte TryReplaceActivator(List<EnemyType> newEnemies, byte id)
+        {
+            byte newId = id;
+            bool foundNonActivator = false;
+            foreach (EnemyType enemyType in newEnemies)
+            {
+                if (!enemyType.IsActivator)
+                {
+                    newId = (byte)enemyType.ID;
+                    foundNonActivator = true;
+                    break;
+                }
+            }
+
+            // Otherwise, switch to its corresponding deactivator(room will appear empty)
+            if (!foundNonActivator)
+            {
+                newId = (byte)EnemyType.GetCorrespondingDeactivator(id);
+            }
+
+            return newId;
         }
 
         public bool CheckEnemySpriteFitInBank(List<EnemyType> currentSprites, EnemyType spriteToAdd)
@@ -210,87 +263,108 @@ namespace MM2Randomizer.Randomizers.Enemies
             EnemyTypes.Add(new EnemyType(EEnemyID.Claw_Activator,
                 new List<byte>() { 0x9D, 0x03 },
                 new List<int>() { 3 },
+                true,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Tanishi,
                 new List<byte>() { 0x9B, 0x03, 0x9C, 0x03 },
-                new List<int>() { 0, 1 }));
+                new List<int>() { 0, 1 },
+                false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Kerog,
                 new List<byte>() { 0x9B, 0x02, 0x9C, 0x02, 0x9D, 0x02 },
                 new List<int>() { 0, 1, 2 },
                 false,
+                false,
                 -4));
             EnemyTypes.Add(new EnemyType(EEnemyID.Batton,
                 new List<byte>() { 0x94, 0x02, 0x93, 0x02 },
-                new List<int>() { 3, 4 }));
+                new List<int>() { 3, 4 },
+                false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Robbit,
                 new List<byte>() { 0x98, 0x02, 0x99, 0x02, 0x9A, 0x02 },
-                new List<int>() { 0, 1, 2 }));
+                new List<int>() { 0, 1, 2 },
+                false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Monking,
                 new List<byte>() { 0x98, 0x01, 0x99, 0x01, 0x9A, 0x01, 0x9B, 0x01 },
-                new List<int>() { 0, 1, 2, 3 }
-                )); // TODO
+                new List<int>() { 0, 1, 2, 3 },
+                false)); // TODO
             EnemyTypes.Add(new EnemyType(EEnemyID.Kukku_Activator,
                 new List<byte>() { 0x90, 0x01, 0x91, 0x01, 0x92, 0x01, 0x93, 0x01 },
                 new List<int>() { 0, 1, 2, 3 },
+                true,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Telly,
                 new List<byte>() { 0x93, 0x01 },
                 new List<int>() { 4 },
+                false,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Pierrobot,
                 new List<byte>() { 0x96, 0x01, 0x97, 0x01 },
-                new List<int>() { 0, 1 }));
+                new List<int>() { 0, 1 },
+                false));
             EnemyTypes.Add(new EnemyType(EEnemyID.FlyBoy,
                 new List<byte>() { 0x94, 0x01, 0x95, 0x01 },
                 new List<int>() { 0, 1 },
+                false,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Press,
                 new List<byte>() { 0x9E, 0x04 },
                 new List<int>() { 3 },
+                false,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Blocky,
                 new List<byte>() { 0x9E, 0x03 },
                 new List<int>() { 3 },
                 false,
+                false,
                 -32));
             EnemyTypes.Add(new EnemyType(EEnemyID.NeoMetall,
                 new List<byte>() { 0x92, 0x02, 0x9A, 0x03 },
-                new List<int>() { 2, 3 }));
+                new List<int>() { 2, 3 },
+                false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Matasaburo,
                 new List<byte>() { 0x90, 0x02, 0x91, 0x02, 0x92, 0x02 },
                 new List<int>() { 0, 1, 2 },
+                false,
                 false,
                 -4));
             EnemyTypes.Add(new EnemyType(EEnemyID.Pipi_Activator,
                 new List<byte>() { 0x9C, 0x01 },
                 new List<int>() { 4 },
+                true,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.LightningGoro,
                 new List<byte>() { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01 },
-                new List<int>() { 0, 1, 2 }));
+                new List<int>() { 0, 1, 2 },
+                false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Mole_Activator,
                 new List<byte>() { 0x90, 0x03 },
                 new List<int>() { 4 },
+                true,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Shotman_Left,
                 new List<byte>() { 0x98, 0x03, 0x99, 0x03 },
-                new List<int>() { 0, 1 }));
+                new List<int>() { 0, 1 },
+                false));
             EnemyTypes.Add(new EnemyType(EEnemyID.SniperArmor,
                 new List<byte>() { 0x91, 0x03, 0x92, 0x03, 0x93, 0x03, 0x94, 0x03, 0x95, 0x03 },
                 new List<int>() { 0, 1, 2, 3, 4 },
                 false,
+                false,
                 -16));
             EnemyTypes.Add(new EnemyType(EEnemyID.SniperJoe,
                 new List<byte>() { 0x94, 0x03, 0x95, 0x03 },
-                new List<int>() { 3, 4 }));
+                new List<int>() { 3, 4 },
+                false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Scworm,
                 new List<byte>() { 0x9E, 0x04 },
                 new List<int>() { 3 },
+                false,
                 false,
                 8));
             EnemyTypes.Add(new EnemyType(EEnemyID.Springer,
                 new List<byte>() { 0x9F, 0x03 },
                 new List<int>() { 5 },
+                false,
                 false,
                 4));
             //EnemyTypes.Add(new EnemyType(EEnemyID.PetitGoblin,
@@ -298,7 +372,8 @@ namespace MM2Randomizer.Randomizers.Enemies
             //    new List<int>() { 5 }));
             EnemyTypes.Add(new EnemyType(EEnemyID.Shrink,
                 new List<byte>() { 0x9E, 0x02, 0x9F, 0x02 },
-                new List<int>() { 0, 1 }));
+                new List<int>() { 0, 1 },
+                false));
             //EnemyTypes.Add(new EnemyType(EEnemyID.BigFish,
             //    new List<byte>() { 0x94, 0x04, 0x95, 0x04, 0x96, 0x04, 0x97, 0x04 },
             //    new List<int>() { 0, 1, 2, 3 }));
@@ -435,9 +510,9 @@ namespace MM2Randomizer.Randomizers.Enemies
                         break;
 
                 // Check each applicable room number for this room group
-                for (int roomIndex = 0; roomIndex < sbrg.RoomNums.Length; roomIndex++)
+                for (int roomIndex = 0; roomIndex < sbrg.Rooms.Count; roomIndex++)
                 {
-                    int roomNum = sbrg.RoomNums[roomIndex];
+                    Room room = sbrg.Rooms[roomIndex];
 
                     // Find first occurrence of this room num in enemy list (starting at this stage)
                     int j = 0;
@@ -449,10 +524,10 @@ namespace MM2Randomizer.Randomizers.Enemies
                         if (checkEnemy.IsActive)
                         {
                             // Enemy instance stage/room num match one described in a SpriteBankRoomGroup
-                            if (checkEnemy.RoomNum == roomNum && checkEnemy.StageNum == stageNum)
+                            if (checkEnemy.RoomNum == room.RoomNum && checkEnemy.StageNum == stageNum)
                             {
                                 // Add enemy to room group 
-                                sbrg.EnemyInstances.Add(checkEnemy);
+                                room.EnemyInstances.Add(checkEnemy);
 
                                 // Remove enemy from temporary list
                                 usedInstances.RemoveAt(i + j);
@@ -473,18 +548,20 @@ namespace MM2Randomizer.Randomizers.Enemies
             } // end foreach sbrg
         }
 
-        private List<EnemyType> GenerateEnemyCombinations(SpriteBankRoomGroup room)
+        private List<EnemyType> GenerateEnemyCombinations(SpriteBankRoomGroup sbrg)
         {
             // Create a random enemy set
             List<EnemyType> NewEnemies = new List<EnemyType>();
             List<EnemyType> PotentialEnemies = new List<EnemyType>();
             bool done = false;
+            bool hasActivator = false;
             while (!done)
             {
                 foreach (EnemyType en in EnemyTypes)
                 {
                     // 1. Skip enemies that have exceeded the type's maximum
                     // 2. Reduce the overall chance of certain types appearing by randomly skipping them
+                    // 3. Limit a room set to having at most one Activator enemy type
                     double chance = 0.0;
                     switch (en.ID)
                     {
@@ -516,36 +593,44 @@ namespace MM2Randomizer.Randomizers.Enemies
                             break;
                     }
 
+                    // Skip any additional activator enemies
+                    if (en.IsActivator && hasActivator)
+                    {
+                        continue;
+                    }
+
                     // Reject certain enemy types for certain stages or rooms
-                    switch (room.Stage)
+                    switch (sbrg.Stage)
                     {
                         case EStageID.HeatW1:
                             // Moles don't display correctly in Heat or Wily 1. Also too annoying in Heat Yoku room.
                             if (en.ID == EEnemyID.Mole_Activator) continue;
                             // Reject Pipis appearing in Yoku block room
-                            if (en.ID == EEnemyID.Pipi_Activator && room.RoomNums.Contains(2)) continue;
+                            if (en.ID == EEnemyID.Pipi_Activator && sbrg.ContainsRoom(2)) continue;
                             // Press doesn't display correctly in Wily 1
-                            if (en.ID == EEnemyID.Press && room.RoomNums.Last() >= 7) continue;
+                            if (en.ID == EEnemyID.Press && sbrg.Rooms.Last().RoomNum >= 7) continue;
                             break;
                         case EStageID.AirW2:
                             // Moles don't display correctly in Heat
-                            if (en.ID == EEnemyID.Mole_Activator && room.RoomNums[0] < 7) continue;
+                            if (en.ID == EEnemyID.Mole_Activator && sbrg.Rooms[0].RoomNum < 7) continue;
                             break;
                         case EStageID.WoodW3:
-                            // Moles don't display in Wood outside room
-                            if (en.ID == EEnemyID.Mole_Activator && room.RoomNums.Contains(7)) continue;
-                            // Don't spawn Springer or Blocky underwater
-                            if (en.ID == EEnemyID.Springer && (room.RoomNums.Contains(11))) continue;
-                            if (en.ID == EEnemyID.Blocky && (room.RoomNums.Contains(11))) continue;
+                            // Moles and Press don't display in Wood outside room
+                            if (en.ID == EEnemyID.Mole_Activator && sbrg.ContainsRoom(7)) continue;
+                            if (en.ID == EEnemyID.Press && sbrg.ContainsRoom(7)) continue;
+                            // Don't spawn Springer, Blocky, or Press underwater
+                            if (en.ID == EEnemyID.Springer && sbrg.ContainsRoom(11)) continue;
+                            if (en.ID == EEnemyID.Blocky && sbrg.ContainsRoom(11)) continue;
+                            if (en.ID == EEnemyID.Press && sbrg.ContainsRoom(11)) continue;
                             break;
                         case EStageID.BubbleW4:
                             // Moles don't display correctly in Bubble
-                            if (en.ID == EEnemyID.Mole_Activator && room.RoomNums[0] < 9) continue;
+                            if (en.ID == EEnemyID.Mole_Activator && sbrg.Rooms[0].RoomNum < 9) continue;
                             // Press doesn't display correctly in Bubble
-                            if (en.ID == EEnemyID.Press && room.RoomNums[0] < 9) continue;
+                            if (en.ID == EEnemyID.Press && sbrg.Rooms[0].RoomNum < 9) continue;
                             // Don't spawn Springer or Blocky underwater
-                            if (en.ID == EEnemyID.Springer && (room.RoomNums.Contains(3) || room.RoomNums.Contains(4))) continue;
-                            if (en.ID == EEnemyID.Blocky && (room.RoomNums.Contains(3) || room.RoomNums.Contains(4))) continue;
+                            if (en.ID == EEnemyID.Springer && (sbrg.ContainsRoom(3) || sbrg.ContainsRoom(4))) continue;
+                            if (en.ID == EEnemyID.Blocky && (sbrg.ContainsRoom(3) || sbrg.ContainsRoom(4))) continue;
                             break;
                         case EStageID.Clash:
                             // Mole bad GFX
@@ -559,23 +644,23 @@ namespace MM2Randomizer.Randomizers.Enemies
 
                     // If room has sprite restrictions, check if this enemy's sprite can be used
                     // (i.e. certain rooms must use certain rows on the sprite table to draw mandatory objects or effects
-                    if (room.IsSpriteRestricted)
+                    if (sbrg.IsSpriteRestricted)
                     {
                         // Check if this enemy uses the restricted row in the sprite bank
-                        List<int> commonRows = en.SpriteBankRows.Intersect(room.SpriteBankRowsRestriction).ToList();
+                        List<int> commonRows = en.SpriteBankRows.Intersect(sbrg.SpriteBankRowsRestriction).ToList();
                         if (commonRows.Count != 0)
                         {
                             bool reject = false;
                             for (int i = 0; i < en.SpriteBankRows.Count; i++)
                             {
                                 int enemyRow = en.SpriteBankRows[i];
-                                int indexOfRow = room.SpriteBankRowsRestriction.IndexOf(enemyRow);
+                                int indexOfRow = sbrg.SpriteBankRowsRestriction.IndexOf(enemyRow);
 
                                 // For a restricted sprite bank row, see if enemy uses the same sprite pattern
                                 if (indexOfRow > -1)
                                 {
-                                    if (en.PatternTableAddresses[i * 2] == room.PatternTableAddressesRestriction[indexOfRow * 2] &&
-                                        en.PatternTableAddresses[i * 2 + 1] == room.PatternTableAddressesRestriction[indexOfRow * 2 + 1])
+                                    if (en.PatternTableAddresses[i * 2] == sbrg.PatternTableAddressesRestriction[indexOfRow * 2] &&
+                                        en.PatternTableAddresses[i * 2 + 1] == sbrg.PatternTableAddressesRestriction[indexOfRow * 2 + 1])
                                     {
                                         // Enemy and the restricted sprite use the same pattern table, allow it
                                         // (do nothing)
@@ -628,6 +713,12 @@ namespace MM2Randomizer.Randomizers.Enemies
                             break;
                         default:
                             break;
+                    }
+
+                    // Flag the new enemy set as having an activator so that no more will be added
+                    if (newEnemy.IsActivator)
+                    {
+                        hasActivator = true;
                     }
                 }
             }

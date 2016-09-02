@@ -11,22 +11,26 @@ namespace MM2Randomizer.Randomizers.Enemies
         /// <summary>
         /// Room numbers in the stage that this sprite bank applies to. Will always be sorted from least to greatest.
         /// </summary>
-        public int[] RoomNums { get; set; }
+        public List<Room> Rooms { get; set; }
         public int PatternAddressStart { get; set; }
-        public List<EnemyInstance> EnemyInstances { get; set; }
         public List<EnemyType> NewEnemyTypes { get; set; }
 
         public bool IsSpriteRestricted { get; set; }
         public List<int> SpriteBankRowsRestriction { get; set; }
         public List<byte> PatternTableAddressesRestriction { get; set; }
 
-        public SpriteBankRoomGroup (EStageID stage, int patternAddressStart, int[] roomNums/*, params EnemyInstance[] enemyInstances*/)
+        public SpriteBankRoomGroup (EStageID stage, int patternAddressStart, int[] roomNums)
         {
             this.Stage = stage;
-            this.RoomNums = roomNums;
             this.PatternAddressStart = patternAddressStart;
 
-            EnemyInstances = new List<EnemyInstance>();
+            Rooms = new List<Room>();
+            for (int i = 0; i < roomNums.Length; i++)
+            {
+                Rooms.Add(new Room(roomNums[i]));
+            }
+
+            //EnemyInstances = new List<EnemyInstance>();
             NewEnemyTypes = new List<EnemyType>();
             IsSpriteRestricted = false;
         }
@@ -37,6 +41,18 @@ namespace MM2Randomizer.Randomizers.Enemies
             SpriteBankRowsRestriction = new List<int>(spriteBankRowsRestriction);
             PatternTableAddressesRestriction = new List<byte>(patternTableAddressesRestriction);
             IsSpriteRestricted = true;
+        }
+
+        public bool ContainsRoom(int roomNum)
+        {
+            foreach (Room room in Rooms)
+            {
+                if (room.RoomNum == roomNum)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

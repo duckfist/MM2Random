@@ -44,9 +44,25 @@ namespace MM2Randomizer.Randomizers.Enemies
             }
         }
 
-        public static EEnemyID GetCorrespondingDeactivator(int deactivator)
+        public static EEnemyID GetCorrespondingDeactivator(int deactivatorID)
         {
-            return GetCorrespondingDeactivator((EEnemyID)deactivator);
+            return GetCorrespondingDeactivator((EEnemyID)deactivatorID);
+        }
+
+        public static bool CheckIsActivator(int enemyID)
+        {
+            switch ((EEnemyID)enemyID)
+            {
+                case EEnemyID.Pipi_Activator:
+                    return true;
+                case EEnemyID.Mole_Activator:
+                    return true;
+                case EEnemyID.Claw_Activator:
+                    return true;
+                case EEnemyID.Kukku_Activator:
+                    return true;
+                default: return false;
+            }
         }
     }
 }

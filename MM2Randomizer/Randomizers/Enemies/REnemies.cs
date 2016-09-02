@@ -118,7 +118,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                                 }
 
                                 // Also, if this last instance is an activator, try to replace it
-                                if (instance.HasNewActivator())
+                                if (EnemyType.CheckIsActivator(newId))
                                 {
                                     newId = TryReplaceActivator(newEnemies, newId);
                                 }

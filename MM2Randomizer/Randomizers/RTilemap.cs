@@ -2,6 +2,8 @@
 using System.IO;
 
 using MM2Randomizer.Enums;
+using MM2Randomizer.Patcher;
+using System;
 
 namespace MM2Randomizer.Randomizers
 {
@@ -22,20 +24,15 @@ namespace MM2Randomizer.Randomizers
             // Make sure 2nd tile chosen is different
             if (tileB == tileA) tileB++;
 
-            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            for (int i = 0; i < 5; i++)
             {
-                for (int i = 0; i < 5; i++)
+                if (i == tileA || i == tileB)
                 {
-                    stream.Position = 0x00CB5C + i * 8;
-
-                    if (i == tileA || i == tileB)
-                    {
-                        stream.WriteByte(0x94); // Fake tile
-                    }
-                    else
-                    {
-                        stream.WriteByte(0x85); // Solid tile
-                    }
+                    Patch.Add(0x00CB5C + i * 8, 0x94, String.Format("Wily 4 Room 4 Tile {0} (fake)", i));
+                }
+                else
+                {
+                    Patch.Add(0x00CB5C + i * 8, 0x85, String.Format("Wily 4 Room 4 Tile {0} (solid)", i));
                 }
             }
         }
@@ -44,28 +41,19 @@ namespace MM2Randomizer.Randomizers
         {
             // 5 tiles, but since two adjacent must construct a gap, 4 possible gaps.  Choose 1 random gap.
             int gap = RandomMM2.Random.Next(4);
-            
-            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            for (int i = 0; i < 4; i++)
             {
-                for (int i = 0; i < 4; i++)
+                if (i == gap)
                 {
-                    stream.Position = 0x00CB9A + i * 8;
-
-                    if (i == gap)
-                    {
-                        stream.WriteByte(0x9B); // Gap on right side
-                        stream.Position += 7;
-                        stream.WriteByte(0x9C); // Gap on left side
-                        ++i; // skip next tile since we just drew it
-                    }
-                    else
-                    {
-                        stream.WriteByte(0x9D); // Solid tile
-                    }
-                    
+                    Patch.Add(0x00CB9A + i * 8, 0x9B, String.Format("Wily 4 Room 5 Tile {0} (gap on right)", i));
+                    Patch.Add(0x00CB9A + i * 8 + 7, 0x9C, String.Format("Wily 4 Room 5 Tile {0} (gap on left)", i));
+                    ++i; // skip next tile since we just drew it
+                }
+                else
+                {
+                    Patch.Add(0x00CB9A + i * 8, 0x9D, String.Format("Wily 4 Room 5 Tile {0} (solid)", i));
                 }
             }
         }
-
     }
 }

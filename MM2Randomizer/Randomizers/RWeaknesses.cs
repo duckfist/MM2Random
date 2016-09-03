@@ -4,6 +4,7 @@ using System.IO;
 using MM2Randomizer.Enums;
 using System;
 using System.Text;
+using MM2Randomizer.Patcher;
 
 namespace MM2Randomizer.Randomizers
 {
@@ -155,13 +156,12 @@ namespace MM2Randomizer.Randomizers
                 using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
                 {
                     List<EDmgVsBoss> bossPrimaryWeaknessAddresses = EDmgVsBoss.GetTables(false, true);
-                    List<EDmgVsBoss> bossShuffled = new List<EDmgVsBoss>(bossPrimaryWeaknessAddresses);
-                    bossShuffled.Shuffle(RandomMM2.Random);
+                    List<EDmgVsBoss> bossWeaknessShuffled = new List<EDmgVsBoss>(bossPrimaryWeaknessAddresses);
+                    bossWeaknessShuffled.Shuffle(RandomMM2.Random);
 
                     // Preparation: Disable redundant Atomic Fire healing code
                     // (Note that 0xFF in any weakness table is sufficient to heal a boss)
-                    stream.Position = 0x02E66D;
-                    stream.WriteByte(0xFF); // Normally "00" to indicate Heatman.
+                    Patch.Add(0x02E66D, 0xFF, "Atomic Fire Boss To Heal" ); // Normally "00" to indicate Heatman.
 
                     // Select 2 robots to be weak against Buster
                     int busterI1 = RandomMM2.Random.Next(8);
@@ -183,7 +183,7 @@ namespace MM2Randomizer.Randomizers
                                 {
                                     // ...except for Atomic Fire, which will do some more damage
                                     damage = (byte)(RWeaponBehavior.AmmoUsage[1] / 2);
-                                }   
+                                }
                                 else if (bossPrimaryWeaknessAddresses[j] == EDmgVsBoss.U_DamageF)
                                 {
                                     damage = 0x00;
@@ -193,24 +193,21 @@ namespace MM2Randomizer.Randomizers
                                     damage = 0x01;
                                 }
                             }
-                            stream.Position = bossPrimaryWeaknessAddresses[j] + i;
-                            stream.WriteByte(damage);
-
+                            Patch.Add(bossPrimaryWeaknessAddresses[j] + i, damage, String.Format("{0} Damage to {1}", bossPrimaryWeaknessAddresses[j].WeaponName, (EDmgVsBoss.Offset)i));
                             BotWeaknesses[i, j + 1] = damage;
                         }
 
                         // Write the primary weakness for this boss
-                        stream.Position = bossShuffled[i] + i;
-                        byte dmgPrimary = GetRoboDamagePrimary(bossShuffled[i]);
-                        stream.WriteByte(dmgPrimary);
+                        byte dmgPrimary = GetRoboDamagePrimary(bossWeaknessShuffled[i]);
+                        Patch.Add(bossWeaknessShuffled[i] + i, dmgPrimary, String.Format("{0} Damage to {1} (Primary)", bossWeaknessShuffled[i].WeaponName, (EDmgVsBoss.Offset)i));
 
                         // Write the secondary weakness for this boss (next element in list)
                         // Secondary weakness will either do 2 damage or 4 if it is Atomic Fire
                         // Time Stopper cannot be a secondary weakness. Instead it will heal that boss.
                         // As a result, one Robot Master will not have a secondary weakness
                         int i2 = (i + 1 >= 8) ? 0 : i + 1;
-                        EDmgVsBoss weakWeap2 = bossShuffled[i2];
-                        stream.Position = weakWeap2 + i;
+                        EDmgVsBoss weakWeap2 = bossWeaknessShuffled[i2];
+                        //stream.Position = weakWeap2 + i;
                         byte dmgSecondary = 0x02;
                         if (weakWeap2 == EDmgVsBoss.U_DamageH)
                         {
@@ -219,29 +216,31 @@ namespace MM2Randomizer.Randomizers
                         else if (weakWeap2 == EDmgVsBoss.U_DamageF)
                         {
                             dmgSecondary = 0x00;
-                            long prevStreamPos = stream.Position;
-                            stream.Position = 0x02C08F; // Address in Time-Stopper code that normally heals Flashman
-                            stream.WriteByte((byte)i);  // Change to this Robot Master's byte
-
-                            stream.Position = prevStreamPos;
+                            //long prevStreamPos = stream.Position;
+                            //stream.Position = 0x02C08F; 
+                            //stream.WriteByte((byte)i);
+                            //stream.Position = prevStreamPos;
+                            // Address in Time-Stopper code that normally heals Flashman, change to heal this boss instead
+                            Patch.Add(0x02C08F, (byte)i, String.Format("Time-Stopper Heals {0} (Special Code)", (EDmgVsBoss.Offset)i));
                         }
-                        stream.WriteByte(dmgSecondary);
+                        Patch.Add(weakWeap2 + i, dmgSecondary, String.Format("{0} Damage to {1} (Secondary)", weakWeap2.WeaponName, (EDmgVsBoss.Offset)i));
+                        //stream.WriteByte(dmgSecondary);
                         
                         // Add buster damage
-                        stream.Position = EDmgVsBoss.U_DamageP + i;
+                        //stream.Position = EDmgVsBoss.U_DamageP + i;
                         if (i == busterI1 || i == busterI2)
                         {
-                            stream.WriteByte(0x02);
+                            Patch.Add(EDmgVsBoss.U_DamageP + i, 0x02, String.Format("Buster Damage to {0}", (EDmgVsBoss.Offset)i));
                             BotWeaknesses[i, 0] = 0x02;
                         }
                         else
                         {
-                            stream.WriteByte(0x01);
+                            Patch.Add(EDmgVsBoss.U_DamageP + i, 0x01, String.Format("Buster Damage to {0}", (EDmgVsBoss.Offset)i));
                             BotWeaknesses[i, 0] = 0x01;
                         }
 
                         // Save info
-                        int weapIndexPrimary = GetWeaponIndexFromAddress(bossShuffled[i]);
+                        int weapIndexPrimary = GetWeaponIndexFromAddress(bossWeaknessShuffled[i]);
                         BotWeaknesses[i, weapIndexPrimary] = dmgPrimary;
                         int weapIndexSecondary = GetWeaponIndexFromAddress(weakWeap2);
                         BotWeaknesses[i, weapIndexSecondary] = dmgSecondary;
@@ -475,8 +474,7 @@ namespace MM2Randomizer.Randomizers
                     byte busterDmg = 0x00;
                     if (rBuster > 0.75)
                         busterDmg = 0x01;
-                    stream.Position = EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Dragon;
-                    stream.WriteByte(busterDmg);
+                    Patch.Add(EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Dragon, busterDmg, "Buster Damage to Dragon");
                     WilyWeaknesses[0, 0] = busterDmg;
 
                     // Choose 2 special weapon weaknesses
@@ -491,7 +489,6 @@ namespace MM2Randomizer.Randomizers
                     for (int i = 0; i < dmgPtrBosses.Count; i++)
                     {
                         EDmgVsBoss weapon = dmgPtrBosses[i];
-                        stream.Position = weapon + EDmgVsBoss.Offset.Dragon;
 
                         // Dragon weak
                         if (weapon == bossWeak1 || weapon == bossWeak2)
@@ -505,13 +502,13 @@ namespace MM2Randomizer.Randomizers
                                 int tryDamage = (int)RWeaponBehavior.AmmoUsage[i+1] - 0x01;
                                 damage = (tryDamage < 2) ? (byte)0x02 : (byte)tryDamage;
                             }
-                            stream.WriteByte(damage);
+                            Patch.Add(weapon + EDmgVsBoss.Offset.Dragon, damage, String.Format("{0} Damage to Dragon", weapon.WeaponName));
                             WilyWeaknesses[0, i + 1] = damage;
                         }
                         // Dragon immune
                         else
                         {
-                            stream.WriteByte(0x00);
+                            Patch.Add(weapon + EDmgVsBoss.Offset.Dragon, 0x00, String.Format("{0} Damage to Dragon", weapon.WeaponName));
                             WilyWeaknesses[0, i + 1] = 0x00;
                         }
                     }
@@ -529,8 +526,7 @@ namespace MM2Randomizer.Randomizers
                     {
                         busterDmg = (byte)(RandomMM2.Random.Next(5) + 3);
                     }
-                    stream.Position = EDmgVsEnemy.DamageP + EDmgVsEnemy.Offset.PicopicoKun;
-                    stream.WriteByte(busterDmg);
+                    Patch.Add(EDmgVsEnemy.DamageP + EDmgVsEnemy.Offset.PicopicoKun, busterDmg, String.Format("Buster Damage to Picopico-Kun"));
                     WilyWeaknesses[1, 0] = busterDmg;
 
                     // Deal ammoUse x 6 for the main weakness
@@ -548,7 +544,6 @@ namespace MM2Randomizer.Randomizers
                     for (int i = 0; i < dmgPtrEnemies.Count; i++)
                     {
                         EDmgVsEnemy weapon = dmgPtrEnemies[i];
-                        stream.Position = weapon + EDmgVsEnemy.Offset.PicopicoKun;
                         byte damage = 0x00;
                         char level = ' ';
 
@@ -584,8 +579,7 @@ namespace MM2Randomizer.Randomizers
                         {
                             damage = 20;
                         }
-
-                        stream.WriteByte(damage);
+                        Patch.Add(weapon + EDmgVsEnemy.Offset.PicopicoKun, damage, String.Format("{0} Damage to Picopico-Kun{1}", weapon.WeaponName, level));
                         WilyWeaknesses[1, i + 1] = damage;
                         WilyWeaknessInfo[1, i + 1] = level;
                     }
@@ -600,8 +594,7 @@ namespace MM2Randomizer.Randomizers
                     busterDmg = 0x00;
                     if (rBuster > 0.75)
                         busterDmg = 0x01;
-                    stream.Position = EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Guts;
-                    stream.WriteByte(busterDmg);
+                    Patch.Add(EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Guts, busterDmg, String.Format("Buster Damage to Guts Tank"));
                     WilyWeaknesses[2, 0] = busterDmg;
 
                     // Choose 2 special weapon weaknesses
@@ -615,7 +608,6 @@ namespace MM2Randomizer.Randomizers
                     for (int i = 0; i < dmgPtrBosses.Count; i++)
                     {
                         EDmgVsBoss weapon = dmgPtrBosses[i];
-                        stream.Position = weapon + EDmgVsBoss.Offset.Guts;
 
                         // Guts weak
                         if (weapon == bossWeak1 || weapon == bossWeak2)
@@ -629,13 +621,13 @@ namespace MM2Randomizer.Randomizers
                                 int tryDamage = (int)RWeaponBehavior.AmmoUsage[i+1] - 0x01;
                                 damage = (tryDamage < 2) ? (byte)0x02 : (byte)tryDamage;
                             }
-                            stream.WriteByte(damage);
+                            Patch.Add(weapon + EDmgVsBoss.Offset.Guts, damage, String.Format("{0} Damage to Guts Tank", weapon.WeaponName));
                             WilyWeaknesses[2, i + 1] = damage;
                         }
                         // Guts immune
                         else
                         {
-                            stream.WriteByte(0x00);
+                            Patch.Add(weapon + EDmgVsBoss.Offset.Guts, 0x00, String.Format("{0} Damage to Guts Tank", weapon.WeaponName));
                             WilyWeaknesses[2, i + 1] = 0x00;
                         }
                     }
@@ -650,8 +642,7 @@ namespace MM2Randomizer.Randomizers
                     busterDmg = 0x00;
                     if (rBuster > 0.25)
                         busterDmg = 0x01;
-                    stream.Position = EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Machine;
-                    stream.WriteByte(busterDmg);
+                    Patch.Add(EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Machine, busterDmg, String.Format("Buster Damage to Wily Machine"));
                     WilyWeaknesses[2, 0] = busterDmg;
 
                     // Choose 3 special weapon weaknesses
@@ -668,7 +659,6 @@ namespace MM2Randomizer.Randomizers
                     for (int i = 0; i < dmgPtrBosses.Count; i++)
                     {
                         EDmgVsBoss weapon = dmgPtrBosses[i];
-                        stream.Position = weapon + EDmgVsBoss.Offset.Machine;
 
                         // Machine weak
                         if (weapon == bossWeak1 || weapon == bossWeak2 || weapon == weakness3)
@@ -681,13 +671,13 @@ namespace MM2Randomizer.Randomizers
                             {
                                 damage = (byte)RWeaponBehavior.AmmoUsage[i+1];
                             }
-                            stream.WriteByte(damage);
+                            Patch.Add(weapon + EDmgVsBoss.Offset.Machine, damage, String.Format("{0} Damage to Wily Machine", weapon.WeaponName));
                             WilyWeaknesses[3, i + 1] = damage;
                         }
                         // Machine immune
                         else
                         {
-                            stream.WriteByte(0x00);
+                            Patch.Add(weapon + EDmgVsBoss.Offset.Machine, 0x00, String.Format("{0} Damage to Wily Machine", weapon.WeaponName));
                             WilyWeaknesses[3, i + 1] = 0x00;
                         }
                     }
@@ -718,15 +708,14 @@ namespace MM2Randomizer.Randomizers
                     {
                         EDmgVsBoss weapon = alienWeapons[i];
 
-                        stream.Position = weapon + EDmgVsBoss.Offset.Alien;
                         if (i == rWeaponIndex)
                         {
-                            stream.WriteByte(alienDamage);
+                            Patch.Add(weapon + EDmgVsBoss.Offset.Alien, alienDamage, String.Format("{0} Damage to Alien", weapon.WeaponName));
                             WilyWeaknesses[4, i] = alienDamage;
                         }
                         else
                         {
-                            stream.WriteByte(0xFF);
+                            Patch.Add(weapon + EDmgVsBoss.Offset.Alien, 0xFF, String.Format("{0} Damage to Alien", weapon.WeaponName));
                             WilyWeaknesses[4, i] = 0xFF;
                         }
                     }

@@ -12,16 +12,21 @@ namespace MM2Randomizer.Enums
             get; private set;
         }
 
+        public string WeaponName
+        {
+            get; private set;
+        }
+
         public static Dictionary<int, EDmgVsEnemy> Addresses { get; set; }
 
-        public static readonly EDmgVsEnemy DamageP = new EDmgVsEnemy(0x03E9A8);
-        public static readonly EDmgVsEnemy DamageH = new EDmgVsEnemy(0x03EA24);
-        public static readonly EDmgVsEnemy DamageA = new EDmgVsEnemy(0x03EA9C);
-        public static readonly EDmgVsEnemy DamageW = new EDmgVsEnemy(0x03EB14);
-        public static readonly EDmgVsEnemy DamageB = new EDmgVsEnemy(0x03EB8C);
-        public static readonly EDmgVsEnemy DamageQ = new EDmgVsEnemy(0x03EC04);
-        public static readonly EDmgVsEnemy DamageM = new EDmgVsEnemy(0x03ECF4);
-        public static readonly EDmgVsEnemy DamageC = new EDmgVsEnemy(0x03EC7C);
+        public static readonly EDmgVsEnemy DamageP = new EDmgVsEnemy(0x03E9A8, "Buster");
+        public static readonly EDmgVsEnemy DamageH = new EDmgVsEnemy(0x03EA24, "Atomic Fire");
+        public static readonly EDmgVsEnemy DamageA = new EDmgVsEnemy(0x03EA9C, "Air Shooter");
+        public static readonly EDmgVsEnemy DamageW = new EDmgVsEnemy(0x03EB14, "Leaf Shield");
+        public static readonly EDmgVsEnemy DamageB = new EDmgVsEnemy(0x03EB8C, "Bubble Lead");
+        public static readonly EDmgVsEnemy DamageQ = new EDmgVsEnemy(0x03EC04, "Quick Boomerang");
+        public static readonly EDmgVsEnemy DamageM = new EDmgVsEnemy(0x03ECF4, "Metal Blade");
+        public static readonly EDmgVsEnemy DamageC = new EDmgVsEnemy(0x03EC7C, "Clash Bomber");
 
         static EDmgVsEnemy()
         {
@@ -38,9 +43,10 @@ namespace MM2Randomizer.Enums
             };
         }
 
-        private EDmgVsEnemy(int address)
+        private EDmgVsEnemy(int address, string name)
         {
             this.Address = address;
+            this.WeaponName = name;
         }
 
         public static implicit operator int (EDmgVsEnemy eDmgVsEnemy)

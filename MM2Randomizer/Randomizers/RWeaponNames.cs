@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+
+using MM2Randomizer.Enums;
+using MM2Randomizer.Patcher;
 
 namespace MM2Randomizer.Randomizers
 {
@@ -12,44 +14,40 @@ namespace MM2Randomizer.Randomizers
 
         public RWeaponNames()
         {
-            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            // Write in new weapon names
+            for (int i = 0; i < 8; i++)
             {
-                // Write in new weapon names
-                for (int i = 0; i < 8; i++)
+                int offset = offsetAtomicFire + i * 0x10;
+
+                string name = GetRandomName();
+                char[] chars = name.ToCharArray();
+
+                for (int j = 0; j < MAX_CHARS; j++)
                 {
-                    stream.Position = offsetAtomicFire + i * 0x10;
-
-                    string name = GetRandomName();
-                    char[] chars = name.ToCharArray();
-
-                    for (int j = 0; j < MAX_CHARS; j++)
+                    if (j < chars.Length)
                     {
-                        if (j < chars.Length)
-                        {
-                            byte b = Convert.ToByte(chars[j]);
-                            stream.WriteByte(b);
-                        }
-                        else
-                        {
-                            stream.WriteByte(Convert.ToByte('@'));
-                        }
+                        byte b = Convert.ToByte(chars[j]);
+                        Patch.Add(offset + j, b, String.Format("Weapon Name {0} Char #{1}: {2}", ((EDmgVsBoss.Offset)i).Name, j, chars[j].ToString()));
+
+                    }
+                    else
+                    {
+                        Patch.Add(offset + j, Convert.ToByte('@'), String.Format("Weapon Name {0} Char #{1}: @", ((EDmgVsBoss.Offset)i).Name, j));
                     }
                 }
+            }
 
-                // Erase "Boomerang" for now
-                stream.Position = 0x037f5e;
-                for (int i = 0; i < 10; i++)
-                {
-                    stream.WriteByte(Convert.ToByte('@'));
-                }
+            // Erase "Boomerang" for now
+            for (int i = 0; i < 10; i++)
+            {
+                Patch.Add(0x037f5e + i, Convert.ToByte('@'), String.Format("Quick Boomerang Name Erase Char #{0}: @", i));
+            }
 
-                // Write in new weapon letters
-                stream.Position = offsetLetters;
-                for (int i = 0; i < 8; i ++)
-                {
-                    int randLetter = 0x41 + RandomMM2.Random.Next(26);
-                    stream.WriteByte((byte)randLetter);
-                }
+            // Write in new weapon letters
+            for (int i = 0; i < 8; i ++)
+            {
+                int randLetter = 0x41 + RandomMM2.Random.Next(26);
+                Patch.Add(offsetLetters + i, (byte)randLetter, String.Format("Weapon Get {0} Letter: {1}", ((EDmgVsBoss.Offset)i).Name, Convert.ToChar(randLetter).ToString()));
             }
         }
 

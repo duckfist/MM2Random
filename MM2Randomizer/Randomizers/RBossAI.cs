@@ -37,8 +37,6 @@ namespace MM2Randomizer.Randomizers
                 ChangeMetal(r, stream);
                 ChangeClash(r, stream);
             }
-
-            Patch.GetString();
         }
 
         public void ChangeHeat(Random r, FileStream stream)
@@ -86,8 +84,6 @@ namespace MM2Randomizer.Randomizers
 
         public void ChangeAir(Random r, FileStream stream)
         {
-            debug.AppendLine("---------- Airman -----------");
-
             int rInt = 0;
             double rDbl = 0;
 

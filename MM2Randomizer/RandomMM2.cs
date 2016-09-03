@@ -5,6 +5,7 @@ using System.Linq;
 using System.Diagnostics;
 using System.Reflection;
 
+using MM2Randomizer.Patcher;
 using MM2Randomizer.Enums;
 using MM2Randomizer.Randomizers;
 using MM2Randomizer.Randomizers.Enemies;
@@ -15,7 +16,6 @@ namespace MM2Randomizer
 {
     public static class RandomMM2
     {
-        public static string BuildNumber = "0.1.2.1";
         public static int Seed = -1;
         public static Random Random;
         public static MainWindowViewModel Settings;
@@ -97,7 +97,12 @@ namespace MM2Randomizer
                 {
                     FixPortraits();
                 }
-                
+
+                // Apply patch with randomized content
+                using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+                {
+                    Patch.ApplyPatch(stream);
+                }
 
                 // Create file name based on seed and game region
                 string newfilename = (Settings.IsJapanese) ? "RM2" : "MM2";

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 
 using MM2Randomizer.Enums;
+using MM2Randomizer.Patcher;
 
 namespace MM2Randomizer.Randomizers.Enemies
 {
@@ -80,111 +81,109 @@ namespace MM2Randomizer.Randomizers.Enemies
 
         private void Randomize()
         {
-            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            foreach (SpriteBankRoomGroup sbrg in RoomGroups)
             {
-                foreach (SpriteBankRoomGroup sbrg in RoomGroups)
+                // Skip processing the room if every sprite bank row is taken
+                if (sbrg.IsSpriteRestricted && sbrg.SpriteBankRowsRestriction.Count >= 6)
+                    continue;
+
+                // Create valid random combination of enemies to place
+                List<EnemyType> newEnemies = GenerateEnemyCombinations(sbrg);
+
+                // No enemy can fit in this room for some reason, skip this room (GFX will be glitched)
+                if (newEnemies.Count == 0)
+                    continue;
+
+                // For each enemy ID (in the room, in the room-group), change to a random enemy from the new set
+                for (int i = 0; i < sbrg.Rooms.Count; i++)
                 {
-                    // Skip processing the room if every sprite bank row is taken
-                    if (sbrg.IsSpriteRestricted && sbrg.SpriteBankRowsRestriction.Count >= 6)
-                        continue;
-
-                    // Create valid random combination of enemies to place
-                    List<EnemyType> newEnemies = GenerateEnemyCombinations(sbrg);
-
-                    // No enemy can fit in this room for some reason, skip this room (GFX will be glitched)
-                    if (newEnemies.Count == 0)
-                        continue;
-
-                    // For each enemy ID (in the room, in the room-group), change to a random enemy from the new set
-                    for (int i = 0; i < sbrg.Rooms.Count; i++)
+                    Room room = sbrg.Rooms[i];
+                    for (int j = 0; j < room.EnemyInstances.Count; j++)
                     {
-                        Room room = sbrg.Rooms[i];
-                        for (int j = 0; j < room.EnemyInstances.Count; j++)
+                        EnemyInstance instance = room.EnemyInstances[j];
+
+                        int randomIndex = RandomMM2.Random.Next(newEnemies.Count);
+                        EnemyType newEnemyType = newEnemies[randomIndex];
+                        sbrg.NewEnemyTypes.Add(newEnemies[randomIndex]);
+                        byte newId = (byte)newEnemies[randomIndex].ID;
+
+                        // When placing the last enemy, If room contains an activator, manually change the last spawn in the room to be its deactivator
+                        if (j == room.EnemyInstances.Count - 1)
                         {
-                            EnemyInstance instance = room.EnemyInstances[j];
-
-                            int randomIndex = RandomMM2.Random.Next(newEnemies.Count);
-                            EnemyType newEnemyType = newEnemies[randomIndex];
-                            sbrg.NewEnemyTypes.Add(newEnemies[randomIndex]);
-                            byte newId = (byte)newEnemies[randomIndex].ID;
-
-                            // When placing the last enemy, If room contains an activator, manually change the last spawn in the room to be its deactivator
-                            if (j == room.EnemyInstances.Count - 1)
+                            EEnemyID? activator = room.GetActivatorIfOneHasBeenAdded();
+                            if (activator != null)
                             {
-                                EEnemyID? activator = room.GetActivatorIfOneHasBeenAdded();
-                                if (activator != null)
-                                {
-                                    newId = (byte)EnemyType.GetCorrespondingDeactivator((EEnemyID)activator);
-                                }
-
-                                // Also, if this last instance is an activator, try to replace it
-                                if (EnemyType.CheckIsActivator(newId))
-                                {
-                                    newId = TryReplaceActivator(newEnemies, newId);
-                                }
+                                newId = (byte)EnemyType.GetCorrespondingDeactivator((EEnemyID)activator);
                             }
-                            
-                            // If room contains only this one enemy and it is an activator
-                            // TODO: How does Clash stage work with the Pipis? They don't break normally.
-                            if ((room.EnemyInstances.Count == 1 && instance.HasNewActivator()))
+
+                            // Also, if this last instance is an activator, try to replace it
+                            if (EnemyType.CheckIsActivator(newId))
                             {
-                                // Try to replace it with a non-activator enemy
                                 newId = TryReplaceActivator(newEnemies, newId);
                             }
-
-                            // Last-minute adjustments to certain enemy spawns
-                            switch ((EEnemyID)newId)
-                            {
-                                case EEnemyID.Shrink:
-                                    double randomSpawner = RandomMM2.Random.NextDouble();
-                                    if (randomSpawner < CHANCE_SHRINKSPAWNER)
-                                    {
-                                        newId = (byte)EEnemyID.Shrink_Spawner;
-                                    }
-                                    break;
-                                case EEnemyID.Shotman_Left:
-                                    if (instance.IsFaceRight)
-                                    {
-                                        newId = (byte)EEnemyID.Shotman_Right;
-                                    }
-                                    break;
-                                default: break;
-                            }
-
-                            // Update object with new ID for future use
-                            room.EnemyInstances[j].EnemyID = newId;
-
-                            // Change the enemy ID in the ROM
-                            int IDposition = Stage0EnemyIDAddress +
-                                instance.StageNum * StageLength +
-                                instance.Offset;
-
-                            stream.Position = IDposition;
-                            stream.WriteByte(newId);
-
-                            // Change the enemy Y pos based on Air or Ground category
-                            int newY = newEnemyType.YAdjust;
-                            newY += (newEnemyType.IsYPosAir) ? instance.YAir : instance.YGround;
-                            stream.Position = Stage0EnemyYAddress +
-                                instance.StageNum * StageLength +
-                                instance.Offset;
-                            stream.WriteByte((byte)newY);
                         }
-                    }
-
-                    // Change sprite banks for the room
-                    stream.Position = sbrg.PatternAddressStart;
-                    foreach (EnemyType e in sbrg.NewEnemyTypes)
-                    {
-                        for (int i = 0; i < e.SpriteBankRows.Count; i++)
+                            
+                        // If room contains only this one enemy and it is an activator
+                        // TODO: How does Clash stage work with the Pipis? They don't break normally.
+                        if ((room.EnemyInstances.Count == 1 && instance.HasNewActivator()))
                         {
-                            stream.Position = sbrg.PatternAddressStart + e.SpriteBankRows[i] * 2;
-                            stream.WriteByte(e.PatternTableAddresses[2 * i]);
-                            stream.WriteByte(e.PatternTableAddresses[2 * i + 1]);
+                            // Try to replace it with a non-activator enemy
+                            newId = TryReplaceActivator(newEnemies, newId);
                         }
+
+                        // Last-minute adjustments to certain enemy spawns
+                        switch ((EEnemyID)newId)
+                        {
+                            case EEnemyID.Shrink:
+                                double randomSpawner = RandomMM2.Random.NextDouble();
+                                if (randomSpawner < CHANCE_SHRINKSPAWNER)
+                                {
+                                    newId = (byte)EEnemyID.Shrink_Spawner;
+                                }
+                                break;
+                            case EEnemyID.Shotman_Left:
+                                if (instance.IsFaceRight)
+                                {
+                                    newId = (byte)EEnemyID.Shotman_Right;
+                                }
+                                break;
+                            default: break;
+                        }
+
+                        // Update object with new ID for future use
+                        room.EnemyInstances[j].EnemyID = newId;
+
+                        // Change the enemy ID in the ROM
+                        int IDposition = Stage0EnemyIDAddress +
+                            instance.StageNum * StageLength +
+                            instance.Offset;
+
+                        Patch.Add(IDposition, newId, String.Format("{0} Stage Enemy #{1} ID (Room {2}) {3}", sbrg.Stage.ToString("G"), instance.Offset, instance.RoomNum, ((EEnemyID)instance.EnemyID).ToString("G")));
+
+                        // Change the enemy Y pos based on Air or Ground category
+                        int newY = newEnemyType.YAdjust;
+                        newY += (newEnemyType.IsYPosAir) ? instance.YAir : instance.YGround;
+                        IDposition = Stage0EnemyYAddress +
+                            instance.StageNum * StageLength +
+                            instance.Offset;
+                        Patch.Add(IDposition, (byte)newY, String.Format("{0} Stage Enemy #{1} Y (Room {2}) {3}", sbrg.Stage.ToString("G"), instance.Offset, instance.RoomNum, ((EEnemyID)instance.EnemyID).ToString("G")));
                     }
-                } // end foreach sbrg
-            }
+                }
+
+                // Change sprite banks for the room
+                foreach (EnemyType e in sbrg.NewEnemyTypes)
+                {
+                    for (int i = 0; i < e.SpriteBankRows.Count; i++)
+                    {
+                        int rowInSlotAddress = sbrg.PatternAddressStart + e.SpriteBankRows[i] * 2;
+                        int patternTblPtr1 = e.PatternTableAddresses[2 * i];
+                        int patternTblPtr2 = e.PatternTableAddresses[2 * i + 1];
+
+                        Patch.Add(rowInSlotAddress, (byte)patternTblPtr1, String.Format("{0} Stage Sprite Bank Slot ? Row {1} Indirect Address 1", sbrg.Stage.ToString("G"), e.SpriteBankRows[i]));
+                        Patch.Add(rowInSlotAddress + 1, (byte)patternTblPtr2, String.Format("{0} Stage Sprite Bank Slot ? Row {1} Indirect Address 2", sbrg.Stage.ToString("G"), e.SpriteBankRows[i]));
+                    }
+                }
+            } // end foreach sbrg
         }
 
         public byte TryReplaceActivator(List<EnemyType> newEnemies, byte id)

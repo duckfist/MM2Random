@@ -2,6 +2,7 @@
 using System.IO;
 
 using MM2Randomizer.Enums;
+using MM2Randomizer;
 
 namespace MM2Randomizer.Randomizers.Colors
 {
@@ -135,12 +136,10 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
             };
 
-            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            for (int i = 0; i < StageSelectColorSets.Count; i++)
             {
-                foreach (ColorSet set in StageSelectColorSets)
-                {
-                    set.RandomizeAndWrite(stream, RandomMM2.Random);
-                }
+                ColorSet set = StageSelectColorSets[i];
+                set.RandomizeAndWrite(RandomMM2.Random, i);
             }
         }
 
@@ -2206,12 +2205,10 @@ namespace MM2Randomizer.Randomizers.Colors
             #endregion
             };
 
-            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
+            for (int i = 0; i < StagesColorSets.Count; i++)
             {
-                foreach (ColorSet set in StagesColorSets)
-                {
-                    set.RandomizeAndWrite(stream, RandomMM2.Random);
-                }
+                ColorSet set = StagesColorSets[i];
+                set.RandomizeAndWrite(RandomMM2.Random, i);
             }
         }
     }

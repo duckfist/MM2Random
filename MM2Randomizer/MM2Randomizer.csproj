@@ -87,6 +87,8 @@
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Enums\EDmgVsEnemy.cs" />
     <Compile Include="Enums\ESoundID.cs" />
+    <Compile Include="Patcher\ByteChangeRecord.cs" />
+    <Compile Include="Patcher\Patch.cs" />
     <Compile Include="Randomizers\Colors\ColorSet.cs" />
     <Compile Include="Randomizers\Colors\RColors.cs" />
     <Compile Include="Randomizers\Enemies\EnemyType.cs" />

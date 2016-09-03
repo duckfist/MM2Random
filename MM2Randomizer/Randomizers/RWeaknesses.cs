@@ -160,7 +160,7 @@ namespace MM2Randomizer.Randomizers
 
                     // Preparation: Disable redundant Atomic Fire healing code
                     // (Note that 0xFF in any weakness table is sufficient to heal a boss)
-                    stream.Position = 0x02EE6D;
+                    stream.Position = 0x02E66D;
                     stream.WriteByte(0xFF); // Normally "00" to indicate Heatman.
 
                     // Select 2 robots to be weak against Buster

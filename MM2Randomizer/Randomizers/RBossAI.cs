@@ -455,7 +455,7 @@ namespace MM2Randomizer.Randomizers
             }
             else if (rDbl > 0.5)
             {
-                jumpType = 0x00;
+                jumpType = 0x26;
             }
             Patch.Add(0x02CD07, jumpType, "Clashman Special Jump Behavior");
 
@@ -465,7 +465,7 @@ namespace MM2Randomizer.Randomizers
 
             //0x02CDD3 - Shot behavior, 0x5E, change to have him always shoot when jumping, 20% chance
             rDbl = r.NextDouble();
-            if (rDbl > 0.20)
+            if (rDbl > 0.80)
                 Patch.Add(0x02CDD3, 0x50, "Clashman Disable Single Shot");
 
             //0x02CDEE - Clash Bomber velocity, 0x06, do from 2 to 8

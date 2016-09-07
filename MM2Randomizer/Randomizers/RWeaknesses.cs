@@ -632,7 +632,7 @@ namespace MM2Randomizer.Randomizers
                 #region Buebeam Trap
 
                 // Buebeam
-                // 5 Orbs + 3 Required Barriers (5 total gates, 4 in speedrun route)
+                // 5 Orbs + 3 Required Barriers (5 total barriers, 4 in speedrun route)
                 // Choose a weakness for both Barriers and Orbs, scale damage to have plenty of energy
                 // If the same weakness for both, scale damage further
                 // If any weakness is Atomic Fire, ensure that there's enough ammo

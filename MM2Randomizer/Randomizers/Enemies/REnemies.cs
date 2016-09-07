@@ -420,7 +420,6 @@ namespace MM2Randomizer.Randomizers.Enemies
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007470, new int[] { 0 }, // Bank 0
                 new int[] { 0, 1, 2/*, 3, 5 */}, new byte[] { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01/*, 0x9A, 0x03, 0x96, 0x03 */})); // Force Goblins, Lightning Goro
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007482, new int[] { 2 })); // Bank 1
-                //new int[] { 3, 5 }, new byte[] { 0x9A, 0x03, 0x96, 0x03 })); // Force Goblins
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007494, new int[] { 1 })); // Bank 2
             // Air Bank 3 - Air fight
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074b8, new int[] { 5 })); // Bank 4

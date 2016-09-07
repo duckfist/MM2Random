@@ -106,8 +106,8 @@ namespace MM2Randomizer.Randomizers.Enemies
 
                         int randomIndex = r.Next(newEnemies.Count);
                         EnemyType newEnemyType = newEnemies[randomIndex];
-                        sbrg.NewEnemyTypes.Add(newEnemies[randomIndex]);
-                        byte newId = (byte)newEnemies[randomIndex].ID;
+                        sbrg.NewEnemyTypes.Add(newEnemyType); // TODO: This adds a bunch of extra unnecessary copies. Change.
+                        byte newId = (byte)newEnemyType.ID;
 
                         // When placing the last enemy, If room contains an activator, manually change the last spawn in the room to be its deactivator
                         if (j == room.EnemyInstances.Count - 1)

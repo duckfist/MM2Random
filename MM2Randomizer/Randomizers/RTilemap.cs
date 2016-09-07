@@ -45,7 +45,7 @@ namespace MM2Randomizer.Randomizers
                 if (i == gap)
                 {
                     Patch.Add(0x00CB9A + i * 8, 0x9B, String.Format("Wily 4 Room 5 Tile {0} (gap on right)", i));
-                    Patch.Add(0x00CB9A + i * 8 + 7, 0x9C, String.Format("Wily 4 Room 5 Tile {0} (gap on left)", i));
+                    Patch.Add(0x00CB9A + i * 8 + 8, 0x9C, String.Format("Wily 4 Room 5 Tile {0} (gap on left)", i));
                     ++i; // skip next tile since we just drew it
                 }
                 else

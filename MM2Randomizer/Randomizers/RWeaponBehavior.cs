@@ -95,14 +95,14 @@ namespace MM2Randomizer.Randomizers
             ChangeClash(p, r);
             ChangeItem1(p, r);
 
-            debug.AppendLine("\nAmmo Usage");
+            debug.AppendLine("Ammo Usage");
             debug.AppendLine("P     H     A     W     B     Q     M     C");
             debug.AppendLine("-----------------------------------------------");
             foreach (double w in AmmoUsage)
             {
                 debug.Append(String.Format("{0:0.00}  ", w));
             }
-            debug.AppendLine("\n");
+            debug.Append(Environment.NewLine);
         }
 
         /// <summary>

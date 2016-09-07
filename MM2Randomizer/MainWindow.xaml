@@ -59,7 +59,7 @@
             
             <DockPanel Grid.Row="2" HorizontalAlignment="Stretch">
                 <TextBlock Text="Seed:" DockPanel.Dock="Left"/>
-                <TextBox HorizontalAlignment="Stretch" Name="tbxSeed" Text="{Binding Path=SeedString}" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
+                <TextBox HorizontalAlignment="Stretch" Name="tbxSeed" Text="{Binding Path=SeedString, UpdateSourceTrigger=PropertyChanged}" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
             </DockPanel>
 
             <Border Name="border" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" BorderThickness="3">
@@ -67,7 +67,7 @@
                     <Button Width="24" Margin="5,6" Name="btnBrowse" Click="btnBrowse_Click">
                         <TextBlock Text="..."/>
                     </Button>
-                    <TextBox HorizontalAlignment="Stretch" Name="tbxSource" AllowDrop="True" Text="{Binding Path=SourcePath}" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
+                    <TextBox HorizontalAlignment="Stretch" Name="tbxSource" AllowDrop="True" Text="{Binding Path=SourcePath, UpdateSourceTrigger=PropertyChanged}" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
                 </DockPanel>
             </Border>
 
@@ -97,7 +97,7 @@
                 </StackPanel>
             </GroupBox>
             <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical">
-                <Button Name="btnCreateROM" IsEnabled="{Binding Path=IsSourcePathValid}" Click="btnCreateROM_Click" Height="30" Margin="3,8,3,3">
+                <Button Name="btnCreateROM" IsEnabled="{Binding Path=IsSourcePathAndSeedValid}" Click="btnCreateROM_Click" Height="30" Margin="3,8,3,3">
                     Create From Given Seed
                 </Button>
                 <Button Name="btnCreateRandom" IsEnabled="{Binding Path=IsSourcePathValid}" Click="btnCreateRandom_Click" Height="30">
@@ -122,8 +122,20 @@
                                 <DataTrigger Binding="{Binding ElementName=chk8Stages, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Text" Value="Shuffle the destination of each Robot Master portrait on the Stage Select screen."/>
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=chkWeaponBehave, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Text" Value="Change movement properties and ammo consumption of special weapons."/>
+                                </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=chkWeakness, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Text" Value="Shuffle the damage done by each weapon to each Robot Master and Wily stage boss.  At this time, Wily 2 and Wily 4 bosses are not changed."/>
+                                    <Setter Property="Text" Value="Shuffle the damage done by each weapon to each Robot Master and Wily stage boss."/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=radWeaknessEasy, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Text" Value="Weapons remain as effective against bosses as they do in the original game."/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=radWeaknessHard, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Text" Value="Weapon damage is more random, and overall lower than the average in the original game."/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=chkBossAI, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Text" Value="Change movement and attack properties of Robot Masters."/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=chkWeapons, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Text" Value="Shuffle which weapon is obtained from defeating each Robot Master."/>

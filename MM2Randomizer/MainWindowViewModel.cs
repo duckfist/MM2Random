@@ -16,10 +16,23 @@ namespace MM2Randomizer
             get { return seedString; }
             set
             {
+                value = value.ToUpper();
                 if (seedString != value)
                 {
                     seedString = value;
                     OnPropertyChanged("SeedString");
+
+                    // TODO: Check for better validity of seed
+                    if (seedString == "")
+                    {
+                        isSeedValid = false;
+                    }
+                    else
+                    {
+                        isSeedValid = true;
+                    }
+
+                    IsSourcePathAndSeedValid = IsSourcePathValid && isSeedValid;
                 }
             }
         }
@@ -40,6 +53,7 @@ namespace MM2Randomizer
 
                     // Check if source path is valid
                     IsSourcePathValid = System.IO.File.Exists(value);
+                    IsSourcePathAndSeedValid = IsSourcePathValid && isSeedValid;
                 }
             }
         }
@@ -57,6 +71,24 @@ namespace MM2Randomizer
                 {
                     isSourcePathValid = value;
                     OnPropertyChanged("IsSourcePathValid");
+                }
+            }
+        }
+
+        private bool isSeedValid = false;
+        private bool isSourcePathAndSeedValid;
+        public bool IsSourcePathAndSeedValid
+        {
+            get
+            {
+                return isSourcePathAndSeedValid;
+            }
+            set
+            {
+                if (isSourcePathAndSeedValid != value)
+                {
+                    isSourcePathAndSeedValid = value;
+                    OnPropertyChanged("IsSourcePathAndSeedValid");
                 }
             }
         }

@@ -24,18 +24,18 @@ namespace MM2Randomizer
         public static readonly string TempFileName = "temp.nes";
         public static string RecentlyCreatedFileName = "";
 
-        private static RStages randomStages = new RStages();
-        private static RWeaponGet randomWeaponGet = new RWeaponGet();
-        private static RWeaponBehavior randomWeaponBehavior = new RWeaponBehavior();
-        private static RWeaknesses randomWeaknesses = new RWeaknesses(true);
-        private static RBossAI randomBossAI = new RBossAI();
-        private static RItemGet randomItemGet = new RItemGet();
-        private static RTeleporters randomTeleporters = new RTeleporters();
-        private static REnemies randomEnemies = new REnemies();
-        private static RTilemap randomTilemap = new RTilemap();
-        private static RColors randomColors = new RColors();
-        private static RMusic randomMusic = new RMusic();
-        private static RWeaponNames rWeaponNames = new RWeaponNames();
+        public static RStages randomStages = new RStages();
+        public static RWeaponGet randomWeaponGet = new RWeaponGet();
+        public static RWeaponBehavior randomWeaponBehavior = new RWeaponBehavior();
+        public static RWeaknesses randomWeaknesses = new RWeaknesses(true);
+        public static RBossAI randomBossAI = new RBossAI();
+        public static RItemGet randomItemGet = new RItemGet();
+        public static RTeleporters randomTeleporters = new RTeleporters();
+        public static REnemies randomEnemies = new REnemies();
+        public static RTilemap randomTilemap = new RTilemap();
+        public static RColors randomColors = new RColors();
+        public static RMusic randomMusic = new RMusic();
+        public static RWeaponNames rWeaponNames = new RWeaponNames();
         public static List<IRandomizer> Randomizers;
 
         /// <summary>

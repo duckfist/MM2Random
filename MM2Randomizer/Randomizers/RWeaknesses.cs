@@ -29,6 +29,7 @@ namespace MM2Randomizer.Randomizers
 
         public void Randomize(Patch p, Random r)
         {
+            debug = new StringBuilder();
             if (RandomMM2.Settings.IsJapanese)
             {
                 RandomizeJ(r);
@@ -257,7 +258,7 @@ namespace MM2Randomizer.Randomizers
                     }
                     debug.AppendLine("< " + ((EDmgVsBoss.Offset)i).ToString());
                 }
-                debug.AppendLine();
+                debug.Append(Environment.NewLine);
             }
 
             // Easy Mode Weaknesses
@@ -670,8 +671,8 @@ namespace MM2Randomizer.Randomizers
                     {
                         damage = 0;
                     }
-                    Patch.Add(wpn.Address + EDmgVsEnemy.Offset.ClashBarrier_W4, damage, String.Format("{0} Damage to Clash Barrier 1", wpnBarrier.WeaponName));
-                    Patch.Add(wpn.Address + EDmgVsEnemy.Offset.ClashBarrier_Other, damage, String.Format("{0} Damage to Clash Barrier 2", wpnBarrier.WeaponName));
+                    Patch.Add(wpn.Address + EDmgVsEnemy.Offset.ClashBarrier_W4, damage, String.Format("{0} Damage to Clash Barrier 1", wpn.WeaponName));
+                    Patch.Add(wpn.Address + EDmgVsEnemy.Offset.ClashBarrier_Other, damage, String.Format("{0} Damage to Clash Barrier 2", wpn.WeaponName));
                 }
 
                 // Remove Barrier weakness from list (therefore, different Buebeam weakness)
@@ -865,7 +866,7 @@ namespace MM2Randomizer.Randomizers
                     }
                     debug.AppendLine("< " + bossName);
                 }
-                debug.AppendLine();
+                debug.Append(Environment.NewLine);
             } // end if
 
             #region Easy Weakness

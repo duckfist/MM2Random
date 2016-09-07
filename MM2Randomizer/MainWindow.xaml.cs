@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows.Media;
+using System.Windows.Input;
 
 namespace MM2Randomizer
 {
@@ -24,6 +25,7 @@ namespace MM2Randomizer
             {
                 SeedString = "",
                 SourcePath = "",
+                IsSourcePathAndSeedValid = false,
                 IsJapanese = false,
                 Is8StagesRandom = true,
                 IsWeaponsRandom = true,
@@ -70,14 +72,30 @@ namespace MM2Randomizer
 
             // Perform randomization based on settings, then generate the ROM.
             RandomMM2.RandomizerCreate();
-            UpdateSeedString();
+            UpdateSeedString(e);
         }
 
-        private void UpdateSeedString()
+        private void UpdateSeedString(RoutedEventArgs e)
         {
             string seedAlpha = SeedConvert.ConvertBase10To26(RandomMM2.Seed);
             ViewModel.SeedString = String.Format("{0}", seedAlpha);
             Debug.WriteLine("\nSeed: " + seedAlpha + "\n");
+
+            // Create log file is left shift is pressed while clicking
+            if (Keyboard.IsKeyDown(Key.LeftShift))
+            {
+                string logFileName = (ViewModel.IsJapanese) ? "RM2" : "MM2";
+                logFileName = String.Format("{0}-RNG-{1}.log", logFileName, seedAlpha);
+                using (StreamWriter sw = new StreamWriter(logFileName, false))
+                {
+                    sw.WriteLine("Mega Man 2 Randomizer");
+                    sw.WriteLine(String.Format("Version {0}", ViewModel.AssemblyVersion.ToString()));
+                    sw.WriteLine(String.Format("Seed {0}\n", seedAlpha));
+                    sw.WriteLine(RandomMM2.randomWeaponBehavior.ToString());
+                    sw.WriteLine(RandomMM2.randomWeaknesses.ToString());
+                    sw.Write(RandomMM2.Patch.GetStringSortedByAddress());
+                }
+            }
         }
 
         private void chkJapanese_Checked(object sender, RoutedEventArgs e)
@@ -89,7 +107,7 @@ namespace MM2Randomizer
         {
             RandomMM2.Seed = -1;
             RandomMM2.RandomizerCreate();
-            UpdateSeedString();
+            UpdateSeedString(e);
         }
 
         private void btnOpenFolder_Click(object sender, RoutedEventArgs e)

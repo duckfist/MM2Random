@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace MM2Randomizer.Patcher
 {
@@ -42,32 +43,31 @@ namespace MM2Randomizer.Patcher
                 }
             }
         }
-
-        public void GetStringSortedByAddress()
+        public string GetStringSortedByAddress()
         {
             var sortDict = from kvp in Bytes orderby kvp.Key ascending select kvp;
-            foreach (KeyValuePair<int, ChangeByteRecord> kvp in sortDict)
-            {
-                ChangeByteRecord b = kvp.Value;
-                System.Diagnostics.Debug.WriteLine(
-                    "0x{0:X6}\t{1:X2}\t{2}",
-                    b.Address,
-                    b.Value,
-                    b.Note);
-            }
+            return ConvertDictToString(sortDict);
         }
 
-        public void GetString()
+        public string GetString()
         {
-            foreach (KeyValuePair<int, ChangeByteRecord> kvp in Bytes)
+            return ConvertDictToString((IOrderedEnumerable<KeyValuePair<int, ChangeByteRecord>>)Bytes);
+        }
+
+        private string ConvertDictToString(IOrderedEnumerable<KeyValuePair<int, ChangeByteRecord>> dict)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (KeyValuePair<int, ChangeByteRecord> kvp in dict)
             {
                 ChangeByteRecord b = kvp.Value;
-                System.Diagnostics.Debug.WriteLine(
+                sb.Append(String.Format(
                     "0x{0:X6}\t{1:X2}\t{2}",
                     b.Address,
                     b.Value,
-                    b.Note);
+                    b.Note));
+                sb.Append(Environment.NewLine);
             }
+            return sb.ToString();
         }
 
         public static void ApplyIPSPatch(string romname, string patchname)

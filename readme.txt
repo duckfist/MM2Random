@@ -1,6 +1,6 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.2.0 beta
+version 0.2.2 beta
 
 -----------------------------------------------------------------------------------------------
 
@@ -11,10 +11,9 @@ the Stage Select screen point to different stages.
 
 - Weapon Behavior: Movement properties and ammo usage of each weapon are changed.
 
-- Boss Weaknesses (CHAOS MODE): The damage done by each weapon against each boss is
-changed, except for Wily 4 boss. Two Robot Masters take 2x damage from Buster.  Every Robot
-Master will have a primary weakness and secondary weakness. Damage values are, on average,
-lower than in vanilla Mega Man 2.
+- Boss Weaknesses (CHAOS MODE): The damage done by each weapon against each boss is changed.
+Two Robot Masters take 2x damage from Buster.  Every Robot Master will have a primary weakness
+and secondary weakness. Damage values are, on average, lower than in vanilla Mega Man 2.
 
 - Boss Weaknesses (EASY MODE): The damage done by each weapon against each Robot Master is
 shuffled, so that all weapons remain as effective as in Mega Man 2. Wily 2 and Wily 4 boss
@@ -51,8 +50,7 @@ Enemy Randomizer notes
 
 - Yoku blocks in Heatman still appear in their ususal spots, slightly reducing enemy variety in
 Heat stage
-- Goblins have been removed from the first room of Airman stage to give possible enemies more
-variety. Their drills still appear glitched in the third room for now.
+- Goblins have been removed from Airman stage to give possible enemies more variety.
 - Lightning Goros still appear in Airman room 1 in order to make crossing the gap possible, 
 therefore all of Airman stage is rather plain.
 - Frienders (wolves) still spawn like normal, due to dependence on solid blocks in their rooms.
@@ -66,8 +64,6 @@ changes make it difficult to implement.
 areas that they can appear in, hopefully reducing frustration.
 - Moles and Presses are rendered behind the background in some stages, so they have been 
 limited in the stages that they can appear.
-- "Deactivator" objects never spawn. Thus, infinitely spawning enemies like Moles, Pipis, and 
-Claws will continue to spawn until you leave the room.
 - If you like to do zip glitches, be careful around the Matasaburo enemy (fan guy). You can get
 stuck in the wall while one is on screen.  If you can't kill them, use Time-Stopper to resume 
 zipping.
@@ -95,6 +91,29 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
 -----------------------------------------------------------------------------------------------
   
 Changelog
+
+v0.2.2-beta
+- ROM file is no longer included
+- (Stage) Added a Large Weapon Energy to Wily 5
+- (Weapon) Fully charged Heat won't cost more than 7 energy now
+- (Enemy) Only at most one type of Activator enemy will appear in any given room
+- (Enemy) Deactivator objects will now spawn at the end of rooms containing Activators
+- (Enemy) Fixed a spawn y-pos in Flashman stage
+- (Enemy) Press now take 1 damage from buster
+- (Enemy) Clash Barriers are now vulnerable to a random weapon
+- (Boss) Fixed a pattern for Metalman
+- (Boss) Added another pattern for Woodman (1/3 chance)
+- (Boss) Increased damage to Picopico-kun
+- (Boss) Boobeam Trap is now vulnerable to a random wepaon
+- (Boss) Wily Machine now has 4 weaknesses instead of 3, but Phase 1 will disable 2 of the
+  weaknesses, and Phase 1 will disable 1 weakness, similar to the original game
+- Bug fix (Enemy) Goblins removed from Airman room 3 and replaced with random spawns
+- Bug fix (Enemy) With deactivators being placed, hopefully no more glitchy spawns
+- Bug fix (Boss) Heatman is no longer always healed by Atomic Fire
+- Bug fix (Boss) Flashman is no longer always healed by Time-Stopper
+
+v0.2.1-beta
+- Added missing file
 
 v0.2.0-beta
 - Weakness Randomizer "Chaos Mode"

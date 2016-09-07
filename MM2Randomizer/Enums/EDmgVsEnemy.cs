@@ -124,10 +124,16 @@ namespace MM2Randomizer.Enums
             }
 
             public static readonly Offset PicopicoKun;
+            public static readonly Offset Press;
+            public static readonly Offset ClashBarrier_Other;
+            public static readonly Offset ClashBarrier_W4;
 
             static Offset()
             {
-                PicopicoKun = new Offset(0x6A);
+                ClashBarrier_Other  = new Offset(0x2D);
+                Press               = new Offset(0x30);
+                ClashBarrier_W4     = new Offset(0x57);
+                PicopicoKun         = new Offset(0x6A);
             }
 
             private Offset(int offset)

@@ -458,6 +458,8 @@ namespace MM2Randomizer.Randomizers
                 List<EDmgVsBoss> dmgPtrBosses = EDmgVsBoss.GetTables(false, false);
                 EDmgVsBoss bossWeak1;
                 EDmgVsBoss bossWeak2;
+                EDmgVsBoss bossWeak3;
+                EDmgVsBoss bossWeak4;
 
                 #region Dragon
 
@@ -630,6 +632,11 @@ namespace MM2Randomizer.Randomizers
                 #region Wily Machine
 
                 // Machine
+                // Will have 4 weaknesses and potentially a Buster weakness
+                // Phase 1 will disable 2 of the weaknesses, taking no damage
+                // Phase 2 will re-enable them, but disable 1 other weakness
+                // Mega Man 2 behaves in a similar fashion, disabling Q and A in phase 1, but only disabling H in phase 2
+
                 // 75% chance to have a buster vulnerability
                 rBuster = r.NextDouble();
                 busterDmg = 0x00;
@@ -638,7 +645,7 @@ namespace MM2Randomizer.Randomizers
                 Patch.Add(EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Machine, busterDmg, String.Format("Buster Damage to Wily Machine"));
                 WilyWeaknesses[2, 0] = busterDmg;
 
-                // Choose 3 special weapon weaknesses
+                // Choose 4 special weapon weaknesses
                 List<EDmgVsBoss> machine = new List<EDmgVsBoss>(dmgPtrBosses);
                 rInt = r.Next(machine.Count);
                 bossWeak1 = machine[rInt];
@@ -647,14 +654,17 @@ namespace MM2Randomizer.Randomizers
                 bossWeak2 = machine[rInt];
                 machine.RemoveAt(rInt);
                 rInt = r.Next(machine.Count);
-                EDmgVsBoss weakness3 = machine[rInt];
+                bossWeak3 = machine[rInt];
+                machine.RemoveAt(rInt);
+                rInt = r.Next(machine.Count);
+                bossWeak4 = machine[rInt];
 
                 for (int i = 0; i < dmgPtrBosses.Count; i++)
                 {
                     EDmgVsBoss weapon = dmgPtrBosses[i];
 
                     // Machine weak
-                    if (weapon == bossWeak1 || weapon == bossWeak2 || weapon == weakness3)
+                    if (weapon == bossWeak1 || weapon == bossWeak2 || weapon == bossWeak3 || weapon == bossWeak4)
                     {
                         // Deal 1 damage with weapons that cost 1 or less ammo
                         byte damage = 0x01;
@@ -672,6 +682,26 @@ namespace MM2Randomizer.Randomizers
                     {
                         Patch.Add(weapon + EDmgVsBoss.Offset.Machine, 0x00, String.Format("{0} Damage to Wily Machine", weapon.WeaponName));
                         WilyWeaknesses[3, i + 1] = 0x00;
+                    }
+
+                    // Get index of this weapon out of all weapons 0-8;
+                    byte wIndex = (byte)(i + 1);
+                    if (weapon == EDmgVsBoss.ClashBomber || weapon == EDmgVsBoss.MetalBlade)
+                        wIndex++;
+
+                    // Disable weakness 1 and 2 on Wily Machine Phase 1
+                    if (weapon == bossWeak1)
+                    {
+                        Patch.Add(0x02DA2E, wIndex, String.Format("Wily Machine Phase 1 Resistance 1 ({0})", weapon.WeaponName));
+                    }
+                    if (weapon == bossWeak2)
+                    {
+                        Patch.Add(0x02DA32, wIndex, String.Format("Wily Machine Phase 1 Resistance 2 ({0})", weapon.WeaponName));
+                    }
+                    // Disable weakness 3 on Wily Machine Phase 2
+                    if (weapon == bossWeak3)
+                    {
+                        Patch.Add(0x02DA3A, wIndex, String.Format("Wily Machine Phase 2 Resistance ({0})", weapon.WeaponName));
                     }
                 }
 

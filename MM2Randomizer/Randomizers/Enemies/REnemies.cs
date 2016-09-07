@@ -130,7 +130,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                         if ((room.EnemyInstances.Count == 1 && instance.HasNewActivator()))
                         {
                             // Try to replace it with a non-activator enemy
-                            newId = TryReplaceActivator(newEnemies, newId);
+                            //newId = TryReplaceActivator(newEnemies, newId);
                         }
 
                         // Last-minute adjustments to certain enemy spawns

@@ -254,7 +254,7 @@
 06,05,01,07,true,4E,40,84,30,94,true
 07,05,02,08,true,4B,68,84,60,84,false
 08,05,04,0A,true,50,50,9C,60,94,false
-09,05,04,0A,true,50,D8,6C,40,74,false
+09,05,04,0A,true,50,D8,6C,40,64,false
 0A,05,05,0B,true,31,88,B0,90,C4,false
 0B,05,06,0C,true,4E,68,B4,94,C4,true
 0C,05,07,0D,true,4E,F8,B4,34,34,false

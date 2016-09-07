@@ -36,6 +36,7 @@ namespace MM2Randomizer
                 IsWeaknessHard = true,
                 IsBossAIRandom = true,
                 IsEnemiesRandom = true,
+                IsTilemapChangesEnabled = true,
                 IsBGMRandom = true,
                 IsWeaponNamesRandom = true,
                 FastText = true,
@@ -68,7 +69,7 @@ namespace MM2Randomizer
             }
 
             // Perform randomization based on settings, then generate the ROM.
-            RandomMM2.Randomize();
+            RandomMM2.RandomizerCreate();
             UpdateSeedString();
         }
 
@@ -87,7 +88,7 @@ namespace MM2Randomizer
         private void btnCreateRandom_Click(object sender, RoutedEventArgs e)
         {
             RandomMM2.Seed = -1;
-            RandomMM2.Randomize();
+            RandomMM2.RandomizerCreate();
             UpdateSeedString();
         }
 

@@ -1,17 +1,16 @@
 ﻿using MM2Randomizer.Enums;
 using MM2Randomizer.Patcher;
+
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace MM2Randomizer.Randomizers
 {
-    public class RWeaponBehavior
+    public class RWeaponBehavior : IRandomizer
     {
-        public List<ESoundID> Sounds;
+        private List<ESoundID> sounds;
 
         // Buster Heat Air Wood Bubble Quick Metal Clash
         public static List<double> AmmoUsage;
@@ -22,11 +21,11 @@ namespace MM2Randomizer.Randomizers
             return debug.ToString();
         }
 
-        public RWeaponBehavior(Random r)
-        {
-            debug = new StringBuilder();
+        public RWeaponBehavior() { }
 
-            Sounds = new List<ESoundID>(new ESoundID[] {
+        private static List<ESoundID> GetSoundList()
+        {
+            return new List<ESoundID>(new ESoundID[] {
                 ESoundID.WeaponF,
                 ESoundID.HeatmanUnused,
                 ESoundID.WeaponM,
@@ -56,22 +55,24 @@ namespace MM2Randomizer.Randomizers
                 ESoundID.Death,
                 ESoundID.OneUp,
             });
-            
+        }
+
+        public void Randomize(Patch p, Random r)
+        {
+            debug = new StringBuilder();
+            sounds = GetSoundList();
             AmmoUsage = new List<double>();
             AmmoUsage.Add(0); // Buster is free
 
-            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
-            {
-                ChangeHeat(r);
-                ChangeAir(r);
-                ChangeWood(r);
-                ChangeBubble(r);
-                ChangeQuick(r);
-                ChangeFlash(r);
-                ChangeMetal(r);
-                ChangeClash(r);
-                ChangeItem1(r);
-            }
+            ChangeHeat(p, r);
+            ChangeAir(p, r);
+            ChangeWood(p, r);
+            ChangeBubble(p, r);
+            ChangeQuick(p, r);
+            ChangeFlash(p, r);
+            ChangeMetal(p, r);
+            ChangeClash(p, r);
+            ChangeItem1(p, r);
 
             debug.AppendLine("\nAmmo Usage");
             debug.AppendLine("P     H     A     W     B     Q     M     C");
@@ -90,9 +91,9 @@ namespace MM2Randomizer.Randomizers
         /// <returns>Sound ID byte</returns>
         private ESoundID GetRandomSound(Random r)
         {
-            int i = r.Next(Sounds.Count);
-            ESoundID sound = Sounds.ElementAt(i);
-            Sounds.RemoveAt(i);
+            int i = r.Next(sounds.Count);
+            ESoundID sound = sounds.ElementAt(i);
+            sounds.RemoveAt(i);
 
             // Pick a random charge level if charge sound is chosen
             if (sound == ESoundID.WeaponH_Charge0)
@@ -103,7 +104,7 @@ namespace MM2Randomizer.Randomizers
             return sound;
         }
 
-        public void ChangeHeat(Random r)
+        protected void ChangeHeat(Patch Patch, Random r)
         {
             //0x03DE55 - H L1 Ammo use(01)
             //0x03DE56 - H L2 Ammo use(06)
@@ -148,7 +149,7 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x03DE48, (byte)sound, "(H) | L3 Sound");
         }
 
-        public void ChangeAir(Random r)
+        protected void ChangeAir(Patch Patch, Random r)
         {
             //0x03DAD6 - A num projectiles, default 0x04
             //  Values 0x02 and 0x03 work, but larger values behave strangely
@@ -215,7 +216,7 @@ namespace MM2Randomizer.Randomizers
             }
         }
 
-        public void ChangeWood(Random r)
+        protected void ChangeWood(Patch Patch, Random r)
         {
             //0x03DEDA - W deploy time (0C)
             //    Can change from 06 to 12
@@ -274,7 +275,7 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x03DF7D, (byte)launchVel, "(W) | Launch Y-Velocity Integer");
         }
 
-        public void ChangeBubble(Random r)
+        protected void ChangeBubble(Patch Patch, Random r)
         {
             //0x03D4AB - B x - speed on shoot (0x01) (do 1-3)
             int xVelShoot = r.Next(0x03) + 0x01;
@@ -325,7 +326,7 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x03DFC8, (byte)yFallVel, "(B) | Y-Velocity Fall (Integer)");
         }
 
-        public void ChangeQuick(Random r)
+        protected void ChangeQuick(Patch Patch, Random r)
         {
             // Q autofire delay, default 0x0B
             //    Do from 0x05 to 0x12
@@ -386,7 +387,7 @@ namespace MM2Randomizer.Randomizers
             //    Change to 0x01 for interesting effects
         }
 
-        public void ChangeFlash(Random r)
+        protected void ChangeFlash(Patch Patch, Random r)
         {
             //0x03DC59 - F sound (21)
             ESoundID sound = GetRandomSound(r);
@@ -474,7 +475,7 @@ namespace MM2Randomizer.Randomizers
             }
         }
 
-        public void ChangeMetal(Random r)
+        protected void ChangeMetal(Patch Patch, Random r)
         {
             //0x03DBB6 - M max shots (04) (change to 0x02-0x05, or 1-4)
             int maxShots = r.Next(0x04) + 0x02;
@@ -535,7 +536,7 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x03DC3B, (byte)halfX, "(M) | X-Velocity Down+Right");
         }
 
-        public void ChangeClash(Random r)
+        protected void ChangeClash(Patch Patch, Random r)
         {
             //0x03D4AD - C x-speed on shoot (04) (do 2-7)
             int xVel = r.Next(0x06) + 0x02;
@@ -581,7 +582,7 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x03E0DA, (byte)sound, "(C) | Sound Explode");
         }
 
-        public void ChangeItem1(Random r)
+        protected void ChangeItem1(Patch Patch, Random r)
         {
             int rInt;
 
@@ -604,5 +605,7 @@ namespace MM2Randomizer.Randomizers
             rInt = r.Next(rXVelFracs.Length);
             Patch.Add(0x03D4C2, (byte)rXVelFracs[rInt], "(1) | Y-Velocity (Fraction)");
         }
+
+
     }
 }

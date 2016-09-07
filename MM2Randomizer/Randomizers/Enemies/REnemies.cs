@@ -11,7 +11,7 @@ namespace MM2Randomizer.Randomizers.Enemies
     /// <summary>
     /// Stage Enemy Type Randomizer
     /// </summary>
-    public class REnemies
+    public class REnemies : IRandomizer
     {
         public List<EnemyType> EnemyTypes { get; set; }
         public List<EnemyInstance> EnemyInstances = new List<EnemyInstance>();
@@ -35,17 +35,19 @@ namespace MM2Randomizer.Randomizers.Enemies
         public int numMoles = 0;
         public int numPipis = 0;
 
-        public REnemies()
+        public REnemies() { }
+
+        public void Randomize(Patch p, Random r)
         {
             EnemyTypes = new List<EnemyType>();
             EnemiesByType = new Dictionary<EEnemyID, EnemyType>();
             RoomGroups = new List<SpriteBankRoomGroup>();
 
             ReadEnemyInstancesFromFile();
-            ChangeRoomSpriteBankSlots();
+            ChangeRoomSpriteBankSlots(p);
             InitializeEnemies();
             InitializeRooms();
-            Randomize();
+            Execute(p, r);
         }
 
         /// <summary>
@@ -79,7 +81,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             }
         }
 
-        private void Randomize()
+        private void Execute(Patch Patch, Random r)
         {
             foreach (SpriteBankRoomGroup sbrg in RoomGroups)
             {
@@ -88,7 +90,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                     continue;
 
                 // Create valid random combination of enemies to place
-                List<EnemyType> newEnemies = GenerateEnemyCombinations(sbrg);
+                List<EnemyType> newEnemies = GenerateEnemyCombinations(sbrg, r);
 
                 // No enemy can fit in this room for some reason, skip this room (GFX will be glitched)
                 if (newEnemies.Count == 0)
@@ -102,7 +104,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                     {
                         EnemyInstance instance = room.EnemyInstances[j];
 
-                        int randomIndex = RandomMM2.Random.Next(newEnemies.Count);
+                        int randomIndex = r.Next(newEnemies.Count);
                         EnemyType newEnemyType = newEnemies[randomIndex];
                         sbrg.NewEnemyTypes.Add(newEnemies[randomIndex]);
                         byte newId = (byte)newEnemies[randomIndex].ID;
@@ -135,7 +137,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                         switch ((EEnemyID)newId)
                         {
                             case EEnemyID.Shrink:
-                                double randomSpawner = RandomMM2.Random.NextDouble();
+                                double randomSpawner = r.NextDouble();
                                 if (randomSpawner < CHANCE_SHRINKSPAWNER)
                                 {
                                     newId = (byte)EEnemyID.Shrink_Spawner;
@@ -391,21 +393,13 @@ namespace MM2Randomizer.Randomizers.Enemies
         /// This method makes some preliminary modifications to the Mega Man 2 ROM to increase the enemy variety
         /// by changing the sprite banks used by certain rooms.
         /// </summary>
-        public void ChangeRoomSpriteBankSlots()
+        public void ChangeRoomSpriteBankSlots(Patch p)
         {
-            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
-            {
-                stream.Position = 0x00b444; // Wood 9th room, change slot from 3 to ? (0x90 special slot)
-                stream.WriteByte(0x90);
-                stream.Position = 0x00b445; // Wood 10th room, change slot from 3 to ? (0xa2 special slot)
-                stream.WriteByte(0xa2);
-                stream.Position = 0x00b446; // Wood 11th room, change slot from 3 to 0
-                stream.WriteByte(0x00);
-                stream.Position = 0x01743e; // Flash 3rd room, change slot from 0 to 2
-                stream.WriteByte(0x24);
-                stream.Position = 0x01f43d; // Clash 2nd room, change slot from 2 to 7
-                stream.WriteByte(0x48);
-            }
+            p.Add(0x00b444, 0x90, "Custom Sprite Bank: Wood 9th room: slot 3->? (0x90 special slot)");
+            p.Add(0x00b445, 0xa2, "Custom Sprite Bank: Wood 10th room: slot 3->? (0xa2 special slot)");
+            p.Add(0x00b446, 0x00, "Custom Sprite Bank: Wood 11th room: slot 3->0");
+            p.Add(0x01743e, 0x24, "Custom Sprite Bank: Flash 3rd room: slot 0->2");
+            p.Add(0x01f43d, 0x48, "Custom Sprite Bank: Clash 2nd room: slot 2->7");
         }
 
         private void InitializeRooms()
@@ -547,7 +541,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             } // end foreach sbrg
         }
 
-        private List<EnemyType> GenerateEnemyCombinations(SpriteBankRoomGroup sbrg)
+        private List<EnemyType> GenerateEnemyCombinations(SpriteBankRoomGroup sbrg, Random r)
         {
             // Create a random enemy set
             List<EnemyType> NewEnemies = new List<EnemyType>();
@@ -567,24 +561,24 @@ namespace MM2Randomizer.Randomizers.Enemies
                         case EEnemyID.Pipi_Activator:
                             if (numPipis >= MAX_PIPIS)
                                 continue;
-                            chance = RandomMM2.Random.NextDouble();
+                            chance = r.NextDouble();
                             if (chance > CHANCE_PIPI)
                                 continue;
                             break;
                         case EEnemyID.Mole_Activator:
                             if (numMoles >= MAX_MOLES)
                                 continue;
-                            chance = RandomMM2.Random.NextDouble();
+                            chance = r.NextDouble();
                             if (chance > CHANCE_MOLE)
                                 continue;
                             break;
                         case EEnemyID.Telly:
-                            chance = RandomMM2.Random.NextDouble();
+                            chance = r.NextDouble();
                             if (chance > CHANCE_TELLY)
                                 continue;
                             break;
                         case EEnemyID.Springer:
-                            chance = RandomMM2.Random.NextDouble();
+                            chance = r.NextDouble();
                             if (chance > CHANCE_SPRINGER)
                                 continue;
                             break;
@@ -697,7 +691,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 else
                 {
                     // Choose a new enemy to add to the set from all possible new enemies to add
-                    EnemyType newEnemy = PotentialEnemies[RandomMM2.Random.Next(PotentialEnemies.Count)];
+                    EnemyType newEnemy = PotentialEnemies[r.Next(PotentialEnemies.Count)];
                     NewEnemies.Add(newEnemy);
                     PotentialEnemies.Clear();
 

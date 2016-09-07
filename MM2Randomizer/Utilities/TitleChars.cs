@@ -67,6 +67,5 @@ namespace MM2Randomizer.Utilities
                     return TitleChars.SPACE;
             }
         }
-
     }
 }

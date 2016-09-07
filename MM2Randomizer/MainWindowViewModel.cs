@@ -37,6 +37,26 @@ namespace MM2Randomizer
                 {
                     sourcePath = value;
                     OnPropertyChanged("SourcePath");
+
+                    // Check if source path is valid
+                    IsSourcePathValid = System.IO.File.Exists(value);
+                }
+            }
+        }
+
+        private bool isSourcePathValid;
+        public bool IsSourcePathValid
+        {
+            get
+            {
+                return isSourcePathValid;
+            }
+            set
+            {
+                if (isSourcePathValid != value)
+                {
+                    isSourcePathValid = value;
+                    OnPropertyChanged("IsSourcePathValid");
                 }
             }
         }
@@ -98,6 +118,11 @@ namespace MM2Randomizer
         /// TODO
         /// </summary>
         public bool IsEnemiesRandom { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsTilemapChangesEnabled { get; set; }
 
         /// <summary>
         /// TODO

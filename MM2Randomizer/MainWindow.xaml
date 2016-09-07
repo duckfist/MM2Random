@@ -97,13 +97,13 @@
                 </StackPanel>
             </GroupBox>
             <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical">
-                <Button Name="btnCreateROM" Click="btnCreateROM_Click" Height="30" Margin="3,8,3,3">
+                <Button Name="btnCreateROM" IsEnabled="{Binding Path=IsSourcePathValid}" Click="btnCreateROM_Click" Height="30" Margin="3,8,3,3">
                     Create From Given Seed
                 </Button>
-                <Button Name="btnCreateRandom" Click="btnCreateRandom_Click" Height="30">
+                <Button Name="btnCreateRandom" IsEnabled="{Binding Path=IsSourcePathValid}" Click="btnCreateRandom_Click" Height="30">
                     Create From Random Seed
                 </Button>
-                <Button Name="btnOpenFolder" Click="btnOpenFolder_Click" Height="30">
+                <Button Name="btnOpenFolder" IsEnabled="{Binding Path=IsSourcePathValid}" Click="btnOpenFolder_Click" Height="30">
                     Open Containing Folder
                 </Button>
                 <GroupBox Header="Settings" BorderThickness="2" BorderBrush="DarkGray">

@@ -110,14 +110,21 @@
     <Compile Include="Enums\ERMWeaponValue.cs" />
     <Compile Include="Enums\EStageID.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Randomizers\IRandomizer.cs" />
+    <Compile Include="Randomizers\RMusic.cs" />
     <Compile Include="Randomizers\RBossAI.cs" />
+    <Compile Include="Randomizers\RItemGet.cs" />
+    <Compile Include="Randomizers\RTeleporters.cs" />
     <Compile Include="Randomizers\RTilemap.cs" />
     <Compile Include="Randomizers\RWeaknesses.cs" />
     <Compile Include="Randomizers\RWeaponBehavior.cs" />
+    <Compile Include="Randomizers\RWeaponGet.cs" />
     <Compile Include="Randomizers\RWeaponNames.cs" />
+    <Compile Include="Randomizers\Stages\RStages.cs" />
     <Compile Include="RandomMM2.cs" />
+    <Compile Include="Utilities\MiscHacks.cs" />
     <Compile Include="Utilities\SeedConvert.cs" />
-    <Compile Include="Randomizers\StageFromSelect.cs" />
+    <Compile Include="Randomizers\Stages\StageFromSelect.cs" />
     <Compile Include="Utilities\TitleChars.cs" />
     <Compile Include="WeaponTable.cs" />
     <Page Include="MainWindow.xaml">
@@ -151,6 +158,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="mm2rng_prepatch.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="enemylist.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

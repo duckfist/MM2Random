@@ -7,39 +7,23 @@ using MM2Randomizer.Patcher;
 
 namespace MM2Randomizer.Randomizers
 {
-    public class RBossAI
+    public class RBossAI : IRandomizer
     {
-        public RBossAI(Random r)
+        public RBossAI() { }
+
+        public void Randomize(Patch p, Random r)
         {
-            Randomize(r);
+            ChangeHeat(p, r);
+            ChangeAir(p, r);
+            ChangeWood(p, r);
+            ChangeBubble(p, r);
+            ChangeQuick(p, r);
+            ChangeFlash(p, r);
+            ChangeMetal(p, r);
+            ChangeClash(p, r);
         }
 
-        private StringBuilder debug;
-        public override string ToString()
-        {
-            return debug.ToString();
-        }
-
-        private void Randomize(Random r)
-        {
-            debug = new StringBuilder();
-
-            using (var stream = new FileStream(RandomMM2.DestinationFileName, FileMode.Open, FileAccess.ReadWrite))
-            {
-                debug.AppendLine("Boss AI");
-
-                ChangeHeat(r, stream);
-                ChangeAir(r, stream);
-                ChangeWood(r, stream);
-                ChangeBubble(r, stream);
-                ChangeQuick(r, stream);
-                ChangeFlash(r, stream);
-                ChangeMetal(r, stream);
-                ChangeClash(r, stream);
-            }
-        }
-
-        public void ChangeHeat(Random r, FileStream stream)
+        protected void ChangeHeat(Patch Patch, Random r)
         {
             int rInt = 0;
             // Heatman AI 0x02C16E - 0x02C1FE
@@ -82,7 +66,7 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x02C253, (byte)rInt, "Heatman Charge Velocity");
         }
 
-        public void ChangeAir(Random r, FileStream stream)
+        protected void ChangeAir(Patch Patch, Random r)
         {
             int rInt = 0;
             double rDbl = 0;
@@ -155,7 +139,6 @@ namespace MM2Randomizer.Randomizers
                 }
                 Patch.Add(0x02C3ED + i, A_xVelInt, String.Format("Airman Tornado {0} X-Vel Int", i));
             }
-            debug.AppendLine();
 
             // Write delays: 05-2A
             for (int i = 0; i < A_tornadoTableLength; i++)
@@ -163,7 +146,6 @@ namespace MM2Randomizer.Randomizers
                 rInt = r.Next(0x25) + 0x05;
                 Patch.Add(0x02C40B + i, (byte)rInt, String.Format("Airman Tornado {0} Delay Time", i));
             }
-            debug.AppendLine();
 
             // 0x02C30C - Num patterns before jumping 0x03 (do 1-4)
             rInt = r.Next(4) + 1;
@@ -234,7 +216,7 @@ namespace MM2Randomizer.Randomizers
             return (byte)yVelInt;
         }
 
-        public void ChangeWood(Random r, FileStream stream)
+        protected void ChangeWood(Patch Patch, Random r)
         {
             int rInt = 0;
             double rDbl = 0.0;
@@ -307,7 +289,7 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x03B855, (byte)yVel, "Woodman Falling Leaf Y-Velocity");
         }
 
-        public void ChangeBubble(Random r, FileStream stream)
+        protected void ChangeBubble(Patch Patch, Random r)
         {
             byte[] yVels;
             int rInt;
@@ -325,7 +307,7 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x02C6D3, yVels[rInt], "Bubbleman Y-Velocity Rising");
         }
 
-        public void ChangeQuick(Random r, FileStream stream)
+        protected void ChangeQuick(Patch Patch, Random r)
         {
             int rInt;
 
@@ -371,7 +353,7 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x02C8DF, (byte)rInt, "Quickman Running Velocity Integer");
         }
 
-        public void ChangeFlash(Random r, FileStream stream)
+        protected void ChangeFlash(Patch Patch, Random r)
         {
             int rInt;
 
@@ -411,7 +393,7 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x02CA09, (byte)rInt, "Flashman Number of Projectiles");
         }
 
-        public void ChangeMetal(Random r, FileStream stream)
+        protected void ChangeMetal(Patch Patch, Random r)
         {
             int rInt;
             double rDbl;
@@ -444,7 +426,7 @@ namespace MM2Randomizer.Randomizers
             }
         }
 
-        public void ChangeClash(Random r, FileStream stream)
+        protected void ChangeClash(Patch Patch, Random r)
         {
             int rInt;
             double rDbl;

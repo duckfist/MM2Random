@@ -6,20 +6,22 @@ using MM2Randomizer.Patcher;
 
 namespace MM2Randomizer.Randomizers
 {
-    public class RWeaponNames
+    public class RWeaponNames : IRandomizer
     {
         public static readonly int MAX_CHARS = 12;
         public static readonly int offsetLetters = 0x037e22;
         public static readonly int offsetAtomicFire = 0x037e2e;
 
-        public RWeaponNames()
+        public RWeaponNames() { }
+
+        public void Randomize(Patch p, Random r)
         {
             // Write in new weapon names
             for (int i = 0; i < 8; i++)
             {
                 int offset = offsetAtomicFire + i * 0x10;
 
-                string name = GetRandomName();
+                string name = GetRandomName(r);
                 char[] chars = name.ToCharArray();
 
                 for (int j = 0; j < MAX_CHARS; j++)
@@ -27,12 +29,12 @@ namespace MM2Randomizer.Randomizers
                     if (j < chars.Length)
                     {
                         byte b = Convert.ToByte(chars[j]);
-                        Patch.Add(offset + j, b, String.Format("Weapon Name {0} Char #{1}: {2}", ((EDmgVsBoss.Offset)i).Name, j, chars[j].ToString()));
+                        p.Add(offset + j, b, String.Format("Weapon Name {0} Char #{1}: {2}", ((EDmgVsBoss.Offset)i).Name, j, chars[j].ToString()));
 
                     }
                     else
                     {
-                        Patch.Add(offset + j, Convert.ToByte('@'), String.Format("Weapon Name {0} Char #{1}: @", ((EDmgVsBoss.Offset)i).Name, j));
+                        p.Add(offset + j, Convert.ToByte('@'), String.Format("Weapon Name {0} Char #{1}: @", ((EDmgVsBoss.Offset)i).Name, j));
                     }
                 }
             }
@@ -40,28 +42,28 @@ namespace MM2Randomizer.Randomizers
             // Erase "Boomerang" for now
             for (int i = 0; i < 10; i++)
             {
-                Patch.Add(0x037f5e + i, Convert.ToByte('@'), String.Format("Quick Boomerang Name Erase Char #{0}: @", i));
+                p.Add(0x037f5e + i, Convert.ToByte('@'), String.Format("Quick Boomerang Name Erase Char #{0}: @", i));
             }
 
             // Write in new weapon letters
-            for (int i = 0; i < 8; i ++)
+            for (int i = 0; i < 8; i++)
             {
-                int randLetter = 0x41 + RandomMM2.Random.Next(26);
-                Patch.Add(offsetLetters + i, (byte)randLetter, String.Format("Weapon Get {0} Letter: {1}", ((EDmgVsBoss.Offset)i).Name, Convert.ToChar(randLetter).ToString()));
+                int randLetter = 0x41 + r.Next(26);
+                p.Add(offsetLetters + i, (byte)randLetter, String.Format("Weapon Get {0} Letter: {1}", ((EDmgVsBoss.Offset)i).Name, Convert.ToChar(randLetter).ToString()));
             }
         }
 
-        private string GetRandomName()
+        private string GetRandomName(Random r)
         {
             string finalName = "";
 
             // Start with random list
-            int l = RandomMM2.Random.Next(1);
+            int l = r.Next(1);
             string name0, name1;
             if (l == 0)
             {
                 // Get random name from first list
-                int random = RandomMM2.Random.Next(Names0.Length);
+                int random = r.Next(Names0.Length);
                 name0 = Names0[random];
 
                 // From second list, get subset of names with valid character count
@@ -78,7 +80,7 @@ namespace MM2Randomizer.Randomizers
                 // Get random name from modified second list
                 if (names1Left.Count > 0)
                 {
-                    random = RandomMM2.Random.Next(names1Left.Count);
+                    random = r.Next(names1Left.Count);
                     name1 = names1Left[random];
                 }
                 else
@@ -89,7 +91,7 @@ namespace MM2Randomizer.Randomizers
             else
             {
                 // Get random name from second list
-                int random = RandomMM2.Random.Next(Names1.Length);
+                int random = r.Next(Names1.Length);
                 name1 = Names1[random];
 
                 // From first list, get subset of names with valid character count
@@ -106,7 +108,7 @@ namespace MM2Randomizer.Randomizers
                 // Get random name from modified first list
                 if (names0Left.Count > 0)
                 {
-                    random = RandomMM2.Random.Next(names0Left.Count);
+                    random = r.Next(names0Left.Count);
                     name0 = names0Left[random];
                 }
                 else

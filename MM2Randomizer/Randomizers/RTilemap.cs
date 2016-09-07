@@ -1,25 +1,24 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using MM2Randomizer.Patcher;
 
-using MM2Randomizer.Enums;
-using MM2Randomizer.Patcher;
 using System;
 
 namespace MM2Randomizer.Randomizers
 {
-    public class RTilemap
+    public class RTilemap : IRandomizer
     {
-        public RTilemap()
+        public RTilemap() { }
+
+        public void Randomize(Patch p, Random r)
         {
-            ChangeW4FloorsBeforeSpikes();
-            ChangeW4FloorsSpikePit();
+            ChangeW4FloorsBeforeSpikes(p, r);
+            ChangeW4FloorsSpikePit(p, r);
         }
 
-        private static void ChangeW4FloorsBeforeSpikes()
+        private static void ChangeW4FloorsBeforeSpikes(Patch Patch, Random r)
         {
             // Choose 2 of the 5 32x32 tiles to be fake
-            int tileA = RandomMM2.Random.Next(5);
-            int tileB = RandomMM2.Random.Next(4);
+            int tileA = r.Next(5);
+            int tileB = r.Next(4);
 
             // Make sure 2nd tile chosen is different
             if (tileB == tileA) tileB++;
@@ -37,10 +36,10 @@ namespace MM2Randomizer.Randomizers
             }
         }
 
-        private static void ChangeW4FloorsSpikePit()
+        private static void ChangeW4FloorsSpikePit(Patch Patch, Random r)
         {
             // 5 tiles, but since two adjacent must construct a gap, 4 possible gaps.  Choose 1 random gap.
-            int gap = RandomMM2.Random.Next(4);
+            int gap = r.Next(4);
             for (int i = 0; i < 4; i++)
             {
                 if (i == gap)
@@ -55,5 +54,7 @@ namespace MM2Randomizer.Randomizers
                 }
             }
         }
+
+
     }
 }

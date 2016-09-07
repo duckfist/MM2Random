@@ -1,4 +1,5 @@
-﻿using MM2Randomizer.Patcher;
+﻿using MM2Randomizer.Enums;
+using MM2Randomizer.Patcher;
 using MM2Randomizer.Randomizers;
 using MM2Randomizer.Randomizers.Stages;
 using System;
@@ -103,6 +104,9 @@ namespace MM2Randomizer.Utilities
             }
         }
 
-
+        public static void EnablePressDamage(Patch Patch)
+        {
+            Patch.Add(EDmgVsEnemy.DamageP + EDmgVsEnemy.Offset.Press, 0x01, "Buster Damage Against Press");
+        }
     }
 }

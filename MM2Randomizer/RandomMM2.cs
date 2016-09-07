@@ -126,6 +126,7 @@ namespace MM2Randomizer
                 {
                     MiscHacks.DrawTitleScreenChanges(Patch, Seed);
                 }
+                MiscHacks.EnablePressDamage(Patch);
 
                 // Prepare a copy of the source rom for modification
                 File.Copy(Settings.SourcePath, TempFileName, true);

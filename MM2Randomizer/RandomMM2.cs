@@ -132,7 +132,7 @@ namespace MM2Randomizer
                 File.Copy(Settings.SourcePath, TempFileName, true);
 
                 // Apply pre-patch changes via IPS patch (manual title screen, stage select, and stage changes)
-                Patch.ApplyIPSPatch(TempFileName, "mm2rng_prepatch.ips");
+                Patch.ApplyIPSPatch(TempFileName, "mm2rng_prepatch.dat");
 
                 // Apply patch with randomized content
                 Patch.ApplyRandoPatch(TempFileName);

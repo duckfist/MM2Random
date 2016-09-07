@@ -161,7 +161,7 @@
     <None Include="enemylist.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="mm2rng_prepatch.ips">
+    <None Include="mm2rng_prepatch.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">

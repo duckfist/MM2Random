@@ -116,6 +116,7 @@ namespace MM2Randomizer
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "ROM image (.nes)|*.nes";
+            dlg.Title = "Open Mega Man 2 (U) NES ROM File";
 
             // Call the ShowDialog method to show the dialog box.
             string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;

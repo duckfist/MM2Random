@@ -12,8 +12,8 @@ namespace MM2Randomizer.Randomizers
     {
         public static bool IsChaos = true;
         public static int[,] BotWeaknesses = new int[8, 9];
-        public static int[,] WilyWeaknesses = new int[5, 8];
-        public static char[,] WilyWeaknessInfo = new char[5, 8];
+        public static int[,] WilyWeaknesses = new int[6, 8];
+        public static char[,] WilyWeaknessInfo = new char[6, 8];
 
         private StringBuilder debug;
         public override string ToString()
@@ -629,6 +629,91 @@ namespace MM2Randomizer.Randomizers
 
                 #endregion
 
+                #region Buebeam Trap
+
+                // Buebeam
+                // 5 Orbs + 3 Required Barriers (5 total gates, 4 in speedrun route)
+                // Choose a weakness for both Barriers and Orbs, scale damage to have plenty of energy
+                // If the same weakness for both, scale damage further
+                // If any weakness is Atomic Fire, ensure that there's enough ammo
+                
+                // Randomize Crash Barrier weakness
+                List<EDmgVsEnemy> dmgBarrierList = EDmgVsEnemy.GetTables(true);
+
+                // Remove Heat as possibility if it costs too much ammo
+                if (RWeaponBehavior.AmmoUsage[1] > 5)
+                {
+                    dmgBarrierList.RemoveAt(1);
+                    WilyWeaknesses[3, 1] = 0;
+                }
+
+                // Get Barrier weakness
+                rInt = r.Next(dmgBarrierList.Count);
+                EDmgVsEnemy wpnBarrier = dmgBarrierList[rInt];
+
+                // Scale damage to be slightly more capable than killing 5 barriers at full ammo
+                int dmgW4 = 0x01;
+                if (wpnBarrier != EDmgVsEnemy.DamageP)
+                {
+                    int totalShots = (int)(28 / RWeaponBehavior.GetAmmoUsage(wpnBarrier));
+                    int numHitsPerBarrier = (int)(totalShots / 5);
+                    if (numHitsPerBarrier > 1) numHitsPerBarrier--;
+                    if (numHitsPerBarrier > 8) numHitsPerBarrier = 8;
+                    dmgW4 = (int)Math.Ceiling(20d / numHitsPerBarrier);
+                }
+                for (int i = 0; i < dmgBarrierList.Count; i++)
+                {
+                    // Deal damage with weakness, and 0 for everything else
+                    byte damage = (byte)dmgW4;
+                    EDmgVsEnemy wpn = dmgBarrierList[i];
+                    if (wpn != wpnBarrier)
+                    {
+                        damage = 0;
+                    }
+                    Patch.Add(wpn.Address + EDmgVsEnemy.Offset.ClashBarrier_W4, damage, String.Format("{0} Damage to Clash Barrier 1", wpnBarrier.WeaponName));
+                    Patch.Add(wpn.Address + EDmgVsEnemy.Offset.ClashBarrier_Other, damage, String.Format("{0} Damage to Clash Barrier 2", wpnBarrier.WeaponName));
+                }
+
+                // Remove Barrier weakness from list (therefore, different Buebeam weakness)
+                dmgBarrierList.Remove(wpnBarrier);
+
+                // Get Buebeam weakness
+                rInt = r.Next(dmgBarrierList.Count);
+                EDmgVsEnemy wpnBuebeam = dmgBarrierList[rInt];
+
+                // Scale damage to be slightly more capable than killing 5 buebeams at full ammo
+                dmgW4 = 0x01;
+                if (wpnBuebeam != EDmgVsEnemy.DamageP)
+                {
+                    int totalShots = (int)(28 / RWeaponBehavior.GetAmmoUsage(wpnBuebeam));
+                    int numHitsPerBuebeam = (int)(totalShots / 5);
+                    if (numHitsPerBuebeam > 1) numHitsPerBuebeam--;
+                    if (numHitsPerBuebeam > 8) numHitsPerBuebeam = 8;
+                    dmgW4 = (int)Math.Ceiling(20d / numHitsPerBuebeam);
+                }
+                for (int i = 0; i < dmgBarrierList.Count; i++)
+                {
+                    byte damage = (byte)dmgW4;
+                    EDmgVsEnemy wpn = dmgBarrierList[i];
+                    if (wpn != wpnBuebeam)
+                    {
+                        damage = 0;
+                    }
+                    Patch.Add(wpn.Address + EDmgVsEnemy.Offset.Buebeam, damage, String.Format("{0} Damage to Buebeam Trap", wpnBuebeam.WeaponName));
+
+                    // Add to damage table (skipping heat if necessary)
+                    if (RWeaponBehavior.AmmoUsage[1] > 5 && i >= 1)
+                    {
+                        WilyWeaknesses[3, i + 1] = damage;
+                    }
+                    else
+                    {
+                        WilyWeaknesses[3, i] = damage;
+                    }
+                }
+
+                #endregion
+
                 #region Wily Machine
 
                 // Machine
@@ -643,7 +728,7 @@ namespace MM2Randomizer.Randomizers
                 if (rBuster > 0.25)
                     busterDmg = 0x01;
                 Patch.Add(EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Machine, busterDmg, String.Format("Buster Damage to Wily Machine"));
-                WilyWeaknesses[2, 0] = busterDmg;
+                WilyWeaknesses[4, 0] = busterDmg;
 
                 // Choose 4 special weapon weaknesses
                 List<EDmgVsBoss> machine = new List<EDmgVsBoss>(dmgPtrBosses);
@@ -675,13 +760,13 @@ namespace MM2Randomizer.Randomizers
                             damage = (byte)RWeaponBehavior.AmmoUsage[i + 1];
                         }
                         Patch.Add(weapon + EDmgVsBoss.Offset.Machine, damage, String.Format("{0} Damage to Wily Machine", weapon.WeaponName));
-                        WilyWeaknesses[3, i + 1] = damage;
+                        WilyWeaknesses[4, i + 1] = damage;
                     }
                     // Machine immune
                     else
                     {
                         Patch.Add(weapon + EDmgVsBoss.Offset.Machine, 0x00, String.Format("{0} Damage to Wily Machine", weapon.WeaponName));
-                        WilyWeaknesses[3, i + 1] = 0x00;
+                        WilyWeaknesses[4, i + 1] = 0x00;
                     }
 
                     // Get index of this weapon out of all weapons 0-8;
@@ -734,12 +819,12 @@ namespace MM2Randomizer.Randomizers
                     if (i == rWeaponIndex)
                     {
                         Patch.Add(weapon + EDmgVsBoss.Offset.Alien, alienDamage, String.Format("{0} Damage to Alien", weapon.WeaponName));
-                        WilyWeaknesses[4, i] = alienDamage;
+                        WilyWeaknesses[5, i] = alienDamage;
                     }
                     else
                     {
                         Patch.Add(weapon + EDmgVsBoss.Offset.Alien, 0xFF, String.Format("{0} Damage to Alien", weapon.WeaponName));
-                        WilyWeaknesses[4, i] = 0xFF;
+                        WilyWeaknesses[5, i] = 0xFF;
                     }
                 }
 
@@ -768,9 +853,12 @@ namespace MM2Randomizer.Randomizers
                             bossName = "guts";
                             break;
                         case 3:
-                            bossName = "machine";
+                            bossName = "boobeam";
                             break;
                         case 4:
+                            bossName = "machine";
+                            break;
+                        case 5:
                             bossName = "alien";
                             break;
                         default: break;

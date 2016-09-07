@@ -106,6 +106,7 @@ namespace MM2Randomizer
                 foreach (IRandomizer randomizer in Randomizers)
                 {
                     randomizer.Randomize(Patch, Random);
+                    Debug.WriteLine(randomizer);
                 }
 
                 // Create patch with additional modifications

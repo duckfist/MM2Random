@@ -33,7 +33,7 @@ namespace MM2Randomizer.Patcher
         {
             using (var stream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite))
             { 
-                GetStringSortedByAddress();
+                //GetStringSortedByAddress();
 
                 foreach (KeyValuePair<int, ChangeByteRecord> kvp in Bytes)
                 {

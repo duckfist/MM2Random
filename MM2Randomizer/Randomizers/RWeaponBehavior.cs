@@ -15,6 +15,27 @@ namespace MM2Randomizer.Randomizers
         // Buster Heat Air Wood Bubble Quick Metal Clash
         public static List<double> AmmoUsage;
 
+        public static double GetAmmoUsage(EDmgVsEnemy weapon)
+        {
+            if (weapon == EDmgVsEnemy.DamageP)
+                return AmmoUsage[0];
+            else if (weapon == EDmgVsEnemy.DamageH)
+                return AmmoUsage[1];
+            else if (weapon == EDmgVsEnemy.DamageA)
+                return AmmoUsage[2];
+            else if (weapon == EDmgVsEnemy.DamageW)
+                return AmmoUsage[3];
+            else if (weapon == EDmgVsEnemy.DamageB)
+                return AmmoUsage[4];
+            else if (weapon == EDmgVsEnemy.DamageQ)
+                return AmmoUsage[5];
+            else if (weapon == EDmgVsEnemy.DamageM)
+                return AmmoUsage[6];
+            else if (weapon == EDmgVsEnemy.DamageC)
+                return AmmoUsage[7];
+            else return 0;
+        }
+
         private StringBuilder debug;
         public override string ToString()
         {
@@ -110,7 +131,7 @@ namespace MM2Randomizer.Randomizers
             //0x03DE56 - H L2 Ammo use(06)
             //0x03DE57 - H L3 Ammo use(0A)
             // 50% chance for L1 to be free
-            // L2 and L3 will cost 1-5 more each
+            // L2 and L3 will cost 1-4 more each
             double rTestL1Ammo = r.NextDouble();
             if (rTestL1Ammo > 0.5)
             {

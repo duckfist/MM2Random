@@ -261,9 +261,9 @@ namespace MM2Randomizer.Randomizers
 
             //0x03D8F6 - 0x02, change to 0x06 for an interesting leaf shield pattern 25% of the time
             rDbl = r.NextDouble();
-            if (rDbl > 0.75)
+            if (rDbl > 0.66)
             {
-                Patch.Add(0x02C553, 0x06, "Woodman Leaf Shield Pattern");
+                Patch.Add(0x03D8F6, 0x06, "Woodman Leaf Shield Pattern");
             }
 
             //0x03B855 - Leaf fall speed(sort of ?) 0x20. 

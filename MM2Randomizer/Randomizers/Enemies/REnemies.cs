@@ -611,9 +611,9 @@ namespace MM2Randomizer.Randomizers.Enemies
                             if (en.ID == EEnemyID.Mole_Activator && sbrg.ContainsRoom(7)) continue;
                             if (en.ID == EEnemyID.Press && sbrg.ContainsRoom(7)) continue;
                             // Don't spawn Springer, Blocky, or Press underwater
-                            if (en.ID == EEnemyID.Springer && sbrg.ContainsRoom(11)) continue;
-                            if (en.ID == EEnemyID.Blocky && sbrg.ContainsRoom(11)) continue;
-                            if (en.ID == EEnemyID.Press && sbrg.ContainsRoom(11)) continue;
+                            if (en.ID == EEnemyID.Springer && sbrg.ContainsRoom(0x11)) continue;
+                            if (en.ID == EEnemyID.Blocky && sbrg.ContainsRoom(0x11)) continue;
+                            if (en.ID == EEnemyID.Press && sbrg.ContainsRoom(0x11)) continue;
                             break;
                         case EStageID.BubbleW4:
                             // Moles don't display correctly in Bubble

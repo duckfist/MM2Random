@@ -3,19 +3,42 @@ using System.Collections.Generic;
 
 using MM2Randomizer.Enums;
 using MM2Randomizer.Patcher;
+using System.Text;
 
 namespace MM2Randomizer.Randomizers
 {
-    public class RWeaponNames : IRandomizer
+    public class RText : IRandomizer
     {
         public static readonly int MAX_CHARS = 12;
         public static readonly int offsetLetters = 0x037e22;
         public static readonly int offsetAtomicFire = 0x037e2e;
+        public static readonly int offsetCutscenePage1L1 = 0x036D56;
 
-        public RWeaponNames() { }
+        public RText() { }
 
         public void Randomize(Patch p, Random r)
         {
+            // Write in intro text
+            int numIntros = IntroTexts.GetLength(0);
+            int introIndex = r.Next(numIntros);
+            char[] introText = IntroTexts[introIndex].ToCharArray();
+            
+            for (int i = 0; i < 270; i++) // 27 characters per line, 5 pages, 2 lines per page
+            {
+                try
+                {
+                    byte charByte = IntroCipher[introText[i]];
+                    p.Add(
+                        offsetCutscenePage1L1 + i,
+                        charByte,
+                        $"Intro Text: {introText[i]}");
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show($"Exception. Probably unsupported character in dictionary. Message:\n{ex.ToString()}");
+                }
+            }
+
             // Write in new weapon names
             for (int i = 0; i < 8; i++)
             {
@@ -52,6 +75,168 @@ namespace MM2Randomizer.Randomizers
                 p.Add(offsetLetters + i, (byte)randLetter, String.Format("Weapon Get {0} Letter: {1}", ((EDmgVsBoss.Offset)i).Name, Convert.ToChar(randLetter).ToString()));
             }
         }
+
+        static Dictionary<char, byte> IntroCipher = new Dictionary<char, byte>()
+        {
+            { ' ', 0x00 },
+            { '0', 0xA0 },
+            { '8', 0xA1 },
+            { '2', 0xA2 },
+            { '©', 0xA3 },
+            { 't', 0xA4 }, // tm
+            { '9', 0xA5 },
+            { '7', 0xA6 },
+            { '1', 0xA7 },
+            { '3', 0xA8 }, // check
+            { '4', 0xA9 }, // check
+            { '5', 0xAA }, // check
+            { '6', 0xAB }, // check
+            { '|', 0xC0 }, // Blank space, change later? also, there may be a blank row (B) to use...
+            { 'A', 0xC1 },
+            { 'B', 0xC2 },
+            { 'C', 0xC3 },
+            { 'D', 0xC4 },
+            { 'E', 0xC5 },
+            { 'F', 0xC6 },
+            { 'G', 0xC7 },
+            { 'H', 0xC8 },
+            { 'I', 0xC9 },
+            { 'J', 0xCA },
+            { 'K', 0xCB },
+            { 'L', 0xCC },
+            { 'M', 0xCD },
+            { 'N', 0xCE },
+            { 'O', 0xCF },
+            { 'P', 0xD0 },
+            { 'Q', 0xD1 },
+            { 'R', 0xD2 },
+            { 'S', 0xD3 },
+            { 'T', 0xD4 },
+            { 'U', 0xD5 },
+            { 'V', 0xD6 },
+            { 'W', 0xD7 },
+            { 'X', 0xD8 },
+            { 'Y', 0xD9 },
+            { 'Z', 0xDA },
+            { '?', 0xDB }, // "r." change to ?
+            { '.', 0xDC },
+            { ',', 0xDD },
+            { '\'', 0xDE },
+            { '!', 0xDF },
+        };
+
+        static string[] IntroTexts = new string[]
+        {
+            "DURING 15TH CENTURY EUROPE "+
+            "  THERE LIVED A PERSON     "+
+            "    NAMED DRACULA. HE      "+
+            "PRACTICED SORCERY IN ORDER "+
+            "   TO CREATE A BAD WORLD   "+
+            "     FILLED WITH EVIL.     "+
+            "   THE CURSE OF DRACULA    "+
+            "        HAS BEGUN.         "+
+            "    THE FATE OF EUROPE     "+
+            " LIES WITH TREVOR BELMONT. ",
+
+            " WITH WHOM DID FATHER HAVE "+
+            "     A DUEL AND LOSE?      "+
+            "  FOR WHAT REASON DID HE   "+
+            "      FIGHT AND DIE?       "+
+            "  AFTER HE DISAPPEARED, I  "+
+            "FOUND A LETTER FROM FATHER."+
+            " \'TAKE THE DRAGON SWORD OF "+
+            "    THE HAYABUSA FAMILY\'   "+
+            "   I WILL GET MY REVENGE!  "+
+            "                           ",
+
+            " MARIO OPENED A DOOR AFTER "+
+            " CLIMBING A LONG STAIR IN  "+
+            " HIS DREAM, ANOTHER WORLD  "+
+            " SPREAD BEFORE HIM AND HE  "+
+            "  HEARD A VOICE CALL FOR   "+
+            "  HELP TO BE FREED FROM A  "+
+            "SPELL. AFTER WAKING, MARIO "+
+            " WENT TO A CAVE NEARBY AND "+
+            "  TO HIS SURPRISE HE SAW   "+
+            "  WHAT WAS IN HIS DREAM... ",
+
+            "   MANY YEARS AGO PRINCE   "+
+            "  DARKNESS \'GANNON\' STOLE  "+
+            " ONE OF THE TRIFORCE WITH  "+
+            " POWER. PRINCESS ZELDA HAD "+
+            " ONE OF THE TRIFORCE WITH  "+
+            "  WISDOM. SHE DIVIDED IT   "+
+            "  INTO 8 UNITS TO HIDE IT  "+
+            "FROM GANNON BEFORE SHE WAS "+
+            "  CAPTURED. GO FIND THE 8  "+
+            "  UNITS LINK TO SAVE HER.  ",
+
+            "          METROID          "+
+            "                           "+
+            "         EMERGENCY         "+
+            "           ORDER           "+
+            "   DEFEAT THE METROID OF   "+
+            "   THE PLANET ZEBETH AND   "+
+            " DESTROY THE MOTHER BRAIN  "+
+            " THE MECHANICAL LIFE VEIN  "+
+            "  GALAXY FEDEREAL POLICE   "+
+            "          M510             ",
+
+            "ONE DAY, THE PEACEFUL LIFE "+
+            "OF DREAMLAND WAS SHATTERED "+
+            "  BY A MYSTERIOUS CRISIS!  "+
+            " THE PEOPLE DIDN\'T DREAM!  "+
+            "DEDEDE HAD BROKEN THE STAR "+
+            " ROD AND GIVEN THE PIECES  "+
+            "  TO HIS FRIENDS, WHO ARE  "+
+            "    HIDING IN DREAMLAND!   "+
+            " TO BRING BACK LOST DREAMS,"+
+            " KIRBY SOUGHT THE STAR ROD!",
+
+            "    I FIRST BATTLED THE    "+
+            " METROIDS ON PLANET ZEBES. "+
+            "IT WAS THERE THAT I FOILED "+
+            "  THE PLANS OF THE SPACE   "+
+            "PIRATE LEADER MOTHER BRAIN "+
+            "  TO USE THE CREATURES TO  "+
+            "      ATTACK GALACTIC      "+
+            "       CIVILIZATION...     "+
+            "     CERES STATION IS      "+
+            "      UNDER ATTACK!!!      ",
+
+            "  THE WORLD IS VEILED IN   "+
+            " DARKNESS. THE WIND STOPS, "+
+            " THE SEA IS WILD, AND THE  "+
+            " EARTH BEGINS TO ROT. THE  "+
+            "  PEOPLE WAIT, THEIR ONLY  "+
+            "HOPE, A PROPHECY. WHEN THE "+
+            "WORLD IS IN DARKNESS, FOUR "+
+            "WARRIORS WILL COME. AFTER A"+
+            "LONG JOURNEY, FOUR WARRIORS"+
+            "ARRIVE, EACH HOLDING AN ORB",
+
+            " LISTEN NOW TO MY WORDS.   "+
+            " DESCENDANT OF ERDRICK, IT "+
+            " IS TOLD THAT IN AGES PAST "+
+            "ERDRICK FOUGHT DEMONS WITH "+
+            "A BALL OF LIGHT. THEN CAME "+
+            " THE DRAGONLORD WHO STOLE  "+
+            "THE PRECIOUS GLOBE AND HID "+
+            " IT IN THE DARKNESS. NOW,  "+
+            "MEGAMAN, THOU MUST HELP US "+
+            "RESTORE PEACE TO OUR LAND. ",
+
+            "IT\'S A PERIOD OF CIVIL WAR."+
+            "REBELS HAVE WON THEIR FIRST"+
+            " VICTORY AGAINST THE EVIL  "+
+            "  GALACTIC EMPIRE. REBEL   "+
+            " SPIES STOLE PLANS TO THE  "+
+            " EMPIRE\'S ULTIMATE WEAPON  "+
+            "  THE DEATH STAR. MEGAMAN  "+
+            " ESCAPES WITH THE PLANS TO "+
+            " SAVE HIS PEOPLE AND BRING "+
+            "   FREEDOM TO THE GALAXY.  ",
+        };
 
         private string GetRandomName(Random r)
         {

@@ -525,9 +525,9 @@ namespace MM2Randomizer.Randomizers
                 Patch.Add(EDmgVsEnemy.DamageP + EDmgVsEnemy.Offset.PicopicoKun, busterDmg, String.Format("Buster Damage to Picopico-Kun"));
                 WilyWeaknesses[1, 0] = busterDmg;
 
-                // Deal ammoUse x 6 for the main weakness
-                // Deal ammoUse x 2 for another
-                // Deal ammoUse x 1 for another
+                // Deal ammoUse x 10 for the main weakness
+                // Deal ammoUse x 6 for another
+                // Deal ammoUse x 3 for another
                 List<EDmgVsEnemy> pico = new List<EDmgVsEnemy>(dmgPtrEnemies);
                 rInt = r.Next(pico.Count);
                 enemyWeak1 = pico[rInt];
@@ -543,7 +543,7 @@ namespace MM2Randomizer.Randomizers
                     byte damage = 0x00;
                     char level = ' ';
 
-                    // Pico weakness 1, deal ammoUse x8 damage
+                    // Pico weakness 1, deal ammoUse x10 damage
                     if (weapon == enemyWeak1)
                     {
                         damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 10);
@@ -553,14 +553,14 @@ namespace MM2Randomizer.Randomizers
                     // weakness 2, deal ammoUse x5 damage
                     else if (weapon == enemyWeak2)
                     {
-                        damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 5);
+                        damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 6);
                         if (damage < 2) damage = 2;
                         level = '*';
                     }
                     // weakness 3, deal ammoUse x2 damage
                     else if (weapon == enemyWeak3)
                     {
-                        damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 2);
+                        damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 3);
                         if (damage < 2) damage = 2;
                     }
 

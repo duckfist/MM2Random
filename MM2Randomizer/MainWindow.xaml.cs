@@ -212,5 +212,10 @@ namespace MM2Randomizer
             tbxSource.Focus();
             tbxSource.SelectionStart = tbxSource.Text.Length;
         }
+
+        private void chkBurstChaser_Checked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Caution: The randomizer is not balanced for Burst Chaser mode.\nIf it is your first time playing, consider using the default settings.");
+        }
     }
 }

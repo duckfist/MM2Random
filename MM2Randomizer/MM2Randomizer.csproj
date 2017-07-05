@@ -119,7 +119,7 @@
     <Compile Include="Randomizers\RWeaknesses.cs" />
     <Compile Include="Randomizers\RWeaponBehavior.cs" />
     <Compile Include="Randomizers\RWeaponGet.cs" />
-    <Compile Include="Randomizers\RWeaponNames.cs" />
+    <Compile Include="Randomizers\RText.cs" />
     <Compile Include="Randomizers\Stages\RStages.cs" />
     <Compile Include="RandomMM2.cs" />
     <Compile Include="Utilities\MiscHacks.cs" />

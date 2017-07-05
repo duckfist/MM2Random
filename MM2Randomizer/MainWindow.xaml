@@ -7,7 +7,7 @@
         xmlns:converters="clr-namespace:MM2Randomizer.Converters"
         mc:Ignorable="d"
         AllowDrop="True"
-        Title="MM2 Randomizer" Height="480" Width="403.259" Drop="Window_Drop" DragEnter="Window_DragEnter" DragLeave="Window_DragLeave">
+        Title="MM2 Randomizer" Height="370" Width="403.259" Drop="Window_Drop" DragEnter="Window_DragEnter" DragLeave="Window_DragLeave">
     <Window.Resources>
         <converters:InverseBooleanConverter x:Key="inverseBooleanConverter"/>
     </Window.Resources>
@@ -49,6 +49,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="60"/>
                 <RowDefinition/>            
             </Grid.RowDefinitions>
             
@@ -72,31 +73,41 @@
             </Border>
 
             
-            <GroupBox Grid.Row="3" Header="Randomize Options" BorderThickness="2" BorderBrush="DarkGray" VerticalAlignment="Top">
+            <GroupBox Grid.Row="3" Header="Randomize Options" BorderThickness="2" BorderBrush="DarkGray" VerticalAlignment="Top" Margin="0,1,0,0">
                 <StackPanel Orientation="Vertical" Margin="4">
-                    <CheckBox Name="chk8Stages" Content="Robot Master Stages" IsChecked="{Binding Path=Is8StagesRandom}"/>
-                    <CheckBox Name="chkWeaponBehave" Content="Weapon Behavior" IsChecked="{Binding Path=IsWeaponBehaviorRandom}"/>
-                    <CheckBox Name="chkWeakness" Content="Boss Weaknesses" IsChecked="{Binding Path=IsWeaknessRandom}"/>
+                    <CheckBox Name="chk8Stages" Content="Robot Master Stages" IsChecked="{Binding Path=Is8StagesRandom}" Visibility="Collapsed"/>
+                    <CheckBox Name="chkWeaponBehave" Content="Weapon Behavior" IsChecked="{Binding Path=IsWeaponBehaviorRandom}" Visibility="Collapsed"/>
+                    <CheckBox Name="chkWeakness" Content="Boss Weaknesses" IsChecked="{Binding Path=IsWeaknessRandom}" Visibility="Collapsed"/>
                     <RadioButton Name="radWeaknessEasy" Margin="16,2,2,2" Content="Easy" 
                          IsEnabled="{Binding ElementName=chkWeakness, Path=IsChecked, TargetNullValue=false}"
-                         IsChecked="{Binding Path=IsWeaknessEasy}"/>
+                         IsChecked="{Binding Path=IsWeaknessEasy}" Visibility="Collapsed"/>
                     <RadioButton Name="radWeaknessHard" Margin="16,2,2,2" Content="Chaos" 
                          IsEnabled="{Binding ElementName=chkWeakness, Path=IsChecked, TargetNullValue=false}"
-                         IsChecked="{Binding Path=IsWeaknessHard}"/>
-                    <CheckBox Name="chkBossAI" Content="Boss AI" IsChecked="{Binding Path=IsBossAIRandom}"/>
-                    <CheckBox Name="chkWeapons" Content="Weapon Get" IsChecked="{Binding Path=IsWeaponsRandom}"/>
-                    <CheckBox Name="chkItems" Content="Items 1, 2, and 3 Get" IsChecked="{Binding Path=IsItemsRandom}"/>
-                    <CheckBox Name="chkTeleporters" Content="Wily 5 Teleporters" IsChecked="{Binding Path=IsTeleportersRandom}" IsEnabled="True"/>
-                    <CheckBox Name="chkEnemies" Content="Enemies" IsChecked="{Binding Path=IsEnemiesRandom}"/>
-                    <CheckBox Name="chkColors" Content="Colors" IsChecked="{Binding Path=IsColorsRandom}"/>
-                    <CheckBox Name="chkBGM" Content="Stage BGM" IsChecked="{Binding Path=IsBGMRandom}"/>
+                         IsChecked="{Binding Path=IsWeaknessHard}" Visibility="Collapsed"/>
+                    <CheckBox Name="chkBossAI" Content="Boss AI" IsChecked="{Binding Path=IsBossAIRandom}" Visibility="Collapsed"/>
+                    <CheckBox Name="chkWeapons" Content="Weapon Get" IsChecked="{Binding Path=IsWeaponsRandom}" Visibility="Collapsed"/>
+                    <CheckBox Name="chkItems" Content="Items 1, 2, and 3 Get" IsChecked="{Binding Path=IsItemsRandom}"  Visibility="Collapsed"/>
+                    <CheckBox Name="chkTeleporters" Content="Wily 5 Teleporters" IsChecked="{Binding Path=IsTeleportersRandom}" IsEnabled="True"  Visibility="Collapsed"/>
+                    <CheckBox Name="chkEnemies" Content="Enemies" IsChecked="{Binding Path=IsEnemiesRandom}"  Visibility="Collapsed"/>
+                    <CheckBox Name="chkColors" Content="Colors" IsChecked="{Binding Path=IsColorsRandom}"  Visibility="Collapsed"/>
+                    <CheckBox Name="chkBGM" Content="Stage BGM" IsChecked="{Binding Path=IsBGMRandom}"  Visibility="Collapsed"/>
                     <CheckBox Name="chkWeaponNames" Content="Weapon Names" 
                       IsEnabled="{Binding ElementName=chkJapanese, Path=IsChecked, TargetNullValue=false, Converter={StaticResource inverseBooleanConverter}}"
-                      IsChecked="{Binding Path=IsWeaponNamesRandom}">
+                      IsChecked="{Binding Path=IsWeaponNamesRandom}" Visibility="Collapsed">
                     </CheckBox>
+                    <CheckBox Name="chkJapanese" Content="J-Version (Rockman 2)" IsEnabled="False" IsChecked="{Binding Path=IsJapanese}" Checked="chkJapanese_Checked" Visibility="Collapsed"/>
+                    <TextBlock Foreground="#555555" FontStyle="Italic">Under Construction</TextBlock>
                 </StackPanel>
             </GroupBox>
-            <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical">
+
+            <GroupBox Grid.Row="4" Header="Settings" BorderThickness="2" BorderBrush="DarkGray" VerticalAlignment="Top" >
+                <StackPanel>
+                    <CheckBox Name="chkFastText" Content="Faster Text" IsChecked="{Binding Path=FastText}" IsEnabled="False"/>
+                    <CheckBox Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}" Checked="chkBurstChaser_Checked"/>
+                </StackPanel>
+            </GroupBox>
+
+            <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="3" Orientation="Vertical">
                 <Button Name="btnCreateROM" IsEnabled="{Binding Path=IsSourcePathAndSeedValid}" Click="btnCreateROM_Click" Height="30" Margin="3,8,3,3">
                     Create From Given Seed
                 </Button>
@@ -106,13 +117,7 @@
                 <Button Name="btnOpenFolder" IsEnabled="{Binding Path=IsSourcePathValid}" Click="btnOpenFolder_Click" Height="30">
                     Open Containing Folder
                 </Button>
-                <GroupBox Header="Settings" BorderThickness="2" BorderBrush="DarkGray">
-                    <StackPanel>
-                        <CheckBox Name="chkFastText" Content="Faster Text" IsChecked="{Binding Path=FastText}"/>
-                        <CheckBox Name="chkJapanese" Content="J-Version (Rockman 2)" IsEnabled="False" IsChecked="{Binding Path=IsJapanese}" Checked="chkJapanese_Checked"/>
-                        <CheckBox Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}"/>
-                    </StackPanel>
-                </GroupBox>
+                
                 <Border Background="DarkGray" Margin="3">
                     <TextBlock Height="118" Margin="3" TextWrapping="WrapWithOverflow">
                     <TextBlock.Style>

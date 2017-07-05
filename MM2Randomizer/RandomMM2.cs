@@ -35,7 +35,7 @@ namespace MM2Randomizer
         public static RTilemap randomTilemap = new RTilemap();
         public static RColors randomColors = new RColors();
         public static RMusic randomMusic = new RMusic();
-        public static RWeaponNames rWeaponNames = new RWeaponNames();
+        public static RText rWeaponNames = new RText();
         public static List<IRandomizer> Randomizers;
 
         /// <summary>

@@ -1,6 +1,6 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.2.2 beta
+version 0.3.0 beta
 
 -----------------------------------------------------------------------------------------------
 
@@ -32,8 +32,10 @@ bosses have randomly assigned colors.
 
 - BGM: The background music for all stages have been shuffled.
 
-- Random Weapon Names: In the Weapon Get screen, the weapon name and letter will be randomized.
-This letter is not used in the pause menu, however.
+- Random Text:
+- - The story in the intro cutscene will be different.
+- - In the Weapon Get screen, the weapon name and letter will be randomized.
+    (This letter is not used in the pause menu, however)
 
 - Fast Text: To compensate for the U version being slower, text delay is increased from 7
 frames to 4 frames.

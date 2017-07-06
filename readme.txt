@@ -1,6 +1,6 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.2.2 beta
+version 0.3.0 beta
 
 -----------------------------------------------------------------------------------------------
 
@@ -11,13 +11,9 @@ the Stage Select screen point to different stages.
 
 - Weapon Behavior: Movement properties and ammo usage of each weapon are changed.
 
-- Boss Weaknesses (CHAOS MODE): The damage done by each weapon against each boss is changed.
+- Boss Weaknesses: The damage done by each weapon against each boss is changed.
 Two Robot Masters take 2x damage from Buster.  Every Robot Master will have a primary weakness
 and secondary weakness. Damage values are, on average, lower than in vanilla Mega Man 2.
-
-- Boss Weaknesses (EASY MODE): The damage done by each weapon against each Robot Master is
-shuffled, so that all weapons remain as effective as in Mega Man 2. Wily 2 and Wily 4 boss
-remain unchanged.
 
 - Boss AI: Properties of Robot Master attack patterns are changed.
 
@@ -36,8 +32,10 @@ bosses have randomly assigned colors.
 
 - BGM: The background music for all stages have been shuffled.
 
-- Random Weapon Names: In the Weapon Get screen, the weapon name and letter will be randomized.
-This letter is not used in the pause menu, however.
+- Random Text:
+- - The story in the intro cutscene will be different.
+- - In the Weapon Get screen, the weapon name and letter will be randomized.
+    (This letter is not used in the pause menu, however)
 
 - Fast Text: To compensate for the U version being slower, text delay is increased from 7
 frames to 4 frames.
@@ -91,6 +89,18 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
 -----------------------------------------------------------------------------------------------
   
 Changelog
+
+v0.3.0-beta
+- New title screen
+- Randomized intro cutscene story
+- Renamed difficulties from Difficult/Normal to Normal/Easy
+- Cursor now defaults on Normal (formerly Difficult)
+- Disabled most options due to compatibility problems. The options suck anyways, everything
+  should just be kept on. I will ponder more actually useful options in the future.
+- (Boss) Increased damage to Picopico-kun:
+- - ammoUse x 10 for the main weakness
+- - ammoUse x 6 for secondary weakness
+- - ammoUse x 3 for tertiary weakness
 
 v0.2.2-beta
 - ROM file is no longer included

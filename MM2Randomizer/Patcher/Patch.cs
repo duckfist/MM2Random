@@ -75,15 +75,10 @@ namespace MM2Randomizer.Patcher
             // Noobish Noobsicle wrote this IPS patching code
             // romname is the original ROM, patchname is the patch to apply
             FileStream romstream = new FileStream(romname, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-            //FileStream ipsstream = new FileStream(patchname, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-            //int lint = (int)ipsstream.Length;
             int lint = (int)Properties.Resources.mm2rng_prepatch.Length;
-            //byte[] ipsbyte = new byte[ipsstream.Length];
             byte[] ipsbyte = Properties.Resources.mm2rng_prepatch;
             byte[] rombyte = new byte[romstream.Length];
             IAsyncResult romresult;
-            //IAsyncResult ipsresult = ipsstream.BeginRead(ipsbyte, 0, lint, null, null);
-            //ipsstream.EndRead(ipsresult);
             int ipson = 5;
             int totalrepeats = 0;
             int offset = 0;
@@ -123,7 +118,6 @@ namespace MM2Randomizer.Patcher
                     keepgoing = false;
             }
             romstream.Close();
-            //ipsstream.Close();
         }
     }
 }

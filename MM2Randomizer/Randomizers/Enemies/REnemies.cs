@@ -55,30 +55,52 @@ namespace MM2Randomizer.Randomizers.Enemies
         /// </summary>
         private void ReadEnemyInstancesFromFile()
         {
-            using (StreamReader sr = new StreamReader("enemylist.csv"))
+            string[] lines = Properties.Resources.enemylist.Split(new string[] { Environment.NewLine }, StringSplitOptions.None );
+            foreach (string line in lines)
             {
-                while (!sr.EndOfStream)
-                {
-                    string line = sr.ReadLine();
-                    if (line.StartsWith("#")) continue; // Ignore comment lines
+                if (line.StartsWith("#")) continue; // Ignore comment lines
 
-                    string[] cols = line.Split(new char[] { ',' });
+                string[] cols = line.Split(new char[] { ',' });
 
-                    EnemyInstance enemy = new EnemyInstance(
-                        Convert.ToInt32(cols[0], 16), // Index
-                        Convert.ToInt32(cols[1], 16), // StageNum
-                        Convert.ToInt32(cols[2], 16), // RoomNum
-                        Convert.ToInt32(cols[3], 16), // ScreenNum
-                        Convert.ToBoolean(cols[4]),   // IsActive
-                        Convert.ToInt32(cols[5], 16), // EnemyID
-                        Convert.ToInt32(cols[6], 16), // XPosOriginal
-                        Convert.ToInt32(cols[7], 16), // YPosOriginal
-                        Convert.ToInt32(cols[8], 16), // YPosAir
-                        Convert.ToInt32(cols[9], 16), // YPosGround
-                        Convert.ToBoolean(cols[10])); // FaceRight
-                    EnemyInstances.Add(enemy);
-                }
+                EnemyInstance enemy = new EnemyInstance(
+                    Convert.ToInt32(cols[0], 16), // Index
+                    Convert.ToInt32(cols[1], 16), // StageNum
+                    Convert.ToInt32(cols[2], 16), // RoomNum
+                    Convert.ToInt32(cols[3], 16), // ScreenNum
+                    Convert.ToBoolean(cols[4]),   // IsActive
+                    Convert.ToInt32(cols[5], 16), // EnemyID
+                    Convert.ToInt32(cols[6], 16), // XPosOriginal
+                    Convert.ToInt32(cols[7], 16), // YPosOriginal
+                    Convert.ToInt32(cols[8], 16), // YPosAir
+                    Convert.ToInt32(cols[9], 16), // YPosGround
+                    Convert.ToBoolean(cols[10])); // FaceRight
+                EnemyInstances.Add(enemy);
             }
+
+            //using (StreamReader sr = new StreamReader("enemylist.csv"))
+            //{
+            //    while (!sr.EndOfStream)
+            //    {
+            //        string line = sr.ReadLine();
+            //        if (line.StartsWith("#")) continue; // Ignore comment lines
+
+            //        string[] cols = line.Split(new char[] { ',' });
+
+            //        EnemyInstance enemy = new EnemyInstance(
+            //            Convert.ToInt32(cols[0], 16), // Index
+            //            Convert.ToInt32(cols[1], 16), // StageNum
+            //            Convert.ToInt32(cols[2], 16), // RoomNum
+            //            Convert.ToInt32(cols[3], 16), // ScreenNum
+            //            Convert.ToBoolean(cols[4]),   // IsActive
+            //            Convert.ToInt32(cols[5], 16), // EnemyID
+            //            Convert.ToInt32(cols[6], 16), // XPosOriginal
+            //            Convert.ToInt32(cols[7], 16), // YPosOriginal
+            //            Convert.ToInt32(cols[8], 16), // YPosAir
+            //            Convert.ToInt32(cols[9], 16), // YPosGround
+            //            Convert.ToBoolean(cols[10])); // FaceRight
+            //        EnemyInstances.Add(enemy);
+            //    }
+            //}
         }
 
         private void Execute(Patch Patch, Random r)

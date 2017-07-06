@@ -543,21 +543,18 @@ namespace MM2Randomizer.Randomizers
                     byte damage = 0x00;
                     char level = ' ';
 
-                    // Pico weakness 1, deal ammoUse x10 damage
                     if (weapon == enemyWeak1)
                     {
                         damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 10);
                         if (damage < 2) damage = 3;
                         level = '^';
                     }
-                    // weakness 2, deal ammoUse x5 damage
                     else if (weapon == enemyWeak2)
                     {
                         damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 6);
                         if (damage < 2) damage = 2;
                         level = '*';
                     }
-                    // weakness 3, deal ammoUse x2 damage
                     else if (weapon == enemyWeak3)
                     {
                         damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 3);

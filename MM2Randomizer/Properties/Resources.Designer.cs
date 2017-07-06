@@ -59,5 +59,35 @@ namespace MM2Randomizer.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #Index,StageNum,RoomNum,ScreenNum,IsActive,EnemyID,XPosOriginal,YPosOriginal,YPosAir,YPosGround,FaceRight
+        ///00,00,00,01,true,2B,70,10,10,10,false
+        ///01,00,00,01,true,2B,F0,10,10,10,false
+        ///02,00,00,02,true,2B,90,10,10,10,false
+        ///03,00,00,02,true,21,A8,58,58,58,false
+        ///04,00,00,02,true,21,E8,78,78,78,false
+        ///05,00,00,03,true,21,48,48,48,48,false
+        ///06,00,00,03,true,21,88,68,68,68,false
+        ///07,00,00,03,true,21,D8,98,98,98,false
+        ///08,00,00,04,true,21,28,58,58,58,false
+        ///09,00,00,04,true,21,88,58,58,58,false
+        ///0A,00,00,04,tru [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string enemylist {
+            get {
+                return ResourceManager.GetString("enemylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] mm2rng_prepatch {
+            get {
+                object obj = ResourceManager.GetObject("mm2rng_prepatch", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.3.0 beta
+version 0.3.1 beta
 
 -----------------------------------------------------------------------------------------------
 
@@ -89,6 +89,9 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
 -----------------------------------------------------------------------------------------------
   
 Changelog
+
+v0.3.1-beta
+- Embedded external files as resources. All you need now is the .exe (...and the ROM...)
 
 v0.3.0-beta
 - New title screen

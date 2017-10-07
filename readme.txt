@@ -92,6 +92,7 @@ Changelog
 
 v0.3.1-beta
 - Embedded external files as resources. All you need now is the .exe (...and the ROM...)
+- Bug fix: Generating multiple ROMs with a set seed should now be consistently random
 
 v0.3.0-beta
 - New title screen

@@ -15,7 +15,7 @@ namespace MM2Randomizer.Randomizers
         public static int[,] WilyWeaknesses = new int[6, 8];
         public static char[,] WilyWeaknessInfo = new char[6, 8];
 
-        private StringBuilder debug;
+        private StringBuilder debug = new StringBuilder();
         public override string ToString()
         {
             return debug.ToString();
@@ -23,7 +23,6 @@ namespace MM2Randomizer.Randomizers
 
         public RWeaknesses(bool isChaos)
         {
-            debug = new StringBuilder();
             IsChaos = isChaos;
         }
 

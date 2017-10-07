@@ -91,6 +91,7 @@ namespace MM2Randomizer
                     sw.WriteLine("Mega Man 2 Randomizer");
                     sw.WriteLine(String.Format("Version {0}", ViewModel.AssemblyVersion.ToString()));
                     sw.WriteLine(String.Format("Seed {0}\n", seedAlpha));
+                    sw.WriteLine(RandomMM2.randomStages.ToString());
                     sw.WriteLine(RandomMM2.randomWeaponBehavior.ToString());
                     sw.WriteLine(RandomMM2.randomWeaknesses.ToString());
                     sw.Write(RandomMM2.Patch.GetStringSortedByAddress());

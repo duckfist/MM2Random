@@ -125,8 +125,29 @@ namespace MM2Randomizer.Randomizers
             { '!', 0xDF },
         };
 
+        static bool AssertIntroTexts()
+        {
+            foreach (string intro in IntroTexts)
+            {
+                if (intro.Length != 270)
+                {
+                    return false;
+                }
+
+                foreach (char c in intro)
+                {
+                    if (!IntroCipher.ContainsKey(c))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
         static string[] IntroTexts = new string[]
         {
+            // Castlevania III: Dracula's Curse
             "DURING 15TH CENTURY EUROPE "+
             "  THERE LIVED A PERSON     "+
             "    NAMED DRACULA. HE      "+
@@ -138,6 +159,7 @@ namespace MM2Randomizer.Randomizers
             "    THE FATE OF EUROPE     "+
             " LIES WITH TREVOR BELMONT. ",
 
+            // Ninja Gaiden
             " WITH WHOM DID FATHER HAVE "+
             "     A DUEL AND LOSE?      "+
             "  FOR WHAT REASON DID HE   "+
@@ -149,6 +171,7 @@ namespace MM2Randomizer.Randomizers
             "   I WILL GET MY REVENGE!  "+
             "                           ",
 
+            // Super Mario Bros. 2
             " MARIO OPENED A DOOR AFTER "+
             " CLIMBING A LONG STAIR IN  "+
             " HIS DREAM, ANOTHER WORLD  "+
@@ -160,6 +183,7 @@ namespace MM2Randomizer.Randomizers
             "  TO HIS SURPRISE HE SAW   "+
             "  WHAT WAS IN HIS DREAM... ",
 
+            // The Legend of Zelda
             "   MANY YEARS AGO PRINCE   "+
             "  DARKNESS \'GANNON\' STOLE  "+
             " ONE OF THE TRIFORCE WITH  "+
@@ -170,18 +194,8 @@ namespace MM2Randomizer.Randomizers
             "FROM GANNON BEFORE SHE WAS "+
             "  CAPTURED. GO FIND THE 8  "+
             "  UNITS LINK TO SAVE HER.  ",
-
-            "          METROID          "+
-            "                           "+
-            "         EMERGENCY         "+
-            "           ORDER           "+
-            "   DEFEAT THE METROID OF   "+
-            "   THE PLANET ZEBETH AND   "+
-            " DESTROY THE MOTHER BRAIN  "+
-            " THE MECHANICAL LIFE VEIN  "+
-            "  GALAXY FEDEREAL POLICE   "+
-            "          M510             ",
-
+            
+            // Kirby's Adventure
             "ONE DAY, THE PEACEFUL LIFE "+
             "OF DREAMLAND WAS SHATTERED "+
             "  BY A MYSTERIOUS CRISIS!  "+
@@ -193,6 +207,19 @@ namespace MM2Randomizer.Randomizers
             " TO BRING BACK LOST DREAMS,"+
             " KIRBY SOUGHT THE STAR ROD!",
 
+            // Metroid
+            "          METROID          "+
+            "                           "+
+            "         EMERGENCY         "+
+            "           ORDER           "+
+            "   DEFEAT THE METROID OF   "+
+            "   THE PLANET ZEBETH AND   "+
+            " DESTROY THE MOTHER BRAIN  "+
+            " THE MECHANICAL LIFE VEIN  "+
+            "  GALAXY FEDEREAL POLICE   "+
+            "          M510             ",
+            
+            // Super Metroid
             "    I FIRST BATTLED THE    "+
             " METROIDS ON PLANET ZEBES. "+
             "IT WAS THERE THAT I FOILED "+
@@ -204,6 +231,7 @@ namespace MM2Randomizer.Randomizers
             "     CERES STATION IS      "+
             "      UNDER ATTACK!!!      ",
 
+            // Final Fantasy
             "  THE WORLD IS VEILED IN   "+
             " DARKNESS. THE WIND STOPS, "+
             " THE SEA IS WILD, AND THE  "+
@@ -214,7 +242,32 @@ namespace MM2Randomizer.Randomizers
             "WARRIORS WILL COME. AFTER A"+
             "LONG JOURNEY, FOUR WARRIORS"+
             "ARRIVE, EACH HOLDING AN ORB",
+                        
+            // Final Fantasy 3, RPGe translation
+            "THE GURGAN QUIETLY SPOKE..."+
+            "THIS EARTHQUAKE IS AN OMEN" +
+            " THE TREMORS THAT PULLED   "+
+            "THE CRYSTALS INTO THE EARTH"+
+            "AND BROUGHT FORTH MONSTERS "+
+            "ARE NOTHING COMPARED TO THE"+
+            "DARKNESS WHICH IS TO COME.."+
+            " BUT HOPE IS NOT YET LOST. "+
+            "  FOUR SOULS WILL TAKE UP  "+
+            "  THE QUEST OF THE LIGHT.  ",
+            
+            // Final Fantasy Tactics
+            " A WARRIOR TAKES SWORD IN  "+
+            "HAND, CLASPING A GEM TO HIS"+
+            "HEART. ENGRAVING VANISHING "+
+            "  MEMORIES INTO THE SWORD, "+
+            "  HE PLACES FINELY HONED   "+
+            "   SKILLS INTO THE STONE   "+
+            "   SPOKEN FROM THE SWORD,  "+
+            " HANDED DOWN FROM THE STONE"+
+            "NOW THE STORY CAN BE TOLD.."+
+            " THE \'ZODIAC BRAVE STORY\'. ",
 
+            // Dragon Warrior
             " LISTEN NOW TO MY WORDS.   "+
             " DESCENDANT OF ERDRICK, IT "+
             " IS TOLD THAT IN AGES PAST "+
@@ -226,6 +279,7 @@ namespace MM2Randomizer.Randomizers
             "MEGAMAN, THOU MUST HELP US "+
             "RESTORE PEACE TO OUR LAND. ",
 
+            // Star Wars
             "IT\'S A PERIOD OF CIVIL WAR."+
             "REBELS HAVE WON THEIR FIRST"+
             " VICTORY AGAINST THE EVIL  "+
@@ -236,6 +290,7 @@ namespace MM2Randomizer.Randomizers
             " ESCAPES WITH THE PLANS TO "+
             " SAVE HIS PEOPLE AND BRING "+
             "   FREEDOM TO THE GALAXY.  ",
+
         };
 
         private string GetRandomName(Random r)

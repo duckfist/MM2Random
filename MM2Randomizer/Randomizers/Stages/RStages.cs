@@ -3,14 +3,21 @@ using MM2Randomizer.Patcher;
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace MM2Randomizer.Randomizers.Stages
 {
     public class RStages : IRandomizer
     {
         public static List<StageFromSelect> StageSelect;
+        private StringBuilder debug = new StringBuilder();
 
         public RStages() { }
+
+        public override string ToString()
+        {
+            return debug.ToString();
+        }
 
         public void FixPortraits(ref byte[] portraitBG_x, ref byte[] portraitBG_y)
         {
@@ -143,10 +150,12 @@ namespace MM2Randomizer.Randomizers.Stages
 
             newStageOrder.Shuffle(r);
 
+            debug.AppendLine("Stage Select:");
             for (int i = 0; i < 8; i++)
             {
                 string portrait = StageSelect[i].PortraitName;
                 StageSelect[i].PortraitDestinationNew = StageSelect[newStageOrder[i]].PortraitDestinationOriginal;
+                debug.AppendLine($"{Enum.GetName(typeof(EStageID), StageSelect[i].PortraitDestinationOriginal)}'s portrait -> {Enum.GetName(typeof(EStageID), StageSelect[i].PortraitDestinationNew)} stage");
             }
 
             foreach (StageFromSelect stage in StageSelect)

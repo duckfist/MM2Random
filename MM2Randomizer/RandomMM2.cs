@@ -24,18 +24,18 @@ namespace MM2Randomizer
         public static readonly string TempFileName = "temp.nes";
         public static string RecentlyCreatedFileName = "";
 
-        public static RStages randomStages = new RStages();
-        public static RWeaponGet randomWeaponGet = new RWeaponGet();
-        public static RWeaponBehavior randomWeaponBehavior = new RWeaponBehavior();
-        public static RWeaknesses randomWeaknesses = new RWeaknesses(true);
-        public static RBossAI randomBossAI = new RBossAI();
-        public static RItemGet randomItemGet = new RItemGet();
-        public static RTeleporters randomTeleporters = new RTeleporters();
-        public static REnemies randomEnemies = new REnemies();
-        public static RTilemap randomTilemap = new RTilemap();
-        public static RColors randomColors = new RColors();
-        public static RMusic randomMusic = new RMusic();
-        public static RText rWeaponNames = new RText();
+        public static RStages randomStages;
+        public static RWeaponGet randomWeaponGet;
+        public static RWeaponBehavior randomWeaponBehavior;
+        public static RWeaknesses randomWeaknesses;
+        public static RBossAI randomBossAI;
+        public static RItemGet randomItemGet;
+        public static RTeleporters randomTeleporters;
+        public static REnemies randomEnemies;
+        public static RTilemap randomTilemap;
+        public static RColors randomColors;
+        public static RMusic randomMusic;
+        public static RText rWeaponNames;
         public static List<IRandomizer> Randomizers;
 
         /// <summary>
@@ -44,6 +44,19 @@ namespace MM2Randomizer
         /// </summary>
         public static void RandomizerCreate()
         {
+            randomStages = new RStages();
+            randomWeaponGet = new RWeaponGet();
+            randomWeaponBehavior = new RWeaponBehavior();
+            randomWeaknesses = new RWeaknesses(true);
+            randomBossAI = new RBossAI();
+            randomItemGet = new RItemGet();
+            randomTeleporters = new RTeleporters();
+            randomEnemies = new REnemies();
+            randomTilemap = new RTilemap();
+            randomColors = new RColors();
+            randomMusic = new RMusic();
+            rWeaponNames = new RText();
+
             try
             {
                 Randomizers = new List<IRandomizer>();

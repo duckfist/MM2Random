@@ -93,6 +93,7 @@ namespace MM2Randomizer
                     sw.WriteLine(String.Format("Seed {0}\n", seedAlpha));
                     sw.WriteLine(RandomMM2.randomStages.ToString());
                     sw.WriteLine(RandomMM2.randomWeaponBehavior.ToString());
+                    sw.WriteLine(RandomMM2.randomEnemyWeakness.ToString());
                     sw.WriteLine(RandomMM2.randomWeaknesses.ToString());
                     sw.Write(RandomMM2.Patch.GetStringSortedByAddress());
                 }

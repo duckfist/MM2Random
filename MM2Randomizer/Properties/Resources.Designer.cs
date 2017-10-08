@@ -61,6 +61,98 @@ namespace MM2Randomizer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HUDSON SOFT
+        ///NINTENDO
+        ///TREASURE
+        ///KONAMI
+        ///DATA EAST
+        ///SNK PLAYMORE
+        ///ACTIVISION
+        ///JALECO
+        ///TECMO
+        ///SUNSOFT
+        ///TAITO
+        ///SONY IMAGESOFT
+        ///SEGA CO. LTD
+        ///IREM
+        ///COMPILE
+        ///KOEI
+        ///TENGEN
+        ///KEMCO
+        ///RARE
+        ///ATLUS
+        ///HAL LABORATORY
+        ///TOSE CO. LTD
+        ///NAMCO LTD.
+        ///NATSUME
+        ///SQUARE CO. LTD
+        ///RAINBOW ARTS.
+        /// </summary>
+        internal static string companynames {
+            get {
+                return ResourceManager.GetString("companynames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AFGHANISTAN
+        ///ALBANIA
+        ///ALGERIA
+        ///ANDORRA
+        ///ANGOLA
+        ///ANTIGUA AND BARBUDA
+        ///ARGENTINA
+        ///ARMENIA
+        ///ARUBA
+        ///AUSTRALIA
+        ///AUSTRIA
+        ///AZERBAIJAN
+        ///ANTARCTICA
+        ///THE BAHAMAS
+        ///BAHRAIN
+        ///BANGLADESH
+        ///BARBADOS
+        ///BELARUS
+        ///BELGIUM
+        ///BELIZE
+        ///BENIN
+        ///BHUTAN
+        ///BOLIVIA
+        ///BOSNIA AND HERZEGOVINA
+        ///BOTSWANA
+        ///BRAZIL
+        ///BRUNEI
+        ///BULGARIA
+        ///BURKINA FASO
+        ///BURMA
+        ///BURUNDI
+        ///CAMBODIA
+        ///CAMEROON
+        ///CANADA
+        ///CABO VERDE
+        ///CENTRAL AFRICAN REPUBLIC
+        ///CHAD
+        ///CHILE
+        ///CHINA
+        ///COLOMBIA
+        ///CONGO
+        ///COSTA RICA
+        ///CROATIA
+        ///CUBA
+        ///CURACAO
+        ///CYPRUS
+        ///CZECH REPUBLIC
+        ///DENMARK
+        ///DJIBOUTI
+        ///DOMINI [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string countrylist {
+            get {
+                return ResourceManager.GetString("countrylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to #Index,StageNum,RoomNum,ScreenNum,IsActive,EnemyID,XPosOriginal,YPosOriginal,YPosAir,YPosGround,FaceRight
         ///00,00,00,01,true,2B,70,10,10,10,false
         ///01,00,00,01,true,2B,F0,10,10,10,false
@@ -77,6 +169,26 @@ namespace MM2Randomizer.Properties {
         internal static string enemylist {
             get {
                 return ResourceManager.GetString("enemylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #EnemyName,#OffsetHex,#P,#H,#A,#W,#B,#Q,#C,#M
+        ///Shrink               ,00,7,20,0,10,20,7,10,10
+        ///Shrink(From Angler)  ,01,7,20,0,10,20,7,10,10
+        ///Claw(Instance)       ,08,20,20,10,10,20,7,10,10
+        ///Tanishi	             ,0A,10,20,0,10,0,4,10,4
+        ///Kerog                ,0C,2,20,0,0,4,4,0,2
+        ///Kerog(Small)         ,0D,20,20,10,10,20,20,10,10
+        ///Batton               ,16,10,20,10,10,0,10,10,20
+        ///Robbit               ,17,2,20,0,20,7,4,20,4
+        ///Friender(Instance)   ,19,1,20,0,20,0,2,0,2
+        ///Monking              ,1D,7,20,0,20,0,7,20,7
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string enemyweakness {
+            get {
+                return ResourceManager.GetString("enemyweakness", resourceCulture);
             }
         }
         

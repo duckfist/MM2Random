@@ -4,25 +4,120 @@ using System.Collections.Generic;
 using MM2Randomizer.Enums;
 using MM2Randomizer.Patcher;
 using System.Text;
+using System.Linq;
 
 namespace MM2Randomizer.Randomizers
 {
     public class RText : IRandomizer
     {
         public static readonly int MAX_CHARS = 12;
+        public static readonly int INTRO_LINE1_MAXCHARS = 19;
+        public static readonly int INTRO_LINE2_MAXCHARS = 31;
+        public static readonly int INTRO_LINE3_MAXCHARS = 11;
+        public static readonly int INTRO_LINE4_MAXCHARS = 25;
+
         public static readonly int offsetLetters = 0x037e22;
         public static readonly int offsetAtomicFire = 0x037e2e;
         public static readonly int offsetCutscenePage1L1 = 0x036D56;
+        public static readonly int offsetIntroLine1 = 0x036EA8;
+        public static readonly int offsetIntroLine2 = 0x036EBE;
+        public static readonly int offsetIntroLine3 = 0x036EE0;
+        public static readonly int offsetIntroLine4 = 0x036EEE;
+
+        private List<string> countryNames = new List<string>();
+        private List<string> companyNames = new List<string>();
 
         public RText() { }
 
         public void Randomize(Patch p, Random r)
         {
-            // Write in intro text
             int numIntros = IntroTexts.GetLength(0);
             int introIndex = r.Next(numIntros);
             char[] introText = IntroTexts[introIndex].ToCharArray();
-            
+
+            // Write in splash screen intro text
+            //Intro Screen Line 1: 0x036EA8 - 0x036EBA(19 chars)
+            //Intro Screen Line 2: 0x036EBE - 0x036EDC(31 chars)
+            //Intro Screen Line 3: 0x036EE0 - 0x036EEA(11 chars)
+            //Intro Screen Line 4: 0x036EEE - 0x036F06(25 chars)
+            //
+            //       ©1988 CAPCOM CO. LTD
+            // TM AND ©1989 CAPCOM U.S.A.,INC.
+            //   MEGA MAN 2 RANDOMIZER 0.3.2
+            //           LICENSED BY
+            //    NINTENDO OF AMERICA. INC.
+
+            // Line 1: ©2017 <company name> (14 chars for company, 19 total)
+            string[] lines = Properties.Resources.companynames.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            foreach (string line in lines)
+            {
+                if (line.StartsWith("#")) continue; // Ignore comment lines
+                companyNames.Add(line);
+            }
+            char[] company = ("©2017 " + companyNames[r.Next(companyNames.Count)]).ToCharArray();
+            char[] companyPadded = Enumerable.Repeat(' ', INTRO_LINE1_MAXCHARS).ToArray();
+            int startChar = (INTRO_LINE1_MAXCHARS - company.Length) / 2;
+            for (int i = 0; i < company.Length; i++)
+            {
+                companyPadded[startChar + i] = company[i];
+            }
+            for (int i = 0; i < INTRO_LINE1_MAXCHARS; i++)
+            {
+                byte charByte = IntroCipher[companyPadded[i]];
+                p.Add(
+                    offsetIntroLine1 + i,
+                    charByte,
+                    $"Splash Text: {companyPadded[i]}");
+            }
+
+            // Line 2: Version
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            string version = assembly.GetName().Version.ToString().Substring(0, 5);
+            char[] line2 = $"  MEGA MAN 2 RANDOMIZER {version}  ".ToCharArray();
+            for (int i = 0; i < INTRO_LINE2_MAXCHARS; i++)
+            {
+                byte charByte = IntroCipher[line2[i]];
+                p.Add(
+                    offsetIntroLine2 + i,
+                    charByte,
+                    $"Splash Text: {line2[i]}");
+            }
+
+            // Line 3: FOR USE IN
+            char[] forUseIn = "FOR USE IN ".ToCharArray();
+            for (int i = 0; i < INTRO_LINE3_MAXCHARS; i++)
+            {
+                byte charByte = IntroCipher[forUseIn[i]];
+                p.Add(
+                    offsetIntroLine3 + i,
+                    charByte,
+                    $"Splash Text: {forUseIn[i]}");
+            }
+
+            // Line 4: <Country>
+            lines = Properties.Resources.countrylist.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            foreach (string line in lines)
+            {
+                if (line.StartsWith("#")) continue; // Ignore comment lines
+                countryNames.Add(line);
+            }
+            char[] country = countryNames[r.Next(countryNames.Count)].ToCharArray();
+            char[] countryPadded = Enumerable.Repeat(' ', INTRO_LINE4_MAXCHARS).ToArray();
+            startChar = (INTRO_LINE4_MAXCHARS - country.Length) / 2;
+            for (int i = 0; i < country.Length; i++)
+            {
+                countryPadded[startChar + i] = country[i];
+            }
+            for (int i = 0; i < INTRO_LINE4_MAXCHARS; i++)
+            {
+                byte charByte = IntroCipher[countryPadded[i]];
+                p.Add(
+                    offsetIntroLine4 + i,
+                    charByte,
+                    $"Splash Text: {countryPadded[i]}");
+            }
+
+            // Write in cutscene intro text
             for (int i = 0; i < 270; i++) // 27 characters per line, 5 pages, 2 lines per page
             {
                 try
@@ -419,10 +514,15 @@ namespace MM2Randomizer.Randomizers
                 "JOKA",
                 "ELLO",
                 "COOLKID",
+                "CYGHFER",
+                "ZODA",
+                "SHOKA",
                 "PROTO",
                 "PLUG",
                 "RTA",
                 "MASH",
+                "TURBO",
+                "TAS",
                 "BIG",
                 "CUT",
                 "URN",

@@ -32,6 +32,7 @@ namespace MM2Randomizer
         public static RItemGet randomItemGet;
         public static RTeleporters randomTeleporters;
         public static REnemies randomEnemies;
+        public static REnemyWeaknesses randomEnemyWeakness;
         public static RTilemap randomTilemap;
         public static RColors randomColors;
         public static RMusic randomMusic;
@@ -52,6 +53,7 @@ namespace MM2Randomizer
             randomItemGet = new RItemGet();
             randomTeleporters = new RTeleporters();
             randomEnemies = new REnemies();
+            randomEnemyWeakness = new REnemyWeaknesses();
             randomTilemap = new RTilemap();
             randomColors = new RColors();
             randomMusic = new RMusic();
@@ -93,6 +95,10 @@ namespace MM2Randomizer
                 if (Settings.IsEnemiesRandom)
                 {
                     Randomizers.Add(randomEnemies);
+                }
+                if (Settings.IsEnemyWeaknessRandom)
+                {
+                    Randomizers.Add(randomEnemyWeakness);
                 }
                 if (Settings.IsTilemapChangesEnabled)
                 {
@@ -139,7 +145,9 @@ namespace MM2Randomizer
                 {
                     MiscHacks.DrawTitleScreenChanges(Patch, Seed);
                 }
-                MiscHacks.EnablePressDamage(Patch);
+                
+                // No longer needed since press is included in enemy damage rando table
+                //MiscHacks.EnablePressDamage(Patch);
 
                 // Prepare a copy of the source rom for modification
                 File.Copy(Settings.SourcePath, TempFileName, true);

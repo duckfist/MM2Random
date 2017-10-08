@@ -164,7 +164,10 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\companynames.csv" />
+    <None Include="Resources\countrylist.csv" />
     <None Include="Resources\enemylist.csv" />
+    <None Include="Resources\enemyweakness.csv" />
     <None Include="Resources\mm2rng_prepatch.dat" />
   </ItemGroup>
   <ItemGroup>

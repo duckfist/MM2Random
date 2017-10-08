@@ -447,13 +447,14 @@ namespace MM2Randomizer.Randomizers
 
             //0x02CD07 - Jump behavior 0x27. 0x17 = always jumping, any other value = doesn't react with a jump.
             // Give 25% chance for each unique behavior, and 50% for default.
+            // UPDATE: One of these two behaviors breaks and clashman goes crazy. I think it's 0x17. disable.
             rDbl = r.NextDouble();
             byte jumpType = 0x27;
             if (rDbl > 0.75)
-            {
-                jumpType = 0x17;
-            }
-            else if (rDbl > 0.5)
+            //{
+            //    jumpType = 0x17;
+            //}
+            //else if (rDbl > 0.5)
             {
                 jumpType = 0x26;
             }

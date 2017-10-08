@@ -36,38 +36,49 @@ namespace MM2Randomizer.Randomizers
             char[] introText = IntroTexts[introIndex].ToCharArray();
 
             // Write in splash screen intro text
-            //Intro Screen Line 1: 0x036EA8 - 0x036EBA(19 chars)
+            //Intro Screen Line 1: 0x036EA8 - 0x036EBA(20 chars)
             //Intro Screen Line 2: 0x036EBE - 0x036EDC(31 chars)
             //Intro Screen Line 3: 0x036EE0 - 0x036EEA(11 chars)
             //Intro Screen Line 4: 0x036EEE - 0x036F06(25 chars)
             //
-            //       ©1988 CAPCOM CO. LTD
+            //       ©1988 CAPCOM CO.LTD
             // TM AND ©1989 CAPCOM U.S.A.,INC.
             //   MEGA MAN 2 RANDOMIZER 0.3.2
             //           LICENSED BY
             //    NINTENDO OF AMERICA. INC.
 
-            // Line 1: ©2017 <company name> (14 chars for company, 19 total)
-            string[] lines = Properties.Resources.companynames.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            foreach (string line in lines)
+            // Line 1: ©2017 <company name> (13 chars for company, 19 total)
+            string[] lines;
+            int startChar;
+            char[] company;
+            try
             {
-                if (line.StartsWith("#")) continue; // Ignore comment lines
-                companyNames.Add(line);
+                lines = Properties.Resources.companynames.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                foreach (string line in lines)
+                {
+                    if (line.StartsWith("#")) continue; // Ignore comment lines
+                    companyNames.Add(line);
+                }
+                company = ("©2017 " + companyNames[r.Next(companyNames.Count)]).ToCharArray();
+                char[] companyPadded = Enumerable.Repeat(' ', INTRO_LINE1_MAXCHARS).ToArray();
+                startChar = (INTRO_LINE1_MAXCHARS - company.Length) / 2;
+                for (int i = 0; i < company.Length; i++)
+                {
+                    companyPadded[startChar + i] = company[i];
+                }
+                for (int i = 0; i < INTRO_LINE1_MAXCHARS; i++)
+                {
+                    byte charByte = IntroCipher[companyPadded[i]];
+                    p.Add(
+                        offsetIntroLine1 + i,
+                        charByte,
+                        $"Splash Text: {companyPadded[i]}");
+                }
             }
-            char[] company = ("©2017 " + companyNames[r.Next(companyNames.Count)]).ToCharArray();
-            char[] companyPadded = Enumerable.Repeat(' ', INTRO_LINE1_MAXCHARS).ToArray();
-            int startChar = (INTRO_LINE1_MAXCHARS - company.Length) / 2;
-            for (int i = 0; i < company.Length; i++)
+            catch (Exception ex)
             {
-                companyPadded[startChar + i] = company[i];
-            }
-            for (int i = 0; i < INTRO_LINE1_MAXCHARS; i++)
-            {
-                byte charByte = IntroCipher[companyPadded[i]];
-                p.Add(
-                    offsetIntroLine1 + i,
-                    charByte,
-                    $"Splash Text: {companyPadded[i]}");
+                System.Windows.MessageBox.Show(ex.ToString());
+                throw;
             }
 
             // Line 2: Version
@@ -219,6 +230,7 @@ namespace MM2Randomizer.Randomizers
             { '\'', 0xDE },
             { '!', 0xDF },
         };
+        // STAFF == D3 D4 C1 C6 C6
 
         static bool AssertIntroTexts()
         {
@@ -340,7 +352,7 @@ namespace MM2Randomizer.Randomizers
                         
             // Final Fantasy 3, RPGe translation
             "THE GURGAN QUIETLY SPOKE..."+
-            "THIS EARTHQUAKE IS AN OMEN" +
+            "THIS EARTHQUAKE IS AN OMEN "+
             " THE TREMORS THAT PULLED   "+
             "THE CRYSTALS INTO THE EARTH"+
             "AND BROUGHT FORTH MONSTERS "+

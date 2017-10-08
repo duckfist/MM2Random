@@ -15,6 +15,7 @@ namespace MM2Randomizer.Randomizers.Colors
     {
         List<ColorSet> StagesColorSets { get; set; }
         List<ColorSet> WeaponColorSets { get; set; }
+        List<ColorSet> IntroColorSets { get; set; }
         List<ColorSet> StageSelectColorSets { get; set; }
 
         public static int MegaManColorAddressU = 0x03d314;
@@ -27,6 +28,7 @@ namespace MM2Randomizer.Randomizers.Colors
             RandomizeStageColors(p, r);
             RandomizeWeaponColors(p, r);
             RandomizeBossColors(p, r);
+            RandomizeIntroColors(p, r);
             RandomizeStageSelectColors(p, r);
         }
 
@@ -362,6 +364,171 @@ namespace MM2Randomizer.Randomizers.Colors
 
             shade1 = (byte)(shade0 + 0x10);
             p.Add(0x02DC79, shade1, String.Format("Alien Head Light Color"));
+        }
+
+        private void RandomizeIntroColors(Patch p, Random r)
+        {
+            IntroColorSets = new List<ColorSet>()
+            {
+                new ColorSet() { // Building 1
+                    addresses = new int[] {
+                        0x36a62,                    // partial 1
+                        0x36a81, 0x36a82,           // partial 2
+                        0x36aa0, 0x36aa1, 0x36aa2 },// full
+                    ColorBytes = new List<EColorsHex[]>() {
+                        new EColorsHex[] { // default
+                            (EColorsHex)0x03,
+                            (EColorsHex)0x03, (EColorsHex)0x13,
+                            (EColorsHex)0x03, (EColorsHex)0x13, (EColorsHex)0x24
+                        },
+                        new EColorsHex[] { // gold
+                            (EColorsHex)0x08,
+                            (EColorsHex)0x08, (EColorsHex)0x18,
+                            (EColorsHex)0x08, (EColorsHex)0x18, (EColorsHex)0x29
+                        },
+                        new EColorsHex[] { // blue
+                            (EColorsHex)0x01,
+                            (EColorsHex)0x01, (EColorsHex)0x11,
+                            (EColorsHex)0x01, (EColorsHex)0x11, (EColorsHex)0x2a
+                        },
+                        new EColorsHex[] { // dark pink
+                            (EColorsHex)0x05,
+                            (EColorsHex)0x05, (EColorsHex)0x15,
+                            (EColorsHex)0x05, (EColorsHex)0x15, (EColorsHex)0x2a
+                        },
+                        
+                        new EColorsHex[] { // orange
+                            (EColorsHex)0x07,
+                            (EColorsHex)0x07, (EColorsHex)0x17,
+                            (EColorsHex)0x07, (EColorsHex)0x17, (EColorsHex)0x28
+                        },
+                        new EColorsHex[] { // dark green
+                            (EColorsHex)0x09,
+                            (EColorsHex)0x09, (EColorsHex)0x19,
+                            (EColorsHex)0x09, (EColorsHex)0x19, (EColorsHex)0x2a
+                        },
+                        new EColorsHex[] { // dark turquoise
+                            (EColorsHex)0x0b,
+                            (EColorsHex)0x0b, (EColorsHex)0x1b,
+                            (EColorsHex)0x0b, (EColorsHex)0x1b, (EColorsHex)0x26
+                        },
+                        new EColorsHex[] { // dark cyan
+                            (EColorsHex)0x0c,
+                            (EColorsHex)0x0c, (EColorsHex)0x1c,
+                            (EColorsHex)0x0c, (EColorsHex)0x1c, (EColorsHex)0x21
+                        },
+                        new EColorsHex[] { // gray
+                            (EColorsHex)0x00,
+                            (EColorsHex)0x00, (EColorsHex)0x10,
+                            (EColorsHex)0x00, (EColorsHex)0x10, (EColorsHex)0x20
+                        },
+                    }
+                },
+
+                new ColorSet() { // Building 2
+                    addresses = new int[] {
+                        0x36a6a,                    // partial 1
+                        0x36a89, 0x36a8a,           // partial 2
+                        0x36aa8, 0x36aa9, 0x36aaa },// full
+                    ColorBytes = new List<EColorsHex[]>() {
+                        new EColorsHex[] { // default light pink
+                            (EColorsHex)0x04,
+                            (EColorsHex)0x04, (EColorsHex)0x14,
+                            (EColorsHex)0x04, (EColorsHex)0x14, (EColorsHex)0x27
+                        },
+                        new EColorsHex[] { // light green
+                            (EColorsHex)0x0a,
+                            (EColorsHex)0x0a, (EColorsHex)0x1b,
+                            (EColorsHex)0x0a, (EColorsHex)0x1b, (EColorsHex)0x23
+                        },
+                        new EColorsHex[] { // orange-red
+                            (EColorsHex)0x06,
+                            (EColorsHex)0x06, (EColorsHex)0x17,
+                            (EColorsHex)0x06, (EColorsHex)0x17, (EColorsHex)0x2a
+                        },
+                        new EColorsHex[] { // green-brown
+                            (EColorsHex)0x08,
+                            (EColorsHex)0x08, (EColorsHex)0x1a,
+                            (EColorsHex)0x08, (EColorsHex)0x1a, (EColorsHex)0x21
+                        },
+                        new EColorsHex[] { // pink-blue
+                            (EColorsHex)0x02,
+                            (EColorsHex)0x02, (EColorsHex)0x14,
+                            (EColorsHex)0x02, (EColorsHex)0x14, (EColorsHex)0x27
+                        },
+                        new EColorsHex[] { // green-blue
+                            (EColorsHex)0x01,
+                            (EColorsHex)0x01, (EColorsHex)0x1b,
+                            (EColorsHex)0x01, (EColorsHex)0x1b, (EColorsHex)0x24
+                        },
+                        new EColorsHex[] { // cool-blue
+                            (EColorsHex)0x0c,
+                            (EColorsHex)0x0c, (EColorsHex)0x12,
+                            (EColorsHex)0x0c, (EColorsHex)0x12, (EColorsHex)0x25
+                        },
+                        new EColorsHex[] { // gray
+                            (EColorsHex)0x00,
+                            (EColorsHex)0x00, (EColorsHex)0x0f,
+                            (EColorsHex)0x00, (EColorsHex)0x0f, (EColorsHex)0x10
+                        },
+                        new EColorsHex[] { // orange stroke
+                            (EColorsHex)0x27,
+                            (EColorsHex)0x27, (EColorsHex)0x0f,
+                            (EColorsHex)0x27, (EColorsHex)0x0f, (EColorsHex)0x10
+                        },
+                    }
+                },
+                new ColorSet() { // Mountain Sky
+                    addresses = new int[] { 0x36aa5, 0x36aa6 },
+                    ColorBytes = new List<EColorsHex[]>() {
+                        new EColorsHex[] { // default blue
+                            (EColorsHex)0x11, (EColorsHex)0x0C
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x12, (EColorsHex)0x01
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x13, (EColorsHex)0x02
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x14, (EColorsHex)0x03
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x15, (EColorsHex)0x04
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x16, (EColorsHex)0x05
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x17, (EColorsHex)0x06
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x18, (EColorsHex)0x07
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x19, (EColorsHex)0x08
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x1a, (EColorsHex)0x09
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x1b, (EColorsHex)0x0a
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x1c, (EColorsHex)0x0b
+                        },
+                        new EColorsHex[] { // 
+                            (EColorsHex)0x10, (EColorsHex)0x00
+                        },
+                    }
+                },
+            };
+
+            for (int i = 0; i < IntroColorSets.Count; i++)
+            {
+                ColorSet set = IntroColorSets[i];
+                set.RandomizeAndWrite(p, r, i);
+            }
         }
 
         private void RandomizeStageColors(Patch p, Random r)

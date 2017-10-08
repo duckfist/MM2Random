@@ -90,6 +90,10 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
   
 Changelog
 
+v0.3.2-beta
+- Enemy Weakness Randomizer
+- (Text) Intro splash screen now has some fun stuff
+
 v0.3.1-beta
 - Embedded external files as resources. All you need now is the .exe (...and the ROM...)
 - Bug fix: Generating multiple ROMs with a set seed should now be consistently random

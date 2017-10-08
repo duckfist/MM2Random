@@ -289,6 +289,18 @@ namespace MM2Randomizer.Randomizers
             " WENT TO A CAVE NEARBY AND "+
             "  TO HIS SURPRISE HE SAW   "+
             "  WHAT WAS IN HIS DREAM... ",
+            
+            // Super Mario World
+            "          WELCOME!         "+
+            "                           "+
+            "          THIS IS          "+
+            "       DINOSAUR LAND.      "+
+            "    IN THIS STRANGE LAND   "+
+            "        WE FIND THAT       "+
+            "     PRINCESS TOADSTOOL    "+
+            "     IS MISSING AGAIN!     "+
+            "     LOOKS LIKE BOWSER     "+
+            "      IS AT IT AGAIN!      ",
 
             // The Legend of Zelda
             "   MANY YEARS AGO PRINCE   "+
@@ -397,7 +409,18 @@ namespace MM2Randomizer.Randomizers
             " ESCAPES WITH THE PLANS TO "+
             " SAVE HIS PEOPLE AND BRING "+
             "   FREEDOM TO THE GALAXY.  ",
-
+            
+            // MORTAL KOMBAT
+            " 2000 YEAR OLD HALF HUMAN  "+
+            "    DRAGON GORO REMAINS    "+
+            "UNDEFEATED FOR THE PAST 500"+
+            "YEARS. HE WON THE TITLE OF "+
+            "GRAND CHAMPION BY DEFEATING"+
+            "    KUNG LAO, A SHAOLIN    "+
+            "FIGHTING MONK.IT WAS DURING"+
+            "  THIS TIME THE TOURNAMENT "+
+            "  FELL INTO SHANG TSUNG\'S  "+
+            " HANDS AND WAS CORRUPTED...",
         };
 
         private string GetRandomName(Random r)

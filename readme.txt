@@ -1,6 +1,6 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.3.1 beta
+version 0.3.2 beta
 
 -----------------------------------------------------------------------------------------------
 
@@ -89,6 +89,10 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
 -----------------------------------------------------------------------------------------------
   
 Changelog
+
+v0.3.2-beta
+- Enemy Weakness Randomizer
+- (Text) Intro splash screen now has some fun stuff
 
 v0.3.1-beta
 - Embedded external files as resources. All you need now is the .exe (...and the ROM...)

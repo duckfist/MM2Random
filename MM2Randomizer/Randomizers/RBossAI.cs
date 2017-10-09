@@ -291,20 +291,30 @@ namespace MM2Randomizer.Randomizers
 
         protected void ChangeBubble(Patch Patch, Random r)
         {
-            byte[] yVels;
+            byte[] bytes;
             int rInt;
 
             // Bubbleman's AI
 
+            //0x02C707 - Y-pos to reach before falling, 0x50.
+            bytes = new byte[] { 0x50, 0x40, 0x60, 0x80, 0xA0 };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x02C707, bytes[rInt], "Bubbleman Y Max Height");
+
             //0x02C70B - Falling speed integer, 0xFF.
-            yVels = new byte[] { 0xF0, 0xF4, 0xF8, 0xFC, 0xFF };
-            rInt = r.Next(yVels.Length);
-            Patch.Add(0x02C70B, yVels[rInt], "Bubbleman Y-Velocity Falling");
+            bytes = new byte[] { 0xF8, 0xFC, 0xFE, 0xFF };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x02C70B, bytes[rInt], "Bubbleman Y-Velocity Falling");
+
+            //0x02C710 - Landing x-tracking speed, integer, 0x00.
+            bytes = new byte[] { 0x00, 0x00, 0x01 };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x02C710, bytes[rInt], "Bubbleman X-Velocity Falling");
 
             //0x02C6D3 - Rising speed integer, 0x01.
-            yVels = new byte[] { 0x01, 0x02, 0x03, 0x05 };
-            rInt = r.Next(yVels.Length);
-            Patch.Add(0x02C6D3, yVels[rInt], "Bubbleman Y-Velocity Rising");
+            bytes = new byte[] { 0x01, 0x02, 0x03, 0x05 };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x02C6D3, bytes[rInt], "Bubbleman Y-Velocity Rising");
         }
 
         protected void ChangeQuick(Patch Patch, Random r)

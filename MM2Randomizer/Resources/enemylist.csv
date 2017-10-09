@@ -1,7 +1,7 @@
 #Index,StageNum,RoomNum,ScreenNum,IsActive,EnemyID,XPosOriginal,YPosOriginal,YPosAir,YPosGround,FaceRight
-00,00,00,01,true,2B,70,10,10,10,false
-01,00,00,01,true,2B,F0,10,10,10,false
-02,00,00,02,true,2B,90,10,10,10,false
+00,00,00,01,true,2B,70,10,14,B4,false
+01,00,00,01,true,2B,F0,10,14,B4,false
+02,00,00,02,true,2B,90,10,18,B4,false
 03,00,00,02,true,21,A8,58,58,58,false
 04,00,00,02,true,21,E8,78,78,78,false
 05,00,00,03,true,21,48,48,48,48,false
@@ -73,9 +73,9 @@
 47,00,07,1E,true,50,A8,AC,A4,A4,false
 48,00,07,1E,true,50,E8,9C,94,94,false
 49,00,07,1F,true,50,F0,BC,B4,B4,false
-4A,00,07,20,true,50,6C,5C,54,54,true
-4B,00,08,21,true,4F,4C,64,64,64,true
-4C,00,09,22,true,4F,44,74,74,74,true
+4A,00,07,20,true,50,6C,5C,44,54,true
+4B,00,08,21,true,4F,4C,64,34,64,true
+4C,00,09,22,true,4F,44,74,44,74,true
 4D,00,0A,23,true,46,98,B8,54,B4,false
 4E,00,0C,25,true,21,10,38,38,38,true
 4F,00,0C,25,true,21,10,88,88,88,true

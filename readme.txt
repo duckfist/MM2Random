@@ -11,6 +11,8 @@ the Stage Select screen point to different stages.
 
 - Weapon Behavior: Movement properties and ammo usage of each weapon are changed.
 
+- Enemy Weaknesses: Damage done to each enemy by each weapon is changed.
+
 - Boss Weaknesses: The damage done by each weapon against each boss is changed.
 Two Robot Masters take 2x damage from Buster.  Every Robot Master will have a primary weakness
 and secondary weakness. Damage values are, on average, lower than in vanilla Mega Man 2.
@@ -23,7 +25,7 @@ and secondary weakness. Damage values are, on average, lower than in vanilla Meg
 
 - Wily 5 Teleporters: The Robot Masters inside of each Wily 5 teleporter has been shuffled.
 
-- Enemies: The enemy IDs for most enemy instances have been changed. Sprite banks for
+- Enemy Types: The enemy IDs for most enemy instances have been changed. Sprite banks for
 each room in each level are modified to support different enemy combinations appearing. A few 
 enemies are not yet supported.
 

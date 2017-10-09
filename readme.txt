@@ -92,6 +92,11 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
   
 Changelog
 
+v0.3.3-beta
+- Bug fix: Bubbleman softlock, shouldn't zip through the floor anymore
+- (Enemy) Adjusted some air enemy spawn positions in Heat and Wily1
+- (Boss) Bubbleman fight now has new randomized parameters
+
 v0.3.2-beta
 - Enemy Weakness Randomizer
 - (Text) Intro splash screen now has some fun stuff

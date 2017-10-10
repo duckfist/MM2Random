@@ -36,6 +36,24 @@ namespace MM2Randomizer.Utilities
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="jVersion"></param>
+        public static void SetWily5NoMusicChange(Patch p, bool jVersion)
+        {
+            p.Add(0x0383DA, 0xEA, String.Format("Disable Music on Boss Defeat 1"));
+            p.Add(0x0383DB, 0xEA, String.Format("Disable Music on Boss Defeat 2"));
+            p.Add(0x0383DC, 0xEA, String.Format("Disable Music on Boss Defeat 3"));
+            p.Add(0x03848A, 0xEA, String.Format("Disable Music on Boss Defeat 4"));
+            p.Add(0x03848B, 0xEA, String.Format("Disable Music on Boss Defeat 5"));
+            p.Add(0x03848C, 0xEA, String.Format("Disable Music on Boss Defeat 6"));
+            p.Add(0x02E070, 0xEA, String.Format("Disable Music on Boss Defeat 7"));
+            p.Add(0x02E071, 0xEA, String.Format("Disable Music on Boss Defeat 8"));
+            p.Add(0x02E072, 0xEA, String.Format("Disable Music on Boss Defeat 9"));
+        }
+
+        /// <summary>
         /// TODO
         /// </summary>
         public static void SetFastText(Patch p, bool jVersion)

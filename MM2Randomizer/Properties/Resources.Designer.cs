@@ -61,6 +61,15 @@ namespace MM2Randomizer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string bossnames {
+            get {
+                return ResourceManager.GetString("bossnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HUDSON SOFT
         ///NINTENDO
         ///TREASURE
@@ -72,8 +81,8 @@ namespace MM2Randomizer.Properties {
         ///TECMO
         ///SUNSOFT
         ///TAITO
-        ///SONY IMAGESOFT
-        ///SEGA CO. LTD
+        ///SONY
+        ///SEGA CO.LTD
         ///IREM
         ///COMPILE
         ///KOEI
@@ -81,12 +90,23 @@ namespace MM2Randomizer.Properties {
         ///KEMCO
         ///RARE
         ///ATLUS
-        ///HAL LABORATORY
-        ///TOSE CO. LTD
+        ///HALKEN
+        ///LUCASARTS
+        ///WESTWOOD
+        ///INTERPLAY
+        ///TOSE CO.LTD
         ///NAMCO LTD.
         ///NATSUME
-        ///SQUARE CO. LTD
-        ///RAINBOW ARTS.
+        ///SQUARE CO.LTD
+        ///RAINBOW ARTS
+        ///OCEAN LTD.
+        ///FACTOR 5
+        ///VIC TOKAI
+        ///ASCII
+        ///THQ
+        ///QUINTET
+        ///ENIX
+        ///MINDSCAPE.
         /// </summary>
         internal static string companynames {
             get {
@@ -135,7 +155,7 @@ namespace MM2Randomizer.Properties {
         ///CHILE
         ///CHINA
         ///COLOMBIA
-        ///CONGO
+        ///THE CONGO
         ///COSTA RICA
         ///CROATIA
         ///CUBA
@@ -144,7 +164,7 @@ namespace MM2Randomizer.Properties {
         ///CZECH REPUBLIC
         ///DENMARK
         ///DJIBOUTI
-        ///DOMINI [rest of string was truncated]&quot;;.
+        ///DO [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string countrylist {
             get {
@@ -154,9 +174,9 @@ namespace MM2Randomizer.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to #Index,StageNum,RoomNum,ScreenNum,IsActive,EnemyID,XPosOriginal,YPosOriginal,YPosAir,YPosGround,FaceRight
-        ///00,00,00,01,true,2B,70,10,10,10,false
-        ///01,00,00,01,true,2B,F0,10,10,10,false
-        ///02,00,00,02,true,2B,90,10,10,10,false
+        ///00,00,00,01,true,2B,70,10,14,B4,false
+        ///01,00,00,01,true,2B,F0,10,14,B4,false
+        ///02,00,00,02,true,2B,90,10,18,B4,false
         ///03,00,00,02,true,21,A8,58,58,58,false
         ///04,00,00,02,true,21,E8,78,78,78,false
         ///05,00,00,03,true,21,48,48,48,48,false

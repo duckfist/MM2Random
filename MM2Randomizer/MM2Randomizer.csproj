@@ -164,6 +164,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\bossnames.csv" />
     <None Include="Resources\companynames.csv" />
     <None Include="Resources\countrylist.csv" />
     <None Include="Resources\enemylist.csv" />

@@ -145,6 +145,7 @@ namespace MM2Randomizer
                 {
                     MiscHacks.DrawTitleScreenChanges(Patch, Seed);
                 }
+                MiscHacks.SetWily5NoMusicChange(Patch, Settings.IsJapanese);
                 
                 // No longer needed since press is included in enemy damage rando table
                 //MiscHacks.EnablePressDamage(Patch);

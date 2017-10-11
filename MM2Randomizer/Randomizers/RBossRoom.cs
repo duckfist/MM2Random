@@ -38,7 +38,12 @@ namespace MM2Randomizer.Randomizers
         
         List<BossRoomRandomComponent> Components;
         
-        public RBossRoom()
+        public RBossRoom() { }
+
+        /// <summary>
+        /// Shuffle which Robot Master awards which weapon.
+        /// </summary>
+        public void Randomize(Patch Patch, Random r)
         {
             Components = new List<BossRoomRandomComponent>
             {
@@ -88,12 +93,12 @@ namespace MM2Randomizer.Randomizers
                     yFix1       : 0x0F,
                     yFix2       : 0x10,
                     spriteBankSlotRows : new byte[] {
-                        0xAB, 0x05,
-                        0xAC, 0x05,
-                        0xAD, 0x05,
-                        0xAA, 0x06,
-                        0xAB, 0x06,
                         0xAC, 0x06,
+                        0xAD, 0x06,
+                        0xAE, 0x06,
+                        0xAF, 0x06,
+                        0xB0, 0x06,
+                        0xB1, 0x06,
                     }),
 
                 // Bubble Man
@@ -188,22 +193,45 @@ namespace MM2Randomizer.Randomizers
                 ),
             };
 
-        }
-
-        /// <summary>
-        /// Shuffle which Robot Master awards which weapon.
-        /// </summary>
-        public void Randomize(Patch Patch, Random r)
-        {
             Components.Shuffle(r);
 
             // Create table for which stage is selectable on the stage select screen (independent of it being blacked out)
             for (int i = 0; i < 8; i++)
             {
-                //Patch.Add((int)(ERMStageSelect.FirstStageInMemory + i), (byte)NewWeaponOrder[i], "Selectable Stage Fix for Random Weapon Get");
+                var bossroom = Components[i];
+                Patch.Add(0x02C15E + i, bossroom.IntroValue, $"Boss Intro Value for Boss Room {i}");
+                Patch.Add(0x02C057 + i, bossroom.AIPtrByte1, $"Boss AI Ptr Byte1 for Boss Room {i}");
+                Patch.Add(0x02C065 + i, bossroom.AIPtrByte2, $"Boss AI Ptr Byte2 for Boss Room {i}");
+                Patch.Add(0x02E4E9 + i, bossroom.GfxFix1, $"Boss GFX Fix 1 for Boss Room {i}");
+                Patch.Add(0x02C166 + i, bossroom.GfxFix1, $"Boss GFX Fix 2 for Boss Room {i}");
+                Patch.Add(0x02C14E + i, bossroom.YPosFix1, $"Boss Y-Pos Fix1 for Boss Room {i}");
+                Patch.Add(0x02C156 + i, bossroom.YPosFix2, $"Boss Y-Pos Fix2 for Boss Room {i}");
             }
+
+            // Adjust sprite banks for each boss room
+            int[] spriteBankBossRoomAddresses = new int[]
+            {
+                0x0034A6, // Heat room
+                0x0074A6, // Air room
+                0x00B4DC, // Wood room
+                0x00F4A6, // Bubble room
+                0x0134B8, // Quick room
+                0x0174A6, // Flash room
+                0x01B494, // Metal room
+                0x01F4DC, // Clash room
+            };
+            for (int i = 0; i < spriteBankBossRoomAddresses.Length; i++)
+            {
+                for (int j = 0; j < Components[i].SpriteBankSlotRowsBytes.Length; j++)
+                {
+                    Patch.Add(spriteBankBossRoomAddresses[i] + j, 
+                        Components[i].SpriteBankSlotRowsBytes[j], 
+                        $"Boss Room {i} Sprite Bank Swap {j}");
+                }
+            }
+            
         }
 
-        
+
     }
 }

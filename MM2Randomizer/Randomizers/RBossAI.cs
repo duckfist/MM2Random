@@ -297,22 +297,22 @@ namespace MM2Randomizer.Randomizers
             // Bubbleman's AI
 
             //0x02C707 - Y-pos to reach before falling, 0x50.
-            bytes = new byte[] { 0x50, 0x40, 0x60, 0x80, 0xA0 };
+            bytes = new byte[] { 0x50, 0x40, 0x50, 0x40, 0x60, 0x80 };
             rInt = r.Next(bytes.Length);
             Patch.Add(0x02C707, bytes[rInt], "Bubbleman Y Max Height");
 
             //0x02C70B - Falling speed integer, 0xFF.
-            bytes = new byte[] { 0xF8, 0xFC, 0xFE, 0xFF };
+            bytes = new byte[] { 0xFD, 0xFE, 0xFF, 0xFF };
             rInt = r.Next(bytes.Length);
             Patch.Add(0x02C70B, bytes[rInt], "Bubbleman Y-Velocity Falling");
 
             //0x02C710 - Landing x-tracking speed, integer, 0x00.
-            bytes = new byte[] { 0x00, 0x00, 0x01 };
+            bytes = new byte[] { 0x00, 0x00, 0x00, 0x01 };
             rInt = r.Next(bytes.Length);
             Patch.Add(0x02C710, bytes[rInt], "Bubbleman X-Velocity Falling");
 
             //0x02C6D3 - Rising speed integer, 0x01.
-            bytes = new byte[] { 0x01, 0x02, 0x03, 0x05 };
+            bytes = new byte[] { 0x01, 0x01, 0x02, 0x02, 0x03, };
             rInt = r.Next(bytes.Length);
             Patch.Add(0x02C6D3, bytes[rInt], "Bubbleman Y-Velocity Rising");
         }
@@ -451,8 +451,8 @@ namespace MM2Randomizer.Randomizers
             rInt = r.Next(256);
             Patch.Add(0x02CCf2, (byte)rInt, "Clashman Walk X-Velocity Fraction");
 
-            //0x02CCF7 - Walk x-vel integer 0x01, do 0 to 3
-            rInt = r.Next(4);
+            //0x02CCF7 - Walk x-vel integer 0x01, do 0 to 2
+            rInt = r.Next(2);
             Patch.Add(0x02CCF7, (byte)rInt, "Clashman Walk X-Velocity Integer");
 
             //0x02CD07 - Jump behavior 0x27. 0x17 = always jumping, any other value = doesn't react with a jump.

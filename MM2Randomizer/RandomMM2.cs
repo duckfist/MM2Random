@@ -33,6 +33,7 @@ namespace MM2Randomizer
         public static RTeleporters randomTeleporters;
         public static REnemies randomEnemies;
         public static REnemyWeaknesses randomEnemyWeakness;
+        public static RBossRoom randomBossRoom;
         public static RTilemap randomTilemap;
         public static RColors randomColors;
         public static RMusic randomMusic;
@@ -54,6 +55,7 @@ namespace MM2Randomizer
             randomTeleporters = new RTeleporters();
             randomEnemies = new REnemies();
             randomEnemyWeakness = new REnemyWeaknesses();
+            randomBossRoom = new RBossRoom();
             randomTilemap = new RTilemap();
             randomColors = new RColors();
             randomMusic = new RMusic();
@@ -100,6 +102,7 @@ namespace MM2Randomizer
                 {
                     Randomizers.Add(randomEnemyWeakness);
                 }
+                Randomizers.Add(randomBossRoom);
                 if (Settings.IsTilemapChangesEnabled)
                 {
                     Randomizers.Add(randomTilemap);

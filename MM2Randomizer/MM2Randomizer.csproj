@@ -112,6 +112,7 @@
     <Compile Include="Enums\EStageID.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Randomizers\IRandomizer.cs" />
+    <Compile Include="Randomizers\RBossRoom.cs" />
     <Compile Include="Randomizers\RMusic.cs" />
     <Compile Include="Randomizers\RBossAI.cs" />
     <Compile Include="Randomizers\RItemGet.cs" />

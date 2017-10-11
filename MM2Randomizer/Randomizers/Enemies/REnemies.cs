@@ -409,7 +409,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003482, new int[] { 3, 8, 9, 10 })); // Bank 1
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003494, new int[] { 1, 2 },    // Bank 2
                 new int[] { 3 }, new byte[] { 0x97, 0x03 })); // Force Yoku blocks
-            // Heat Bank 3 - Heat fight
+            // Heat Bank 3 - Heat fight 0x0034A6
             // Heat Bank 4 - Dragon fight
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x0034ca, new int[] { 7 })); // Bank 5
 
@@ -418,7 +418,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 new int[] { 0, 1, 2/*, 3, 5 */}, new byte[] { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01/*, 0x9A, 0x03, 0x96, 0x03 */})); // Force Goblins, Lightning Goro
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007482, new int[] { 2 })); // Bank 1
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007494, new int[] { 1 })); // Bank 2
-            // Air Bank 3 - Air fight
+            // Air Bank 3 - Air fight 0x0074A6
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074b8, new int[] { 5 })); // Bank 4
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074ca, new int[] { 7 })); // Bank 5
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074dc, new int[] { 9 })); // Bank 6
@@ -432,7 +432,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B4A6, new int[] { 0 })); // Bank 3
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B4B8, new int[] { 11 })); // Bank 4
             // Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B4CA, new int[] { 2, 3, 4 })); // Bank 5 - Friender rooms
-            // Wood Bank 6 - Wood fight
+            // Wood Bank 6 - Wood fight 0x00B4DC
             // Wood Bank 7 - Gutsdozer fight
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00b500, new int[] { 8, 16 })); // Bank ? (0x90); Moved Room 8 from bank 3
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00b512, new int[] { 9, 17 })); // Bank ? (0xA2); Moved Room 9 from bank 3
@@ -443,7 +443,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F482, new int[] { 1, 2, 3 })); // Bank 1
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F494, new int[] { 4 }, // Bank 2
                 new int[] { 0, 1 }, new byte[] { 0x9E, 0x02, 0x9F, 0x02 })); // Shrimp sprites
-            // Bubble Bank 3 - Bubbleman fight
+            // Bubble Bank 3 - Bubbleman fight 0x00F4A6
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4b8, new int[] { 9, 10, 13 })); // Bank 4
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4ca, new int[] { 15, 17 }, // Bank 5
                 new int[] { 3 }, new byte[] { 0x95, 0x03 })); // Moving platform sprite
@@ -454,7 +454,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x013482, new int[] { 7 })); // Bank 1
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x013494, new int[] { 15 })); // Bank 2
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x0134A6, new int[] { 3, 4, 5, 8, 9, 10, 11, 12, 13, 14 })); // Bank 3
-            // Quick Bank 4 - Quick fight
+            // Quick Bank 4 - Quick fight // 0x0134B8
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x0134CA, new int[] { 1, 2 })); // Bank 5
             // Quick Bank 6 - W5 Teleporters
             // Quick Bank 7 - Wily Machine
@@ -463,7 +463,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017470, new int[] { 0, 3, 5 })); // Bank 0
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017482, new int[] { 1, 6, 7 })); // Bank 1
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017494, new int[] { 2, 4 })); // Bank 2; Moved room 2 from bank 0
-            // Flash Bank 3: Flashman fight
+            // Flash Bank 3: Flashman fight 0x0174A6
             // Flash Bank 4: W6 Alien fight
             // Flash Bank 5: Wily defeated cutscene?
             // Flash Bank 6: Droplets
@@ -471,6 +471,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             // Metal
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Metal, 0x01B470, new int[] { 0, 1 }));
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Metal, 0x01B482, new int[] { 2 }));
+            // Metal fight 0x01B494
 
             // Clash
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f494, new int[] { 0, 3, 4, 5 },
@@ -480,6 +481,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f470, new int[] { 10, 11, 12 }));
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f4b8, new int[] { 1 })); // Slot 4, changed from empty room 13 to room 1
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f4ca, new int[] { 14 }));
+            // Clash fight 0x01F4DC
 
             // Get copy of enemy spawn list to save time
             List <EnemyInstance> usedInstances = new List<EnemyInstance>(EnemyInstances);

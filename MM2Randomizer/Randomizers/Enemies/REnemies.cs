@@ -13,11 +13,6 @@ namespace MM2Randomizer.Randomizers.Enemies
     /// </summary>
     public class REnemies : IRandomizer
     {
-        public List<EnemyType> EnemyTypes { get; set; }
-        public List<EnemyInstance> EnemyInstances = new List<EnemyInstance>();
-        public Dictionary<EEnemyID, EnemyType> EnemiesByType { get; set; }
-        public List<SpriteBankRoomGroup> RoomGroups { get; set; }
-
         public static int Stage0EnemyScreenAddress = 0x3610;
         public static int Stage0EnemyYAddress = 0x3810;
         public static int Stage0EnemyIDAddress = 0x3910;
@@ -31,6 +26,11 @@ namespace MM2Randomizer.Randomizers.Enemies
 
         public static int MAX_MOLES = 2;
         public static int MAX_PIPIS = 5;
+        
+        public List<EnemyType> EnemyTypes { get; set; } = new List<EnemyType>();
+        public List<EnemyInstance> EnemyInstances { get; set; } = new List<EnemyInstance>();
+        public Dictionary<EEnemyID, EnemyType> EnemiesByType { get; set; } = new Dictionary<EEnemyID, EnemyType>();
+        public List<SpriteBankRoomGroup> RoomGroups { get; set; } = new List<SpriteBankRoomGroup>();
 
         public int numMoles = 0;
         public int numPipis = 0;
@@ -39,9 +39,10 @@ namespace MM2Randomizer.Randomizers.Enemies
 
         public void Randomize(Patch p, Random r)
         {
-            EnemyTypes = new List<EnemyType>();
-            EnemiesByType = new Dictionary<EEnemyID, EnemyType>();
-            RoomGroups = new List<SpriteBankRoomGroup>();
+            EnemyTypes.Clear();
+            EnemiesByType.Clear();
+            RoomGroups.Clear();
+            EnemyInstances.Clear();
 
             ReadEnemyInstancesFromFile();
             ChangeRoomSpriteBankSlots(p);
@@ -56,6 +57,7 @@ namespace MM2Randomizer.Randomizers.Enemies
         private void ReadEnemyInstancesFromFile()
         {
             string[] lines = Properties.Resources.enemylist.Split(new string[] { Environment.NewLine }, StringSplitOptions.None );
+
             foreach (string line in lines)
             {
                 if (line.StartsWith("#")) continue; // Ignore comment lines
@@ -157,7 +159,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                             instance.StageNum * StageLength +
                             instance.Offset;
 
-                        Patch.Add(IDposition, newId, String.Format("{0} Stage Enemy #{1} ID (Room {2}) {3}", sbrg.Stage.ToString("G"), instance.Offset, instance.RoomNum, ((EEnemyID)instance.EnemyID).ToString("G")));
+                        Patch.Add(IDposition, newId, $"{sbrg.Stage.ToString("G")} Stage Enemy #{instance.Offset} ID (Room {instance.RoomNum}) {((EEnemyID)instance.EnemyID).ToString("G")}");
 
                         // Change the enemy Y pos based on Air or Ground category
                         int newY = newEnemyType.YAdjust;
@@ -165,7 +167,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                         IDposition = Stage0EnemyYAddress +
                             instance.StageNum * StageLength +
                             instance.Offset;
-                        Patch.Add(IDposition, (byte)newY, String.Format("{0} Stage Enemy #{1} Y (Room {2}) {3}", sbrg.Stage.ToString("G"), instance.Offset, instance.RoomNum, ((EEnemyID)instance.EnemyID).ToString("G")));
+                        Patch.Add(IDposition, (byte)newY, $"{sbrg.Stage.ToString("G")} Stage Enemy #{instance.Offset} Y (Room {instance.RoomNum}) {((EEnemyID)instance.EnemyID).ToString("G")}");
                     }
                 }
 
@@ -178,8 +180,8 @@ namespace MM2Randomizer.Randomizers.Enemies
                         int patternTblPtr1 = e.PatternTableAddresses[2 * i];
                         int patternTblPtr2 = e.PatternTableAddresses[2 * i + 1];
 
-                        Patch.Add(rowInSlotAddress, (byte)patternTblPtr1, String.Format("{0} Stage Sprite Bank Slot ? Row {1} Indirect Address 1", sbrg.Stage.ToString("G"), e.SpriteBankRows[i]));
-                        Patch.Add(rowInSlotAddress + 1, (byte)patternTblPtr2, String.Format("{0} Stage Sprite Bank Slot ? Row {1} Indirect Address 2", sbrg.Stage.ToString("G"), e.SpriteBankRows[i]));
+                        Patch.Add(rowInSlotAddress,     (byte)patternTblPtr1, $"{sbrg.Stage.ToString("G")} Stage Sprite Bank Slot ? Row {e.SpriteBankRows[i]} Indirect Address 1");
+                        Patch.Add(rowInSlotAddress + 1, (byte)patternTblPtr2, $"{sbrg.Stage.ToString("G")} Stage Sprite Bank Slot ? Row {e.SpriteBankRows[i]} Indirect Address 2");
                     }
                 }
             } // end foreach sbrg

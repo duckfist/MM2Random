@@ -153,6 +153,8 @@ namespace MM2Randomizer
 
         public bool IsEnemyWeaknessRandom { get; set; } = true;
 
+        public bool IsBossInBossRoomRandom { get; set; } = true;
+
         /// <summary>
         /// 
         /// </summary>

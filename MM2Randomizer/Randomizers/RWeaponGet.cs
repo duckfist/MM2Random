@@ -48,7 +48,7 @@ namespace MM2Randomizer.Randomizers
             // This also affects which teleporter deactivates after defeating a Wily 5 refight boss
             for (int i = 0; i < 8; i++)
             {
-                Patch.Add((int)(ERMStageWeaponAddress.HeatMan + i), (byte)NewWeaponOrder[i], String.Format("{0}man Weapon Get", ((EDmgVsBoss.Offset)i).ToString()));
+                Patch.Add((int)(ERMStageWeaponAddress.HeatMan + i), (byte)NewWeaponOrder[i], $"{(EDmgVsBoss.Offset)i} Weapon Get");
             }
 
             // Create a copy of the default weapon order table to be used by teleporter function

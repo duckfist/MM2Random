@@ -17,6 +17,9 @@ namespace MM2Randomizer.Randomizers.Enemies
         public static int EnemyDamageAddressC = 0x03EC7C;
         public static int EnemyDamageAddressM = 0x03ECF4;
 
+        // NOTE: Will have to change these indices if enemies are added/removed from enemyweaknesses.csv!
+        public static int EnemyIndexInShotArray_Friender = 9;
+
         private StringBuilder debug = new StringBuilder();
         private List<string> enemyNames = new List<string>();
         private List<int> offsets = new List<int>();
@@ -65,6 +68,9 @@ namespace MM2Randomizer.Randomizers.Enemies
             shotQ.Shuffle(r);
             shotC.Shuffle(r);
             shotM.Shuffle(r);
+
+            // Force Buster to always do 1 damage to minibosses
+            shotP[EnemyIndexInShotArray_Friender] = 0x01;
 
             for (int i = 0; i < offsets.Count; i++)
             {

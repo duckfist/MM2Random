@@ -20,7 +20,7 @@ namespace MM2Randomizer.Utilities
             for (int i = 0; i < version.Length; i++)
             {
                 byte value = TitleChars.GetChar(version[i]).ID;
-                p.Add(0x0373C7 + i, value, String.Format("Title Screen Version Number"));
+                p.Add(0x0373C7 + i, value, "Title Screen Version Number");
             }
 
             // Draw seed
@@ -31,7 +31,7 @@ namespace MM2Randomizer.Utilities
                 byte charIndex = (byte)(Convert.ToByte(ch) - Convert.ToByte('A'));
 
                 // 'A' starts at C1 in the pattern table
-                p.Add(0x037387 + i, (byte)(0xC1 + charIndex), String.Format("Title Screen Seed"));
+                p.Add(0x037387 + i, (byte)(0xC1 + charIndex), "Title Screen Seed");
             }
         }
 
@@ -42,15 +42,15 @@ namespace MM2Randomizer.Utilities
         /// <param name="jVersion"></param>
         public static void SetWily5NoMusicChange(Patch p, bool jVersion)
         {
-            p.Add(0x0383DA, 0xEA, String.Format("Disable Music on Boss Defeat 1"));
-            p.Add(0x0383DB, 0xEA, String.Format("Disable Music on Boss Defeat 2"));
-            p.Add(0x0383DC, 0xEA, String.Format("Disable Music on Boss Defeat 3"));
-            p.Add(0x03848A, 0xEA, String.Format("Disable Music on Boss Defeat 4"));
-            p.Add(0x03848B, 0xEA, String.Format("Disable Music on Boss Defeat 5"));
-            p.Add(0x03848C, 0xEA, String.Format("Disable Music on Boss Defeat 6"));
-            p.Add(0x02E070, 0xEA, String.Format("Disable Music on Boss Defeat 7"));
-            p.Add(0x02E071, 0xEA, String.Format("Disable Music on Boss Defeat 8"));
-            p.Add(0x02E072, 0xEA, String.Format("Disable Music on Boss Defeat 9"));
+            p.Add(0x0383DA, 0xEA, "Disable Music on Boss Defeat 1");
+            p.Add(0x0383DB, 0xEA, "Disable Music on Boss Defeat 2");
+            p.Add(0x0383DC, 0xEA, "Disable Music on Boss Defeat 3");
+            p.Add(0x03848A, 0xEA, "Disable Music on Boss Defeat 4");
+            p.Add(0x03848B, 0xEA, "Disable Music on Boss Defeat 5");
+            p.Add(0x03848C, 0xEA, "Disable Music on Boss Defeat 6");
+            p.Add(0x02E070, 0xEA, "Disable Music on Boss Defeat 7");
+            p.Add(0x02E071, 0xEA, "Disable Music on Boss Defeat 8");
+            p.Add(0x02E072, 0xEA, "Disable Music on Boss Defeat 9");
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace MM2Randomizer.Utilities
         public static void SetFastText(Patch p, bool jVersion)
         {
             int address = (jVersion) ? 0x037C51 : 0x037D4A;
-            p.Add(address, 0x04, String.Format("Weapon Get Text Write Delay"));
+            p.Add(address, 0x04, "Weapon Get Text Write Delay");
         }
 
         /// <summary>
@@ -67,16 +67,16 @@ namespace MM2Randomizer.Utilities
         /// </summary>
         public static void SetBurstChaser(Patch p, bool jVersion)
         {
-            p.Add(0x038147, 0x60, String.Format("READY Text Delay"));
-            p.Add(0x038921, 0x03, String.Format("Mega Man Walk X-Velocity Integer"));
-            p.Add(0x03892C, 0x00, String.Format("Mega Man Walk X-Velocity Fraction"));
-            p.Add(0x038922, 0x03, String.Format("Mega Man Air X-Velocity Integer"));
-            p.Add(0x03892D, 0x00, String.Format("Mega Man Air X-Velocity Fraction"));
-            p.Add(0x0386EF, 0x01, String.Format("Mega Man Ladder Climb Up Integer"));
-            p.Add(0x03872E, 0xFE, String.Format("Mega Man Ladder Climb Down Integer"));
+            p.Add(0x038147, 0x60, "READY Text Delay");
+            p.Add(0x038921, 0x03, "Mega Man Walk X-Velocity Integer");
+            p.Add(0x03892C, 0x00, "Mega Man Walk X-Velocity Fraction");
+            p.Add(0x038922, 0x03, "Mega Man Air X-Velocity Integer");
+            p.Add(0x03892D, 0x00, "Mega Man Air X-Velocity Fraction");
+            p.Add(0x0386EF, 0x01, "Mega Man Ladder Climb Up Integer");
+            p.Add(0x03872E, 0xFE, "Mega Man Ladder Climb Down Integer");
 
             int address = (jVersion) ? 0x03D4A4 : 0x03D4A7;
-            p.Add(address, 0x08, String.Format("Buster Projectile X-Velocity Integer"));
+            p.Add(address, 0x08, "Buster Projectile X-Velocity Integer");
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace MM2Randomizer.Utilities
 
             for (int i = 0; i < 8; i++)
             {
-                Patch.Add(0x034541 + i, portraitBG_y[i], String.Format("Stage Select Portrait {0} Y-Pos Fix", i + 1));
-                Patch.Add(0x034549 + i, portraitBG_x[i], String.Format("Stage Select Portrait {0} X-Pos Fix", i + 1));
+                Patch.Add(0x034541 + i, portraitBG_y[i], $"Stage Select Portrait {i + 1} Y-Pos Fix");
+                Patch.Add(0x034549 + i, portraitBG_x[i], $"Stage Select Portrait {i + 1} X-Pos Fix");
                 // Changing this sprite table misplaces their positions by default.
                 //stream.Position = 0x03460D + i;
                 //stream.WriteByte(portraitSprite_y[i]);
@@ -122,6 +122,9 @@ namespace MM2Randomizer.Utilities
             }
         }
 
+        /// <summary>
+        /// No longer needed since press is included in enemy damage rando table
+        /// </summary>
         public static void EnablePressDamage(Patch Patch)
         {
             Patch.Add(EDmgVsEnemy.DamageP + EDmgVsEnemy.Offset.Press, 0x01, "Buster Damage Against Press");

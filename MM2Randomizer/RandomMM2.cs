@@ -33,7 +33,7 @@ namespace MM2Randomizer
         public static RTeleporters randomTeleporters;
         public static REnemies randomEnemies;
         public static REnemyWeaknesses randomEnemyWeakness;
-        public static RBossRoom randomBossRoom;
+        public static RBossRoom randomBossInBossRoom;
         public static RTilemap randomTilemap;
         public static RColors randomColors;
         public static RMusic randomMusic;
@@ -55,7 +55,7 @@ namespace MM2Randomizer
             randomTeleporters = new RTeleporters();
             randomEnemies = new REnemies();
             randomEnemyWeakness = new REnemyWeaknesses();
-            randomBossRoom = new RBossRoom();
+            randomBossInBossRoom = new RBossRoom();
             randomTilemap = new RTilemap();
             randomColors = new RColors();
             randomMusic = new RMusic();
@@ -102,7 +102,10 @@ namespace MM2Randomizer
                 {
                     Randomizers.Add(randomEnemyWeakness);
                 }
-                Randomizers.Add(randomBossRoom);
+                if (Settings.IsBossInBossRoomRandom)
+                {
+                    Randomizers.Add(randomBossInBossRoom);
+                }
                 if (Settings.IsTilemapChangesEnabled)
                 {
                     Randomizers.Add(randomTilemap);
@@ -150,9 +153,6 @@ namespace MM2Randomizer
                 }
                 MiscHacks.SetWily5NoMusicChange(Patch, Settings.IsJapanese);
                 
-                // No longer needed since press is included in enemy damage rando table
-                //MiscHacks.EnablePressDamage(Patch);
-
                 // Prepare a copy of the source rom for modification
                 File.Copy(Settings.SourcePath, TempFileName, true);
 
@@ -165,7 +165,7 @@ namespace MM2Randomizer
                 // Create file name based on seed and game region
                 string newfilename = (Settings.IsJapanese) ? "RM2" : "MM2";
                 string seedAlpha = SeedConvert.ConvertBase10To26(Seed);
-                newfilename = String.Format("{0}-RNG-{1}.nes", newfilename, seedAlpha);
+                newfilename = $"{newfilename}-RNG-{seedAlpha}.nes";
 
                 // If a file of the same seed already exists, delete it
                 if (File.Exists(newfilename))

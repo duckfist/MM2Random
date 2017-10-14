@@ -50,6 +50,7 @@ namespace MM2Randomizer.Randomizers
             // Line 1: ©2017 <company name> (13 chars for company, 19 total)
             string[] lines;
             int startChar;
+            string companyStr;
             char[] company;
             try
             {
@@ -59,7 +60,8 @@ namespace MM2Randomizer.Randomizers
                     if (line.StartsWith("#")) continue; // Ignore comment lines
                     companyNames.Add(line);
                 }
-                company = ("©2017 " + companyNames[r.Next(companyNames.Count)]).ToCharArray();
+                companyStr = companyNames[r.Next(companyNames.Count)];
+                company = ($"©2017 {companyStr}").ToCharArray();
                 char[] companyPadded = Enumerable.Repeat(' ', INTRO_LINE1_MAXCHARS).ToArray();
                 startChar = (INTRO_LINE1_MAXCHARS - company.Length) / 2;
                 for (int i = 0; i < company.Length; i++)
@@ -235,7 +237,7 @@ namespace MM2Randomizer.Randomizers
 
                 p.Add(0x024C78 + k, (byte)args[2].Length, $"Credits Line {k} Length");
                 byte asdf = Convert.ToByte(args[1], 16);
-                //p.Add(0x024C3C + k, byte.Parse(args[1]), $"Credits Line {k} X-Pos");
+                p.Add(0x024C3C + k, asdf, $"Credits Line {k} X-Pos");
                 k++;
                 creditsSb.Append(args[2]); // Content of line of text
             }
@@ -243,8 +245,102 @@ namespace MM2Randomizer.Randomizers
             startChar = 0x024D36; // First byte of credits text
             for (int i = 0; i < creditsSb.Length; i++)
             {
-                p.Add(startChar + i, CreditsCipher[creditsSb[i]], $"Credits char #{i}");
+                p.Add(startChar, CreditsCipher[creditsSb[i]], $"Credits char #{i}");
+                startChar++;
             }
+
+            // Last line "Capcom Co.Ltd."
+            for (int i = 0; i < companyStr.Length; i++)
+            {
+                p.Add(startChar, CreditsCipher[companyStr[i]], $"Credits company char #{i}");
+                startChar++;
+            }
+            p.Add(0x024CA4, (byte)companyStr.Length, "Credits Company Line Length");
+
+            
+            
+            int[] txtRobos = new int[8] {
+                0x024D6B, // Heat
+                0x024D83, // Air
+                0x024D9C, // Wood
+                0x024DB7, // Bubble
+                0x024DD1, // Quick
+                0x024DEB, // Flash
+                0x024E05, // Metal
+                0x024E1F, // Clash
+            };
+
+            int[] txtWilys = new int[6] {
+                0x024E54, // Dragon
+                0x024E6C, // Picopico
+                0x024E80, // Guts
+                0x024E97, // Boobeam
+                0x024EAE, // Machine
+                0x024EC3, // Alien
+            };
+
+            // Write Robot Master damage table
+            StringBuilder sb;
+            for (int i = 0; i < txtRobos.Length; i++)
+            {
+                sb = new StringBuilder();
+                for (int j = 0; j < 9; j++)
+                {
+                    int dmg = RWeaknesses.BotWeaknesses[i, j];
+                    sb.Append($"{GetBossWeaknessDamageChar(dmg)} ");
+                }
+
+                string rowString = sb.ToString().Trim();
+                for (int j = 0; j < rowString.Length; j++)
+                {
+                    p.Add(txtRobos[i] + j,
+                        CreditsCipher[rowString[j]],
+                        $"Credits robo weakness table char #{j + i * rowString.Length}");
+                }
+            }
+
+            // Write Wily Boss damage table
+            for (int i = 0; i < txtWilys.Length; i++)
+            {
+                sb = new StringBuilder();
+                for (int j = 0; j < 8; j++)
+                {
+                    int dmg = RWeaknesses.WilyWeaknesses[i, j];
+                    sb.Append($"{GetBossWeaknessDamageChar(dmg)} ");
+                }
+
+                sb.Remove(sb.Length - 1, 1);
+                string rowString = sb.ToString();
+
+                for (int j = 0; j < rowString.Length; j++)
+                {
+                    p.Add(txtWilys[i] + j,
+                        CreditsCipher[rowString[j]],
+                        $"Credits wily weakness table char #{j + i * rowString.Length}");
+                }
+            }
+        }
+
+        static char GetBossWeaknessDamageChar(int dmg)
+        {
+            char c;
+            if (dmg == 0 || dmg == 255)
+            {
+                c = ' ';
+            }
+            else if (dmg < 10)
+            {
+                c = dmg.ToString()[0];
+            }
+            else if (dmg >= 10 && dmg < 20)
+            {
+                c = 'A';
+            }
+            else
+            {
+                c = 'B';
+            }
+            return c;
         }
 
         static Dictionary<char, byte> CreditsCipher = new Dictionary<char, byte>()
@@ -290,7 +386,8 @@ namespace MM2Randomizer.Randomizers
             { '6', 0x36},
             { '7', 0x37},
             { '8', 0x38}, 
-            { '9', 0x39},                                                                               
+            { '9', 0x39},
+            { '=', 0x23},
         };
 
         static Dictionary<char, byte> IntroCipher = new Dictionary<char, byte>()

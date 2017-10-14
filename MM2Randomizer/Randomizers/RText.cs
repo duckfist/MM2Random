@@ -171,7 +171,7 @@ namespace MM2Randomizer.Randomizers
             // Erase "Boomerang" for now
             for (int i = 0; i < 10; i++)
             {
-                p.Add(0x037f5e + i, Convert.ToByte('@'), String.Format("Quick Boomerang Name Erase Char #{0}: @", i));
+                p.Add(0x037f5e + i, Convert.ToByte('@'), $"Quick Boomerang Name Erase Char #{i}: @");
             }
 
             // Write in new weapon letters
@@ -180,7 +180,118 @@ namespace MM2Randomizer.Randomizers
                 int randLetter = 0x41 + r.Next(26);
                 p.Add(offsetLetters + i, (byte)randLetter, String.Format("Weapon Get {0} Letter: {1}", ((EDmgVsBoss.Offset)i).Name, Convert.ToChar(randLetter).ToString()));
             }
+
+            // Credits: Text content (Starting with "Special Thanks")
+            StringBuilder creditsSb = new StringBuilder();
+            //creditsSb.Append("ROBOT MASTERS");
+            //creditsSb.Append(" ");
+            //creditsSb.Append("P H A W B Q F M C");
+            //creditsSb.Append("HEATMAN 2 0 3 0 0 1 0 0 2");
+            //creditsSb.Append("AIRMAN 1 2 0 1 2 0 0 0 4");
+            //creditsSb.Append("WOODMAN 1 0 1 1 3 2 0 0 0");
+            //creditsSb.Append("BUBBLEMAN 2 4 0 1 1 3 0 1 0");
+            //creditsSb.Append("QUICKMAN 1 5 1 1 1 0 0 2 0");
+            //creditsSb.Append("FLASHMAN 1 2 0 1 0 1 0 3 1");
+            //creditsSb.Append("METALMAN 1 2 1 2 0 1 1 1 0");
+            //creditsSb.Append("CLASHMAN 1 2 2 3 1 0 0 0 0");
+            //creditsSb.Append(" ");
+            //creditsSb.Append(" ");
+            //creditsSb.Append("WILY BOSSES");
+            //creditsSb.Append("f");
+            //creditsSb.Append("P H A W B Q M C");
+            //creditsSb.Append("DRAGON 0 0 2 0 1 0 0 0");
+            //creditsSb.Append("PICOPICO 0 B 0 A 0 0 2 0");
+            //creditsSb.Append("GUTS 0 0 2 0 0 0 1 0");
+            //creditsSb.Append("BOOBEAM 0 0 0 0 3 0 0 0");
+            //creditsSb.Append("MACHINE 0 0 2 1 0 1 1 0");
+            //creditsSb.Append("ALIEN X X X 2 X X X X");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+            //creditsSb.Append("RANDOMIZER BY");
+            //creditsSb.Append("DUCKFIST");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+            //creditsSb.Append("SPECIAL THANKS TO THE");
+            //creditsSb.Append("ROCKMAN 2 TEAM");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+            //creditsSb.Append("f");
+
+            // Credits: Text line lengths (Starting with "Special Thanks")
+            lines = Properties.Resources.creditstext.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            int k = 0;
+            foreach (string line in lines)
+            {
+                if (line.StartsWith("#")) continue; // Ignore comment lines
+                string[] args = line.Split('|');
+
+                p.Add(0x024C78 + k, (byte)args[2].Length, $"Credits Line {k} Length");
+                byte asdf = Convert.ToByte(args[1], 16);
+                //p.Add(0x024C3C + k, byte.Parse(args[1]), $"Credits Line {k} X-Pos");
+                k++;
+                creditsSb.Append(args[2]); // Content of line of text
+            }
+
+            startChar = 0x024D36; // First byte of credits text
+            for (int i = 0; i < creditsSb.Length; i++)
+            {
+                p.Add(startChar + i, CreditsCipher[creditsSb[i]], $"Credits char #{i}");
+            }
         }
+
+        static Dictionary<char, byte> CreditsCipher = new Dictionary<char, byte>()
+        {
+            { ' ', 0x00},
+            { 'A', 0x01},
+            { 'B', 0x02},
+            { 'C', 0x03},
+            { 'D', 0x04},
+            { 'E', 0x05}, 
+            { 'F', 0x06},
+            { 'G', 0x07},
+            { 'H', 0x08},
+            { 'I', 0x09}, 
+            { 'J', 0x0A}, 
+            { 'K', 0x0B}, 
+            { 'L', 0x0C}, 
+            { 'M', 0x0D}, 
+            { 'N', 0x0E},
+            { 'O', 0x0F},
+            { 'P', 0x10},
+            { 'Q', 0x11},
+            { 'R', 0x12},
+            { 'S', 0x13},
+            { 'T', 0x14},
+            { 'U', 0x15},
+            { 'V', 0x16},
+            { 'W', 0x17},
+            { 'X', 0x18},
+            { 'Y', 0x19},
+            { 'Z', 0x1A},
+            { '.', 0x1C},
+            { ',', 0x1D},
+            {'\'', 0x1E},
+            { '!', 0x1F},
+            { 'f', 0x20},
+            { '0', 0x30},
+            { '1', 0x31},
+            { '2', 0x32},
+            { '3', 0x33},
+            { '4', 0x34},
+            { '5', 0x35},
+            { '6', 0x36},
+            { '7', 0x37},
+            { '8', 0x38}, 
+            { '9', 0x39},                                                                               
+        };
 
         static Dictionary<char, byte> IntroCipher = new Dictionary<char, byte>()
         {

@@ -15,6 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +28,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>0.1.2.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -168,6 +168,7 @@
     <None Include="Resources\bossnames.csv" />
     <None Include="Resources\companynames.csv" />
     <None Include="Resources\countrylist.csv" />
+    <None Include="Resources\creditstext.csv" />
     <None Include="Resources\enemylist.csv" />
     <None Include="Resources\enemyweakness.csv" />
     <None Include="Resources\mm2rng_prepatch.dat" />

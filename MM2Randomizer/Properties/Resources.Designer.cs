@@ -19,7 +19,7 @@ namespace MM2Randomizer.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,7 +61,72 @@ namespace MM2Randomizer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to # Also randomize the &quot;Dr. WILY&quot;?
+        ///# DR. COSSACK
+        ///# DR. LIGHT
+        ///# MR. X
+        ///# BREAK MAN
+        ///# DOC ROBOT
+        ///# BASS
+        ///#
+        ///# Misc
+        ///CLASH
+        ///WILY
+        ///PROTO
+        ///BREAK
+        ///ROCK
+        ///DARK
+        ///ENKER
+        ///QUINT
+        ///PUNK
+        ///BALLADE
+        ///#
+        ///# Mega Man
+        ///CUT
+        ///ELEC
+        ///ICE
+        ///FIRE
+        ///BOMB
+        ///GUTS
+        ///#
+        ///# Mega Man 2
+        ///BUBBLE
+        ///HEAT
+        ///METAL
+        ///AIR
+        ///FLASH
+        ///QUICK
+        ///WOOD
+        ///CRASH
+        ///#
+        ///# MEGA MAN 3
+        ///TOP
+        ///GEMINI
+        ///SHADOW
+        ///NEEDLE
+        ///HARD
+        ///MAGNET
+        ///SNAKE
+        ///SPARK
+        ///#
+        ///# MEGA MAN 4
+        ///PHARAOH
+        ///BRIGHT
+        ///RING
+        ///DUST
+        ///SKULL
+        ///DIVE
+        ///DRILL
+        ///TOAD
+        ///#
+        ///# MEGA MAN 5
+        ///STAR
+        ///GRAVITY
+        ///GYRO
+        ///CRYSTAL
+        ///NAPALM
+        ///STONE
+        ///C [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string bossnames {
             get {
@@ -98,6 +163,8 @@ namespace MM2Randomizer.Properties {
         ///NAMCO LTD.
         ///NATSUME
         ///SQUARE CO.LTD
+        ///COMCEPT
+        ///INTI CREATES
         ///RAINBOW ARTS
         ///OCEAN LTD.
         ///FACTOR 5
@@ -169,6 +236,35 @@ namespace MM2Randomizer.Properties {
         internal static string countrylist {
             get {
                 return ResourceManager.GetString("countrylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 14|09|MM2 RANDOMIZER
+        ///13|10|ROBOT MASTERS
+        ///01|01|f
+        ///17|11|P H A W B Q F M C
+        ///25|03|HEATMAN 2 0 3 0 0 1 0 0 2
+        ///24|04|AIRMAN 1 2 0 1 2 0 0 0 4
+        ///25|03|WOODMAN 1 0 1 1 3 2 0 0 0
+        ///27|01|BUBBLEMAN 2 4 0 1 1 3 0 1 0
+        ///26|02|QUICKMAN 1 5 1 1 1 0 0 2 0
+        ///26|02|FLASHMAN 1 2 0 1 0 1 0 3 1
+        ///26|02|METALMAN 1 2 1 2 0 1 1 1 0
+        ///26|02|CLASHMAN 1 2 2 3 1 0 0 0 0
+        ///01|01|f
+        ///01|01|f
+        ///11|11|WILY BOSSES
+        ///01|01|f
+        ///15|12|P H A W B Q M C
+        ///22|05|DRAGON 0 0 2 0 1 0 0 0
+        ///24|03|PICOPICO 0 B 0 A 0 0 2 0
+        ///20|07|GUTS 0 0 2 0 0 0 1 0
+        ///23|04|B [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string creditstext {
+            get {
+                return ResourceManager.GetString("creditstext", resourceCulture);
             }
         }
         

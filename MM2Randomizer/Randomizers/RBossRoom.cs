@@ -9,7 +9,7 @@ namespace MM2Randomizer.Randomizers
 {
     public class RBossRoom : IRandomizer
     {
-        class BossRoomRandomComponent
+        public class BossRoomRandomComponent
         {
             // This seems to be every table necessary to shuffle for getting a boss
             // to function and display properly in a different boss room.
@@ -21,9 +21,10 @@ namespace MM2Randomizer.Randomizers
             public byte YPosFix1 { get; set; }      // 09 0C 0F 0A 09 09 08 08
             public byte YPosFix2 { get; set; }      // 0C 10 10 0C 0C 0C 0C 0C
             public byte[] SpriteBankSlotRowsBytes { get; set; }
+            public int OriginalBossIndex { get; set; }
             // ...and maybe room layout???
 
-            public BossRoomRandomComponent(byte introValue, byte aiPtr1, byte aiPtr2, byte gfxfix1, byte gfxfix2, byte yFix1, byte yFix2, byte[] spriteBankSlotRows)
+            public BossRoomRandomComponent(int original, byte introValue, byte aiPtr1, byte aiPtr2, byte gfxfix1, byte gfxfix2, byte yFix1, byte yFix2, byte[] spriteBankSlotRows)
             {
                 this.IntroValue = introValue;
                 this.AIPtrByte1 = aiPtr1;
@@ -33,10 +34,11 @@ namespace MM2Randomizer.Randomizers
                 this.YPosFix1 = yFix1;
                 this.YPosFix2 = yFix2;
                 this.SpriteBankSlotRowsBytes = spriteBankSlotRows;
+                this.OriginalBossIndex = original;
             }
         }
         
-        List<BossRoomRandomComponent> Components;
+        public List<BossRoomRandomComponent> Components;
         
         public RBossRoom() { }
 
@@ -49,6 +51,7 @@ namespace MM2Randomizer.Randomizers
             {
                 // Heat Man
                 new BossRoomRandomComponent(
+                    original    : 0,
                     introValue  : 0x0F, // 0x02C15E
                     aiPtr1      : 0xC5, // 0x02C057
                     aiPtr2      : 0x80, // 0x02C065
@@ -67,6 +70,7 @@ namespace MM2Randomizer.Randomizers
 
                 // Air Man
                 new BossRoomRandomComponent(
+                    original    : 1,
                     introValue  : 0x0F,
                     aiPtr1      : 0xE3,
                     aiPtr2      : 0x82,
@@ -85,6 +89,7 @@ namespace MM2Randomizer.Randomizers
 
                 // Wood Man
                 new BossRoomRandomComponent(
+                    original    : 2,
                     introValue  : 0x0B,
                     aiPtr1      : 0xFB,
                     aiPtr2      : 0x84,
@@ -103,6 +108,7 @@ namespace MM2Randomizer.Randomizers
 
                 // Bubble Man
                 new BossRoomRandomComponent(
+                    original    : 3,
                     introValue  : 0x05,
                     aiPtr1      : 0x56,
                     aiPtr2      : 0x86,
@@ -121,6 +127,7 @@ namespace MM2Randomizer.Randomizers
 
                 // Quick Man
                 new BossRoomRandomComponent(
+                    original    : 4,
                     introValue  : 0x09,
                     aiPtr1      : 0x9E,
                     aiPtr2      : 0x87,
@@ -139,6 +146,7 @@ namespace MM2Randomizer.Randomizers
 
                 // Flash Man
                 new BossRoomRandomComponent(
+                    original    : 5,
                     introValue  : 0x07,
                     aiPtr1      : 0x56,
                     aiPtr2      : 0x89,
@@ -157,6 +165,7 @@ namespace MM2Randomizer.Randomizers
 
                 // Metal Man
                 new BossRoomRandomComponent(
+                    original    : 6,
                     introValue  : 0x05,
                     aiPtr1      : 0x20,
                     aiPtr2      : 0x8B,
@@ -175,6 +184,7 @@ namespace MM2Randomizer.Randomizers
 
                 // Clash Man
                 new BossRoomRandomComponent(
+                    original    : 7,
                     introValue  : 0x03,
                     aiPtr1      : 0xC3,
                     aiPtr2      : 0x8C,

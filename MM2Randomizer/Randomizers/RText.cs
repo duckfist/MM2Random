@@ -284,9 +284,25 @@ namespace MM2Randomizer.Randomizers
             for (int i = 0; i < txtRobos.Length; i++)
             {
                 sb = new StringBuilder();
+
+                // Since weaknesses are for the "Room", and the room bosses were shuffled,
+                // obtain the weakness for the boss at this room
+                // TODO: Optimize this mess; when the bossroom is shuffled it should save
+                // a mapping that could be reused here.
+                int newIndex = 0;
+                for (int m = 0; m < RandomMM2.randomBossInBossRoom.Components.Count; m++)
+                {
+                    var room = RandomMM2.randomBossInBossRoom.Components[m];
+                    if (room.OriginalBossIndex == i)
+                    {
+                        newIndex = m;
+                        break;
+                    }
+                }
+
                 for (int j = 0; j < 9; j++)
                 {
-                    int dmg = RWeaknesses.BotWeaknesses[i, j];
+                    int dmg = RWeaknesses.BotWeaknesses[newIndex, j];
                     sb.Append($"{GetBossWeaknessDamageChar(dmg)} ");
                 }
 

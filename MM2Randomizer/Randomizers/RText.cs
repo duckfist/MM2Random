@@ -645,6 +645,8 @@ namespace MM2Randomizer.Randomizers
             "  THIS TIME THE TOURNAMENT "+
             "  FELL INTO SHANG TSUNG\'S  "+
             " HANDS AND WAS CORRUPTED...",
+
+
         };
 
         private string GetRandomName(Random r)

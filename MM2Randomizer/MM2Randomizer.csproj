@@ -171,7 +171,7 @@
     <None Include="Resources\creditstext.csv" />
     <None Include="Resources\enemylist.csv" />
     <None Include="Resources\enemyweakness.csv" />
-    <None Include="Resources\mm2rng_prepatch.dat" />
+    <None Include="Resources\mm2rng_prepatch.ips" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

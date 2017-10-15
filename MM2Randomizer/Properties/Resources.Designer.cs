@@ -241,26 +241,26 @@ namespace MM2Randomizer.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 14|09|MM2 RANDOMIZER
-        ///13|10|ROBOT MASTERS
-        ///01|01|f
-        ///17|11|P H A W B Q F M C
-        ///25|03|HEATMAN 2 0 3 0 0 1 0 0 2
-        ///24|04|AIRMAN 1 2 0 1 2 0 0 0 4
-        ///25|03|WOODMAN 1 0 1 1 3 2 0 0 0
-        ///27|01|BUBBLEMAN 2 4 0 1 1 3 0 1 0
-        ///26|02|QUICKMAN 1 5 1 1 1 0 0 2 0
-        ///26|02|FLASHMAN 1 2 0 1 0 1 0 3 1
-        ///26|02|METALMAN 1 2 1 2 0 1 1 1 0
-        ///26|02|CLASHMAN 1 2 2 3 1 0 0 0 0
-        ///01|01|f
-        ///01|01|f
-        ///11|11|WILY BOSSES
-        ///01|01|f
-        ///15|12|P H A W B Q M C
-        ///22|05|DRAGON 0 0 2 0 1 0 0 0
-        ///24|03|PICOPICO 0 B 0 A 0 0 2 0
-        ///20|07|GUTS 0 0 2 0 0 0 1 0
-        ///23|04|B [rest of string was truncated]&quot;;.
+        ///13|2A|ROBOT MASTERS
+        ///01|61|f
+        ///17|AB|P H A W B Q F M C
+        ///25|E3|HEATMAN 2   3     1     2
+        ///24|24|AIRMAN 1 2   1 2       4
+        ///25|63|WOODMAN 1   1 1 3 2      
+        ///27|A1|BUBBLEMAN 2 4   1 1 3   1  
+        ///26|E2|QUICKMAN 1 5 1 1 1     2  
+        ///26|22|FLASHMAN 1 2   1   1   3 1
+        ///26|62|METALMAN 1 2 1 2   1 1 1  
+        ///26|A2|CLASHMAN 1 2 2 3 1        
+        ///01|E1|f
+        ///01|21|f
+        ///11|6B|WILY BOSSES
+        ///01|A1|f
+        ///15|2C|P H A W B Q M C
+        ///22|65|DRAGON                
+        ///24|A3|PICOPICO                
+        ///20|E7|GUTS                
+        ///23|24|B [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string creditstext {
             get {

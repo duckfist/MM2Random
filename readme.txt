@@ -113,6 +113,7 @@ v0.3.3-beta
 - (Enemy) Adjusted some air enemy spawn positions in Heat and Wily1
 - (Enemy) Friender now always takes 1 damage from Buster
 - (Boss) Bubbleman fight now has new randomized parameters
+- (Text) Added 4 new intro stories
 - (Colors) Intro, Credits, Start, Password, Weapon Get, Dragon, and Gutsdozer
 
 v0.3.2-beta

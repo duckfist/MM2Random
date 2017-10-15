@@ -645,8 +645,31 @@ namespace MM2Randomizer.Randomizers
             "  THIS TIME THE TOURNAMENT "+
             "  FELL INTO SHANG TSUNG\'S  "+
             " HANDS AND WAS CORRUPTED...",
+            
+            // SHADOW OF THE NINJA //////
+            " UNITED STATES OF AMERICA. "+
+            "         2029 A.D.         "+
+            "  DUE TO THE DICTATORIAL   "+
+            "   GOVERNMENT OF EMPEROR   "+
+            " GARUDA, A NUMBER OF LIVES "+
+            "      HAVE BEEN LOST...    "+
+            "  IN ORDER TO DEFEAT THE   "+
+            "      EMPEROR GARUDA,      "+
+            "   TWO SHADOWS APPEAR.     "+
+            " \'NINJA\' THEY ARE CALLED.  ",
 
-
+            // TERMINATOR 2 NES /////////
+            " TEN YEARS AGO THEY SENT A "+
+            "  MACHINE FROM THE FUTURE  "+
+            "    TO GET SARAH CONNOR.   "+
+            "    IT FAILED. NOW THEY    "+
+            "     HAVE A NEW TARGET.    "+
+            "     THE FUTURE LEADER     "+
+            "     OF THE RESISTANCE,    "+
+            "       HER SON JOHN.       "+
+            "  THE BATTLE FOR TOMORROW  "+
+            "       BEGINS TODAY        ",
+            
         };
 
         private string GetRandomName(Random r)

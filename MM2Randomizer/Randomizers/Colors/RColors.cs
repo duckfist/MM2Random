@@ -391,6 +391,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 p.Add(SolidColorPair2Light[i], goodLightColors[rColor], String.Format("Robot Master Color"));
             }
 
+            
             // Wily Machine
             // choose main body color
             rColor = r.Next(darkOnly.Count);
@@ -400,21 +401,107 @@ namespace MM2Randomizer.Randomizers.Colors
                 shade1 = 0x00; // Dark gray up from black
             byte shade2 = (byte)(shade1 + 0x10);
 
-            p.Add(0x02D7D5, shade2, String.Format("Wily Machine Light-Gold Color")); // 0x27
-            p.Add(0x02D7D2, shade1, String.Format("Wily Machine Gold 1 Color")); // 0x17
-            p.Add(0x02D7D6, shade1, String.Format("Wily Machine Gold 2 Color")); // 0x17
-            p.Add(0x02D7DA, shade1, String.Format("Wily Machine Gold 3 Color")); // 0x17
-            p.Add(0x02D7D7, shade0, String.Format("Wily Machine Dark Gold 1 Color")); // 0x07
-            p.Add(0x02D7DB, shade0, String.Format("Wily Machine Dark Gold 2 Color")); // 0x07
-
+            p.Add(0x02D7D5, shade2, "Wily Machine Light-Gold Color"); // 0x27
+            p.Add(0x02D7D2, shade1, "Wily Machine Gold 1 Color"); // 0x17
+            p.Add(0x02D7D6, shade1, "Wily Machine Gold 2 Color"); // 0x17
+            p.Add(0x02D7DA, shade1, "Wily Machine Gold 3 Color"); // 0x17
+            p.Add(0x02D7D7, shade0, "Wily Machine Dark Gold 1 Color"); // 0x07
+            p.Add(0x02D7DB, shade0, "Wily Machine Dark Gold 2 Color"); // 0x07
+            
             // choose front color
             rColor = r.Next(mediumOnly.Count);
             shade0 = mediumOnly[rColor];
             shade1 = (byte)(shade0 + 0x20);
 
-            p.Add(0x02D7D1, shade0, String.Format("Wily Machine Red 1 Color")); // 0x15
-            p.Add(0x02D7D9, shade0, String.Format("Wily Machine Red 2 Color")); // 0x15
-            p.Add(0x02D7D3, shade1, String.Format("Wily Machine Light Red 1 Color")); // 0x15
+            p.Add(0x02D7D1, shade0, "Wily Machine Red 1 Color"); // 0x15
+            p.Add(0x02D7D9, shade0, "Wily Machine Red 2 Color"); // 0x15
+            p.Add(0x02D7D3, shade1, "Wily Machine Light Red 1 Color"); // 0x15
+
+            // Dragon
+            // choose orange replacement
+            rColor = r.Next(darkOnly.Count);
+            shade0 = darkOnly[rColor];
+            shade1 = (byte)(shade0 + 0x10);
+            if (shade0 == 0x0F)
+                shade1 = 0x00; // Dark gray up from black
+            shade2 = (byte)(shade1 + 0x10);
+            byte shade3 = (byte)(shade2 + 0x10);
+            p.Add(0x02CF8F, shade2, "Dragon Orange Color 1");
+            p.Add(0x02CF97, shade2, "Dragon Orange Color 2");
+            p.Add(0x0034C6, shade3, "Dragon Orange Mouth");
+            p.Add(0x0034C7, shade2, "Dragon Orange Color 3");
+
+            // Choose green replacement
+            rColor = r.Next(darkOnly.Count);
+            shade0 = darkOnly[rColor];
+            shade1 = (byte)(shade0 + 0x10);
+            if (shade0 == 0x0F)
+                shade1 = 0x00; // Dark gray up from black
+            shade2 = (byte)(shade1 + 0x10);
+            p.Add(0x02CF8C, shade2, "Dragon Light Green 1");
+            p.Add(0x02CF8D, shade1, "Dragon Dark Green 1");
+            p.Add(0x02CF98, shade2, "Dragon Light Green 2");
+            p.Add(0x02CF99, shade1, "Dragon Dark Green 2");
+            p.Add(0x0034C8, shade2, "Dragon Light Green 3");
+            p.Add(0x0034C9, shade1, "Dragon Dark Green 3");
+            p.Add(0x02CF91, shade1, "Dragon Dark Green 4");
+
+            // choose blue replacement
+            rColor = r.Next(darkOnly.Count);
+            shade0 = darkOnly[rColor];
+            shade1 = (byte)(shade0 + 0x10);
+            if (shade0 == 0x0F)
+                shade1 = 0x00; // Dark gray up from black
+            shade2 = (byte)(shade1 + 0x10);
+            p.Add(0x02CF90, shade1, "Dragon Blue Color 1");
+
+            // Gutsdozer
+            // Choose red replacement
+            rColor = r.Next(darkOnly.Count);
+            shade0 = darkOnly[rColor];
+            shade1 = (byte)(shade0 + 0x10);
+            if (shade0 == 0x0F)
+                shade1 = 0x00; // Dark gray up from black
+            shade2 = (byte)(shade1 + 0x10);
+            p.Add(0x00BF40, shade0, "Guts Dark Red 1");
+            p.Add(0x00BF41, shade1, "Guts Light Red 1");
+            p.Add(0x00BF50, shade0, "Guts Dark Red 2");
+            p.Add(0x00BF51, shade1, "Guts Light Red 2");
+            p.Add(0x00BF39, shade1, "Guts Light Red 3");
+            p.Add(0x00BF49, shade1, "Guts Light Red 4");
+            p.Add(0x00BF3D, shade1, "Guts Light Red 5");
+            p.Add(0x00BF4D, shade1, "Guts Light Red 6");
+
+            // Choose blue replacement
+            rColor = r.Next(darkOnly.Count);
+            shade0 = darkOnly[rColor];
+            shade1 = (byte)(shade0 + 0x10);
+            if (shade0 == 0x0F)
+                shade1 = 0x00; // Dark gray up from black
+            shade2 = (byte)(shade1 + 0x10);
+            p.Add(0x00BF38, shade1, "Guts Blue 1");
+            p.Add(0x00BF48, shade1, "Guts Blue 2");
+
+            // Choose orange replacement
+            rColor = r.Next(darkOnly.Count);
+            shade0 = darkOnly[rColor];
+            shade1 = (byte)(shade0 + 0x10);
+            if (shade0 == 0x0F)
+                shade1 = 0x00; // Dark gray up from black
+            shade2 = (byte)(shade1 + 0x10);
+            shade3 = (byte)(shade2 + 0x10);
+            p.Add(0x00BF3F, shade2, "Guts Light Orange Color 1");
+            p.Add(0x00BF4F, shade2, "Guts Light Orange Color 2");
+            p.Add(0x00BF37, shade2, "Guts Light Orange Color 3");
+            p.Add(0x00BF47, shade2, "Guts Light Orange Color 4");
+            p.Add(0x00BF33, shade2, "Guts Light Orange Color 5");
+            p.Add(0x00BF34, shade3, "Guts Lighter Orange Color 1");
+            p.Add(0x00BF43, shade2, "Guts Light Orange Color 6");
+            p.Add(0x00BF44, shade3, "Guts Lighter Orange Color 2");
+            p.Add(0x00B4FE, shade3, "Guts Lighter Orange Color 3");
+            p.Add(0x00B4FF, shade2, "Guts Light Orange Color 7");
+            p.Add(0x03918F, shade2, "Guts Orange Color Stage");
+            p.Add(0x039190, shade3, "Guts Light Orange Color Stage");
 
             // Alien
             //0x02DC74(3 bytes) Alien Body, static   0x16 0x29 0x19

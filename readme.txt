@@ -15,8 +15,14 @@ Featured Randomizer Modules
 - Enemy Weaknesses: Damage done to each enemy by each weapon is changed.
 
 - Boss Weaknesses: The damage done by each weapon against each boss is changed.
-Two Robot Masters take 2x damage from Buster.  Every Robot Master will have a primary weakness
-and secondary weakness. Damage values are, on average, lower than in vanilla Mega Man 2.
+  > Two Robot Masters take 2x damage from Buster.
+  > Every Robot Master will have a primary weakness and secondary weakness. 
+  > Damage values are, on average, lower than in vanilla Mega Man 2.
+  > Note that an uncharged Heat does Buster damage, and a fully charged Heat does Heat damage.
+  > Wily bosses are also affected, including Boobeam Trap and its Barriers.
+  > There is a 25% chance for each Wily boss to take damage from buster.
+  > Time Stopper will never do damage to Wily bosses.
+  > Damage is scaled based on Ammo consumption
 
 - Boss AI: Properties of Robot Master attack patterns are changed.
 
@@ -26,9 +32,9 @@ and secondary weakness. Damage values are, on average, lower than in vanilla Meg
 
 - Wily 5 Teleporters: The Robot Masters inside of each Wily 5 teleporter has been shuffled.
 
-- Enemy Types: The enemy IDs for most enemy instances have been changed. Sprite banks for
-each room in each level are modified to support different enemy combinations appearing. A few 
-enemies are not yet supported.
+- Enemy Types: The enemy IDs for most enemy instances have been changed. 
+  > Sprite banks for each room are modified to support different enemy combinations appearing.
+  > A few enemies are not yet supported.
 
 - Colors: Stage backgrounds, Robot Master colors, Mega Man's weapon colors, and a few Wily
 bosses have randomly assigned colors.
@@ -36,14 +42,20 @@ bosses have randomly assigned colors.
 - BGM: The background music for all stages have been shuffled.
 
 - Random Text:
-- - The story in the intro cutscene will be different.
-- - In the Weapon Get screen, the weapon name and letter will be randomized.
+  > The story in the intro cutscene will be different.
+  > In the Weapon Get screen, the weapon name and letter will be randomized.
     (This letter is not used in the pause menu, however)
+
+- And a few surprises
+
+Other Features
 
 - Fast Text: To compensate for the U version being slower, text delay is increased from 7
 frames to 4 frames.
 
 - Burst Chaser Mode: Increase Mega Man's movement speed, and reduce a few other delay timers.
+
+- Additional large weapon energy refills provided in Wily 5 and Wily 6
 
 -----------------------------------------------------------------------------------------------
 

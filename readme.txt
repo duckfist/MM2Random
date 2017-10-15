@@ -1,13 +1,14 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.3.2 beta
+version 0.3.3 beta
 
 -----------------------------------------------------------------------------------------------
 
 Featured Randomizer Modules
 
-- Robot Master Order: The 8 robot master stages are shuffled.  The boss portraits on
-the Stage Select screen point to different stages.
+- Robot Master Portraits: The boss portraits on the Stage Select point to different stages.
+
+- Robot Master Spawn: Boss rooms may contain a different boss.
 
 - Weapon Behavior: Movement properties and ammo usage of each weapon are changed.
 
@@ -94,10 +95,13 @@ Changelog
 
 v0.3.3-beta
 - Random Robot Masters in boss rooms
+- Modified credits sequence with damage table
 - Music no longer changes during Wily 5 refights
 - Bug fix: Bubbleman softlock, shouldn't zip through the floor anymore
 - (Enemy) Adjusted some air enemy spawn positions in Heat and Wily1
+- (Enemy) Friender now always takes 1 damage from Buster
 - (Boss) Bubbleman fight now has new randomized parameters
+- (Colors) Intro, Credits, Start, Password, Weapon Get, Dragon, and Gutsdozer
 
 v0.3.2-beta
 - Enemy Weakness Randomizer

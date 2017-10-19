@@ -105,6 +105,9 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
   
 Changelog
 
+v0.3.4-beta
+- Bug fix: Removed ceiling from Woodman's room to prevent stuck Robot Masters
+
 v0.3.3-beta
 - Random Robot Masters in boss rooms
 - Modified credits sequence with damage table
@@ -113,6 +116,8 @@ v0.3.3-beta
 - (Enemy) Adjusted some air enemy spawn positions in Heat and Wily1
 - (Enemy) Friender now always takes 1 damage from Buster
 - (Boss) Bubbleman fight now has new randomized parameters
+- (Stage) Added 1 extra Large Weapon Energy to Wily 5 and Wily 6
+- (Text) Added 4 new intro stories
 - (Colors) Intro, Credits, Start, Password, Weapon Get, Dragon, and Gutsdozer
 
 v0.3.2-beta

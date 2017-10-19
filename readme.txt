@@ -105,6 +105,9 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
   
 Changelog
 
+v0.3.4-beta
+- Bug fix: Removed ceiling from Woodman's room to prevent stuck Robot Masters
+
 v0.3.3-beta
 - Random Robot Masters in boss rooms
 - Modified credits sequence with damage table

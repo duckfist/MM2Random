@@ -18,7 +18,7 @@ namespace MM2Randomizer.Randomizers.Enemies
         public static int EnemyDamageAddressM = 0x03ECF4;
 
         // NOTE: Will have to change these indices if enemies are added/removed from enemyweaknesses.csv!
-        public static int EnemyIndexInShotArray_Friender = 9;
+        public static int EnemyIndexInShotArray_Friender = 8;
 
         private StringBuilder debug = new StringBuilder();
         private List<string> enemyNames = new List<string>();

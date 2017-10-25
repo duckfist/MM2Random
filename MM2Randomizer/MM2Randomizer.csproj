@@ -172,6 +172,7 @@
     <None Include="Resources\enemylist.csv" />
     <None Include="Resources\enemyweakness.csv" />
     <None Include="Resources\mm2rng_prepatch.ips" />
+    <None Include="Resources\music.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

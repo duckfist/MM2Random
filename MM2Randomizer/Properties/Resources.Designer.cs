@@ -317,5 +317,14 @@ namespace MM2Randomizer.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string music {
+            get {
+                return ResourceManager.GetString("music", resourceCulture);
+            }
+        }
     }
 }

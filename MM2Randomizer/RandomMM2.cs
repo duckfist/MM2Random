@@ -153,8 +153,16 @@ namespace MM2Randomizer
                 }
                 MiscHacks.SetWily5NoMusicChange(Patch, Settings.IsJapanese);
                 
-                // Prepare a copy of the source rom for modification
-                File.Copy(Settings.SourcePath, TempFileName, true);
+                // Prepare a copy of the source rom for modification. Provide the ROM, or should the user?
+                //File.Copy(Settings.SourcePath, TempFileName, true);
+                var assembly = Assembly.GetExecutingAssembly();
+                using (Stream stream = assembly.GetManifestResourceStream("MM2Randomizer.Resources.MM2.nes"))
+                {
+                    using (Stream output = File.OpenWrite(TempFileName))
+                    {
+                        stream.CopyTo(output);
+                    }
+                }
 
                 // Apply pre-patch changes via IPS patch (manual title screen, stage select, and stage changes)
                 Patch.ApplyIPSPatch(TempFileName);

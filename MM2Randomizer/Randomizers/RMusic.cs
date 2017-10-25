@@ -51,8 +51,14 @@ namespace MM2Randomizer.Randomizers
         /// The maximum number of bytes that the list of stage songs can be.
         /// </summary>
         public const int StageSongsSize = 0x20CA; // 8394
+        private StringBuilder debug = new StringBuilder();
 
         public RMusic() { }
+
+        public override string ToString()
+        {
+            return debug.ToString();
+        }
 
         public void Randomize(Patch p, Random r)
         {
@@ -90,6 +96,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     totalBytes += song.SongHeader.Count;
                     totalBytes += song.SongData.Count;
+                    debug.AppendLine($"<TODO> stage song: {song.SongName}, {song.OriginalStartAddress}");
                 }
 
                 // Break if within limit (Redo shuffle if over limit)

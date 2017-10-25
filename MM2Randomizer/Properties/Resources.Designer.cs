@@ -311,6 +311,16 @@ namespace MM2Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] MM2 {
+            get {
+                object obj = ResourceManager.GetObject("MM2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] mm2rng_prepatch {
             get {
                 object obj = ResourceManager.GetObject("mm2rng_prepatch", resourceCulture);
@@ -319,7 +329,18 @@ namespace MM2Randomizer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to # Mega Man 2 Song Interpreter
+        ///#
+        ///# Each line is one song, and of comma-separated value format
+        ///#
+        ///# Example:
+        ///# SongName,OriginalStartAddress,SongData
+        ///#	where   
+        ///#		SongName = Any string to identify the song, such as the name and what game/hack it comes from
+        ///#		OriginalStartAddress = The address of the first byte of the song&apos;s header (value 0F) in the song&apos;s original ROM
+        ///#		SongData = Stream of bytes representing the song, each byte a pair of adjacent characters in the string
+        ///#
+        ///# The 10 songs chosen  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string music {
             get {

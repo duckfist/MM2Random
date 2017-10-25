@@ -63,7 +63,8 @@
                 <TextBox HorizontalAlignment="Stretch" Name="tbxSeed" Text="{Binding Path=SeedString, UpdateSourceTrigger=PropertyChanged}" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
             </DockPanel>
 
-            <Border Name="border" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" BorderThickness="3">
+            <!-- Re-enable this for users to provide their own roms -->
+            <Border Name="border" Grid.Row="1" Grid.ColumnSpan="2" IsEnabled="False" HorizontalAlignment="Stretch" BorderThickness="3">
                 <DockPanel >
                     <Button Width="24" Margin="5,6" Name="btnBrowse" Click="btnBrowse_Click">
                         <TextBlock Text="..."/>
@@ -108,13 +109,13 @@
             </GroupBox>
 
             <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="3" Orientation="Vertical">
-                <Button Name="btnCreateROM" IsEnabled="{Binding Path=IsSourcePathAndSeedValid}" Click="btnCreateROM_Click" Height="30" Margin="3,8,3,3">
+                <Button Name="btnCreateROM" IsEnabled="{Binding Path=IsSeedValid}" Click="btnCreateROM_Click" Height="30" Margin="3,8,3,3">
                     Create From Given Seed
                 </Button>
-                <Button Name="btnCreateRandom" IsEnabled="{Binding Path=IsSourcePathValid}" Click="btnCreateRandom_Click" Height="30">
+                <Button Name="btnCreateRandom" Click="btnCreateRandom_Click" Height="30">
                     Create From Random Seed
                 </Button>
-                <Button Name="btnOpenFolder" IsEnabled="{Binding Path=IsSourcePathValid}" Click="btnOpenFolder_Click" Height="30">
+                <Button Name="btnOpenFolder" Click="btnOpenFolder_Click" Height="30">
                     Open Containing Folder
                 </Button>
                 

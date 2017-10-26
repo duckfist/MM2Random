@@ -63,7 +63,7 @@ namespace MM2Randomizer.Randomizers
         public void Randomize(Patch p, Random r)
         {
             ImportMusic(p, r);
-            OldRando(p, r);
+            //OldRando(p, r);
         }
 
         public void ImportMusic(Patch p, Random r)
@@ -79,7 +79,15 @@ namespace MM2Randomizer.Randomizers
                 string[] lineParts = line.Split(',');
 
                 // Add song to list of songs
-                songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
+                Song song = new Song(lineParts[0], lineParts[1], lineParts[2]);
+                songs.Add(song);
+
+                // DEBUG ONLY: TEST ONE SONG AT A TIME
+                for (int i = 0; i < 10; i++)
+                {
+                    songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
+                }
+                break;
             }
 
             // Create a shuffled list of songs
@@ -100,10 +108,10 @@ namespace MM2Randomizer.Randomizers
                 }
 
                 // Break if within limit (Redo shuffle if over limit)
-                if (totalBytes <= StageSongsSize)
-                {
+                //if (totalBytes <= StageSongsSize)
+                //{
                     checkBytes = false;
-                }
+                //}
             }
 
             // Write the songs and song info

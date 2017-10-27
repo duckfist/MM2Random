@@ -91,10 +91,10 @@ namespace MM2Randomizer.Randomizers
                 songs.Add(song);
 
                 // DEBUG ONLY: TEST ONE SONG AT A TIME
-                //for (int i = 0; i < 10; i++)
-                //{
-                //    songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
-                //}
+                for (int i = 0; i < 10; i++)
+                {
+                    songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
+                }
             }
 
             // Create a shuffled list of songs
@@ -116,10 +116,10 @@ namespace MM2Randomizer.Randomizers
                 
                 // Break if within limit (Redo shuffle if over limit)
                 // DEBUG DEBUG
-                if (totalBytes <= StageSongsSize)
-                {
+                //if (totalBytes <= StageSongsSize)
+                //{
                     checkBytes = false;
-                }
+                //}
             }
 
             // Write the songs and song info

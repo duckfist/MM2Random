@@ -43,6 +43,14 @@ namespace MM2Randomizer.Randomizers
                 return byteSmall + (byteLarge * 256);
             }
         }
+
+        public int TotalLength
+        {
+            get
+            {
+                return SongHeader.Count + SongData.Count;
+            }
+        }
     }
 
     public class RMusic : IRandomizer
@@ -83,11 +91,10 @@ namespace MM2Randomizer.Randomizers
                 songs.Add(song);
 
                 // DEBUG ONLY: TEST ONE SONG AT A TIME
-                for (int i = 0; i < 10; i++)
-                {
-                    songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
-                }
-                break;
+                //for (int i = 0; i < 10; i++)
+                //{
+                //    songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
+                //}
             }
 
             // Create a shuffled list of songs
@@ -106,12 +113,13 @@ namespace MM2Randomizer.Randomizers
                     totalBytes += song.SongData.Count;
                     debug.AppendLine($"<TODO> stage song: {song.SongName}, {song.OriginalStartAddress}");
                 }
-
+                
                 // Break if within limit (Redo shuffle if over limit)
-                //if (totalBytes <= StageSongsSize)
-                //{
+                // DEBUG DEBUG
+                if (totalBytes <= StageSongsSize)
+                {
                     checkBytes = false;
-                //}
+                }
             }
 
             // Write the songs and song info
@@ -168,6 +176,18 @@ namespace MM2Randomizer.Randomizers
                 song.SongHeader[9] = (byte)(newVibratoOffset % 256);
                 song.SongHeader[10] = (byte)(newVibratoOffset / 256);
 
+                if (relChannel1Offset > song.TotalLength || relChannel1Offset < 0)
+                    debug.AppendLine($"WARNING: Song {song.SongName} channel 1 points to a shared location.");
+                if (relChannel2Offset > song.TotalLength || relChannel2Offset < 0)
+                    debug.AppendLine($"WARNING: Song {song.SongName} channel 2 points to a shared location.");
+                if (relChannel3Offset > song.TotalLength || relChannel3Offset < 0)
+                    debug.AppendLine($"WARNING: Song {song.SongName} channel 3 points to a shared location.");
+                if (relChannel4Offset > song.TotalLength || relChannel4Offset < 0)
+                    debug.AppendLine($"WARNING: Song {song.SongName} channel 4 points to a shared location.");
+                if (relVibratoOffset > song.TotalLength || relVibratoOffset < 0)
+                    debug.AppendLine($"WARNING: Song {song.SongName} vibrato points to a shared location.");
+
+
                 // Write song header
                 foreach (byte b in song.SongHeader)
                 {
@@ -212,6 +232,9 @@ namespace MM2Randomizer.Randomizers
                             song.SongData[i + 2] = (byte)(newLoopOffset % 256);
                             song.SongData[i + 3] = (byte)(newLoopOffset / 256);
 
+                            if (relLoopOffset > song.TotalLength || relLoopOffset < 0)
+                                debug.AppendLine($"WARNING: Song {song.SongName} has external loop point.");
+
                             i += 3;
                             break;
                         case 0x05: // Two-byte encoding $05 n. Sets note base to n. Value n is added to the note index for any notes (excluding pauses) played on this channel from now.
@@ -234,7 +257,7 @@ namespace MM2Randomizer.Randomizers
                             break;
                     }
                 }
-
+                
                 // Write song data
                 foreach (byte b in song.SongData)
                 {

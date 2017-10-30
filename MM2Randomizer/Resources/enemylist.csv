@@ -1,7 +1,7 @@
 #Index,StageNum,RoomNum,ScreenNum,IsActive,EnemyID,XPosOriginal,YPosOriginal,YPosAir,YPosGround,FaceRight
-00,00,00,01,true,2B,70,10,14,B4,false
-01,00,00,01,true,2B,F0,10,14,B4,false
-02,00,00,02,true,2B,90,10,18,B4,false
+00,00,00,01,true,2B,70,10,24,A4,false
+01,00,00,01,true,2B,F0,10,24,A4,false
+02,00,00,02,true,2B,90,10,28,A4,false
 03,00,00,02,true,21,A8,58,58,58,false
 04,00,00,02,true,21,E8,78,78,78,false
 05,00,00,03,true,21,48,48,48,48,false

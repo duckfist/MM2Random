@@ -198,6 +198,14 @@ namespace MM2Randomizer.Randomizers
                 // Song Data: Traverse stream and change loop pointers
                 for (int i = 0; i < song.SongData.Count; i++)
                 {
+                    // Do not parse loop pointers for vibrato
+                    // TODO: Check the length of the vibrato string, or even better, use separate lists for
+                    // each channel!
+                    if (addressTwoBytes + i + 11 >= newVibratoOffset)
+                    {
+                        continue;
+                    }
+
                     byte b0 = song.SongData[i];
 
                     // Bisqwit is awesome.

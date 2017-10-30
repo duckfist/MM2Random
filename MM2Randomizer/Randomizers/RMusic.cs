@@ -71,7 +71,7 @@ namespace MM2Randomizer.Randomizers
         public void Randomize(Patch p, Random r)
         {
             ImportMusic(p, r);
-            //OldRando(p, r);
+            OldRando(p, r);
         }
 
         public void ImportMusic(Patch p, Random r)
@@ -91,11 +91,12 @@ namespace MM2Randomizer.Randomizers
                 songs.Add(song);
 
                 // DEBUG ONLY: TEST ONE SONG AT A TIME
-                for (int i = 0; i < 10; i++)
-                {
-                    songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
-                }
+                //for (int i = 0; i < 10; i++)
+                //{
+                //    songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
+                //}
             }
+            debug.AppendLine($"{songs.Count} stage songs loaded.");
 
             // Create a shuffled list of songs
             bool checkBytes = true;
@@ -113,13 +114,17 @@ namespace MM2Randomizer.Randomizers
                     totalBytes += song.SongData.Count;
                     debug.AppendLine($"<TODO> stage song: {song.SongName}, {song.OriginalStartAddress}");
                 }
-                
+
                 // Break if within limit (Redo shuffle if over limit)
                 // DEBUG DEBUG
-                //if (totalBytes <= StageSongsSize)
-                //{
+                if (totalBytes <= StageSongsSize)
+                {
                     checkBytes = false;
-                //}
+                }
+                else
+                {
+                    debug.AppendLine($"{totalBytes} bytes, greater than {StageSongsSize} limit. Reshuffled songs.");
+                }
             }
 
             // Write the songs and song info
@@ -201,10 +206,10 @@ namespace MM2Randomizer.Randomizers
                     // Do not parse loop pointers for vibrato
                     // TODO: Check the length of the vibrato string, or even better, use separate lists for
                     // each channel!
-                    if (addressTwoBytes + i + 11 >= newVibratoOffset)
-                    {
-                        continue;
-                    }
+                    //if (addressTwoBytes + i + 11 >= newVibratoOffset)
+                    //{
+                    //    continue;
+                    //}
 
                     byte b0 = song.SongData[i];
 

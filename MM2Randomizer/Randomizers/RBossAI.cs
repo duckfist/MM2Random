@@ -302,12 +302,12 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x02C707, bytes[rInt], "Bubbleman Y Max Height");
 
             //0x02C70B - Falling speed integer, 0xFF.
-            bytes = new byte[] { 0xFD, 0xFE, 0xFF, 0xFF };
+            bytes = new byte[] { 0xFE, 0xFF, 0xFF, 0xFF, 0xFF };
             rInt = r.Next(bytes.Length);
             Patch.Add(0x02C70B, bytes[rInt], "Bubbleman Y-Velocity Falling");
 
             //0x02C710 - Landing x-tracking speed, integer, 0x00.
-            bytes = new byte[] { 0x00, 0x00, 0x00, 0x01 };
+            bytes = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
             rInt = r.Next(bytes.Length);
             Patch.Add(0x02C710, bytes[rInt], "Bubbleman X-Velocity Falling");
 
@@ -315,6 +315,51 @@ namespace MM2Randomizer.Randomizers
             bytes = new byte[] { 0x01, 0x01, 0x02, 0x02, 0x03, };
             rInt = r.Next(bytes.Length);
             Patch.Add(0x02C6D3, bytes[rInt], "Bubbleman Y-Velocity Rising");
+
+            //0x02C745 - Delay between water gun shots, 0x12
+            bytes = new byte[] { 0x04, 0x08, 0x0C, 0x10, 0x10, 0x14, 0x18, 0x1C };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x02C745, bytes[rInt], "Bubbleman Water Gun Cooldown");
+
+            //0x03DA19 - X-Vel water gun, Int 0x04
+            bytes = new byte[] { 0x02, 0x03, 0x04, 0x05, };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x03DA19, bytes[rInt], "Bubbleman X-Vel Water Gun, Int");
+
+            //0x03DA1A - X-Vel water gun, Frac 0x40
+            bytes = new byte[] { 0x40, 0x80, 0xC0, 0x00, };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x03DA1A, bytes[rInt], "Bubbleman X-Vel Water Gun, Frac");
+
+            //0x03DA25 - X-Vel bubble shot, Int 0x01
+            bytes = new byte[] { 0x00, 0x00, 0x01, 0x01, 0x02, };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x03DA25, bytes[rInt], "Bubbleman X-Vel Bubble, Int");
+
+            //0x03DA26 - X-Vel bubble shot, Frac 0x00
+            bytes = new byte[] { 0x80, 0xC0, 0xFF };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x03DA26, bytes[rInt], "Bubbleman X-Vel Bubble, Frac");
+
+            //0x03DA4D - Y-Vel bubble shot initial, Int (0x03)
+            bytes = new byte[] { 0x02, 0x03, 0x04, 0x05 };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x03DA4D, bytes[rInt], "Bubbleman Y-Vel Bubble Initial, Int");
+
+            //0x03DA4E - Y-Vel bubble shot initial, Frac (0x76)
+            bytes = new byte[] { 0x00, 0x40, 0x80, 0xC0 };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x03DA4E, bytes[rInt], "Bubbleman Y-Vel Bubble Initial, Frac");
+
+            //0x03B747 - Y-Vel bubble shot bounce, Int (0x03)
+            bytes = new byte[] { 0x02, 0x03, 0x04, 0x05 };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x03B747, bytes[rInt], "Bubbleman Y-Vel Bubble Bounce, Int");
+
+            //0x03B74C - Y-Vel bubble shot bounce, Frac (0x76)
+            bytes = new byte[] { 0x00, 0x40, 0x80, 0xC0 };
+            rInt = r.Next(bytes.Length);
+            Patch.Add(0x03B74C, bytes[rInt], "Bubbleman Y-Vel Bubble Bounce, Frac");
         }
 
         protected void ChangeQuick(Patch Patch, Random r)

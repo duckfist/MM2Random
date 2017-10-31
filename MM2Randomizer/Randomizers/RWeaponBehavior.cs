@@ -130,22 +130,46 @@ namespace MM2Randomizer.Randomizers
             //0x03DE55 - H L1 Ammo use(01)
             //0x03DE56 - H L2 Ammo use(06)
             //0x03DE57 - H L3 Ammo use(0A)
-            // 50% chance for L1 to be free
-            // L2 and L3 will cost 1-4 more each
+            // 90% chance for L1 to be free, else cost 1 ammo
+            // L2 ammo cost = L1 ammo cost
+            // L3 will cost 1-4 ammo
             double rTestL1Ammo = r.NextDouble();
-            if (rTestL1Ammo > 0.5)
+            byte L1Ammo = (rTestL1Ammo > 0.1) ? (byte)0 : (byte)1;
+            Patch.Add(0x03DE55, L1Ammo, $"(H) | Shot L1 Ammo Cost: {L1Ammo}");
+            Patch.Add(0x03DE56, L1Ammo, $"(H) | Shot L2 Ammo Cost: {L1Ammo}");
+
+            byte[] bytes = new byte[] { 0x01, 0x01, 0x02, 0x02, 0x02, 0x02, 0x03, 0x03, };
+            int rInt = r.Next(bytes.Length);
+            Patch.Add(0x03DE57, bytes[rInt], $"(H) | Shot L3 Ammo Cost: {bytes[rInt]}");
+            AmmoUsage.Add(bytes[rInt]);
+
+            // Charge Behavior
+            // 20% to have old charge behavior, 40% to skip 1 level, 40% to shoot L3 immediately
+            double rTestChargeType = r.NextDouble();
+            //0x03DD66 - H change these 4 bytes to 0xEA to skip L2 charge
+            if (rTestChargeType < 0.8)
             {
-                Patch.Add(0x03DE55, 0x00, "(H) | Shot L1 Ammo Cost: 00"); // Normally "00" to indicate Heatman.
+                for (int i = 0; i < 4; i++)
+                    Patch.Add(0x03DD66 + i, 0xEA, $"(H) | Skip L2 Charge");
+            }
+            //0x03DD62 - H after doing the previous, change these 2 bytes to 0xEA to skip charge altogether
+            if (rTestChargeType < 0.4)
+            {
+                Patch.Add(0x03DD62, 0xEA, $"(H) | Skip L1 Charge");
+                Patch.Add(0x03DD63, 0xEA, $"(H) | Skip L1 Charge");
+                //0x03DD95 - H change this from 0x0D to 0x14 to fire the charge on press instead of on release
+                Patch.Add(0x03DD95, 0x14, $"(H) | Fire Shot On Press");
             }
 
-            int ammoMax = 0;
-            for (int i = 0; i < 2; i++)
-            {
-                int ammoUse = r.Next(0x04) + 0x01;
-                ammoMax += ammoUse;
-                Patch.Add(0x03DE56 + i, (byte)ammoMax, String.Format("(H) | Shot L{0} Ammo Cost: {1}", i + 2, ammoMax));
-            }
-            AmmoUsage.Add(ammoMax);
+            // Charge delay for L2 will be between 0x10 and 0x80 frames
+            //0x03DD61 - H L2 charge delay (0x7D)
+            int chargeDelayL2 = r.Next(0x70) + 0x09;
+            Patch.Add(0x03DD61, (byte)chargeDelayL2, "(H) | L2 Charge Delay");
+
+            // Charge delay for L3 will L2 plus a value between 0x10 and 0x40 frames
+            //0x03DD67 - H L3 charge delay(0xBB)
+            int chargeDelayL3 = r.Next(0x30) + 0x09 + chargeDelayL2;
+            Patch.Add(0x03DD67, (byte)chargeDelayL3, "(H) | L3 Charge Delay");
 
             //0x03DDEC - H shot sound effect(38)
             ESoundID sound = GetRandomSound(r);

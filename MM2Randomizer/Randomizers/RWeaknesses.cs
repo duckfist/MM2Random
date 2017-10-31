@@ -571,10 +571,10 @@ namespace MM2Randomizer.Randomizers
                     }
 
                     // If any weakness is Atomic Fire, deal 20 damage
-                    if (weapon == EDmgVsEnemy.DamageH && (enemyWeak1 == weapon || enemyWeak2 == weapon || enemyWeak3 == weapon))
-                    {
-                        damage = 20;
-                    }
+                    //if (weapon == EDmgVsEnemy.DamageH && (enemyWeak1 == weapon || enemyWeak2 == weapon || enemyWeak3 == weapon))
+                    //{
+                    //    damage = 20;
+                    //}
 
                     // Bump up already high damage values to 20
                     if (damage >= 14)

@@ -147,6 +147,10 @@ namespace MM2Randomizer
                 {
                     MiscHacks.FixPortraits(Patch, Settings.Is8StagesRandom, randomStages, Settings.IsWeaponsRandom, randomWeaponGet);
                 }
+                if (Settings.IsEnemiesRandom)
+                {
+                    MiscHacks.FixM445PaletteGlitch(Patch);
+                }
                 if (!Settings.IsJapanese)
                 {
                     MiscHacks.DrawTitleScreenChanges(Patch, Seed);

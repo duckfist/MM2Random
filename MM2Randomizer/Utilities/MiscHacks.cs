@@ -129,5 +129,11 @@ namespace MM2Randomizer.Utilities
         {
             Patch.Add(EDmgVsEnemy.DamageP + EDmgVsEnemy.Offset.Press, 0x01, "Buster Damage Against Press");
         }
+
+        public static void FixM445PaletteGlitch(Patch p)
+        {
+            for (int i = 0; i < 3; i++)
+                p.Add(0x395BD + i, 0xEA, "M-445 Palette Glitch Fix");
+        }
     }
 }

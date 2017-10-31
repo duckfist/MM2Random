@@ -269,30 +269,30 @@ namespace MM2Randomizer.Randomizers.Enemies
                 new List<byte>() { 0x9B, 0x03, 0x9C, 0x03 },
                 new List<int>() { 0, 1 },
                 false));
-            //EnemyTypes.Add(new EnemyType(EEnemyID.Kerog,
-            //    new List<byte>() { 0x9B, 0x02, 0x9C, 0x02, 0x9D, 0x02 },
-            //    new List<int>() { 0, 1, 2 },
-            //    false,
-            //    false,
-            //    -4));
+            EnemyTypes.Add(new EnemyType(EEnemyID.Kerog,
+                new List<byte>() { 0x9B, 0x02, 0x9C, 0x02, 0x9D, 0x02 },
+                new List<int>() { 0, 1, 2 },
+                false,
+                false,
+                -4));
             EnemyTypes.Add(new EnemyType(EEnemyID.Batton,
                 new List<byte>() { 0x94, 0x02, 0x93, 0x02 },
                 new List<int>() { 3, 4 },
                 false,
                 true));
-            //EnemyTypes.Add(new EnemyType(EEnemyID.Robbit,
-            //    new List<byte>() { 0x98, 0x02, 0x99, 0x02, 0x9A, 0x02 },
-            //    new List<int>() { 0, 1, 2 },
-            //    false));
-            //EnemyTypes.Add(new EnemyType(EEnemyID.Monking,
-            //    new List<byte>() { 0x98, 0x01, 0x99, 0x01, 0x9A, 0x01, 0x9B, 0x01 },
-            //    new List<int>() { 0, 1, 2, 3 },
-            //    false)); // TODO
-            //EnemyTypes.Add(new EnemyType(EEnemyID.Kukku_Activator,
-            //    new List<byte>() { 0x90, 0x01, 0x91, 0x01, 0x92, 0x01, 0x93, 0x01 },
-            //    new List<int>() { 0, 1, 2, 3 },
-            //    true,
-            //    true));
+            EnemyTypes.Add(new EnemyType(EEnemyID.Robbit,
+                new List<byte>() { 0x98, 0x02, 0x99, 0x02, 0x9A, 0x02 },
+                new List<int>() { 0, 1, 2 },
+                false));
+            EnemyTypes.Add(new EnemyType(EEnemyID.Monking,
+                new List<byte>() { 0x98, 0x01, 0x99, 0x01, 0x9A, 0x01, 0x9B, 0x01 },
+                new List<int>() { 0, 1, 2, 3 },
+                false)); // TODO
+            EnemyTypes.Add(new EnemyType(EEnemyID.Kukku_Activator,
+                new List<byte>() { 0x90, 0x01, 0x91, 0x01, 0x92, 0x01, 0x93, 0x01 },
+                new List<int>() { 0, 1, 2, 3 },
+                true,
+                true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Telly,
                 new List<byte>() { 0x93, 0x01 },
                 new List<int>() { 4 },
@@ -318,25 +318,25 @@ namespace MM2Randomizer.Randomizers.Enemies
                 false,
                 false,
                 -32));
-            //EnemyTypes.Add(new EnemyType(EEnemyID.NeoMetall,
-            //    new List<byte>() { 0x92, 0x02, 0x9A, 0x03 },
-            //    new List<int>() { 2, 3 },
-            //    false));
-            //EnemyTypes.Add(new EnemyType(EEnemyID.Matasaburo,
-            //    new List<byte>() { 0x90, 0x02, 0x91, 0x02, 0x92, 0x02 },
-            //    new List<int>() { 0, 1, 2 },
-            //    false,
-            //    false,
-            //    -4));
+            EnemyTypes.Add(new EnemyType(EEnemyID.NeoMetall,
+                new List<byte>() { 0x92, 0x02, 0x9A, 0x03 },
+                new List<int>() { 2, 3 },
+                false));
+            EnemyTypes.Add(new EnemyType(EEnemyID.Matasaburo,
+                new List<byte>() { 0x90, 0x02, 0x91, 0x02, 0x92, 0x02 },
+                new List<int>() { 0, 1, 2 },
+                false,
+                false,
+                -4));
             EnemyTypes.Add(new EnemyType(EEnemyID.Pipi_Activator,
                 new List<byte>() { 0x9C, 0x01 },
                 new List<int>() { 4 },
                 true,
                 true));
-            //EnemyTypes.Add(new EnemyType(EEnemyID.LightningGoro,
-            //    new List<byte>() { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01 },
-            //    new List<int>() { 0, 1, 2 },
-            //    false));
+            EnemyTypes.Add(new EnemyType(EEnemyID.LightningGoro,
+                new List<byte>() { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01 },
+                new List<int>() { 0, 1, 2 },
+                false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Mole_Activator,
                 new List<byte>() { 0x90, 0x03 },
                 new List<int>() { 4 },
@@ -370,9 +370,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 4));
             //EnemyTypes.Add(new EnemyType(EEnemyID.PetitGoblin,
             //    new List<byte>() { 0x96, 0x03 },
-            //    new List<int>() { 5 },
-            //    true,
-            //    true));
+            //    new List<int>() { 5 }));
             EnemyTypes.Add(new EnemyType(EEnemyID.Shrink,
                 new List<byte>() { 0x9E, 0x02, 0x9F, 0x02 },
                 new List<int>() { 0, 1 },

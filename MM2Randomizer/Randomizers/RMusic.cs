@@ -15,6 +15,7 @@ namespace MM2Randomizer.Randomizers
             this.OriginalStartAddress = originalStartAddress;
             this.SongName = songname;
 
+
             // Parse song bytes from hex string
             List<byte> songBytes = new List<byte>();
             while (songBytesStr.Length > 0)
@@ -27,11 +28,75 @@ namespace MM2Randomizer.Randomizers
             // Header consists of the first 11 bytes, followed by the song data
             this.SongHeader = songBytes.GetRange(0, 11);
             this.SongData = songBytes.GetRange(11, songBytes.Count - 11);
+
+            // Parse channel information
+            byte byteSmall = SongHeader[1];
+            byte byteLarge = SongHeader[2];
+            int absolutePos = byteSmall + (byteLarge * 256);
+            Channel1Index = absolutePos - OriginalStartAddressInt - 11;
+
+            byteSmall = SongHeader[3];
+            byteLarge = SongHeader[4];
+            absolutePos = byteSmall + (byteLarge * 256);
+            Channel2Index = absolutePos - OriginalStartAddressInt - 11;
+
+            byteSmall = SongHeader[5];
+            byteLarge = SongHeader[6];
+            absolutePos = byteSmall + (byteLarge * 256);
+            Channel3Index = absolutePos - OriginalStartAddressInt - 11;
+
+            byteSmall = SongHeader[7];
+            byteLarge = SongHeader[8];
+            absolutePos = byteSmall + (byteLarge * 256);
+            Channel4Index = absolutePos - OriginalStartAddressInt - 11;
+
+            // Parse vibrato information
+            byteSmall = songBytes[9];
+            byteLarge = songBytes[10];
+            absolutePos = byteSmall + (byteLarge * 256);
+            VibratoIndex = absolutePos - OriginalStartAddressInt - 11;
+
+            // Count length of vibrato section
+            int i = VibratoIndex;
+            while (true)
+            {
+                if (i >= SongData.Count ||
+                    i == Channel1Index ||
+                    i == Channel2Index ||
+                    i == Channel3Index ||
+                    i == Channel4Index)
+                {
+                    VibratoLength = i - VibratoIndex;
+                    break;
+                }
+                i++;
+            }
+        }
+
+        public enum SongIndex
+        {
+            Flash,
+            Wood,
+            Crash,
+            Heat,
+            Air,
+            Metal,
+            Quick,
+            Bubble,
+            Wily12,
+            Wily345
         }
 
         public string SongName { get; set; }
         public List<byte> SongHeader { get; set; }
         public List<byte> SongData { get; set; }
+
+        public int Channel1Index { get; set; }
+        public int Channel2Index { get; set; }
+        public int Channel3Index { get; set; }
+        public int Channel4Index { get; set; }
+        public int VibratoIndex { get; set; }
+        public int VibratoLength { get; set; }
 
         public string OriginalStartAddress { get; set; }
         public int OriginalStartAddressInt
@@ -91,10 +156,10 @@ namespace MM2Randomizer.Randomizers
                 songs.Add(song);
 
                 // DEBUG ONLY: TEST ONE SONG AT A TIME
-                //for (int i = 0; i < 10; i++)
-                //{
-                //    songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
-                //}
+                for (int i = 0; i < 10; i++)
+                {
+                    songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
+                }
             }
             debug.AppendLine($"{songs.Count} stage songs loaded.");
 
@@ -108,24 +173,26 @@ namespace MM2Randomizer.Randomizers
 
                 // Count bytes 
                 int totalBytes = 0;
+                int i = 0;
                 foreach (Song song in stageSongs)
                 {
                     totalBytes += song.SongHeader.Count;
                     totalBytes += song.SongData.Count;
-                    debug.AppendLine($"<TODO> stage song: {song.SongName}, {song.OriginalStartAddress}");
+                    debug.AppendLine($"{Enum.GetName(typeof(EMusicID),(EMusicID)i)} stage song: {song.SongName}, {song.OriginalStartAddress}");
+                    i++;
                 }
 
                 // Break if within limit (Redo shuffle if over limit)
                 // DEBUG DEBUG
-                if (totalBytes <= StageSongsSize)
-                {
-                    checkBytes = false;
-                    debug.AppendLine($"{totalBytes} bytes, out of {StageSongsSize} limit.");
-                }
-                else
-                {
-                    debug.AppendLine($"{totalBytes} bytes, greater than {StageSongsSize} limit. Reshuffled songs.");
-                }
+                //if (totalBytes <= StageSongsSize)
+                //{
+                checkBytes = false;
+                //    debug.AppendLine($"{totalBytes} bytes used out of {StageSongsSize} limit.");
+                //}
+                //else
+                //{
+                //    debug.AppendLine($"{totalBytes} bytes, greater than {StageSongsSize} limit. Reshuffled songs.");
+                //}
             }
 
             // Write the songs and song info
@@ -204,13 +271,14 @@ namespace MM2Randomizer.Randomizers
                 // Song Data: Traverse stream and change loop pointers
                 for (int i = 0; i < song.SongData.Count; i++)
                 {
-                    // Do not parse loop pointers for vibrato
-                    // TODO: Check the length of the vibrato string, or even better, use separate lists for
-                    // each channel!
-                    //if (addressTwoBytes + i + 11 >= newVibratoOffset)
-                    //{
-                    //    continue;
-                    //}
+                    //Do not parse loop pointers for vibrato
+                    //TODO: Check the length of the vibrato string, or even better, use separate lists for
+
+                    //each channel!
+                    if (i >= song.VibratoIndex && i < song.VibratoLength)
+                    {
+                        continue;
+                    }
 
                     byte b0 = song.SongData[i];
 

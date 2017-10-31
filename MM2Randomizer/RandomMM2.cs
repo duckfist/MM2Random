@@ -156,7 +156,8 @@ namespace MM2Randomizer
                     MiscHacks.DrawTitleScreenChanges(Patch, Seed);
                 }
                 MiscHacks.SetWily5NoMusicChange(Patch, Settings.IsJapanese);
-                
+                MiscHacks.FixDamageValues(Patch);
+
                 // Prepare a copy of the source rom for modification. Provide the ROM, or should the user?
                 //File.Copy(Settings.SourcePath, TempFileName, true);
                 var assembly = Assembly.GetExecutingAssembly();

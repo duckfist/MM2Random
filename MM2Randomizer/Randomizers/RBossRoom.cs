@@ -205,7 +205,7 @@ namespace MM2Randomizer.Randomizers
 
             Components.Shuffle(r);
 
-            // Create table for which stage is selectable on the stage select screen (independent of it being blacked out)
+            // Write in new boss positions
             for (int i = 0; i < 8; i++)
             {
                 var bossroom = Components[i];
@@ -239,9 +239,16 @@ namespace MM2Randomizer.Randomizers
                         $"Boss Room {i} Sprite Bank Swap {j}");
                 }
             }
-            
+
+            // Undo shuffling of damage values for each boss room
+            int contactDmgTbl = 0x2E9C2;
+            byte[] originalDmgVals = new byte[] { 08,08,08,04,04,04,06,04 };
+            byte[] newDmgVals = new byte[8];
+            for (int i = 0; i < Components.Count; i++)
+            {
+                newDmgVals[i] = originalDmgVals[Components[i].OriginalBossIndex];
+                Patch.Add(contactDmgTbl + i, newDmgVals[i]);
+            }
         }
-
-
     }
 }

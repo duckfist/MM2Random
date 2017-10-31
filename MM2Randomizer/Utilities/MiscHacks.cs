@@ -135,5 +135,14 @@ namespace MM2Randomizer.Utilities
             for (int i = 0; i < 3; i++)
                 p.Add(0x395BD + i, 0xEA, "M-445 Palette Glitch Fix");
         }
+
+        /// <summary>
+        /// Manual tuning of specific enemy damage values on top of vanilla MM2.
+        /// </summary>
+        /// <param name="p"></param>
+        public static void FixDamageValues(Patch p)
+        {
+            p.Add(0x3ED6C + 0x61, 0x04, "Woodman's Leaf Shield Attack Nerf");
+        }
     }
 }

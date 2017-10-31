@@ -388,7 +388,7 @@ namespace MM2Randomizer.Randomizers
         }
 
         /// <summary>
-        /// Do 3 damage for high-ammo weapons, and ammo-damage + 1 for the others
+        /// Do 3 or 4 damage for high-ammo weapons, and ammo-damage + 1 for the others
         /// Time Stopper will always do 1 damage.
         /// </summary>
         /// <param name="weapon"></param>
@@ -413,8 +413,18 @@ namespace MM2Randomizer.Randomizers
                 return 1;
             else if (weapon == EDmgVsBoss.U_DamageC)
                 damage += (byte)(RWeaponBehavior.AmmoUsage[7] + 1);
-            
-            if (damage < 3) damage = 3;
+
+            // 50% chance to cap the minimum damage at 4, else cap minimum damage at 3
+            rExtraDmg = r.NextDouble();
+            if (rExtraDmg > 0.5)
+            {
+                if (damage < 4) damage = 4;
+            }
+            else
+            {
+                if (damage < 3) damage = 3;
+            }
+
             return damage;
         }
 

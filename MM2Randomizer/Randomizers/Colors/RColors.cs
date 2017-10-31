@@ -1467,10 +1467,22 @@ namespace MM2Randomizer.Randomizers.Colors
                             (EColorsHex)0x31, (EColorsHex)0x21,
                         },
                         new EColorsHex[] {
+                            (EColorsHex)0x32, (EColorsHex)0x22,
+                            (EColorsHex)0x32, (EColorsHex)0x22,
+                            (EColorsHex)0x32, (EColorsHex)0x22,
+                            (EColorsHex)0x32, (EColorsHex)0x22,
+                        },
+                        new EColorsHex[] {
                             (EColorsHex)0x33, (EColorsHex)0x23,
                             (EColorsHex)0x33, (EColorsHex)0x23,
                             (EColorsHex)0x33, (EColorsHex)0x23,
                             (EColorsHex)0x33, (EColorsHex)0x23,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x34, (EColorsHex)0x24,
+                            (EColorsHex)0x34, (EColorsHex)0x24,
+                            (EColorsHex)0x34, (EColorsHex)0x24,
+                            (EColorsHex)0x34, (EColorsHex)0x24,
                         },
                         new EColorsHex[] {
                             (EColorsHex)0x36, (EColorsHex)0x26,
@@ -1479,10 +1491,22 @@ namespace MM2Randomizer.Randomizers.Colors
                             (EColorsHex)0x36, (EColorsHex)0x26,
                         },
                         new EColorsHex[] {
+                            (EColorsHex)0x37, (EColorsHex)0x27,
+                            (EColorsHex)0x37, (EColorsHex)0x27,
+                            (EColorsHex)0x37, (EColorsHex)0x27,
+                            (EColorsHex)0x37, (EColorsHex)0x27,
+                        },
+                        new EColorsHex[] {
                             (EColorsHex)0x38, (EColorsHex)0x28,
                             (EColorsHex)0x38, (EColorsHex)0x28,
                             (EColorsHex)0x38, (EColorsHex)0x28,
                             (EColorsHex)0x38, (EColorsHex)0x28,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x39, (EColorsHex)0x29,
+                            (EColorsHex)0x39, (EColorsHex)0x29,
+                            (EColorsHex)0x39, (EColorsHex)0x29,
+                            (EColorsHex)0x39, (EColorsHex)0x29,
                         },
                         new EColorsHex[] {
                             (EColorsHex)0x3a, (EColorsHex)0x2a,
@@ -1493,8 +1517,8 @@ namespace MM2Randomizer.Randomizers.Colors
                         new EColorsHex[] {
                             (EColorsHex)0x0f, (EColorsHex)0x05,
                             (EColorsHex)0x0f, (EColorsHex)0x05,
-                            (EColorsHex)0x0f, (EColorsHex)0x09,
-                            (EColorsHex)0x0f, (EColorsHex)0x01,
+                            (EColorsHex)0x0f, (EColorsHex)0x05,
+                            (EColorsHex)0x0f, (EColorsHex)0x05,
                         },
                     }
                 },
@@ -1526,6 +1550,12 @@ namespace MM2Randomizer.Randomizers.Colors
                             (EColorsHex)0x33, (EColorsHex)0x23,
                         },
                         new EColorsHex[] {
+                            (EColorsHex)0x35, (EColorsHex)0x25,
+                            (EColorsHex)0x35, (EColorsHex)0x25,
+                            (EColorsHex)0x35, (EColorsHex)0x25,
+                            (EColorsHex)0x35, (EColorsHex)0x25,
+                        },
+                        new EColorsHex[] {
                             (EColorsHex)0x36, (EColorsHex)0x26,
                             (EColorsHex)0x36, (EColorsHex)0x26,
                             (EColorsHex)0x36, (EColorsHex)0x26,
@@ -1536,6 +1566,12 @@ namespace MM2Randomizer.Randomizers.Colors
                             (EColorsHex)0x38, (EColorsHex)0x28,
                             (EColorsHex)0x38, (EColorsHex)0x28,
                             (EColorsHex)0x38, (EColorsHex)0x28,
+                        },
+                        new EColorsHex[] {
+                            (EColorsHex)0x39, (EColorsHex)0x29,
+                            (EColorsHex)0x39, (EColorsHex)0x29,
+                            (EColorsHex)0x39, (EColorsHex)0x29,
+                            (EColorsHex)0x39, (EColorsHex)0x29,
                         },
                         new EColorsHex[] {
                             (EColorsHex)0x3a, (EColorsHex)0x2a,
@@ -1546,9 +1582,10 @@ namespace MM2Randomizer.Randomizers.Colors
                         new EColorsHex[] {
                             (EColorsHex)0x0f, (EColorsHex)0x05,
                             (EColorsHex)0x0f, (EColorsHex)0x05,
-                            (EColorsHex)0x0f, (EColorsHex)0x09,
-                            (EColorsHex)0x0f, (EColorsHex)0x01,
+                            (EColorsHex)0x0f, (EColorsHex)0x05,
+                            (EColorsHex)0x0f, (EColorsHex)0x05,
                         },
+                        
                     }
                 },
 

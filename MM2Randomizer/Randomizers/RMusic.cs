@@ -120,6 +120,7 @@ namespace MM2Randomizer.Randomizers
                 if (totalBytes <= StageSongsSize)
                 {
                     checkBytes = false;
+                    debug.AppendLine($"{totalBytes} bytes, out of {StageSongsSize} limit.");
                 }
                 else
                 {

@@ -40,6 +40,8 @@ namespace MM2Randomizer.Randomizers.Enemies
                     return EEnemyID.Claw_Deactivator;
                 case EEnemyID.Kukku_Activator:
                     return EEnemyID.Kukku_Deactivator;
+                case EEnemyID.M445_Activator:
+                    return EEnemyID.M445_Deactivator;
                 default: return activator;
             }
         }
@@ -60,6 +62,8 @@ namespace MM2Randomizer.Randomizers.Enemies
                 case EEnemyID.Claw_Activator:
                     return true;
                 case EEnemyID.Kukku_Activator:
+                    return true;
+                case EEnemyID.M445_Activator:
                     return true;
                 default: return false;
             }

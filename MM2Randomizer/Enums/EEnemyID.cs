@@ -8,13 +8,17 @@ namespace MM2Randomizer.Enums
     public enum EEnemyID
     {
         Shrink              = 0x00,
+        Shrink_Angler       = 0x01,
         Shrink_Spawner      = 0x02,
         M445_Activator      = 0x03,
+        M445_Instance       = 0x04,
         M445_Deactivator    = 0x05,
         Claw_Activator      = 0x07,
+        Claw_Instance       = 0x08,
         Claw_Deactivator    = 0x09,
         Tanishi             = 0x0A,
         Kerog               = 0x0C,
+        Kerog_Small         = 0x0D,
         QuickLaser          = 0x14,
         Batton              = 0x16,
         Robbit              = 0x17,

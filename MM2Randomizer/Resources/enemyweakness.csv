@@ -1,6 +1,7 @@
 #EnemyName,#OffsetHex,#P,#H,#A,#W,#B,#Q,#C,#M
 Shrink               ,00,7,20,0,10,20,7,10,10
 Shrink(From Angler)  ,01,7,20,0,10,20,7,10,10
+M445(Instance)       ,04,20,20,20,20,0,20,20,20
 Claw(Instance)       ,08,20,20,10,10,20,7,10,10
 Tanishi	             ,0A,10,20,0,10,0,4,10,4
 Kerog                ,0C,2,20,0,0,4,4,0,2

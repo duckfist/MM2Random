@@ -156,10 +156,10 @@ namespace MM2Randomizer.Randomizers
                 songs.Add(song);
 
                 // DEBUG ONLY: TEST ONE SONG AT A TIME
-                for (int i = 0; i < 10; i++)
-                {
-                    songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
-                }
+                //for (int i = 0; i < 10; i++)
+                //{
+                //    songs.Add(new Song(lineParts[0], lineParts[1], lineParts[2]));
+                //}
             }
             debug.AppendLine($"{songs.Count} stage songs loaded.");
 
@@ -184,15 +184,15 @@ namespace MM2Randomizer.Randomizers
 
                 // Break if within limit (Redo shuffle if over limit)
                 // DEBUG DEBUG
-                //if (totalBytes <= StageSongsSize)
-                //{
-                checkBytes = false;
-                //    debug.AppendLine($"{totalBytes} bytes used out of {StageSongsSize} limit.");
-                //}
-                //else
-                //{
-                //    debug.AppendLine($"{totalBytes} bytes, greater than {StageSongsSize} limit. Reshuffled songs.");
-                //}
+                if (totalBytes <= StageSongsSize)
+                {
+                    checkBytes = false;
+                    debug.AppendLine($"{totalBytes} bytes used out of {StageSongsSize} limit.");
+                }
+                else
+                {
+                    debug.AppendLine($"{totalBytes} bytes, greater than {StageSongsSize} limit. Reshuffled songs.");
+                }
             }
 
             // Write the songs and song info

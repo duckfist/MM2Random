@@ -1,6 +1,6 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.3.4 beta
+version 0.3.6 beta
 
 -----------------------------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ Featured Randomizer Modules
 - Colors: Stage backgrounds, Robot Master colors, Mega Man's weapon colors, and a few Wily
 bosses have randomly assigned colors.
 
-- BGM: The background music for all stages have been shuffled.
+- BGM: The background music for all stages are shuffled, and include several tracks from Mega Man 2 romhacks.
 
 - Random Text:
   > The story in the intro cutscene will be different.
@@ -104,6 +104,18 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
 -----------------------------------------------------------------------------------------------
   
 Changelog
+v0.3.6-beta
+- Bug fix: Contact damage from bosses no longer depends on the boss room
+- (Boss) Significantly altered Bubbleman's AI, mostly projectile properties
+- (Boss) Nerfed Woodman's Leaf Shield attack damage from 8 to 4
+- (Enemy) Added M-445 enemy back in, after fixing its palette change trigger
+- (Weapon) Significantly changed Atomic Fire. Lower ammo cost, chance to skip charge levels
+- (Colors) Bubble stage has more variety, took out the disco
+- (Music) 14 new songs from romhacks, bringing the track total to 66
+
+v0.3.5-beta
+- Implemented Music Importer for stage music. 42 new songs from Rockman 2 romhacks.
+- Bug fix: First 3 enemies in Heat stage. Again.
 
 v0.3.4-beta
 - Bug fix: Removed ceiling from Woodman's room to prevent stuck Robot Masters

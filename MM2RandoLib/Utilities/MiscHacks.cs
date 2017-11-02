@@ -14,7 +14,7 @@ namespace MM2Randomizer.Utilities
         public static void DrawTitleScreenChanges(Patch p, int seed)
         {
             // Draw version number
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(RandomMM2));
             string version = assembly.GetName().Version.ToString();
 
             for (int i = 0; i < version.Length; i++)

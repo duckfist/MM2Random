@@ -52,35 +52,28 @@ namespace MM2Randomizer.Randomizers
             int startChar;
             string companyStr;
             char[] company;
-            try
+
+            lines = Properties.Resources.companynames.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            foreach (string line in lines)
             {
-                lines = Properties.Resources.companynames.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-                foreach (string line in lines)
-                {
-                    if (line.StartsWith("#")) continue; // Ignore comment lines
-                    companyNames.Add(line);
-                }
-                companyStr = companyNames[r.Next(companyNames.Count)];
-                company = ($"©2017 {companyStr}").ToCharArray();
-                char[] companyPadded = Enumerable.Repeat(' ', INTRO_LINE1_MAXCHARS).ToArray();
-                startChar = (INTRO_LINE1_MAXCHARS - company.Length) / 2;
-                for (int i = 0; i < company.Length; i++)
-                {
-                    companyPadded[startChar + i] = company[i];
-                }
-                for (int i = 0; i < INTRO_LINE1_MAXCHARS; i++)
-                {
-                    byte charByte = IntroCipher[companyPadded[i]];
-                    p.Add(
-                        offsetIntroLine1 + i,
-                        charByte,
-                        $"Splash Text: {companyPadded[i]}");
-                }
+                if (line.StartsWith("#")) continue; // Ignore comment lines
+                companyNames.Add(line);
             }
-            catch (Exception ex)
+            companyStr = companyNames[r.Next(companyNames.Count)];
+            company = ($"©2017 {companyStr}").ToCharArray();
+            char[] companyPadded = Enumerable.Repeat(' ', INTRO_LINE1_MAXCHARS).ToArray();
+            startChar = (INTRO_LINE1_MAXCHARS - company.Length) / 2;
+            for (int i = 0; i < company.Length; i++)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
-                throw;
+                companyPadded[startChar + i] = company[i];
+            }
+            for (int i = 0; i < INTRO_LINE1_MAXCHARS; i++)
+            {
+                byte charByte = IntroCipher[companyPadded[i]];
+                p.Add(
+                    offsetIntroLine1 + i,
+                    charByte,
+                    $"Splash Text: {companyPadded[i]}");
             }
 
             // Line 2: Version
@@ -133,18 +126,11 @@ namespace MM2Randomizer.Randomizers
             // Write in cutscene intro text
             for (int i = 0; i < 270; i++) // 27 characters per line, 5 pages, 2 lines per page
             {
-                try
-                {
-                    byte charByte = IntroCipher[introText[i]];
-                    p.Add(
-                        offsetCutscenePage1L1 + i,
-                        charByte,
-                        $"Intro Text: {introText[i]}");
-                }
-                catch (Exception ex)
-                {
-                    System.Windows.MessageBox.Show($"Exception. Probably unsupported character in dictionary. Message:\n{ex.ToString()}");
-                }
+                byte charByte = IntroCipher[introText[i]];
+                p.Add(
+                    offsetCutscenePage1L1 + i,
+                    charByte,
+                    $"Intro Text: {introText[i]}");
             }
 
             // Write in new weapon names

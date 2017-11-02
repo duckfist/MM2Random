@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MM2Randomizer
+namespace MM2RandoHost
 {
     /// <summary>
     /// Interaction logic for App.xaml

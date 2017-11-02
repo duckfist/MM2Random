@@ -270,9 +270,9 @@ namespace MM2Randomizer.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to #Index,StageNum,RoomNum,ScreenNum,IsActive,EnemyID,XPosOriginal,YPosOriginal,YPosAir,YPosGround,FaceRight
-        ///00,00,00,01,true,2B,70,10,14,B4,false
-        ///01,00,00,01,true,2B,F0,10,14,B4,false
-        ///02,00,00,02,true,2B,90,10,18,B4,false
+        ///00,00,00,01,true,2B,70,10,24,A4,false
+        ///01,00,00,01,true,2B,F0,10,24,A4,false
+        ///02,00,00,02,true,2B,90,10,28,A4,false
         ///03,00,00,02,true,21,A8,58,58,58,false
         ///04,00,00,02,true,21,E8,78,78,78,false
         ///05,00,00,03,true,21,48,48,48,48,false
@@ -292,15 +292,14 @@ namespace MM2Randomizer.Properties {
         ///   Looks up a localized string similar to #EnemyName,#OffsetHex,#P,#H,#A,#W,#B,#Q,#C,#M
         ///Shrink               ,00,7,20,0,10,20,7,10,10
         ///Shrink(From Angler)  ,01,7,20,0,10,20,7,10,10
+        ///M445(Instance)       ,04,20,20,20,20,0,20,20,20
         ///Claw(Instance)       ,08,20,20,10,10,20,7,10,10
         ///Tanishi	             ,0A,10,20,0,10,0,4,10,4
         ///Kerog                ,0C,2,20,0,0,4,4,0,2
         ///Kerog(Small)         ,0D,20,20,10,10,20,20,10,10
         ///Batton               ,16,10,20,10,10,0,10,10,20
         ///Robbit               ,17,2,20,0,20,7,4,20,4
-        ///Friender(Instance)   ,19,1,20,0,20,0,2,0,2
-        ///Monking              ,1D,7,20,0,20,0,7,20,7
-        /// [rest of string was truncated]&quot;;.
+        ///Friender(Instance)   ,19,1,20,0,20,0,2,0 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string enemyweakness {
             get {

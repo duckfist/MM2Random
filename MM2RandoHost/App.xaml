@@ -1,7 +1,7 @@
-﻿<Application x:Class="MM2Randomizer.App"
+﻿<Application x:Class="MM2RandoHost.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MM2Randomizer"
+             xmlns:local="clr-namespace:MM2RandoHost"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

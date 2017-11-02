@@ -1,10 +1,10 @@
-﻿<Window x:Class="MM2Randomizer.MainWindow"
+﻿<Window x:Class="MM2RandoHost.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MM2Randomizer"
-        xmlns:converters="clr-namespace:MM2Randomizer.Converters"
+        xmlns:local="clr-namespace:MM2RandoHost"
+        xmlns:converters="clr-namespace:MM2RandoHost.Converters"
         mc:Ignorable="d"
         AllowDrop="True"
         Title="MM2 Randomizer" Height="370" Width="403.259" Drop="Window_Drop" DragEnter="Window_DragEnter" DragLeave="Window_DragLeave">
@@ -184,3 +184,4 @@
         </Grid>
     </Grid>
 </Window>
+

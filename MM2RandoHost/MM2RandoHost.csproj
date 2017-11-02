@@ -7,8 +7,8 @@
     <ProjectGuid>{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MM2Randomizer</RootNamespace>
-    <AssemblyName>MM2Randomizer</AssemblyName>
+    <RootNamespace>MM2RandoHost</RootNamespace>
+    <AssemblyName>MM2RandoHost</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -85,50 +85,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\InverseBooleanConverter.cs" />
-    <Compile Include="Enums\EDmgVsEnemy.cs" />
-    <Compile Include="Enums\ESoundID.cs" />
-    <Compile Include="Patcher\ByteChangeRecord.cs" />
-    <Compile Include="Patcher\Patch.cs" />
-    <Compile Include="Randomizers\Colors\ColorSet.cs" />
-    <Compile Include="Randomizers\Colors\RColors.cs" />
-    <Compile Include="Randomizers\Enemies\EnemyType.cs" />
-    <Compile Include="Randomizers\Enemies\EnemyInstance.cs" />
-    <Compile Include="Randomizers\Enemies\REnemies.cs" />
-    <Compile Include="Randomizers\Enemies\REnemyWeaknesses.cs" />
-    <Compile Include="Randomizers\Enemies\Room.cs" />
-    <Compile Include="Randomizers\Enemies\SpriteBankRoomGroup.cs" />
-    <Compile Include="Enums\EColorsHex.cs" />
-    <Compile Include="Enums\EEnemyID.cs" />
-    <Compile Include="Enums\EItemNumber.cs" />
-    <Compile Include="Enums\EItemStageAddress.cs" />
-    <Compile Include="Enums\EMiscAddresses.cs" />
-    <Compile Include="Enums\EMusicID.cs" />
-    <Compile Include="Enums\ERMPortraitAddress.cs" />
-    <Compile Include="Enums\ERMStageClearAddress.cs" />
-    <Compile Include="Enums\ERMStageSelect.cs" />
-    <Compile Include="Enums\ERMStageWeaponAddress.cs" />
-    <Compile Include="Enums\EDmgVsBoss.cs" />
-    <Compile Include="Enums\ERMWeaponValue.cs" />
-    <Compile Include="Enums\EStageID.cs" />
-    <Compile Include="MainWindowViewModel.cs" />
-    <Compile Include="Randomizers\IRandomizer.cs" />
-    <Compile Include="Randomizers\RBossRoom.cs" />
-    <Compile Include="Randomizers\RMusic.cs" />
-    <Compile Include="Randomizers\RBossAI.cs" />
-    <Compile Include="Randomizers\RItemGet.cs" />
-    <Compile Include="Randomizers\RTeleporters.cs" />
-    <Compile Include="Randomizers\RTilemap.cs" />
-    <Compile Include="Randomizers\RWeaknesses.cs" />
-    <Compile Include="Randomizers\RWeaponBehavior.cs" />
-    <Compile Include="Randomizers\RWeaponGet.cs" />
-    <Compile Include="Randomizers\RText.cs" />
-    <Compile Include="Randomizers\Stages\RStages.cs" />
-    <Compile Include="RandomMM2.cs" />
-    <Compile Include="Utilities\MiscHacks.cs" />
-    <Compile Include="Utilities\SeedConvert.cs" />
-    <Compile Include="Randomizers\Stages\StageFromSelect.cs" />
-    <Compile Include="Utilities\TitleChars.cs" />
-    <Compile Include="WeaponTable.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -160,23 +116,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MM2.nes" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Resources\bossnames.csv" />
-    <None Include="Resources\companynames.csv" />
-    <None Include="Resources\countrylist.csv" />
-    <None Include="Resources\creditstext.csv" />
-    <None Include="Resources\enemylist.csv" />
-    <None Include="Resources\enemyweakness.csv" />
-    <None Include="Resources\mm2rng_prepatch.ips" />
-    <None Include="Resources\music.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -194,6 +143,12 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MM2RandoLib\MM2RandoLib.csproj">
+      <Project>{2f96fe8d-29dc-46f3-9d26-fc85dc2225c8}</Project>
+      <Name>MM2RandoLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

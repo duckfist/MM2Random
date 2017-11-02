@@ -1,50 +1,28 @@
 ﻿using System;
 using System.Windows;
-
-using MM2Randomizer.Utilities;
 using System.Diagnostics;
-using Microsoft.Win32;
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Input;
+using Microsoft.Win32;
 
-namespace MM2Randomizer
+using MM2Randomizer;
+using MM2Randomizer.Utilities;
+
+namespace MM2RandoHost
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        MainWindowViewModel ViewModel;
+        RandoSettings ViewModel;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            ViewModel = new MainWindowViewModel()
-            {
-                SeedString = "",
-                SourcePath = "",
-                IsSourcePathAndSeedValid = false,
-                IsJapanese = false,
-                Is8StagesRandom = true,
-                IsWeaponsRandom = true,
-                IsItemsRandom = true,
-                IsTeleportersRandom = true,
-                IsColorsRandom = true,
-                IsWeaponBehaviorRandom = true,
-                IsWeaknessRandom = true,
-                IsWeaknessEasy = false,
-                IsWeaknessHard = true,
-                IsBossAIRandom = true,
-                IsEnemiesRandom = true,
-                IsTilemapChangesEnabled = true,
-                IsBGMRandom = true,
-                IsWeaponNamesRandom = true,
-                FastText = true,
-                BurstChaserMode = false
-            };
-
+            ViewModel = new RandoSettings();
             DataContext = ViewModel;
             RandomMM2.Settings = ViewModel;
         }
@@ -71,7 +49,7 @@ namespace MM2Randomizer
             }
 
             // Perform randomization based on settings, then generate the ROM.
-            RandomMM2.RandomizerCreate();
+            RandomMM2.RandomizerCreate(true);
             UpdateSeedString(e);
         }
 
@@ -81,7 +59,7 @@ namespace MM2Randomizer
             ViewModel.SeedString = String.Format("{0}", seedAlpha);
             Debug.WriteLine("\nSeed: " + seedAlpha + "\n");
 
-            // Create log file is left shift is pressed while clicking
+            // Create log file if left shift is pressed while clicking
             if (Keyboard.IsKeyDown(Key.LeftShift))
             {
                 string logFileName = (ViewModel.IsJapanese) ? "RM2" : "MM2";
@@ -108,7 +86,7 @@ namespace MM2Randomizer
         private void btnCreateRandom_Click(object sender, RoutedEventArgs e)
         {
             RandomMM2.Seed = -1;
-            RandomMM2.RandomizerCreate();
+            RandomMM2.RandomizerCreate(true);
             UpdateSeedString(e);
         }
 

@@ -4,8 +4,32 @@ using System.ComponentModel;
 
 namespace MM2Randomizer
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class RandoSettings : INotifyPropertyChanged
     {
+        public RandoSettings()
+        {
+            SeedString = "";
+            SourcePath = "";
+            IsSourcePathAndSeedValid = false;
+            IsJapanese = false;
+            Is8StagesRandom = true;
+            IsWeaponsRandom = true;
+            IsItemsRandom = true;
+            IsTeleportersRandom = true;
+            IsColorsRandom = true;
+            IsWeaponBehaviorRandom = true;
+            IsWeaknessRandom = true;
+            IsWeaknessEasy = false;
+            IsWeaknessHard = true;
+            IsBossAIRandom = true;
+            IsEnemiesRandom = true;
+            IsTilemapChangesEnabled = true;
+            IsBGMRandom = true;
+            IsWeaponNamesRandom = true;
+            FastText = true;
+            BurstChaserMode = false;
+        }
+
         private string seedString;
         /// <summary>
         /// Alphabetical string representation of the RandomMM2.Seed integer of the most
@@ -200,7 +224,7 @@ namespace MM2Randomizer
         {
             get
             {
-                return Assembly.GetEntryAssembly().GetName().Version;
+                return Assembly.GetAssembly(typeof(RandomMM2)).GetName().Version;
             }
         }
 

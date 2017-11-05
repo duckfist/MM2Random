@@ -105,6 +105,7 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
   
 Changelog
 v0.3.6-beta
+- Exported the randomizer to a .dll
 - Bug fix: Contact damage from bosses no longer depends on the boss room
 - (Boss) Significantly altered Bubbleman's AI, mostly projectile properties
 - (Boss) Nerfed Woodman's Leaf Shield attack damage from 8 to 4

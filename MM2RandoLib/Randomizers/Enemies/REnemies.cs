@@ -20,13 +20,15 @@ namespace MM2Randomizer.Randomizers.Enemies
 
         public static double CHANCE_MOLE = 0.25;
         public static double CHANCE_PIPI = 0.4;
+        public static double CHANCE_M445 = 0.4;
         public static double CHANCE_SHRINKSPAWNER = 0.25;
         public static double CHANCE_SPRINGER = 0.10;
         public static double CHANCE_TELLY = 0.15;
 
         public static int MAX_MOLES = 2;
         public static int MAX_PIPIS = 5;
-        
+        public static int MAX_M445S = 7;
+
         public List<EnemyType> EnemyTypes { get; set; } = new List<EnemyType>();
         public List<EnemyInstance> EnemyInstances { get; set; } = new List<EnemyInstance>();
         public Dictionary<EEnemyID, EnemyType> EnemiesByType { get; set; } = new Dictionary<EEnemyID, EnemyType>();
@@ -34,6 +36,7 @@ namespace MM2Randomizer.Randomizers.Enemies
 
         public int numMoles = 0;
         public int numPipis = 0;
+        public int numM445s = 0;
 
         public REnemies() { }
 
@@ -575,6 +578,13 @@ namespace MM2Randomizer.Randomizers.Enemies
                             if (chance > CHANCE_MOLE)
                                 continue;
                             break;
+                        case EEnemyID.M445_Activator:
+                            if (numM445s > MAX_M445S)
+                                continue;
+                            chance = r.NextDouble();
+                            if (chance > CHANCE_M445)
+                                continue;
+                            break;
                         case EEnemyID.Telly:
                             chance = r.NextDouble();
                             if (chance > CHANCE_TELLY)
@@ -603,6 +613,8 @@ namespace MM2Randomizer.Randomizers.Enemies
                             if (en.ID == EEnemyID.Mole_Activator) continue;
                             // Reject Pipis appearing in Yoku block room
                             if (en.ID == EEnemyID.Pipi_Activator && sbrg.ContainsRoom(2)) continue;
+                            // Reject M445s appearing in Yoku block room
+                            if (en.ID == EEnemyID.M445_Activator && sbrg.ContainsRoom(2)) continue;
                             // Press doesn't display correctly in Wily 1
                             if (en.ID == EEnemyID.Press && sbrg.Rooms.Last().RoomNum >= 7) continue;
                             break;
@@ -706,6 +718,9 @@ namespace MM2Randomizer.Randomizers.Enemies
                             break;
                         case EEnemyID.Mole_Activator:
                             numMoles++;
+                            break;
+                        case EEnemyID.M445_Activator:
+                            numM445s++;
                             break;
                         default:
                             break;

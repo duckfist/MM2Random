@@ -169,7 +169,10 @@ namespace MM2Randomizer.Randomizers
             // Charge delay for L3 will L2 plus a value between 0x10 and 0x40 frames
             //0x03DD67 - H L3 charge delay(0xBB)
             int chargeDelayL3 = r.Next(0x30) + 0x09 + chargeDelayL2;
-            Patch.Add(0x03DD67, (byte)chargeDelayL3, "(H) | L3 Charge Delay");
+            if (rTestChargeType >= 0.8)
+            {
+                Patch.Add(0x03DD67, (byte)chargeDelayL3, "(H) | L3 Charge Delay");
+            }
 
             //0x03DDEC - H shot sound effect(38)
             ESoundID sound = GetRandomSound(r);

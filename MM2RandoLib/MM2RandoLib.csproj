@@ -104,6 +104,7 @@
     <None Include="Resources\enemylist.csv" />
     <None Include="Resources\enemyweakness.csv" />
     <EmbeddedResource Include="Resources\MM2.nes" />
+    <None Include="Resources\mm2rng_musicpatch.ips" />
     <None Include="Resources\mm2rng_prepatch.ips" />
   </ItemGroup>
   <ItemGroup>

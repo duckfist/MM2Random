@@ -88,6 +88,8 @@ namespace MM2Randomizer.Randomizers
         }
 
         public string SongName { get; set; }
+        public byte SongStartPtr1stByte { get; set; }
+        public byte SongStartPtr2ndByte { get; set; }
         public List<byte> SongHeader { get; set; }
         public List<byte> SongData { get; set; }
 
@@ -137,8 +139,12 @@ namespace MM2Randomizer.Randomizers
 
         public void Randomize(Patch p, Random r)
         {
+            debug.AppendLine();
+            debug.AppendLine("Random Music Module");
+            debug.AppendLine("--------------------------------------------");
+
             ImportMusic(p, r);
-            OldRando(p, r);
+            //OldRando(p, r);
         }
 
         public void ImportMusic(Patch p, Random r)
@@ -167,11 +173,12 @@ namespace MM2Randomizer.Randomizers
 
             // Create a shuffled list of songs
             bool checkBytes = true;
+            const int numTracks = 11;
             while (checkBytes)
             {
-                // Shuffle and get first 10 songs
+                // Shuffle and get first 11 songs
                 songs.Shuffle(r);
-                stageSongs = songs.GetRange(0, 10);
+                stageSongs = songs.GetRange(0, numTracks);
 
                 // Count bytes 
                 int totalBytes = 0;
@@ -180,7 +187,6 @@ namespace MM2Randomizer.Randomizers
                 {
                     totalBytes += song.SongHeader.Count;
                     totalBytes += song.SongData.Count;
-                    debug.AppendLine($"{Enum.GetName(typeof(EMusicID),(EMusicID)i)} stage song: {song.SongName}, {song.OriginalStartAddress}");
                     i++;
                 }
 
@@ -189,26 +195,43 @@ namespace MM2Randomizer.Randomizers
                 if (totalBytes <= StageSongsSize)
                 {
                     checkBytes = false;
-                    debug.AppendLine($"{totalBytes} bytes used out of {StageSongsSize} limit.");
+                    debug.AppendLine($"{numTracks} songs selected. {totalBytes} bytes used out of {StageSongsSize} limit.");
                 }
                 else
                 {
-                    debug.AppendLine($"{totalBytes} bytes, greater than {StageSongsSize} limit. Reshuffled songs.");
+                    debug.AppendLine($"{numTracks} songs selected. {totalBytes} bytes, greater than {StageSongsSize} limit. Reshuffled songs.");
                 }
             }
 
             // Write the songs and song info
             int songStartRom = 0x030AE6;
             int TblPtrOffset = 0x30A60; // Start of address pairs which point to song locations
-            foreach (Song song in stageSongs)
+            for (int k = 0; k < stageSongs.Count; k++)
             {
+                Song song = stageSongs[k];
+
                 // Calculate start addresses from song lengths and write to address table
                 int addressTwoBytes = songStartRom - 0x30010 + 0x8000;
                 string addressHex = addressTwoBytes.ToString("X");
-                byte firstByte = byte.Parse(addressHex.Substring(0, 2), NumberStyles.HexNumber);
-                byte secondByte = byte.Parse(addressHex.Substring(2, 2), NumberStyles.HexNumber);
-                p.Add(TblPtrOffset++, secondByte, "Song Pointer Offset Byte 1");
-                p.Add(TblPtrOffset++, firstByte, "Song Pointer Offset Byte 2");
+                song.SongStartPtr1stByte = byte.Parse(addressHex.Substring(0, 2), NumberStyles.HexNumber);
+                song.SongStartPtr2ndByte = byte.Parse(addressHex.Substring(2, 2), NumberStyles.HexNumber);
+
+
+                if (k >= 10) // Must use a different location for the 11th track; use Stage Select at 0x30A78
+                {
+                    p.Add(0x30A78, song.SongStartPtr2ndByte, $"Song {k} Pointer Offset Byte 1");
+                    p.Add(0x30A79, song.SongStartPtr1stByte, $"Song {k} Pointer Offset Byte 2");
+
+                    byte songIndex = 0x0C; // Wily 5 will play the song at the Stage Select address
+                    p.Add(0x0381EC, songIndex, $"Wily 5 Song"); 
+                    debug.AppendLine($"{Enum.GetName(typeof(EMusicID), (EMusicID)songIndex)} stage song: {song.SongName}, {song.OriginalStartAddress}");
+                }
+                else
+                {
+                    p.Add(TblPtrOffset++, song.SongStartPtr2ndByte, $"Song {k} Pointer Offset Byte 1");
+                    p.Add(TblPtrOffset++, song.SongStartPtr1stByte, $"Song {k} Pointer Offset Byte 2");
+                    debug.AppendLine($"{Enum.GetName(typeof(EMusicID), (EMusicID)k)} stage song: {song.SongName}, {song.OriginalStartAddress}");
+                }
 
                 // Header: Calculate 4 channel addresses and vibrato address
                 byte origChannel1ByteSmall = song.SongHeader[1];
@@ -349,6 +372,12 @@ namespace MM2Randomizer.Randomizers
                     songStartRom++;
                 }
             }
+
+            // Play a random stage song during the credits
+            Song creditsSong = stageSongs[r.Next(numTracks)];
+            p.Add(0x30A88, creditsSong.SongStartPtr2ndByte, $"Song Credits 2 Byte 0 ({creditsSong.SongName})");
+            p.Add(0x30A89, creditsSong.SongStartPtr1stByte, $"Song Credits 2 Byte 0 ({creditsSong.SongName})");
+            debug.AppendLine($"Credits song: {creditsSong.SongName}");
         }
 
         public void OldRando(Patch p, Random r)

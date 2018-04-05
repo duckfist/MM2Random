@@ -13,7 +13,7 @@
         Wily12      = 0x08,
         Wily345     = 0x09,
         Boss        = 0x0B,
-        StageSelect = 0x0C,
+        StageSelectWily5 = 0x0C,
         Nothing     = 0xFF,
     }
 }

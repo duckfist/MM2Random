@@ -174,7 +174,8 @@ namespace MM2Randomizer
                 }
 
                 // Apply pre-patch changes via IPS patch (manual title screen, stage select, and stage changes)
-                Patch.ApplyIPSPatch(TempFileName);
+                Patch.ApplyIPSPatch(TempFileName, Properties.Resources.mm2rng_musicpatch);
+                Patch.ApplyIPSPatch(TempFileName, Properties.Resources.mm2rng_prepatch);
 
                 // Apply patch with randomized content
                 Patch.ApplyRandoPatch(TempFileName);
@@ -207,7 +208,8 @@ namespace MM2Randomizer
                 }
 
                 // Apply pre-patch changes via IPS patch (manual title screen, stage select, and stage changes)
-                Patch.ApplyIPSPatch(serverPathTemp);
+                Patch.ApplyIPSPatch(serverPathTemp, Properties.Resources.mm2rng_musicpatch);
+                Patch.ApplyIPSPatch(serverPathTemp, Properties.Resources.mm2rng_prepatch);
 
                 // Apply patch with randomized content
                 Patch.ApplyRandoPatch(serverPathTemp);

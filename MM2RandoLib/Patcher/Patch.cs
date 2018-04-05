@@ -70,13 +70,13 @@ namespace MM2Randomizer.Patcher
             return sb.ToString();
         }
 
-        public static void ApplyIPSPatch(string romname/*, string patchname*/)
+        public static void ApplyIPSPatch(string romname, byte[] patchBytes)
         {
             // Noobish Noobsicle wrote this IPS patching code
             // romname is the original ROM, patchname is the patch to apply
             FileStream romstream = new FileStream(romname, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-            int lint = (int)Properties.Resources.mm2rng_prepatch.Length;
-            byte[] ipsbyte = Properties.Resources.mm2rng_prepatch;
+            int lint = patchBytes.Length;
+            byte[] ipsbyte = patchBytes;
             byte[] rombyte = new byte[romstream.Length];
             IAsyncResult romresult;
             int ipson = 5;

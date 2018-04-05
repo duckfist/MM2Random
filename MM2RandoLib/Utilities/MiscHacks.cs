@@ -36,6 +36,15 @@ namespace MM2Randomizer.Utilities
         }
 
         /// <summary>
+        /// TODO
+        /// </summary>
+        public static void SetETankKeep(Patch p)
+        {
+            p.Add(0x03C1CC, 0xEA, "Disable ETank clear on Game Over 1");
+            p.Add(0x03C1CD, 0xEA, "Disable ETank clear on Game Over 2");
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="p"></param>

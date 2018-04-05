@@ -215,8 +215,7 @@ namespace MM2Randomizer.Randomizers
                 string addressHex = addressTwoBytes.ToString("X");
                 song.SongStartPtr1stByte = byte.Parse(addressHex.Substring(0, 2), NumberStyles.HexNumber);
                 song.SongStartPtr2ndByte = byte.Parse(addressHex.Substring(2, 2), NumberStyles.HexNumber);
-
-
+                
                 if (k >= 10) // Must use a different location for the 11th track; use Stage Select at 0x30A78
                 {
                     p.Add(0x30A78, song.SongStartPtr2ndByte, $"Song {k} Pointer Offset Byte 1");
@@ -376,7 +375,7 @@ namespace MM2Randomizer.Randomizers
             // Play a random stage song during the credits
             Song creditsSong = stageSongs[r.Next(numTracks)];
             p.Add(0x30A88, creditsSong.SongStartPtr2ndByte, $"Song Credits 2 Byte 0 ({creditsSong.SongName})");
-            p.Add(0x30A89, creditsSong.SongStartPtr1stByte, $"Song Credits 2 Byte 0 ({creditsSong.SongName})");
+            p.Add(0x30A89, creditsSong.SongStartPtr1stByte, $"Song Credits 2 Byte 1 ({creditsSong.SongName})");
             debug.AppendLine($"Credits song: {creditsSong.SongName}");
         }
 

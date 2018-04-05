@@ -1,6 +1,6 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.3.6 beta
+version 0.3.7 beta
 
 -----------------------------------------------------------------------------------------------
 
@@ -104,6 +104,10 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
 -----------------------------------------------------------------------------------------------
   
 Changelog
+v0.3.7-beta
+- Bug fix: Fixed glitchy instant-charge Atomic Fire (sometimes crashed the game)
+- (Enemy): Added several restrictions on M-445 spawning, should be easier now
+
 v0.3.6-beta
 - Exported the randomizer to a .dll
 - Bug fix: Contact damage from bosses no longer depends on the boss room

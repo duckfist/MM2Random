@@ -123,7 +123,9 @@ namespace MM2Randomizer.Randomizers
         /// <summary>
         /// The maximum number of bytes that the list of stage songs can be.
         /// </summary>
-        public const int StageSongsSize = 0x20CA; // 8394
+        //public const int StageSongsSize = 0x20CA; // 8394
+        public const int StageSongsSize = 0x24DE; // 8394 + 1044 Expanded size from music prepatch
+        
         private StringBuilder debug = new StringBuilder();
 
         public RMusic() { }

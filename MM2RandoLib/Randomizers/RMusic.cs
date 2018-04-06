@@ -259,11 +259,17 @@ namespace MM2Randomizer.Randomizers
 
                 byte origChannel4ByteSmall = song.SongHeader[7];
                 byte origChannel4ByteLarge = song.SongHeader[8];
-                int origChannel4Offset = origChannel4ByteSmall + (origChannel4ByteLarge * 256);
-                int relChannel4Offset = origChannel4Offset - song.OriginalStartAddressInt;
-                int newChannel4Offset = addressTwoBytes + relChannel4Offset;
-                song.SongHeader[7] = (byte)(newChannel4Offset % 256);
-                song.SongHeader[8] = (byte)(newChannel4Offset / 256);
+                if (origChannel4ByteSmall > 0 || origChannel4ByteLarge > 0)
+                {
+                    int origChannel4Offset = origChannel4ByteSmall + (origChannel4ByteLarge * 256);
+                    int relChannel4Offset = origChannel4Offset - song.OriginalStartAddressInt;
+                    int newChannel4Offset = addressTwoBytes + relChannel4Offset;
+                    song.SongHeader[7] = (byte)(newChannel4Offset % 256);
+                    song.SongHeader[8] = (byte)(newChannel4Offset / 256);
+
+                    if (relChannel4Offset > song.TotalLength || relChannel4Offset < 0)
+                        debug.AppendLine($"WARNING: Song {song.SongName} channel 4 points to a shared location.");
+                }
 
                 byte origVibratoByteSmall = song.SongHeader[9];
                 byte origVibratoByteLarge = song.SongHeader[10];
@@ -279,8 +285,6 @@ namespace MM2Randomizer.Randomizers
                     debug.AppendLine($"WARNING: Song {song.SongName} channel 2 points to a shared location.");
                 if (relChannel3Offset > song.TotalLength || relChannel3Offset < 0)
                     debug.AppendLine($"WARNING: Song {song.SongName} channel 3 points to a shared location.");
-                if (relChannel4Offset > song.TotalLength || relChannel4Offset < 0)
-                    debug.AppendLine($"WARNING: Song {song.SongName} channel 4 points to a shared location.");
                 if (relVibratoOffset > song.TotalLength || relVibratoOffset < 0)
                     debug.AppendLine($"WARNING: Song {song.SongName} vibrato points to a shared location.");
 

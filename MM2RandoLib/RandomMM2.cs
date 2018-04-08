@@ -247,7 +247,8 @@ namespace MM2Randomizer
         /// <typeparam name="T">The Type of the elements in the list.</typeparam>
         /// <param name="list">The object to be shuffled.</param>
         /// <param name="rng">The seed used to perform the shuffling.</param>
-        public static void Shuffle<T>(this IList<T> list, Random rng)
+        /// <returns>A reference to the shuffled list.</returns>
+        public static IList<T> Shuffle<T>(this IList<T> list, Random rng)
         {
             int n = list.Count;
             while (n > 1)
@@ -258,6 +259,7 @@ namespace MM2Randomizer
                 list[k] = list[n];
                 list[n] = value;
             }
+            return list;
         }
     }
 }

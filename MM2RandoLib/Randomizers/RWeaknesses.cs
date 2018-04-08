@@ -164,10 +164,7 @@ namespace MM2Randomizer.Randomizers
                 Patch.Add(0x02E66D, 0xFF, "Atomic Fire Boss To Heal" ); // Normally "00" to indicate Heatman.
 
                 // Select 2 robots to be weak against Buster
-                int busterI1 = r.Next(8);
-                int busterI2 = busterI1;
-                while (busterI2 == busterI1)
-                    busterI2 = r.Next(8);
+                List<int> busterList = new List<int>(new List<int>{ 0, 1, 2, 3, 4, 5, 6, 7 }.Shuffle(r)).GetRange(0,4);
 
                 // Foreach boss
                 for (int i = 0; i < 8; i++)
@@ -207,7 +204,6 @@ namespace MM2Randomizer.Randomizers
                     // As a result, one Robot Master will not have a secondary weakness
                     int i2 = (i + 1 >= 8) ? 0 : i + 1;
                     EDmgVsBoss weakWeap2 = bossWeaknessShuffled[i2];
-                    //stream.Position = weakWeap2 + i;
                     byte dmgSecondary = 0x02;
                     if (weakWeap2 == EDmgVsBoss.U_DamageH)
                     {
@@ -216,19 +212,14 @@ namespace MM2Randomizer.Randomizers
                     else if (weakWeap2 == EDmgVsBoss.U_DamageF)
                     {
                         dmgSecondary = 0x00;
-                        //long prevStreamPos = stream.Position;
-                        //stream.Position = 0x02C08F; 
-                        //stream.WriteByte((byte)i);
-                        //stream.Position = prevStreamPos;
+
                         // Address in Time-Stopper code that normally heals Flashman, change to heal this boss instead
                         Patch.Add(0x02C08F, (byte)i, String.Format("Time-Stopper Heals {0} (Special Code)", (EDmgVsBoss.Offset)i));
                     }
                     Patch.Add(weakWeap2 + i, dmgSecondary, String.Format("{0} Damage to {1} (Secondary)", weakWeap2.WeaponName, (EDmgVsBoss.Offset)i));
-                    //stream.WriteByte(dmgSecondary);
                         
                     // Add buster damage
-                    //stream.Position = EDmgVsBoss.U_DamageP + i;
-                    if (i == busterI1 || i == busterI2)
+                    if (busterList.Contains(i))
                     {
                         Patch.Add(EDmgVsBoss.U_DamageP + i, 0x02, String.Format("Buster Damage to {0}", (EDmgVsBoss.Offset)i));
                         BotWeaknesses[i, 0] = 0x02;

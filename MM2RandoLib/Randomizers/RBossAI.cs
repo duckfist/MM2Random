@@ -166,8 +166,8 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x02C4E6, (byte)jump1x, "Airman X-Velocity Integer Jump 1");
             Patch.Add(0x02C4E7, (byte)jump2x, "Airman X-Velocity Integer Jump 2");
 
-            // If a jump's x-int is 0, its corresponding y-int must be 6-7
-            // If a jump's x-int is 1, its corresponding y-int must be 4-7
+            // If a jump's x-int is 0, its corresponding y-int must be 5-6
+            // If a jump's x-int is 1, its corresponding y-int must be 4-5
             // If a jump's x-int is 2, its corresponding y-int must be 3-5
             // If a jump's x-int is 3, its corresponding y-int must be 2-4
             int jump1y = AirmanGetJumpYVelocity(jump1x, r);
@@ -194,11 +194,11 @@ namespace MM2Randomizer.Randomizers
             switch (xVelInt)
             {
                 case 0:
-                    jumpYMax = 7;
-                    jumpYMin = 6;
+                    jumpYMax = 6;
+                    jumpYMin = 5;
                     break;
                 case 1:
-                    jumpYMax = 7;
+                    jumpYMax = 5;
                     jumpYMax = 4;
                     break;
                 case 2:

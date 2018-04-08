@@ -47,152 +47,142 @@ namespace MM2Randomizer.Randomizers
         /// </summary>
         public void Randomize(Patch Patch, Random r)
         {
-            Components = new List<BossRoomRandomComponent>
-            {
-                // Heat Man
-                new BossRoomRandomComponent(
-                    original    : 0,
-                    introValue  : 0x0F, // 0x02C15E
-                    aiPtr1      : 0xC5, // 0x02C057
-                    aiPtr2      : 0x80, // 0x02C065
-                    gfxfix1     : 0x50, // 0x02E4E9
-                    gfxfix2     : 0x51, // 0x02C166
-                    yFix1       : 0x09, // 0x02C14E
-                    yFix2       : 0x0C, // 0x02C156
-                    spriteBankSlotRows : new byte[] {
+            BossRoomRandomComponent HeatManComponent = new BossRoomRandomComponent(
+                    original: 0,
+                    introValue: 0x0F, // 0x02C15E
+                    aiPtr1: 0xC5, // 0x02C057
+                    aiPtr2: 0x80, // 0x02C065
+                    gfxfix1: 0x50, // 0x02E4E9
+                    gfxfix2: 0x51, // 0x02C166
+                    yFix1: 0x09, // 0x02C14E
+                    yFix2: 0x0C, // 0x02C156
+                    spriteBankSlotRows: new byte[] {
                         0x98, 0x06,
                         0x99, 0x06,
                         0x9A, 0x06,
                         0x9B, 0x06,
                         0x9C, 0x06,
                         0x9D, 0x06,
-                    }),
+                    });
 
-                // Air Man
-                new BossRoomRandomComponent(
-                    original    : 1,
-                    introValue  : 0x0F,
-                    aiPtr1      : 0xE3,
-                    aiPtr2      : 0x82,
-                    gfxfix1     : 0x66,
-                    gfxfix2     : 0x67,
-                    yFix1       : 0x0C,
-                    yFix2       : 0x10,
-                    spriteBankSlotRows : new byte[] {
+            BossRoomRandomComponent AirManComponent = new BossRoomRandomComponent(
+                    original: 1,
+                    introValue: 0x0F,
+                    aiPtr1: 0xE3,
+                    aiPtr2: 0x82,
+                    gfxfix1: 0x66,
+                    gfxfix2: 0x67,
+                    yFix1: 0x0C,
+                    yFix2: 0x10,
+                    spriteBankSlotRows: new byte[] {
                         0xAB, 0x05,
                         0xAC, 0x05,
                         0xAD, 0x05,
                         0xAA, 0x06,
                         0xAB, 0x06,
                         0xAC, 0x06,
-                    }),
+                    });
 
-                // Wood Man
-                new BossRoomRandomComponent(
-                    original    : 2,
-                    introValue  : 0x0B,
-                    aiPtr1      : 0xFB,
-                    aiPtr2      : 0x84,
-                    gfxfix1     : 0x6C,
-                    gfxfix2     : 0x6D,
-                    yFix1       : 0x0F,
-                    yFix2       : 0x10,
-                    spriteBankSlotRows : new byte[] {
+            BossRoomRandomComponent WoodManComponent = new BossRoomRandomComponent(
+                    original: 2,
+                    introValue: 0x0B,
+                    aiPtr1: 0xFB,
+                    aiPtr2: 0x84,
+                    gfxfix1: 0x6C,
+                    gfxfix2: 0x6D,
+                    yFix1: 0x0F,
+                    yFix2: 0x10,
+                    spriteBankSlotRows: new byte[] {
                         0xAC, 0x06,
                         0xAD, 0x06,
                         0xAE, 0x06,
                         0xAF, 0x06,
                         0xB0, 0x06,
                         0xB1, 0x06,
-                    }),
+                    });
 
-                // Bubble Man
-                new BossRoomRandomComponent(
-                    original    : 3,
-                    introValue  : 0x05,
-                    aiPtr1      : 0x56,
-                    aiPtr2      : 0x86,
-                    gfxfix1     : 0x60,
-                    gfxfix2     : 0x61,
-                    yFix1       : 0x0A,
-                    yFix2       : 0x0C,
-                    spriteBankSlotRows : new byte[] {
+            BossRoomRandomComponent BubbleManComponent = new BossRoomRandomComponent(
+                    original: 3,
+                    introValue: 0x05,
+                    aiPtr1: 0x56,
+                    aiPtr2: 0x86,
+                    gfxfix1: 0x60,
+                    gfxfix2: 0x61,
+                    yFix1: 0x0A,
+                    yFix2: 0x0C,
+                    spriteBankSlotRows: new byte[] {
                         0x98, 0x07,
                         0x99, 0x07,
                         0x9A, 0x07,
                         0x9B, 0x07,
                         0x9C, 0x07,
                         0x9D, 0x07,
-                    }),
+                    });
 
-                // Quick Man
-                new BossRoomRandomComponent(
-                    original    : 4,
-                    introValue  : 0x09,
-                    aiPtr1      : 0x9E,
-                    aiPtr2      : 0x87,
-                    gfxfix1     : 0x54,
-                    gfxfix2     : 0x55,
-                    yFix1       : 0x09,
-                    yFix2       : 0x0C,
-                    spriteBankSlotRows : new byte[] {
+            BossRoomRandomComponent QuickManComponent = new BossRoomRandomComponent(
+                    original: 4,
+                    introValue: 0x09,
+                    aiPtr1: 0x9E,
+                    aiPtr2: 0x87,
+                    gfxfix1: 0x54,
+                    gfxfix2: 0x55,
+                    yFix1: 0x09,
+                    yFix2: 0x0C,
+                    spriteBankSlotRows: new byte[] {
                         0x90, 0x07,
                         0x91, 0x07,
                         0x92, 0x07,
                         0x93, 0x07,
                         0x94, 0x07,
                         0x95, 0x07,
-                    }),
+                    });
 
-                // Flash Man
-                new BossRoomRandomComponent(
-                    original    : 5,
-                    introValue  : 0x07,
-                    aiPtr1      : 0x56,
-                    aiPtr2      : 0x89,
-                    gfxfix1     : 0x5A,
-                    gfxfix2     : 0x5C,
-                    yFix1       : 0x09,
-                    yFix2       : 0x0C,
-                    spriteBankSlotRows : new byte[] {
+            BossRoomRandomComponent FlashManComponent = new BossRoomRandomComponent(
+                    original: 5,
+                    introValue: 0x07,
+                    aiPtr1: 0x56,
+                    aiPtr2: 0x89,
+                    gfxfix1: 0x5A,
+                    gfxfix2: 0x5C,
+                    yFix1: 0x09,
+                    yFix2: 0x0C,
+                    spriteBankSlotRows: new byte[] {
                         0x9E, 0x06,
                         0x9F, 0x06,
                         0x96, 0x07,
                         0x97, 0x07,
                         0x9E, 0x07,
                         0x9F, 0x07,
-                    }),
+                    });
 
-                // Metal Man
-                new BossRoomRandomComponent(
-                    original    : 6,
-                    introValue  : 0x05,
-                    aiPtr1      : 0x20,
-                    aiPtr2      : 0x8B,
-                    gfxfix1     : 0x63,
-                    gfxfix2     : 0x64,
-                    yFix1       : 0x08,
-                    yFix2       : 0x0C,
-                    spriteBankSlotRows : new byte[] {
+            BossRoomRandomComponent MetalManComponent = new BossRoomRandomComponent(
+                    original: 6,
+                    introValue: 0x05,
+                    aiPtr1: 0x20,
+                    aiPtr2: 0x8B,
+                    gfxfix1: 0x63,
+                    gfxfix2: 0x64,
+                    yFix1: 0x08,
+                    yFix2: 0x0C,
+                    spriteBankSlotRows: new byte[] {
                         0xB0, 0x03,
                         0xB1, 0x03,
                         0xB2, 0x03,
                         0xB3, 0x03,
                         0xAA, 0x05,
                         0xAB, 0x05,
-                    }),
+                    });
 
-                // Clash Man
-                new BossRoomRandomComponent(
-                    original    : 7,
-                    introValue  : 0x03,
-                    aiPtr1      : 0xC3,
-                    aiPtr2      : 0x8C,
-                    gfxfix1     : 0x69,
-                    gfxfix2     : 0x6A,
-                    yFix1       : 0x08,
-                    yFix2       : 0x0C,
-                    spriteBankSlotRows : new byte[] {
+            BossRoomRandomComponent ClashManComponent = new BossRoomRandomComponent(
+                    original: 7,
+                    introValue: 0x03,
+                    aiPtr1: 0xC3,
+                    aiPtr2: 0x8C,
+                    gfxfix1: 0x69,
+                    gfxfix2: 0x6A,
+                    yFix1: 0x08,
+                    yFix2: 0x0C,
+                    spriteBankSlotRows: new byte[] {
                         0xAE, 0x05,
                         0xAF, 0x05,
                         0xB0, 0x05,
@@ -200,10 +190,23 @@ namespace MM2Randomizer.Randomizers
                         0xB2, 0x05,
                         0xB3, 0x05,
                     }
-                ),
+                );
+
+            Components = new List<BossRoomRandomComponent>
+            {
+                HeatManComponent,
+                AirManComponent,
+                WoodManComponent,
+                BubbleManComponent,
+                QuickManComponent,
+                FlashManComponent,
+                MetalManComponent,
+                ClashManComponent,
             };
 
             Components.Shuffle(r);
+            //DEBUG test Bubble on Bubble stage
+            //Components.Insert(3, BubbleManComponent);
 
             // Write in new boss positions
             for (int i = 0; i < 8; i++)

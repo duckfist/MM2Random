@@ -127,7 +127,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                             }
                         }
 
-                        sbrg.NewEnemyTypes.Add(newEnemyType); // TODO: This adds a bunch of extra unnecessary copies. Change.
+                        sbrg.NewEnemyTypes.Add(newEnemyType); // TODO: This all should be refactored. Use a hashtable of EnemyTypes and abolish "EnemyID".
 
                         // If room contains only this one enemy and it is an activator
                         // TODO: How does Clash stage work with the Pipis? They don't break normally.

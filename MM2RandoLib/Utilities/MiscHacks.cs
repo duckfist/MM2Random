@@ -88,6 +88,28 @@ namespace MM2Randomizer.Utilities
             p.Add(address, 0x08, "Buster Projectile X-Velocity Integer");
         }
 
+        public static void SkipItemGetPages(Patch p)
+        {
+            // At 0x037C88, A62ABD81C24A09A08D2004EE20044CD0BC
+            p.Add(0x037C88, 0xA6, "Fast Item Get Patch");
+            p.Add(0x037C89, 0x2A, "Fast Item Get Patch");
+            p.Add(0x037C8A, 0xBD, "Fast Item Get Patch");
+            p.Add(0x037C8B, 0x81, "Fast Item Get Patch");
+            p.Add(0x037C8C, 0xC2, "Fast Item Get Patch");
+            p.Add(0x037C8D, 0x4A, "Fast Item Get Patch");
+            p.Add(0x037C8E, 0x09, "Fast Item Get Patch");
+            p.Add(0x037C8F, 0xA0, "Fast Item Get Patch");
+            p.Add(0x037C90, 0x8D, "Fast Item Get Patch");
+            p.Add(0x037C91, 0x20, "Fast Item Get Patch");
+            p.Add(0x037C92, 0x04, "Fast Item Get Patch");
+            p.Add(0x037C93, 0xEE, "Fast Item Get Patch");
+            p.Add(0x037C94, 0x20, "Fast Item Get Patch");
+            p.Add(0x037C95, 0x04, "Fast Item Get Patch");
+            p.Add(0x037C96, 0x4C, "Fast Item Get Patch");
+            p.Add(0x037C97, 0xD0, "Fast Item Get Patch");
+            p.Add(0x037C98, 0xBC, "Fast Item Get Patch");
+        }
+
         /// <summary>
         /// Enabling Random Weapons or Random Stages will cause the wrong Robot Master portrait to
         /// be blacked out when a stage is completed. The game uses your acquired weapons to determine

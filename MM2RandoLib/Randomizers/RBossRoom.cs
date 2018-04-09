@@ -205,8 +205,8 @@ namespace MM2Randomizer.Randomizers
             };
 
             Components.Shuffle(r);
-            //DEBUG test Bubble on Bubble stage
-            //Components.Insert(3, BubbleManComponent);
+            //DEBUG test a boss in a particular boss room, also comment out the corresponding boss from the Components list above
+            //Components.Insert(5, WoodManComponent);
 
             // Write in new boss positions
             for (int i = 0; i < 8; i++)

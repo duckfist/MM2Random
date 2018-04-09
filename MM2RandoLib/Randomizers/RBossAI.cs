@@ -232,8 +232,8 @@ namespace MM2Randomizer.Randomizers
             rInt = r.Next(0x20 - 0x06 + 1) + 0x06;
             Patch.Add(0x02C537, (byte)rInt, "Woodman Leaf Spacing Delay");
 
-            //0x02C5DD - Jump height, 0x04. Do 0x03 to 0x08.
-            rInt = r.Next(0x08 - 0x03 + 1) + 0x03;
+            //0x02C5DD - Jump height, 0x04. Do 0x03 to 0x07.
+            rInt = r.Next(0x07 - 0x03 + 1) + 0x03;
             Patch.Add(0x02C5DD, (byte)rInt, "Woodman Jump Y-Velocity");
 
             //0x02C5E2 - Jump distance, 0x01. Do 0x01 to 0x04.
@@ -249,19 +249,19 @@ namespace MM2Randomizer.Randomizers
             if (rDbl > 0.8)
                 Patch.Add(0x02C553, 0x02, "Woodman Falling Leaf Quantity");
 
-            //0x02C576 - Falling leaf x-vel, 0x02. Do 0x01 or 0x02, but with a 10% chance for 0x00 and 10% for 0x03
+            //0x02C576 - Falling leaf x-vel, 0x02. Do 0x01 or 0x02, but with a low chance for 0x00 and lower chance for 0x03
             xVels = new byte[] {
-                0x00,
+                0x00,0x00,0x00,
                 0x03,
-                0x01,0x01,0x01,0x01,
+                0x01,0x01,0x01,0x01,0x01,0x01,
                 0x02,0x02,0x02,0x02,
             };
             rInt = r.Next(xVels.Length);
             Patch.Add(0x02C576, xVels[rInt], "Woodman Falling Leaf X-Velocity");
 
-            //0x03D8F6 - 0x02, change to 0x06 for an interesting leaf shield pattern 25% of the time
+            //0x03D8F6 - 0x02, change to 0x06 for an interesting leaf shield pattern 20% of the time
             rDbl = r.NextDouble();
-            if (rDbl > 0.66)
+            if (rDbl > 0.8)
             {
                 Patch.Add(0x03D8F6, 0x06, "Woodman Leaf Shield Pattern");
             }
@@ -278,13 +278,13 @@ namespace MM2Randomizer.Randomizers
             }
             else
             {
-                xVels = new byte[]
+                byte[] yVels = new byte[]
                 {
-                    0x00, 0x04, 0x08, 0x0C, 0x10, 0x14, 0x18, 0x1C, // Fall faster
-                    0x1D, 0x1E, 0x20, 0x21, 0x22, 0x23, 0x24        // Fall slower
+                    0x08, 0x18, 0x1C, // Fall faster
+                    0x1D, 0x1E, 0x20, 0x21, 0x22, 0x23, 0x24 // Fall slower
                 };
-                rInt = r.Next(xVels.Length);
-                yVel = xVels[rInt];
+                rInt = r.Next(yVels.Length);
+                yVel = yVels[rInt];
             }
             Patch.Add(0x03B855, (byte)yVel, "Woodman Falling Leaf Y-Velocity");
         }

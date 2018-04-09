@@ -68,5 +68,25 @@ namespace MM2Randomizer.Randomizers.Enemies
                 default: return false;
             }
         }
+
+        public static bool CheckIsDeactivator(int enemyID)
+        {
+            switch ((EEnemyID)enemyID)
+            {
+                case EEnemyID.Pipi_Deactivator:
+                    return true;
+                case EEnemyID.Mole_Deactivator:
+                    return true;
+                case EEnemyID.Claw_Deactivator:
+                    return true;
+                case EEnemyID.Kukku_Deactivator:
+                    return true;
+                case EEnemyID.M445_Deactivator:
+                    return true;
+                default: return false;
+            }
+        }
+
+
     }
 }

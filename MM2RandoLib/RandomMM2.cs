@@ -156,6 +156,7 @@ namespace MM2Randomizer
             MiscHacks.SetWily5NoMusicChange(Patch, Settings.IsJapanese);
             MiscHacks.FixDamageValues(Patch);
             MiscHacks.SetETankKeep(Patch);
+            MiscHacks.SkipItemGetPages(Patch);
 
             // Create file name based on seed and game region
             string newfilename = (Settings.IsJapanese) ? "RM2" : "MM2";

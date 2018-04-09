@@ -123,7 +123,12 @@ namespace MM2Randomizer.Randomizers.Enemies
                             if (EnemyType.CheckIsActivator(newId))
                             {
                                 newId = TryReplaceActivator(newEnemies, newId);
-                                newEnemyType = newEnemies.Where(x => (byte)x.ID == newId).First();
+
+                                // Update the new enemy type because it may require different graphics
+                                if (!EnemyType.CheckIsDeactivator(newId))
+                                {
+                                    newEnemyType = newEnemies.Where(x => (byte)x.ID == newId).First();
+                                }
                             }
                         }
 

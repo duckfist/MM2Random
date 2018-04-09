@@ -56,6 +56,8 @@ namespace MM2Randomizer.Randomizers.Enemies
                     return true;
                 case EEnemyID.Kukku_Activator:
                     return true;
+                case EEnemyID.M445_Activator:
+                    return true;
                 default: return false;
             }
         }

@@ -38,9 +38,9 @@ namespace MM2Randomizer.Randomizers
             }
         }
         
-        public List<BossRoomRandomComponent> Components;
-        
         public RBossRoom() { }
+
+        public List<BossRoomRandomComponent> Components { get; set; }
 
         /// <summary>
         /// Shuffle which Robot Master awards which weapon.

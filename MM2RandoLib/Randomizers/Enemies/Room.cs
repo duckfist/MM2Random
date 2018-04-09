@@ -25,6 +25,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                 if (id == EEnemyID.Pipi_Activator ||
                     id == EEnemyID.Mole_Activator ||
                     id == EEnemyID.Claw_Activator ||
+                    id == EEnemyID.M445_Activator ||
                     id == EEnemyID.Kukku_Activator)
                 {
                     return id;

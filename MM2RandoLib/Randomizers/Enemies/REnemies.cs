@@ -108,7 +108,6 @@ namespace MM2Randomizer.Randomizers.Enemies
 
                         int randomIndex = r.Next(newEnemies.Count);
                         EnemyType newEnemyType = newEnemies[randomIndex];
-                        sbrg.NewEnemyTypes.Add(newEnemyType); // TODO: This adds a bunch of extra unnecessary copies. Change.
                         byte newId = (byte)newEnemyType.ID;
 
                         // When placing the last enemy, If room contains an activator, manually change the last spawn in the room to be its deactivator
@@ -124,9 +123,12 @@ namespace MM2Randomizer.Randomizers.Enemies
                             if (EnemyType.CheckIsActivator(newId))
                             {
                                 newId = TryReplaceActivator(newEnemies, newId);
+                                newEnemyType = newEnemies.Where(x => (byte)x.ID == newId).First();
                             }
                         }
-                            
+
+                        sbrg.NewEnemyTypes.Add(newEnemyType); // TODO: This adds a bunch of extra unnecessary copies. Change.
+
                         // If room contains only this one enemy and it is an activator
                         // TODO: How does Clash stage work with the Pipis? They don't break normally.
                         if ((room.EnemyInstances.Count == 1 && instance.HasNewActivator()))

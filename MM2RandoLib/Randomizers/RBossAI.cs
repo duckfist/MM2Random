@@ -321,15 +321,16 @@ namespace MM2Randomizer.Randomizers
             rInt = r.Next(bytes.Length);
             Patch.Add(0x02C745, bytes[rInt], "Bubbleman Water Gun Cooldown");
 
-            //0x03DA19 - X-Vel water gun, Int 0x04
-            bytes = new byte[] { 0x02, 0x03, 0x04, 0x05, };
-            rInt = r.Next(bytes.Length);
-            Patch.Add(0x03DA19, bytes[rInt], "Bubbleman X-Vel Water Gun, Int");
+            // WARNING: THIS ADDRESS IS SHARED WITH THE VELOCITY OF THE DEATH BEAMS IN QUICKMAN STAGE!!
+            ////0x03DA19 - X-Vel water gun, Int 0x04
+            //bytes = new byte[] { 0x02, 0x03, 0x04, 0x05, };
+            //rInt = r.Next(bytes.Length);
+            //Patch.Add(0x03DA19, bytes[rInt], "Bubbleman X-Vel Water Gun, Int");
 
-            //0x03DA1A - X-Vel water gun, Frac 0x40
-            bytes = new byte[] { 0x40, 0x80, 0xC0, 0x00, };
-            rInt = r.Next(bytes.Length);
-            Patch.Add(0x03DA1A, bytes[rInt], "Bubbleman X-Vel Water Gun, Frac");
+            ////0x03DA1A - X-Vel water gun, Frac 0x40
+            //bytes = new byte[] { 0x40, 0x80, 0xC0, 0x00, };
+            //rInt = r.Next(bytes.Length);
+            //Patch.Add(0x03DA1A, bytes[rInt], "Bubbleman X-Vel Water Gun, Frac");
 
             //0x03DA25 - X-Vel bubble shot, Int 0x01
             bytes = new byte[] { 0x00, 0x00, 0x01, 0x01, 0x02, };

@@ -72,8 +72,10 @@ namespace MM2Randomizer.Randomizers.Enemies
             // Force Buster to always do 1 damage to minibosses
             shotP[EnemyIndexInShotArray_Friender] = 0x01;
 
+            // To each enemy...
             for (int i = 0; i < offsets.Count; i++)
             {
+                // ...apply each weapon's damage
                 p.Add(EnemyDamageAddressP + offsets[i], shotP[i], $"{enemyNames[i]} damage from P");
                 p.Add(EnemyDamageAddressH + offsets[i], shotH[i], $"{enemyNames[i]} damage from H");
                 p.Add(EnemyDamageAddressA + offsets[i], shotA[i], $"{enemyNames[i]} damage from A");
@@ -82,6 +84,29 @@ namespace MM2Randomizer.Randomizers.Enemies
                 p.Add(EnemyDamageAddressQ + offsets[i], shotQ[i], $"{enemyNames[i]} damage from Q");
                 p.Add(EnemyDamageAddressC + offsets[i], shotC[i], $"{enemyNames[i]} damage from C");
                 p.Add(EnemyDamageAddressM + offsets[i], shotM[i], $"{enemyNames[i]} damage from M");
+
+                // Furthermore, there are 3 enemy types that need a second array of damage values 
+                // - Shrink (instance vs. spawner)
+                // - Mole (moving up vs. moving down)
+                // - Shotman (facing left vs. facing right)
+                // The corresponding auxiliary types are omitted from the shuffle.
+                // Instead, assign common weaknesses for a more consistent playing experience.
+                // Each auxiliary type occurs at the next offset, offsets[i] + 1
+
+                // Shrink 0x00 apply same damage to Shrink Spawner 0x01
+                // Mole (Up) 0x48 apply same damage to Mole (Down) 0x49
+                // Shotman (Left) 0x4B apply same damage to Shotman (Right) 0x4C
+                if (offsets[i] == 0x00 || offsets[i] == 0x48 || offsets[i] == 0x4B)
+                {
+                    p.Add(EnemyDamageAddressP + offsets[i] + 1, shotP[i], $"{enemyNames[i]} damage from P");
+                    p.Add(EnemyDamageAddressH + offsets[i] + 1, shotH[i], $"{enemyNames[i]} damage from H");
+                    p.Add(EnemyDamageAddressA + offsets[i] + 1, shotA[i], $"{enemyNames[i]} damage from A");
+                    p.Add(EnemyDamageAddressW + offsets[i] + 1, shotW[i], $"{enemyNames[i]} damage from W");
+                    p.Add(EnemyDamageAddressB + offsets[i] + 1, shotB[i], $"{enemyNames[i]} damage from B");
+                    p.Add(EnemyDamageAddressQ + offsets[i] + 1, shotQ[i], $"{enemyNames[i]} damage from Q");
+                    p.Add(EnemyDamageAddressC + offsets[i] + 1, shotC[i], $"{enemyNames[i]} damage from C");
+                    p.Add(EnemyDamageAddressM + offsets[i] + 1, shotM[i], $"{enemyNames[i]} damage from M");
+                }
             }
 
             // Format nice debug table

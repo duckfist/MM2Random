@@ -50,6 +50,7 @@
     <Compile Include="Enums\EMiscAddresses.cs" />
     <Compile Include="Enums\EMusicID.cs" />
     <Compile Include="Enums\ERMPortraitAddress.cs" />
+    <Compile Include="Enums\ERMPortraitText.cs" />
     <Compile Include="Enums\ERMStageClearAddress.cs" />
     <Compile Include="Enums\ERMStageSelect.cs" />
     <Compile Include="Enums\ERMStageWeaponAddress.cs" />

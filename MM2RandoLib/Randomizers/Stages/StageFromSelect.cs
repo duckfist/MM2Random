@@ -9,6 +9,8 @@ namespace MM2Randomizer.Randomizers.Stages
     public class StageFromSelect
     {
         public string PortraitName;
+        public ERMPortraitText TextAddress;
+        public string TextValues;
         public ERMPortraitAddress PortraitAddress;
         public int PortraitDestinationOriginal;
         public int PortraitDestinationNew;

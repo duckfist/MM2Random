@@ -345,7 +345,7 @@ namespace MM2Randomizer.Randomizers
             return c;
         }
 
-        static Dictionary<char, byte> CreditsCipher = new Dictionary<char, byte>()
+        public static Dictionary<char, byte> CreditsCipher = new Dictionary<char, byte>()
         {
             { ' ', 0x00},
             { 'A', 0x01},
@@ -392,7 +392,7 @@ namespace MM2Randomizer.Randomizers
             { '=', 0x23},
         };
 
-        static Dictionary<char, byte> IntroCipher = new Dictionary<char, byte>()
+        public static Dictionary<char, byte> IntroCipher = new Dictionary<char, byte>()
         {
             { ' ', 0x00 },
             { '0', 0xA0 },

@@ -71,7 +71,9 @@ namespace MM2Randomizer.Randomizers.Stages
                 PortraitDestinationNew = 3,
                 StageClearAddress = ERMStageClearAddress.BubbleMan,
                 StageClearDestinationOriginal = 8,
-                StageClearDestinationNew = 8
+                StageClearDestinationNew = 8,
+                TextAddress = ERMPortraitText.BubbleMan,
+                TextValues = "BUBBLE",
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -81,7 +83,9 @@ namespace MM2Randomizer.Randomizers.Stages
                 PortraitDestinationNew = 1,
                 StageClearAddress = ERMStageClearAddress.AirMan,
                 StageClearDestinationOriginal = 2,
-                StageClearDestinationNew = 2
+                StageClearDestinationNew = 2,
+                TextAddress = ERMPortraitText.AirMan,
+                TextValues = "fAIRfff"
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -91,7 +95,9 @@ namespace MM2Randomizer.Randomizers.Stages
                 PortraitDestinationNew = 4,
                 StageClearAddress = ERMStageClearAddress.QuickMan,
                 StageClearDestinationOriginal = 16,
-                StageClearDestinationNew = 16
+                StageClearDestinationNew = 16,
+                TextAddress = ERMPortraitText.QuickMan,
+                TextValues = "QUICKf"
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -101,7 +107,9 @@ namespace MM2Randomizer.Randomizers.Stages
                 PortraitDestinationNew = 2,
                 StageClearAddress = ERMStageClearAddress.WoodMan,
                 StageClearDestinationOriginal = 4,
-                StageClearDestinationNew = 4
+                StageClearDestinationNew = 4,
+                TextAddress = ERMPortraitText.WoodMan,
+                TextValues = "WOODff",
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -111,7 +119,9 @@ namespace MM2Randomizer.Randomizers.Stages
                 PortraitDestinationNew = 7,
                 StageClearAddress = ERMStageClearAddress.CrashMan,
                 StageClearDestinationOriginal = 128,
-                StageClearDestinationNew = 128
+                StageClearDestinationNew = 128,
+                TextAddress = ERMPortraitText.CrashMan,
+                TextValues = "CRASHf",
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -121,7 +131,9 @@ namespace MM2Randomizer.Randomizers.Stages
                 PortraitDestinationNew = 5,
                 StageClearAddress = ERMStageClearAddress.FlashMan,
                 StageClearDestinationOriginal = 32,
-                StageClearDestinationNew = 32
+                StageClearDestinationNew = 32,
+                TextAddress = ERMPortraitText.FlashMan,
+                TextValues = "FLASHf",
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -131,7 +143,9 @@ namespace MM2Randomizer.Randomizers.Stages
                 PortraitDestinationNew = 6,
                 StageClearAddress = ERMStageClearAddress.MetalMan,
                 StageClearDestinationOriginal = 64,
-                StageClearDestinationNew = 64
+                StageClearDestinationNew = 64,
+                TextAddress = ERMPortraitText.MetalMan,
+                TextValues = "METALf",
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -141,7 +155,9 @@ namespace MM2Randomizer.Randomizers.Stages
                 PortraitDestinationNew = 0, // 4 = quick
                 StageClearAddress = ERMStageClearAddress.HeatMan,
                 StageClearDestinationOriginal = 1,
-                StageClearDestinationNew = 1
+                StageClearDestinationNew = 1,
+                TextAddress = ERMPortraitText.HeatMan,
+                TextValues = "HEATff",
             });
 
 
@@ -153,14 +169,25 @@ namespace MM2Randomizer.Randomizers.Stages
             debug.AppendLine("Stage Select:");
             for (int i = 0; i < 8; i++)
             {
-                string portrait = StageSelect[i].PortraitName;
-                StageSelect[i].PortraitDestinationNew = StageSelect[newStageOrder[i]].PortraitDestinationOriginal;
-                debug.AppendLine($"{Enum.GetName(typeof(EStageID), StageSelect[i].PortraitDestinationOriginal)}'s portrait -> {Enum.GetName(typeof(EStageID), StageSelect[i].PortraitDestinationNew)} stage");
+                StageFromSelect stage = StageSelect[i];
+
+                // Change portrait destination
+                stage.PortraitDestinationNew = StageSelect[newStageOrder[i]].PortraitDestinationOriginal;
+
+                // Change portrait text to match new destination
+                string newlabel = StageSelect[newStageOrder[i]].TextValues;
+                for (int j = 0; j < newlabel.Length; j++)
+                {
+                    char c = newlabel[j];
+                    Patch.Add((int)stage.TextAddress + j, RText.CreditsCipher[c], $"Stage Select Portrait Text");
+                }
+
+                debug.AppendLine($"{Enum.GetName(typeof(EStageID), stage.PortraitDestinationOriginal)}'s portrait -> {Enum.GetName(typeof(EStageID), StageSelect[i].PortraitDestinationNew)} stage");
             }
 
             foreach (StageFromSelect stage in StageSelect)
             {
-                Patch.Add((int)stage.PortraitAddress, (byte)stage.PortraitDestinationNew, String.Format("Stage Select {0} Destination", stage.PortraitName));
+                Patch.Add((int)stage.PortraitAddress, (byte)stage.PortraitDestinationNew, $"Stage Select {stage.PortraitName} Destination");
             }
         }
     }

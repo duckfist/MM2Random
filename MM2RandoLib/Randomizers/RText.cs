@@ -26,6 +26,8 @@ namespace MM2Randomizer.Randomizers
 
         private List<string> countryNames = new List<string>();
         private List<string> companyNames = new List<string>();
+        private string[] newWeaponNames = new string[8];
+        private char[] newWeaponLetters = new char[9]; // Original order: P H A W B Q F M C
 
         public RText() { }
 
@@ -139,6 +141,7 @@ namespace MM2Randomizer.Randomizers
                 int offset = offsetAtomicFire + i * 0x10;
 
                 string name = GetRandomName(r);
+                newWeaponNames[i] = name;
                 char[] chars = name.ToCharArray();
 
                 for (int j = 0; j < MAX_CHARS; j++)
@@ -162,58 +165,46 @@ namespace MM2Randomizer.Randomizers
                 p.Add(0x037f5e + i, Convert.ToByte('@'), $"Quick Boomerang Name Erase Char #{i}: @");
             }
 
+            // Create new weapon letters
+            {
+                // Keep local copy of the alphabet to remove letters from
+                List<char> alphabet = new List<char>(Alphabet.ToCharArray());
+
+                // First pick a letter for buster, 1/26
+                int rLetterIndex = r.Next(alphabet.Count);
+                newWeaponLetters[0] = alphabet[rLetterIndex];
+                alphabet.RemoveAt(rLetterIndex);
+
+                // For each special weapon...
+                for (int i = 0; i < 8; i++)
+                {
+                    // Try to use the first letter of the weapon name if it hasn't been used yet
+                    char tryLetter = newWeaponNames[i][0];
+                    if (alphabet.Contains(tryLetter))
+                    {
+                        newWeaponLetters[i] = tryLetter;
+                        alphabet.Remove(tryLetter);
+                    }
+                    // Otherwise use a random letter from the remaining letters
+                    else
+                    {
+                        rLetterIndex = r.Next(alphabet.Count);
+                        newWeaponLetters[i] = alphabet[rLetterIndex];
+                        alphabet.RemoveAt(rLetterIndex);
+                    }
+                }
+            }
+
             // Write in new weapon letters
             for (int i = 0; i < 8; i++)
             {
-                int randLetter = 0x41 + r.Next(26);
-                p.Add(offsetLetters + i, (byte)randLetter, String.Format("Weapon Get {0} Letter: {1}", ((EDmgVsBoss.Offset)i).Name, Convert.ToChar(randLetter).ToString()));
+                // Get index of the chosen letter
+                int newLetter = 0x41 + Alphabet.IndexOf(newWeaponLetters[i]); // unicode
+                p.Add(offsetLetters + i, (byte)newLetter, String.Format($"Weapon Get {((EDmgVsBoss.Offset)i).Name} Letter: {newWeaponLetters[i]}"));
             }
 
-            // Credits: Text content (Starting with "Special Thanks")
+            // Credits: Text content and line lengths (Starting with "Special Thanks")
             StringBuilder creditsSb = new StringBuilder();
-            //creditsSb.Append("ROBOT MASTERS");
-            //creditsSb.Append(" ");
-            //creditsSb.Append("P H A W B Q F M C");
-            //creditsSb.Append("HEATMAN 2 0 3 0 0 1 0 0 2");
-            //creditsSb.Append("AIRMAN 1 2 0 1 2 0 0 0 4");
-            //creditsSb.Append("WOODMAN 1 0 1 1 3 2 0 0 0");
-            //creditsSb.Append("BUBBLEMAN 2 4 0 1 1 3 0 1 0");
-            //creditsSb.Append("QUICKMAN 1 5 1 1 1 0 0 2 0");
-            //creditsSb.Append("FLASHMAN 1 2 0 1 0 1 0 3 1");
-            //creditsSb.Append("METALMAN 1 2 1 2 0 1 1 1 0");
-            //creditsSb.Append("CLASHMAN 1 2 2 3 1 0 0 0 0");
-            //creditsSb.Append(" ");
-            //creditsSb.Append(" ");
-            //creditsSb.Append("WILY BOSSES");
-            //creditsSb.Append("f");
-            //creditsSb.Append("P H A W B Q M C");
-            //creditsSb.Append("DRAGON 0 0 2 0 1 0 0 0");
-            //creditsSb.Append("PICOPICO 0 B 0 A 0 0 2 0");
-            //creditsSb.Append("GUTS 0 0 2 0 0 0 1 0");
-            //creditsSb.Append("BOOBEAM 0 0 0 0 3 0 0 0");
-            //creditsSb.Append("MACHINE 0 0 2 1 0 1 1 0");
-            //creditsSb.Append("ALIEN X X X 2 X X X X");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-            //creditsSb.Append("RANDOMIZER BY");
-            //creditsSb.Append("DUCKFIST");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-            //creditsSb.Append("SPECIAL THANKS TO THE");
-            //creditsSb.Append("ROCKMAN 2 TEAM");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-            //creditsSb.Append("f");
-
-            // Credits: Text line lengths (Starting with "Special Thanks")
             lines = Properties.Resources.creditstext.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
             int k = 0;
             foreach (string line in lines)
@@ -344,6 +335,13 @@ namespace MM2Randomizer.Randomizers
             }
             return c;
         }
+
+        public static string Alphabet { get; set; } = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        public static Dictionary<char, object> PauseScreenCipher = new Dictionary<char, object>()
+        {
+            { 'A', 0x00 },
+        };
 
         public static Dictionary<char, byte> CreditsCipher = new Dictionary<char, byte>()
         {

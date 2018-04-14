@@ -429,8 +429,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x0034ca, new int[] { 7 })); // Bank 5
 
             // Airman & Wily 2 stage enemies
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007470, new int[] { 0 }, // Bank 0
-                new int[] { 0, 1, 2/*, 3, 5 */}, new byte[] { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01/*, 0x9A, 0x03, 0x96, 0x03 */})); // Force Goblins, Lightning Goro
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007470, new int[] { 0 })); // Bank 0 - Lightning Goro room
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007482, new int[] { 2 })); // Bank 1
             RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007494, new int[] { 1 })); // Bank 2
             // Air Bank 3 - Air fight 0x0074A6
@@ -504,7 +503,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             // First, loop back through entire list of room-groups. For each, loop through entire list of 
             // enemies, match them and assign them to their room-group. Assigned enemies are removed from
             // the list, reducing the search time on each loop. For now, completely discard all enemy spawns
-            // that are reserved (i.e. Yoku blocks in Heat, Lightning Goros in Air).
+            // that are reserved (i.e. Yoku blocks in Heat, beams in Quick).
             foreach (SpriteBankRoomGroup sbrg in RoomGroups)
             {
                 int stageNum = (int)sbrg.Stage;

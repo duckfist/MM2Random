@@ -1,4 +1,7 @@
 #Index,StageNum,RoomNum,ScreenNum,IsActive,EnemyID,XPosOriginal,YPosOriginal,YPosAir,YPosGround,FaceRight
+###
+### Heat Man / Wily 1 Stage
+###
 00,00,00,01,true,2B,70,10,24,A4,false
 01,00,00,01,true,2B,F0,10,24,A4,false
 02,00,00,02,true,2B,90,10,28,A4,false
@@ -84,19 +87,26 @@
 52,00,0E,2A,false,63,98,88,0,0,false
 53,00,0E,2A,false,63,D8,88,0,0,false
 54,00,0E,2A,false,64,FF,98,0,0,false
+###
+### Air Man / Wily 2 Stage
+###
+#Index,StageNum,RoomNum,ScreenNum,IsActive,EnemyID,XPosOriginal,YPosOriginal,YPosAir,YPosGround,FaceRight
 00,01,00,01,true,40,48,9B,10,64,false
 01,01,00,01,true,41,F8,AB,10,74,false
 02,01,00,02,true,40,98,6B,10,34,false
 03,01,00,03,true,41,48,8B,10,54,false
 04,01,00,03,true,40,E8,8B,10,54,false
-05,01,00,04,false,3E,C0,20,0,0,false
-06,01,00,05,false,3E,60,60,0,0,false
-07,01,00,06,false,3E,00,38,0,0,false
-08,01,00,06,false,3E,40,40,0,0,false
-09,01,00,06,true,39,A0,08,10,10,false
-0A,01,00,06,false,3E,D0,40,0,0,false
+# Lightning Goros
+05,01,00,04,true,3E,C0,20,10,54,false
+06,01,00,05,true,3E,60,60,10,74,false
+07,01,00,06,true,3E,00,38,10,94,false
+08,01,00,06,true,3E,60,40,10,94,false
+09,01,00,06,true,39,B0,08,10,74,false
+0A,01,00,06,true,3E,E0,40,10,74,false
+# Pipi Spawner and Despawner
 0B,01,00,07,true,37,70,30,20,74,false
 0C,01,00,07,true,00,C0,20,20,74,false
+# Checkpoint room
 0D,01,00,08,true,00,38,20,20,74,false
 0E,01,00,08,true,00,B0,20,20,74,false
 0F,01,00,09,true,00,60,20,20,74,false
@@ -127,6 +137,9 @@
 28,01,09,23,true,30,30,0C,10,34,false
 29,01,09,23,true,30,B0,0C,10,34,false
 2A,01,09,23,true,30,E0,0C,10,34,false
+###
+### Wood Man / Wily 3 Stage
+###
 00,02,00,01,true,16,08,48,48,A4,false
 01,02,00,01,true,16,50,68,86,B4,false
 02,02,00,01,true,16,98,48,48,A4,false

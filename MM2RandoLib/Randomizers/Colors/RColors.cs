@@ -116,7 +116,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     }
                 },
 
-                new ColorSet() { // Stage select background color sets
+                new ColorSet() { // Stage Select and Credits Panel background color sets
                     addresses = new int[] {
                         0x0344ab, 0x0344ac,
                         0x0344af, 0x0344b0,
@@ -218,6 +218,13 @@ namespace MM2Randomizer.Randomizers.Colors
                     }
                 },
             };
+
+            // Boss Intro Panel color set, use the similar formatted Start/Password colorbytes
+            StageSelectColorSets.Add(new ColorSet()
+            {
+                addresses = new int[] { 0x34186, 0x3418B },
+                ColorBytes = new List<EColorsHex[]>(StageSelectColorSets[0].ColorBytes),
+            });
 
             for (int i = 0; i < StageSelectColorSets.Count; i++)
             {

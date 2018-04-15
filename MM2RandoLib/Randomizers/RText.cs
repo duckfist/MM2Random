@@ -641,7 +641,7 @@ namespace MM2Randomizer.Randomizers
             "      EMPEROR GARUDA,      "+
             "   TWO SHADOWS APPEAR.     "+
             " \'NINJA\' THEY ARE CALLED.  ",
-
+            
             // TERMINATOR 2 NES /////////
             " TEN YEARS AGO THEY SENT A "+
             "  MACHINE FROM THE FUTURE  "+
@@ -653,7 +653,78 @@ namespace MM2Randomizer.Randomizers
             "       HER SON JOHN.       "+
             "  THE BATTLE FOR TOMORROW  "+
             "       BEGINS TODAY        ",
+                        
+            // ZERO WING ///////////////
+            "        IN A.D. 2101       "+
+            "     WAR WAS BEGINNING.    "+
+            "CAPTAIN \'WHAT HAPPEN?\'     "+
+            "MECHANIC \'SOMEBODY SET UP  "+
+            " US THE BOMB.\'             "+
+            "OPERATOR \'WE GET SIGNAL.\'  "+
+            "CATS \'ALL YOUR BASE ARE    "+
+            " BELONG TO US.\'            "+
+            "CAPTAIN \'TAKE OFF EVERY    "+
+            " ZIG. FOR GREAT JUSTICE.\'  ",
+
+            // SUPER MARIO 64 ////////////
+            "       DEAR MEGAMAN,       "+
+            "                           "+
+            " PLEASE COME TO THE CASTLE."+
+            "                           "+
+            " I\'VE BAKED A CAKE FOR YOU."+
+            "                           "+
+            " YOURS TRULY,              "+
+            "  PRINCESS TOADSTOOL       "+
+            "                           "+
+            "                   \'PEACH\' ",
             
+            // HALF-LIFE /////////////////
+            "HELLO, AND WELCOME TO THE  "+
+            "BLACK MESA TRANSIT SYSTEM. "+
+            "DUE TO THE HIGH TOXICITY OF"+
+            "MATERIAL ROUTINELY HANDLED "+
+            "NO SMOKING, EATING, OR     "+
+            "DRINKING IS PERMITTED.     "+
+            "NOW ARRIVING  SECTOR C TEST"+
+            "LABS AND CONTROL FACILITIES"+
+            "THANK YOU, AND HAVE A VERY "+
+            "SAFE AND PRODUCTIVE DAY.   ",
+            
+            // METAL GEAR SOLID 3 ////////
+            "     AFTER THE END OF      "+
+            "       WORLD WAR II,       "+
+            "       THE WORLD WAS       "+
+            "       SPLIT INTO TWO      "+
+            "       EAST AND WEST.      "+
+            "                           "+
+            "      THIS MARKED THE      "+
+            "        BEGINNING OF       "+
+            "     THE ERA KNOWN AS      "+
+            "       THE COLD WAR.       ",
+            
+            // ZORK //////////////////////
+            "       WEST OF HOUSE       "+
+            "                           "+
+            " YOU ARE STANDING IN AN    "+
+            " OPEN FIELD WEST OF A      "+
+            " WHITE HOUSE, WITH A       "+
+            " BOARDED FRONT DOOR.       "+
+            " THERE IS A SMALL          "+
+            " MAILBOX HERE.             "+
+            " COMMAND?                  "+
+            "                           ",
+            
+            // DIABLO ////////////////////
+            "     HELLO, MY FRIEND.     "+
+            " STAY AWHILE, AND LISTEN..."+
+            " THE EVIL YOU MOVE AGAINST "+
+            "IS THE DARK LORD OF TERROR."+
+            " HE IS KNOWN TO MORTAL MEN "+
+            "AS DIABLO. HE SEEKS TO ONCE"+
+            "  AGAIN SOW CHAOS IN THE   "+
+            "REALM OF MANKIND. YOU MUST "+
+            "  FIND AND DESTROY DIABLO  "+
+            "   BEFORE IT IS TOO LATE!  ",
         };
 
         private string GetRandomName(Random r)

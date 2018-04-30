@@ -1,6 +1,6 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.3.7 beta
+version 0.4.0 beta
 
 -----------------------------------------------------------------------------------------------
 
@@ -15,10 +15,9 @@ Featured Randomizer Modules
 - Enemy Weaknesses: Damage done to each enemy by each weapon is changed.
 
 - Boss Weaknesses: The damage done by each weapon against each boss is changed.
-  > Two Robot Masters take 2x damage from Buster.
+  > Four Robot Masters take 2x damage from Buster.
   > Every Robot Master will have a primary weakness and secondary weakness. 
   > Damage values are, on average, lower than in vanilla Mega Man 2.
-  > Note that an uncharged Heat does Buster damage, and a fully charged Heat does Heat damage.
   > Wily bosses are also affected, including Boobeam Trap and its Barriers.
   > There is a 25% chance for each Wily boss to take damage from buster.
   > Time Stopper will never do damage to Wily bosses.
@@ -39,12 +38,12 @@ Featured Randomizer Modules
 - Colors: Stage backgrounds, Robot Master colors, Mega Man's weapon colors, and a few Wily
 bosses have randomly assigned colors.
 
-- BGM: The background music for all stages are shuffled, and include several tracks from Mega Man 2 romhacks.
+- BGM: The background music for all stages are changed, and include several tracks from Mega
+Man 2 romhacks and other Capcom games.
 
 - Random Text:
   > The story in the intro cutscene will be different.
   > In the Weapon Get screen, the weapon name and letter will be randomized.
-    (This letter is not used in the pause menu, however)
 
 - And a few surprises
 
@@ -55,38 +54,74 @@ frames to 4 frames.
 
 - Burst Chaser Mode: Increase Mega Man's movement speed, and reduce a few other delay timers.
 
-- Additional large weapon energy refills provided in Wily 5 and Wily 6
+- The layouts of a few stages have been modified to accomodate the randomizer, such as some
+tile edits in Airman stage, tiles in a few boss rooms, and some large weapon energy capsules.
 
 -----------------------------------------------------------------------------------------------
 
-Enemy Randomizer notes
+BEFORE YOU PLAY MEGA MAN 2 RANDOMZIER
 
-- Yoku blocks in Heatman still appear in their ususal spots, slightly reducing enemy variety in
-Heat stage
-- Goblins have been removed from Airman stage to give possible enemies more variety.
-- Lightning Goros still appear in Airman room 1 in order to make crossing the gap possible, 
-therefore all of Airman stage is rather plain.
+Basic knowledge of Mega Man 2 game mechanics is highly recommended before playing. A few other
+intermediate tricks can significantly help with some painfully synergistic enemy combinations.
+Here are some pointers you should keep in mind:
+
+- Atomic Fire: Remember that the uncharged shot and the half-charge shot both use the Mega
+Buster damage table for damage calculation against enemies and bosses. Only the full charge
+will use the Atomic Fire damage table. When checking a boss for an Atomic Fire weakness, use a
+full charge, and don't bother with checking an uncharged or half-charge shot
+
+- "Pausefalling": If you pause the game while falling, and then unpause, Mega Man's fall speed
+is reset to 0. By repeatedly pausing during the descent of a jump, you can travel a greater
+horizontal distance before landing. In Randomizer, some enemy placements can make for some 
+difficult jumps if you don't have Item 1 or 2 - take advantage of pausefalling to make these
+situations easier.
+
+- If you like to do zip glitches, be careful around the Matasaburo enemy (fan guy). You can get
+stuck in the wall while one is on screen. If you can't kill them, use Time-Stopper to resume 
+zipping.
+
+- Leaf Shield and Atomic Fire tend to be very effective against enemies - don't forget to try
+them out, along with other weapons, if enemies get too tough.
+
+
+SOME ENEMY RANDOMIZER NOTES
+
+- The layouts of a few stages have been edited to allow for more enemy variety, particularly
+the first room of Airman stage.
+- Yoku blocks in Heatman stage and Drop Platforms in Bubbleman stage still appear, slightly
+reducing enemy variety in those rooms.
 - Frienders (wolves) still spawn like normal, due to dependence on solid blocks in their rooms.
 - Big Fish (wily 3 fish) do not spawn anywhere yet, TODO.
 - Anko (angler in bubble stage) do not spawn anymore.
-- M-445 enemies (metroids on bubble stage) do not spawn anywhere. Their gfx behave strangely in
-most stages, needs more work.
-- Changkey Makers (fire guys on quick stage) do not spawn anywhere. Their dependence on palette
-changes make it difficult to implement.
-- I have restricted Moles (drills), Pipis (birds), and Presses (crushers) in the number of 
-areas that they can appear in, hopefully reducing frustration.
-- Moles and Presses are rendered behind the background in some stages, so they have been 
-limited in the stages that they can appear.
-- If you like to do zip glitches, be careful around the Matasaburo enemy (fan guy). You can get
-stuck in the wall while one is on screen.  If you can't kill them, use Time-Stopper to resume 
-zipping.
 - Acid still appears like normal in Wily 6. Although, I could easily replace them with tons of 
 enemies. Do you really want that?
 
------------------------------------------------------------------------------------------------
 
-Other Known Bugs:
+OTHER MODIFICATIONS
 
+- All Wily bosses have a small chance to take damage from the Mega Buster; don't forget to try
+the Buster on these bosses to save some weapon energy!
+- No Wily boss will be weak to Time Stopper, so don't bother trying it.
+- Additional large weapon capsules have been placed in Wily 5 and Wily 6.
+- The ceilings have been removed from a few Robot Master boss rooms
+
+
+SOME NASTY BUGS
+
+--- Softlock/zip out of Bubbleman's Boss room ---
+If there significant lag and you are facing left as you defeat the boss in Bubbleman's room,
+the game can suddenly consider the water to solid and zip you out of the room, depriving you of
+credit for beating the stage, and respawning you in a glitched version of Wily 4. You can
+revert this by Game Overing and then choosing Stage Select. To avoid this, take extra care in
+Bubbleman's boss room, especially if Bubble himself spawns there, which, ironically, is when it
+happens the most. If you are facing Right as you defeat the boss, there's no risk.
+
+--- Bird despawns Mega Man ---
+In some very rare circumstances, a Pipi can sometimes despawn Mega Man himself when it leaves
+the screen. This causes Mega Man to suddenly appear inside the ceiling or floor, unable to
+move. If you see this occur and you have video footage of it, please let me know.
+
+All known bugs are tracked here:
 https://github.com/duckfist/MM2Random/issues?q=is%3Aopen+is%3Aissue+label%3Abug
   
 -----------------------------------------------------------------------------------------------
@@ -104,6 +139,37 @@ Special thanks to Binarynova and RaneofSoTN for their code contributions
 -----------------------------------------------------------------------------------------------
   
 Changelog
+
+v0.4.0-beta
+- E-Tanks in your inventory now persist through Game Overs
+- (Stage Select): The boss name beneath each portrait now corresponds to the stage it points to
+- (Stage - Airman): Removed first room's Lightning Goro requirement
+- (Stage - Airman): Redesigned first room with static platforms and adjusted enemy spawns
+- (Stage - Flashman): Edited Flashman's boss room to have no ceiling (fixes Airman behavior)
+- (Stage - Quickman): Fixed bug that accidentally changed the velocity of Quick Beams
+- (Boss - Woodman): Nerf - Reduce leaf fall-speed so he does't jump as quickly 
+- (Boss - Woodman): Nerf - Reduce chance of parameters that produce more difficult patterns
+- (Boss - Airman): Reduced max Y-velocity for both jumps
+- (Weapon) Buster now does 2 damage against 4 Robot Masters instead of only 2
+- (Enemy): Add Changkey Maker enemy type back in and disabled its palette change behavior
+- (Enemy): Made "auxiliary" enemy types have consistent weaknesses (i.e. Shotman, Shrink, Mole)
+- (Enemy): Finally corrected all instances of enemies appearing with glitched graphics 
+- (Enemy): Glitched M-445s no longer suddenly spawn where they shouldn't
+- (Text): Increased the speed of the Item Get cutscene, skipping Dr. Light's extra text
+- (Text): The Weapon Letter chosen for each weapon will try to be the first letter of the name
+- (Colors): The "Stage-Selected Boss Intro" screen now has some random colors
+- (Music): Disabled legacy music randomizer
+- (Music): Removed Credits 2 song, Weapon Get song, and Start/Password song
+- (Music): A random stage song is played during "Credits 2"
+- (Music): "Start/Password" and "Weapon Get" scenes now just play the Stage Select song
+- (Music): 11 stage songs are chosen instead of 10, with Wily 5 taking the unique extra song
+- (Music): Fixed bug in parsing songs with no noise channel, fixing 2 tracks
+TODO:
+- (Music): Added XX new songs, bringing the track total to XXX.
+- (Text): Added XX new intro cutscene paragraphs
+- (Text): Weapon Letters in the pause menu match the letters shown on Weapon Get screen
+
+
 v0.3.7-beta
 - Bug fix: Fixed glitchy instant-charge Atomic Fire (sometimes crashed the game)
 - (Enemy): Added several restrictions on M-445 spawning, should be easier now

@@ -47,8 +47,11 @@ namespace MM2Randomizer.Randomizers
 
             byteSmall = SongHeader[7];
             byteLarge = SongHeader[8];
-            absolutePos = byteSmall + (byteLarge * 256);
-            Channel4Index = absolutePos - OriginalStartAddressInt - 11;
+            if (byteSmall != 0 || byteLarge != 0) // Ignore some songs with no noise channel
+            {
+                absolutePos = byteSmall + (byteLarge * 256);
+                Channel4Index = absolutePos - OriginalStartAddressInt - 11;
+            }
 
             // Parse vibrato information
             byteSmall = songBytes[9];

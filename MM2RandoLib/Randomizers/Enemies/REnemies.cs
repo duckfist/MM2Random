@@ -52,6 +52,8 @@ namespace MM2Randomizer.Randomizers.Enemies
             InitializeEnemies();
             InitializeRooms();
             Execute(p, r);
+
+            Utilities.MiscHacks.DisableChangkeyMakerPaletteSwap(p);
         }
 
         /// <summary>
@@ -308,6 +310,12 @@ namespace MM2Randomizer.Randomizers.Enemies
                 new List<int>() { 4 },
                 false,
                 true));
+            EnemyTypes.Add(new EnemyType(EEnemyID.ChangkeyMaker,
+                new List<byte>() { 0x90, 0x04, 0x91, 0x04, 0x92, 0x04, 0x93, 0x04 },
+                new List<int>() { 0, 1, 2, 4 },
+                false,
+                false,
+                -4));
             EnemyTypes.Add(new EnemyType(EEnemyID.Pierrobot,
                 new List<byte>() { 0x96, 0x01, 0x97, 0x01 },
                 new List<int>() { 0, 1 },

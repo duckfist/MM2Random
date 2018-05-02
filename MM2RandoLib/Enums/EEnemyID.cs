@@ -26,6 +26,7 @@ namespace MM2Randomizer.Enums
         Kukku_Activator     = 0x1E,
         Kukku_Deactivator   = 0x20,
         Telly               = 0x21,
+        ChangkeyMaker       = 0x23,
         QuickDarkPalette    = 0x25,
         QuickNormalPalette  = 0x27,
         Pierrobot           = 0x29,

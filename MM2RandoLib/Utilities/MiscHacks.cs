@@ -175,5 +175,22 @@ namespace MM2Randomizer.Utilities
         {
             p.Add(0x3ED6C + 0x61, 0x04, "Woodman's Leaf Shield Attack Nerf");
         }
+
+        public static void DisableChangkeyMakerPaletteSwap(Patch p)
+        {
+            // Stop palette change when enemy appears
+            // $3A4F6 > 0E:A4E6: 20 59 F1 JSR $F159
+            // Change to 4C 55 A5 (JMP $A555, which returns immediately) 
+            p.Add(0x3A4F6, 0x4C, "Disable Changkey Maker palette swap 1");
+            p.Add(0x3A4F7, 0x55, "Disable Changkey Maker palette swap 1");
+            p.Add(0x3A4F8, 0xA5, "Disable Changkey Maker palette swap 1");
+
+            // Stop palette change on kill/despawn:
+            // $3A562 > 0E:A552: 20 59 F1 JSR $F159
+            // Change to EA EA EA (NOP)
+            p.Add(0x3A562, 0xEA, "Disable Changkey Maker palette swap 2");
+            p.Add(0x3A563, 0xEA, "Disable Changkey Maker palette swap 2");
+            p.Add(0x3A564, 0xEA, "Disable Changkey Maker palette swap 2");
+        }
     }
 }

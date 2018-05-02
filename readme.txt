@@ -83,6 +83,9 @@ zipping.
 - Leaf Shield and Atomic Fire tend to be very effective against enemies - don't forget to try
 them out, along with other weapons, if enemies get too tough.
 
+- On Easy Mode, every weapon simply does double damage to everything. That is the only
+difference. (Same goes for the original Mega Man 2's Normal Mode).
+
 
 SOME ENEMY RANDOMIZER NOTES
 
@@ -156,7 +159,7 @@ v0.4.0-beta
 - (Enemy): Finally corrected all instances of enemies appearing with glitched graphics 
 - (Enemy): Glitched M-445s no longer suddenly spawn where they shouldn't
 - (Text): Increased the speed of the Item Get cutscene, skipping Dr. Light's extra text
-- (Text): The Weapon Letter chosen for each weapon will try to be the first letter of the name
+- (Text): Added 6 new intro cutscene paragraphs, bringing the total to 20.
 - (Colors): The "Stage-Selected Boss Intro" screen now has some random colors
 - (Music): Disabled legacy music randomizer
 - (Music): Removed Credits 2 song, Weapon Get song, and Start/Password song
@@ -164,11 +167,8 @@ v0.4.0-beta
 - (Music): "Start/Password" and "Weapon Get" scenes now just play the Stage Select song
 - (Music): 11 stage songs are chosen instead of 10, with Wily 5 taking the unique extra song
 - (Music): Fixed bug in parsing songs with no noise channel, fixing 2 tracks
-TODO:
-- (Music): Added XX new songs, bringing the track total to XXX.
-- (Text): Added XX new intro cutscene paragraphs
-- (Text): Weapon Letters in the pause menu match the letters shown on Weapon Get screen
-
+- (Music): Fixed some songs and added many others, bringing the track total to 102! This
+includes most songs from Mega Man, Bionic Commando, and Legendary Wings.
 
 v0.3.7-beta
 - Bug fix: Fixed glitchy instant-charge Atomic Fire (sometimes crashed the game)

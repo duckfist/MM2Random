@@ -25,8 +25,8 @@ CAUTION: KNOWN MAJOR GLITCHES
 
 --- Softlock/zip out of Bubbleman's Boss room ---
 If there significant lag and you are facing left as you defeat the boss in Bubbleman's room,
-the game can suddenly consider the water to solid and zip you out of the room, depriving you of
-credit for beating the stage, and respawning you in a glitched version of Wily 4. You can
+the game can suddenly consider the water to be solid and zip you out of the room, depriving you
+of credit for beating the stage, and respawning you in a glitched version of Wily 4. You can
 revert this by Game Overing and then choosing Stage Select. To avoid this, take extra care in
 Bubbleman's boss room, especially if Bubble himself spawns there, which, ironically, is when it
 happens the most. If you are facing Right as you defeat the boss, there's no risk.

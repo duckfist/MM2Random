@@ -646,8 +646,8 @@ namespace MM2Randomizer.Randomizers
                 }
 
                 // Get Barrier weakness
-                rInt = r.Next(dmgBarrierList.Count);
-                EDmgVsEnemy wpnBarrier = dmgBarrierList[rInt];
+                int rBarrierWeakness = r.Next(dmgBarrierList.Count);
+                EDmgVsEnemy wpnBarrier = dmgBarrierList[rBarrierWeakness];
 
                 // Scale damage to be slightly more capable than killing 5 barriers at full ammo
                 int dmgW4 = 0x01;
@@ -672,12 +672,15 @@ namespace MM2Randomizer.Randomizers
                     Patch.Add(wpn.Address + EDmgVsEnemy.Offset.ClashBarrier_Other, damage, String.Format("{0} Damage to Clash Barrier 2", wpn.WeaponName));
                 }
 
-                // Remove Barrier weakness from list (therefore, different Buebeam weakness)
-                dmgBarrierList.Remove(wpnBarrier);
+                // Remove Barrier weakness from list first (therefore, different Buebeam weakness)
+                dmgBarrierList.RemoveAt(rBarrierWeakness);
 
                 // Get Buebeam weakness
                 rInt = r.Next(dmgBarrierList.Count);
                 EDmgVsEnemy wpnBuebeam = dmgBarrierList[rInt];
+
+                // Add Barrier weakness back to list for counting later
+                dmgBarrierList.Insert(rBarrierWeakness, wpnBarrier);
 
                 // Scale damage to be slightly more capable than killing 5 buebeams at full ammo
                 dmgW4 = 0x01;
@@ -689,6 +692,8 @@ namespace MM2Randomizer.Randomizers
                     if (numHitsPerBuebeam > 8) numHitsPerBuebeam = 8;
                     dmgW4 = (int)Math.Ceiling(20d / numHitsPerBuebeam);
                 }
+
+                // Add Buebeam damage values to patch, as well as array for use by Text and other modules later
                 for (int i = 0; i < dmgBarrierList.Count; i++)
                 {
                     byte damage = (byte)dmgW4;

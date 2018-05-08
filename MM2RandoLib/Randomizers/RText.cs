@@ -870,6 +870,7 @@ namespace MM2Randomizer.Randomizers
                 "ION",
                 "AUTO",
                 "BEAT",
+                "LAG",
             };
 
         static string[] Names1 = new string[]

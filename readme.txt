@@ -2,6 +2,98 @@ Mega Man 2 Randomizer
 by duckfist
 version 0.4.0 beta
 
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+vvv READ THIS BEFORE PLAYING vvvv
+
+-----------------------------------------------------------------------------------------------
+
+CAUTION: KNOWN MAJOR GLITCHES
+
+--- Softlock/zip out of Bubbleman's Boss room ---
+If there significant lag and you are facing left as you defeat the boss in Bubbleman's room,
+the game can suddenly consider the water to be solid and zip you out of the room, depriving you
+of credit for beating the stage, and respawning you in a glitched version of Wily 4. You can
+revert this by Game Overing and then choosing Stage Select. To avoid this, take extra care in
+Bubbleman's boss room, especially if Bubble himself spawns there, which, ironically, is when it
+happens the most. If you are facing Right as you defeat the boss, there's no risk.
+tldr; IF BUBBLE MAN APPEARS IN HIS OWN BOSS ROOM ON BUBBLE MAN STAGE, AS YOU DELIVER THE FINAL
+HIT TO DEFEAT HIM, MAKE SURE YOU ARE FACING _RIGHT_.
+
+--- Bird despawns Mega Man ---
+In some very rare circumstances, a Pipi can sometimes despawn Mega Man himself when it leaves
+the screen. This causes Mega Man to suddenly appear inside the ceiling or floor, unable to
+move. If you see this occur and you have video footage of it, please let me know.
+
+All known bugs are tracked here:
+https://github.com/duckfist/MM2Random/issues?q=is%3Aopen+is%3Aissue+label%3Abug
+  
+  
+BEFORE YOU PLAY MEGA MAN 2 RANDOMZIER
+
+Basic knowledge of Mega Man 2 game mechanics is highly recommended before playing. A few other
+intermediate tricks can significantly help with some painfully synergistic enemy combinations.
+Here are some pointers you should keep in mind:
+
+- Atomic Fire: Remember that the uncharged shot and the half-charge shot both use the Mega
+Buster damage table for damage calculation against enemies and bosses. Only the full charge
+will use the Atomic Fire damage table. When checking a boss for an Atomic Fire weakness, use a
+full charge, and don't bother with checking an uncharged or half-charge shot
+
+- "Pausefalling": If you pause the game while falling, and then unpause, Mega Man's fall speed
+is reset to 0. By repeatedly pausing during the descent of a jump, you can travel a greater
+horizontal distance before landing. In Randomizer, some enemy placements can make for some 
+difficult jumps if you don't have Item 1 or 2 - take advantage of pausefalling to make these
+situations easier.
+
+- If you like to do zip glitches, be careful around the Matasaburo enemy (fan guy). You can get
+stuck in the wall while one is on screen. If you can't kill them, use Time-Stopper to resume 
+zipping.
+
+- Leaf Shield and Atomic Fire tend to be very effective against enemies - don't forget to try
+them out, along with other weapons, if enemies get too tough.
+
+- On Easy Mode, every weapon simply does double damage to everything. That is the only
+difference. (Same goes for the original Mega Man 2's Normal Mode).
+
+
+SOME ENEMY RANDOMIZER NOTES
+
+- The layouts of a few stages have been edited to allow for more enemy variety, particularly
+the first room of Airman stage.
+- Yoku blocks in Heatman stage and Drop Platforms in Bubbleman stage still appear, slightly
+reducing enemy variety in those rooms.
+- Frienders (wolves) still spawn like normal, due to dependence on solid blocks in their rooms.
+- Big Fish (wily 3 fish) do not spawn anywhere yet, TODO.
+- Anko (angler in bubble stage) do not spawn anymore.
+- Acid still appears like normal in Wily 6. Although, I could easily replace them with tons of 
+enemies. Do you really want that?
+
+
+OTHER MODIFICATIONS
+
+- All Wily bosses have a small chance to take damage from the Mega Buster; don't forget to try
+the Buster on these bosses to save some weapon energy!
+- No Wily boss will be weak to Time Stopper, so don't bother trying it.
+- Additional large weapon capsules have been placed in Wily 5 and Wily 6.
+- The ceilings have been removed from a few Robot Master boss rooms
+
+
+
+
 -----------------------------------------------------------------------------------------------
 
 Featured Randomizer Modules
@@ -57,72 +149,6 @@ frames to 4 frames.
 - The layouts of a few stages have been modified to accomodate the randomizer, such as some
 tile edits in Airman stage, tiles in a few boss rooms, and some large weapon energy capsules.
 
------------------------------------------------------------------------------------------------
-
-BEFORE YOU PLAY MEGA MAN 2 RANDOMZIER
-
-Basic knowledge of Mega Man 2 game mechanics is highly recommended before playing. A few other
-intermediate tricks can significantly help with some painfully synergistic enemy combinations.
-Here are some pointers you should keep in mind:
-
-- Atomic Fire: Remember that the uncharged shot and the half-charge shot both use the Mega
-Buster damage table for damage calculation against enemies and bosses. Only the full charge
-will use the Atomic Fire damage table. When checking a boss for an Atomic Fire weakness, use a
-full charge, and don't bother with checking an uncharged or half-charge shot
-
-- "Pausefalling": If you pause the game while falling, and then unpause, Mega Man's fall speed
-is reset to 0. By repeatedly pausing during the descent of a jump, you can travel a greater
-horizontal distance before landing. In Randomizer, some enemy placements can make for some 
-difficult jumps if you don't have Item 1 or 2 - take advantage of pausefalling to make these
-situations easier.
-
-- If you like to do zip glitches, be careful around the Matasaburo enemy (fan guy). You can get
-stuck in the wall while one is on screen. If you can't kill them, use Time-Stopper to resume 
-zipping.
-
-- Leaf Shield and Atomic Fire tend to be very effective against enemies - don't forget to try
-them out, along with other weapons, if enemies get too tough.
-
-
-SOME ENEMY RANDOMIZER NOTES
-
-- The layouts of a few stages have been edited to allow for more enemy variety, particularly
-the first room of Airman stage.
-- Yoku blocks in Heatman stage and Drop Platforms in Bubbleman stage still appear, slightly
-reducing enemy variety in those rooms.
-- Frienders (wolves) still spawn like normal, due to dependence on solid blocks in their rooms.
-- Big Fish (wily 3 fish) do not spawn anywhere yet, TODO.
-- Anko (angler in bubble stage) do not spawn anymore.
-- Acid still appears like normal in Wily 6. Although, I could easily replace them with tons of 
-enemies. Do you really want that?
-
-
-OTHER MODIFICATIONS
-
-- All Wily bosses have a small chance to take damage from the Mega Buster; don't forget to try
-the Buster on these bosses to save some weapon energy!
-- No Wily boss will be weak to Time Stopper, so don't bother trying it.
-- Additional large weapon capsules have been placed in Wily 5 and Wily 6.
-- The ceilings have been removed from a few Robot Master boss rooms
-
-
-SOME NASTY BUGS
-
---- Softlock/zip out of Bubbleman's Boss room ---
-If there significant lag and you are facing left as you defeat the boss in Bubbleman's room,
-the game can suddenly consider the water to solid and zip you out of the room, depriving you of
-credit for beating the stage, and respawning you in a glitched version of Wily 4. You can
-revert this by Game Overing and then choosing Stage Select. To avoid this, take extra care in
-Bubbleman's boss room, especially if Bubble himself spawns there, which, ironically, is when it
-happens the most. If you are facing Right as you defeat the boss, there's no risk.
-
---- Bird despawns Mega Man ---
-In some very rare circumstances, a Pipi can sometimes despawn Mega Man himself when it leaves
-the screen. This causes Mega Man to suddenly appear inside the ceiling or floor, unable to
-move. If you see this occur and you have video footage of it, please let me know.
-
-All known bugs are tracked here:
-https://github.com/duckfist/MM2Random/issues?q=is%3Aopen+is%3Aissue+label%3Abug
   
 -----------------------------------------------------------------------------------------------
   
@@ -156,7 +182,7 @@ v0.4.0-beta
 - (Enemy): Finally corrected all instances of enemies appearing with glitched graphics 
 - (Enemy): Glitched M-445s no longer suddenly spawn where they shouldn't
 - (Text): Increased the speed of the Item Get cutscene, skipping Dr. Light's extra text
-- (Text): The Weapon Letter chosen for each weapon will try to be the first letter of the name
+- (Text): Added 6 new intro cutscene paragraphs, bringing the total to 20.
 - (Colors): The "Stage-Selected Boss Intro" screen now has some random colors
 - (Music): Disabled legacy music randomizer
 - (Music): Removed Credits 2 song, Weapon Get song, and Start/Password song
@@ -164,11 +190,8 @@ v0.4.0-beta
 - (Music): "Start/Password" and "Weapon Get" scenes now just play the Stage Select song
 - (Music): 11 stage songs are chosen instead of 10, with Wily 5 taking the unique extra song
 - (Music): Fixed bug in parsing songs with no noise channel, fixing 2 tracks
-TODO:
-- (Music): Added XX new songs, bringing the track total to XXX.
-- (Text): Added XX new intro cutscene paragraphs
-- (Text): Weapon Letters in the pause menu match the letters shown on Weapon Get screen
-
+- (Music): Fixed some songs and added many others, bringing the track total to 102! This
+includes most songs from Mega Man, Bionic Commando, and Legendary Wings.
 
 v0.3.7-beta
 - Bug fix: Fixed glitchy instant-charge Atomic Fire (sometimes crashed the game)

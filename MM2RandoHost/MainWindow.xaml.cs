@@ -46,6 +46,9 @@ namespace MM2RandoHost
                     System.Diagnostics.Debug.WriteLine("Exception in parsing Seed. Using random seed. Message:/n" + ex.ToString());
                     seed = -1;
                 }
+            } else //if no text entered, use random seed
+            {
+                RandomMM2.Seed = -1;
             }
 
             // Perform randomization based on settings, then generate the ROM.
@@ -82,14 +85,7 @@ namespace MM2RandoHost
         {
             chkWeaponNames.IsChecked = false;
         }
-
-        private void btnCreateRandom_Click(object sender, RoutedEventArgs e)
-        {
-            RandomMM2.Seed = -1;
-            RandomMM2.RandomizerCreate(true);
-            UpdateSeedString(e);
-        }
-
+        
         private void btnOpenFolder_Click(object sender, RoutedEventArgs e)
         {
             if (RandomMM2.RecentlyCreatedFileName != "")

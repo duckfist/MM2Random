@@ -121,6 +121,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Resource Include="Resources\megaman_2.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -149,6 +150,12 @@
       <Project>{2f96fe8d-29dc-46f3-9d26-fc85dc2225c8}</Project>
       <Name>MM2RandoLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MM2rando.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\mm2sprite.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

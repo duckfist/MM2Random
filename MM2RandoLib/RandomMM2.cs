@@ -11,6 +11,7 @@ using MM2Randomizer.Randomizers;
 using MM2Randomizer.Randomizers.Enemies;
 using MM2Randomizer.Randomizers.Colors;
 using MM2Randomizer.Randomizers.Stages;
+using MM2Randomizer.Randomizers.Stages.Components;
 using MM2Randomizer.Utilities;
 
 namespace MM2Randomizer
@@ -120,6 +121,7 @@ namespace MM2Randomizer
             {
                 Randomizers.Add(rWeaponNames);
             }
+
                 
             // Instantiate RNG object r based on RandomMM2.Seed
             InitializeSeed();

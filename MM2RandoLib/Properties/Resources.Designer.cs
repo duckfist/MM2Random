@@ -270,6 +270,9 @@ namespace MM2Randomizer.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to #Index,StageNum,RoomNum,ScreenNum,IsActive,EnemyID,XPosOriginal,YPosOriginal,YPosAir,YPosGround,FaceRight
+        ///###
+        ///### Heat Man / Wily 1 Stage
+        ///###
         ///00,00,00,01,true,2B,70,10,24,A4,false
         ///01,00,00,01,true,2B,F0,10,24,A4,false
         ///02,00,00,02,true,2B,90,10,28,A4,false
@@ -279,8 +282,7 @@ namespace MM2Randomizer.Properties {
         ///06,00,00,03,true,21,88,68,68,68,false
         ///07,00,00,03,true,21,D8,98,98,98,false
         ///08,00,00,04,true,21,28,58,58,58,false
-        ///09,00,00,04,true,21,88,58,58,58,false
-        ///0A,00,00,04,tru [rest of string was truncated]&quot;;.
+        ///09,00,00,04,tru [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string enemylist {
             get {
@@ -291,7 +293,7 @@ namespace MM2Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized string similar to #EnemyName,#OffsetHex,#P,#H,#A,#W,#B,#Q,#C,#M
         ///Shrink               ,00,7,20,0,10,20,7,10,10
-        ///Shrink(From Angler)  ,01,7,20,0,10,20,7,10,10
+        ///#Shrink(From Angler)  ,01,7,20,0,10,20,7,10,10
         ///M445(Instance)       ,04,20,20,20,20,0,20,20,20
         ///Claw(Instance)       ,08,20,20,10,10,20,7,10,10
         ///Tanishi	             ,0A,10,20,0,10,0,4,10,4
@@ -299,11 +301,32 @@ namespace MM2Randomizer.Properties {
         ///Kerog(Small)         ,0D,20,20,10,10,20,20,10,10
         ///Batton               ,16,10,20,10,10,0,10,10,20
         ///Robbit               ,17,2,20,0,20,7,4,20,4
-        ///Friender(Instance)   ,19,1,20,0,20,0,2,0 [rest of string was truncated]&quot;;.
+        ///Friender(Instance)   ,19,1,20,0,20,0,2, [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string enemyweakness {
             get {
                 return ResourceManager.GetString("enemyweakness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;level_components&quot;: [
+        ///        {
+        ///            &quot;name&quot;: &quot;flash_room0_screen2&quot;,
+        ///            &quot;start_address&quot;: &quot;14590&quot;,
+        ///            &quot;end_address&quot;: &quot;145CF&quot;,
+        ///            &quot;variations&quot;: [
+        ///                {
+        ///                    &quot;name&quot;: &quot;default&quot;,
+        ///                    &quot;tsa_map&quot;: [&quot;59&quot;, &quot;2A&quot;, &quot;28&quot;, &quot;01&quot;, &quot;01&quot;, &quot;23&quot;, &quot;58&quot;, &quot;59&quot;, 
+        ///                                &quot;6B&quot;, &quot;33&quot;, &quot;25&quot;, &quot;1B&quot;, &quot;03&quot;, &quot;25&quot;, &quot;45&quot;, &quot;67&quot;, 
+        ///                                &quot;59&quot;, &quot;60&quot;, &quot;30&quot;, &quot;09&quot;, &quot;03&quot;, &quot;75&quot;, &quot;78&quot;, &quot;03&quot;, 
+        ///                  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string level_components {
+            get {
+                return ResourceManager.GetString("level_components", resourceCulture);
             }
         }
         
@@ -349,7 +372,7 @@ namespace MM2Randomizer.Properties {
         ///#		OriginalStartAddress = The address of the first byte of the song&apos;s header (value 0F) in the song&apos;s original ROM
         ///#		SongData = Stream of bytes representing the song, each byte a pair of adjacent characters in the string
         ///#
-        ///# The 10 songs chosen  [rest of string was truncated]&quot;;.
+        ///# The 11 songs chosen  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string music {
             get {

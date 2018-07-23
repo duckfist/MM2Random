@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,6 +60,8 @@
     <Compile Include="Enums\ERMWeaponValue.cs" />
     <Compile Include="Enums\ESoundID.cs" />
     <Compile Include="Enums\EStageID.cs" />
+    <Compile Include="Randomizers\Stages\Components\EnemyComponent.cs" />
+    <Compile Include="Randomizers\Stages\Components\LevelComponent.cs" />
     <Compile Include="RandoSettings.cs" />
     <Compile Include="Patcher\ByteChangeRecord.cs" />
     <Compile Include="Patcher\Patch.cs" />
@@ -98,6 +103,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Resources\bossnames.csv" />
     <None Include="Resources\companynames.csv" />
     <None Include="Resources\countrylist.csv" />
@@ -105,6 +111,7 @@
     <None Include="Resources\enemylist.csv" />
     <None Include="Resources\enemyweakness.csv" />
     <EmbeddedResource Include="Resources\MM2.nes" />
+    <None Include="Resources\level_components.json" />
     <None Include="Resources\mm2rng_musicpatch.ips" />
     <None Include="Resources\mm2rng_prepatch.ips" />
   </ItemGroup>

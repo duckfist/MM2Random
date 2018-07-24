@@ -20,6 +20,7 @@ namespace MM2Randomizer
     {
         public static int Seed = -1;
         public static Random Random;
+        public static Random RNGCosmetic;
         public static Patch Patch;
         public static RandoSettings Settings;
         public static readonly string TempFileName = "temp.nes";
@@ -40,6 +41,7 @@ namespace MM2Randomizer
         public static RMusic randomMusic;
         public static RText rWeaponNames;
         public static List<IRandomizer> Randomizers;
+        public static List<IRandomizer> CosmeticRandomizers;
 
         /// <summary>
         /// Perform the randomization based on the seed and user-provided settings, and then
@@ -47,24 +49,74 @@ namespace MM2Randomizer
         /// </summary>
         public static string RandomizerCreate(bool fromClientApp)
         {
+            // List of randomizer modules to use; will add modules based on checkbox states
+            Randomizers = new List<IRandomizer>();
+            CosmeticRandomizers = new List<IRandomizer>();
+
+
+            ///==========================
+            /// "CORE" MODULES
+            ///==========================
+            // NOTE: Just in case, link RStages, RWeaponGet, and RTeleporter into one "Core Randomizer" module
+            // Their interdependencies are too risky to separate as options, and likely nobody will want to customize this part anyways.
+            // Random portrait locations on stage select
             randomStages = new RStages();
+            // Random weapon awarded from each stage
+            // WARNING: May be dependent on RTeleporters, verify?
+            // WARNING: May be dependent on RStages
             randomWeaponGet = new RWeaponGet();
-            randomWeaponBehavior = new RWeaponBehavior();
-            randomWeaknesses = new RWeaknesses(true);
-            randomBossAI = new RBossAI();
-            randomItemGet = new RItemGet();
+            // Random teleporter destinations in Wily 5
             randomTeleporters = new RTeleporters();
-            randomEnemies = new REnemies();
-            randomEnemyWeakness = new REnemyWeaknesses();
+
+
+            ///==========================
+            /// "GAMEPLAY SEED" MODULES
+            ///==========================
+            // Caution: Depends on weaknesses, but can use default values if its not enabled.
+            randomWeaponBehavior = new RWeaponBehavior();
+
+            // Independent
+            randomWeaknesses = new RWeaknesses();
+
+            // Caution: RText depends on this, but default values will be used if not enabled.
             randomBossInBossRoom = new RBossRoom();
+
+            // Independent
+            randomBossAI = new RBossAI();
+
+            // Independent
+            randomItemGet = new RItemGet();
+
+            // Independent
+            randomEnemies = new REnemies();
+
+            // Independent
+            randomEnemyWeakness = new REnemyWeaknesses();
+
+            // Independent
             randomTilemap = new RTilemap();
-            randomColors = new RColors();
-            randomMusic = new RMusic();
+
+
+            ///==========================
+            /// "COSMETIC SEED" MODULES
+            ///==========================
+            // Caution: Depends on RBossRoom, but can use default values if its not enabled.
             rWeaponNames = new RText();
 
-            Randomizers = new List<IRandomizer>();
+            // Independent
+            randomColors = new RColors();
+
+            // Independent
+            randomMusic = new RMusic();
+
+
+
+
 
             // Add randomizers according to each flag
+            ///==========================
+            /// "GAMEPLAY SEED" MODULES
+            ///==========================
             if (Settings.Is8StagesRandom)
             {
                 Randomizers.Add(randomStages);
@@ -109,17 +161,21 @@ namespace MM2Randomizer
             {
                 Randomizers.Add(randomTilemap);
             }
+
+            ///==========================
+            /// "COSMETIC SEED" MODULES
+            ///==========================
             if (Settings.IsColorsRandom)
             {
-                Randomizers.Add(randomColors);
+                CosmeticRandomizers.Add(randomColors);
             }
             if (Settings.IsBGMRandom)
             {
-                Randomizers.Add(randomMusic);
+                CosmeticRandomizers.Add(randomMusic);
             }
             if (Settings.IsWeaponNamesRandom)
             {
-                Randomizers.Add(rWeaponNames);
+                CosmeticRandomizers.Add(rWeaponNames);
             }
 
                 
@@ -128,21 +184,23 @@ namespace MM2Randomizer
 
             // Create randomization patch
             Patch = new Patch();
+
+            // Conduct randomization of Gameplay Modules
             foreach (IRandomizer randomizer in Randomizers)
             {
                 randomizer.Randomize(Patch, Random);
                 Debug.WriteLine(randomizer);
             }
 
-            // Create patch with additional modifications
-            if (Settings.FastText)
+            // Conduct randomization of Cosmetic Modules
+            foreach (IRandomizer cosmetic in CosmeticRandomizers)
             {
-                MiscHacks.SetFastText(Patch, Settings.IsJapanese);
+                RNGCosmetic = new Random(Seed);
+                cosmetic.Randomize(Patch, RNGCosmetic);
+                Debug.WriteLine(cosmetic);
             }
-            if (Settings.BurstChaserMode)
-            {
-                MiscHacks.SetBurstChaser(Patch, Settings.IsJapanese);
-            }
+
+            // Apply additional required incidental modifications
             if (Settings.Is8StagesRandom || Settings.IsWeaponsRandom)
             {
                 MiscHacks.FixPortraits(Patch, Settings.Is8StagesRandom, randomStages, Settings.IsWeaponsRandom, randomWeaponGet);
@@ -151,20 +209,28 @@ namespace MM2Randomizer
             {
                 MiscHacks.FixM445PaletteGlitch(Patch);
             }
-            if (!Settings.IsJapanese)
+
+            // Apply final optional gameplay modifications
+            if (Settings.FastText)
             {
-                MiscHacks.DrawTitleScreenChanges(Patch, Seed);
+                MiscHacks.SetFastText(Patch);
             }
-            MiscHacks.SetWily5NoMusicChange(Patch, Settings.IsJapanese);
+            if (Settings.BurstChaserMode)
+            {
+                MiscHacks.SetBurstChaser(Patch);
+            }
+            MiscHacks.DrawTitleScreenChanges(Patch, Seed);
+            MiscHacks.SetWily5NoMusicChange(Patch);
             MiscHacks.FixDamageValues(Patch);
             MiscHacks.SetETankKeep(Patch);
             MiscHacks.SkipItemGetPages(Patch);
 
-            // Create file name based on seed and game region
-            string newfilename = (Settings.IsJapanese) ? "RM2" : "MM2";
-            string seedAlpha = SeedConvert.ConvertBase10To26(Seed);
-            newfilename = $"{newfilename}-RNG-{seedAlpha}.nes";
 
+            // Create file name based on seed and game region
+            string seedAlpha = SeedConvert.ConvertBase10To26(Seed);
+            string newfilename = $"MM2-RNG-{seedAlpha}.nes";
+
+            // Apply patch and deliver the ROM; different routine for client vs. web app
             var assembly = Assembly.GetExecutingAssembly();
             if (fromClientApp)
             {
@@ -242,6 +308,7 @@ namespace MM2Randomizer
                 Seed = rndSeed.Next(int.MaxValue);
             }
             Random = new Random(Seed);
+            RNGCosmetic = new Random(Seed);
         }
 
         /// <summary>

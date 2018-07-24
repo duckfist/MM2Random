@@ -8,17 +8,17 @@ namespace MM2Randomizer.Randomizers.Enemies
 {
     public class REnemyWeaknesses : IRandomizer
     {
-        public static int EnemyDamageAddressP = 0x03E9A8;
-        public static int EnemyDamageAddressH = 0x03EA24;
-        public static int EnemyDamageAddressA = 0x03EA9C;
-        public static int EnemyDamageAddressW = 0x03EB14;
-        public static int EnemyDamageAddressB = 0x03EB8C;
-        public static int EnemyDamageAddressQ = 0x03EC04;
-        public static int EnemyDamageAddressC = 0x03EC7C;
-        public static int EnemyDamageAddressM = 0x03ECF4;
+        private readonly static int EnemyDamageAddressP = 0x03E9A8;
+        private readonly static int EnemyDamageAddressH = 0x03EA24;
+        private readonly static int EnemyDamageAddressA = 0x03EA9C;
+        private readonly static int EnemyDamageAddressW = 0x03EB14;
+        private readonly static int EnemyDamageAddressB = 0x03EB8C;
+        private readonly static int EnemyDamageAddressQ = 0x03EC04;
+        private readonly static int EnemyDamageAddressC = 0x03EC7C;
+        private readonly static int EnemyDamageAddressM = 0x03ECF4;
 
         // NOTE: Will have to change these indices if enemies are added/removed from enemyweaknesses.csv!
-        public static int EnemyIndexInShotArray_Friender = 8;
+        private readonly static int EnemyIndexInShotArray_Friender = 8;
 
         private StringBuilder debug = new StringBuilder();
         private List<string> enemyNames = new List<string>();

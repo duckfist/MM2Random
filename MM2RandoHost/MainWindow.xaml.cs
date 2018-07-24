@@ -8,6 +8,7 @@ using Microsoft.Win32;
 
 using MM2Randomizer;
 using MM2Randomizer.Utilities;
+using MM2RandoHost.ViewModels;
 
 namespace MM2RandoHost
 {
@@ -16,15 +17,15 @@ namespace MM2RandoHost
     /// </summary>
     public partial class MainWindow : Window
     {
-        RandoSettings ViewModel;
+        // TODO Remove
+        MainWindowViewModel ViewModel;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            ViewModel = new RandoSettings();
-            DataContext = ViewModel;
-            RandomMM2.Settings = ViewModel;
+            // TODO Remove
+            ViewModel = DataContext as MainWindowViewModel;
         }
 
         private void btnCreateROM_Click(object sender, RoutedEventArgs e)
@@ -56,18 +57,19 @@ namespace MM2RandoHost
         private void UpdateSeedString(RoutedEventArgs e)
         {
             string seedAlpha = SeedConvert.ConvertBase10To26(RandomMM2.Seed);
-            ViewModel.SeedString = String.Format("{0}", seedAlpha);
+            ViewModel.RandoSettings.SeedString = String.Format("{0}", seedAlpha);
             Debug.WriteLine("\nSeed: " + seedAlpha + "\n");
 
             // Create log file if left shift is pressed while clicking
             if (Keyboard.IsKeyDown(Key.LeftShift))
             {
-                string logFileName = (ViewModel.IsJapanese) ? "RM2" : "MM2";
+                //string logFileName = (ViewModel.RandoSettings.IsJapanese) ? "RM2" : "MM2";
+                string logFileName = "MM2";
                 logFileName = String.Format("{0}-RNG-{1}.log", logFileName, seedAlpha);
                 using (StreamWriter sw = new StreamWriter(logFileName, false))
                 {
                     sw.WriteLine("Mega Man 2 Randomizer");
-                    sw.WriteLine(String.Format("Version {0}", ViewModel.AssemblyVersion.ToString()));
+                    sw.WriteLine(String.Format("Version {0}", ViewModel.RandoSettings.AssemblyVersion.ToString()));
                     sw.WriteLine(String.Format("Seed {0}\n", seedAlpha));
                     sw.WriteLine(RandomMM2.randomStages.ToString());
                     sw.WriteLine(RandomMM2.randomWeaponBehavior.ToString());
@@ -76,11 +78,6 @@ namespace MM2RandoHost
                     sw.Write(RandomMM2.Patch.GetStringSortedByAddress());
                 }
             }
-        }
-
-        private void chkJapanese_Checked(object sender, RoutedEventArgs e)
-        {
-            chkWeaponNames.IsChecked = false;
         }
 
         private void btnCreateRandom_Click(object sender, RoutedEventArgs e)
@@ -187,7 +184,7 @@ namespace MM2RandoHost
         private void trySetSourcePath(string path)
         {
             // TODO error handling
-            ViewModel.SourcePath = path;
+            ViewModel.RandoSettings.SourcePath = path;
 
             tbxSource.Focus();
             tbxSource.SelectionStart = tbxSource.Text.Length;

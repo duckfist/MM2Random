@@ -2,8 +2,10 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:MM2RandoHost"
+             xmlns:viewmodels="clr-namespace:MM2RandoHost.ViewModels"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <viewmodels:MainWindowViewModel x:Key="MainWindowVM"/>
+
     </Application.Resources>
 </Application>

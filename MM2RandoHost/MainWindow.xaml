@@ -5,9 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MM2RandoHost"
         xmlns:converters="clr-namespace:MM2RandoHost.Converters"
+        xmlns:viewmodels="clr-namespace:MM2RandoHost.ViewModels"
         mc:Ignorable="d"
         AllowDrop="True"
-        Title="MM2 Randomizer" Height="370" Width="403.259" Drop="Window_Drop" DragEnter="Window_DragEnter" DragLeave="Window_DragLeave">
+        Title="{Binding Path=RandoSettings.AssemblyVersion, StringFormat={}MM2 Randomizer v{0}}" Height="520" Width="420" Drop="Window_Drop" DragEnter="Window_DragEnter" DragLeave="Window_DragLeave"
+        DataContext="{StaticResource MainWindowVM}"
+        >
     <Window.Resources>
         <converters:InverseBooleanConverter x:Key="inverseBooleanConverter"/>
     </Window.Resources>
@@ -31,6 +34,17 @@
                 <Style TargetType="CheckBox">
                     <Setter Property="VerticalAlignment" Value="Center"/>
                     <Setter Property="Margin" Value="2"/>
+                    <!--<Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type CheckBox}">
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Value="Gray" Property="Foreground" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>-->
                 </Style>
 
                 <Style TargetType="RadioButton">
@@ -42,74 +56,40 @@
                 </Style>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="180"/>
+                <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition/>            
+                <RowDefinition Height="28"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="120"/>
+                <RowDefinition/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
-            
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
-                <TextBlock Text="Mega Man 2 Randomizer" FontSize="16" TextAlignment="Center" />
-                <TextBlock Text="{Binding Path=AssemblyVersion}" TextAlignment="Center" FontSize="10" Margin="-4"/>
-            </StackPanel>
-            
-            <DockPanel Grid.Row="2" HorizontalAlignment="Stretch">
-                <TextBlock Text="Seed:" DockPanel.Dock="Left"/>
-                <TextBox HorizontalAlignment="Stretch" Name="tbxSeed" Text="{Binding Path=SeedString, UpdateSourceTrigger=PropertyChanged}" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
-            </DockPanel>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="16" TextAlignment="Center" 
+                        Text="Mega Man 2 Randomizer" />
 
             <!-- Re-enable this for users to provide their own roms -->
-            <Border Name="border" Grid.Row="1" Grid.ColumnSpan="2" IsEnabled="False" HorizontalAlignment="Stretch" BorderThickness="3">
-                <DockPanel >
-                    <Button Width="24" Margin="5,6" Name="btnBrowse" Click="btnBrowse_Click">
+            <Border Name="border" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+                <DockPanel Margin="0,4,0,0">
+                    <Button Width="24" Margin="6.5,0" Name="btnBrowse" Click="btnBrowse_Click">
                         <TextBlock Text="..."/>
                     </Button>
-                    <TextBox HorizontalAlignment="Stretch" Name="tbxSource" AllowDrop="True" Text="{Binding Path=SourcePath, UpdateSourceTrigger=PropertyChanged}" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
+                    <TextBox HorizontalAlignment="Stretch" Name="tbxSource" AllowDrop="True" Text="{Binding Path=RandoSettings.SourcePath, UpdateSourceTrigger=PropertyChanged}" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
                 </DockPanel>
             </Border>
 
-            
-            <GroupBox Grid.Row="3" Header="Randomize Options" BorderThickness="2" BorderBrush="DarkGray" VerticalAlignment="Top" Margin="0,1,0,0">
-                <StackPanel Orientation="Vertical" Margin="4">
-                    <CheckBox Name="chk8Stages" Content="Robot Master Stages" IsChecked="{Binding Path=Is8StagesRandom}" Visibility="Collapsed"/>
-                    <CheckBox Name="chkWeaponBehave" Content="Weapon Behavior" IsChecked="{Binding Path=IsWeaponBehaviorRandom}" Visibility="Collapsed"/>
-                    <CheckBox Name="chkWeakness" Content="Boss Weaknesses" IsChecked="{Binding Path=IsWeaknessRandom}" Visibility="Collapsed"/>
-                    <RadioButton Name="radWeaknessEasy" Margin="16,2,2,2" Content="Easy" 
-                         IsEnabled="{Binding ElementName=chkWeakness, Path=IsChecked, TargetNullValue=false}"
-                         IsChecked="{Binding Path=IsWeaknessEasy}" Visibility="Collapsed"/>
-                    <RadioButton Name="radWeaknessHard" Margin="16,2,2,2" Content="Chaos" 
-                         IsEnabled="{Binding ElementName=chkWeakness, Path=IsChecked, TargetNullValue=false}"
-                         IsChecked="{Binding Path=IsWeaknessHard}" Visibility="Collapsed"/>
-                    <CheckBox Name="chkBossAI" Content="Boss AI" IsChecked="{Binding Path=IsBossAIRandom}" Visibility="Collapsed"/>
-                    <CheckBox Name="chkWeapons" Content="Weapon Get" IsChecked="{Binding Path=IsWeaponsRandom}" Visibility="Collapsed"/>
-                    <CheckBox Name="chkItems" Content="Items 1, 2, and 3 Get" IsChecked="{Binding Path=IsItemsRandom}"  Visibility="Collapsed"/>
-                    <CheckBox Name="chkTeleporters" Content="Wily 5 Teleporters" IsChecked="{Binding Path=IsTeleportersRandom}" IsEnabled="True"  Visibility="Collapsed"/>
-                    <CheckBox Name="chkEnemies" Content="Enemies" IsChecked="{Binding Path=IsEnemiesRandom}"  Visibility="Collapsed"/>
-                    <CheckBox Name="chkColors" Content="Colors" IsChecked="{Binding Path=IsColorsRandom}"  Visibility="Collapsed"/>
-                    <CheckBox Name="chkBGM" Content="Stage BGM" IsChecked="{Binding Path=IsBGMRandom}"  Visibility="Collapsed"/>
-                    <CheckBox Name="chkWeaponNames" Content="Weapon Names" 
-                      IsEnabled="{Binding ElementName=chkJapanese, Path=IsChecked, TargetNullValue=false, Converter={StaticResource inverseBooleanConverter}}"
-                      IsChecked="{Binding Path=IsWeaponNamesRandom}" Visibility="Collapsed">
-                    </CheckBox>
-                    <CheckBox Name="chkJapanese" Content="J-Version (Rockman 2)" IsEnabled="False" IsChecked="{Binding Path=IsJapanese}" Checked="chkJapanese_Checked" Visibility="Collapsed"/>
-                    <TextBlock Foreground="#555555" FontStyle="Italic">Under Construction</TextBlock>
-                </StackPanel>
-            </GroupBox>
 
-            <GroupBox Grid.Row="4" Header="Settings" BorderThickness="2" BorderBrush="DarkGray" VerticalAlignment="Top" >
-                <StackPanel>
-                    <CheckBox Name="chkFastText" Content="Faster Text" IsChecked="{Binding Path=FastText}" IsEnabled="False"/>
-                    <CheckBox Name="chkBurstChaser" Content="Burst Chaser Mode" IsChecked="{Binding Path=BurstChaserMode}" Checked="chkBurstChaser_Checked"/>
-                </StackPanel>
-            </GroupBox>
 
-            <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="3" Orientation="Vertical">
-                <Button Name="btnCreateROM" IsEnabled="{Binding Path=IsSeedValid}" Click="btnCreateROM_Click" Height="30" Margin="3,8,3,3">
+            <DockPanel Grid.Row="2" HorizontalAlignment="Stretch">
+                <TextBlock Text="Seed:" DockPanel.Dock="Left"/>
+                <TextBox HorizontalAlignment="Stretch" Name="tbxSeed" Text="{Binding Path=RandoSettings.SeedString, UpdateSourceTrigger=PropertyChanged}" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
+            </DockPanel>
+
+            <StackPanel Grid.Row="3" Orientation="Vertical">
+                <Button Name="btnCreateROM" IsEnabled="{Binding Path=RandoSettings.IsSeedValid}" Click="btnCreateROM_Click" Height="30" Margin="3,8,3,3">
                     Create From Given Seed
                 </Button>
                 <Button Name="btnCreateRandom" Click="btnCreateRandom_Click" Height="30">
@@ -118,56 +98,106 @@
                 <Button Name="btnOpenFolder" Click="btnOpenFolder_Click" Height="30">
                     Open Containing Folder
                 </Button>
+            </StackPanel>
+
+            <TabControl Grid.Row="4" Grid.ColumnSpan="2">
+                <TabItem Header="Gameplay Variables">
+                    <Grid Margin="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Vertical">
+                            <Grid x:Name="gridChkCoreModules">
+                                <CheckBox x:Name="chkCoreModules" Content="Randomizer Core" IsEnabled="False"
+                                  IsChecked="{Binding IsCoreModulesChecked}"/>
+                            </Grid>
+
+                            <CheckBox Name="chkWeaponBehave" Content="Weapon Behavior" 
+                            IsChecked="{Binding Path=RandoSettings.IsWeaponBehaviorRandom}" />
+                            <CheckBox Name="chkWeakness" Content="Boss Weaknesses" 
+                            IsChecked="{Binding Path=RandoSettings.IsWeaknessRandom}"/>
+                            <CheckBox Name="chkBossRoom" Content="Boss Room" 
+                            IsChecked="{Binding Path=RandoSettings.IsBossInBossRoomRandom}"/>
+                            <CheckBox Name="chkBossAI" Content="Boss AI" 
+                            IsChecked="{Binding Path=RandoSettings.IsBossAIRandom}"/>
+                            <CheckBox Name="chkItems" Content="Items 1, 2, and 3 Get" 
+                            IsChecked="{Binding Path=RandoSettings.IsItemsRandom}"/>
+                            <CheckBox Name="chkEnemies" Content="Enemy Locations" 
+                            IsChecked="{Binding Path=RandoSettings.IsEnemiesRandom}" />
+                            <CheckBox Name="chkEnemyWeakness" Content="Enemy Weaknesses" 
+                            IsChecked="{Binding Path=RandoSettings.IsEnemyWeaknessRandom}" />
+                            <CheckBox Name="chkTilemap" Content="Stage Layouts" 
+                            IsChecked="{Binding Path=RandoSettings.IsTilemapChangesEnabled}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical">
+                            <CheckBox Name="chkFastText" Content="Faster Text" 
+                                      IsChecked="{Binding Path=RandoSettings.FastText}"/>
+                            <CheckBox Name="chkBurstChaser" Content="Burst Chaser Mode" 
+                                      IsChecked="{Binding Path=RandoSettings.BurstChaserMode}" 
+                                      Checked="chkBurstChaser_Checked"/>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
                 
-                <Border Background="DarkGray" Margin="3">
-                    <TextBlock Height="118" Margin="3" TextWrapping="WrapWithOverflow">
+                <TabItem Header="Cosmetic Options">
+                    <StackPanel Margin="4">
+                        <CheckBox Name="chkColors" Content="Colors" 
+                            IsChecked="{Binding Path=RandoSettings.IsColorsRandom}"/>
+                        <CheckBox Name="chkBGM" Content="Stage BGM" 
+                            IsChecked="{Binding Path=RandoSettings.IsBGMRandom}" />
+                        <CheckBox Name="chkText" Content="Text" 
+                            IsChecked="{Binding Path=RandoSettings.IsWeaponNamesRandom}">
+                        </CheckBox>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+            
+            <Border Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Background="DarkGray" Margin="3">
+                <TextBlock Height="118" Margin="3" TextWrapping="WrapWithOverflow">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Setter Property="Text" Value=""/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=chk8Stages, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Text" Value="Shuffle the destination of each Robot Master portrait on the Stage Select screen."/>
+                                <DataTrigger Binding="{Binding ElementName=gridChkCoreModules, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Text" Value="Required component. Shuffle the weapons obtained from Robot Masters, stage select portrait locations, and Wily 5 teleporter destinations. Other modules depend on this module being active."/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=chkWeaponBehave, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Text" Value="Change movement properties and ammo consumption of special weapons."/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=chkWeakness, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Text" Value="Shuffle the damage done by each weapon to each Robot Master and Wily stage boss."/>
+                                    <Setter Property="Text" Value="Randomize the damage done by each weapon to each Robot Master and Wily stage boss."/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=radWeaknessEasy, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Text" Value="Weapons remain as effective against bosses as they do in the original game."/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=radWeaknessHard, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Text" Value="Weapon damage is more random, and overall lower than the average in the original game."/>
+                                <DataTrigger Binding="{Binding ElementName=chkBossRoom, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Text" Value="Shuffle the robot masters that appear at the end of each stage."/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=chkBossAI, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Text" Value="Change movement and attack properties of Robot Masters."/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=chkWeapons, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Text" Value="Shuffle which weapon is obtained from defeating each Robot Master."/>
-                                </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=chkItems, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Text" Value="Shuffle which Item is received from defeating each Robot Master."/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=chkTeleporters, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Text" Value="Shuffle the Robot Master fights in the teleporters of Wily stage 5."/>
-                                </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=chkEnemies, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Text" Value="Randomize the enemy type for most enemy instances throughout the game."/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=chkEnemyWeakness, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Text" Value="Randomize the damage done by each weapon against every standard enemy in the game."/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=chkTilemap, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Text" Value="Randomize select layouts of some stages, such as the locations of the false floors in some rooms of Wily 4."/>
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding ElementName=chkText, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Text" Value="Randomize the names and letters for each weapon and the introduction story text. This also customizes the text in the credits and title screen."/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=chkColors, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Text" Value="Randomly change the color palettes for Mega Man and each stage."/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=chkBGM, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Text" Value="Randomly change the background music used for stages."/>
+                                    <Setter Property="Text" Value="Randomly change the background music used for stages, including with songs from other NES games and romhacks."/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=chkWeaponNames, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Text" Value="Randomize the names and letters for each weapon."/>
-                                </DataTrigger>
-                                
-                                <DataTrigger Binding="{Binding ElementName=chkJapanese, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Text" Value="Use the Japanese ROM Rockman 2. NOTE: Will not have randomized Weapon Get messages or Title Screen changes."/>
-                                </DataTrigger>
+
                                 <DataTrigger Binding="{Binding ElementName=chkFastText, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Text" Value="On the Weapon Get screen, decrease the write-delay of each letter from 7 to 4 frames."/>
                                 </DataTrigger>
@@ -178,9 +208,20 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                </Border>
+            </Border>
 
-            </StackPanel>
+
+            <DockPanel Grid.Row="5" Grid.ColumnSpan="2">
+                <DockPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="10"/>
+                        <Setter Property="Margin" Value="6,0"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                </DockPanel.Resources>
+                <TextBlock Text="Status: "/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding StatusMessage}"/>
+            </DockPanel>
         </Grid>
     </Grid>
 </Window>

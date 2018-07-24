@@ -1,36 +1,53 @@
 ﻿using System;
 using System.Reflection;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace MM2Randomizer
 {
     public class RandoSettings : INotifyPropertyChanged
     {
+        private string seedString;
+        private string sourcePath;
+        private bool isSourcePathValid;
+        private bool isSeedValid;
+        private bool isSourcePathAndSeedValid;
+
+
         public RandoSettings()
         {
+            // Rando assembly state variables
             SeedString = "";
             SourcePath = "";
+            IsSeedValid = false;
+            IsSourcePathValid = false;
             IsSourcePathAndSeedValid = false;
-            IsJapanese = false;
+
+            // Flags for Rando Core Modules
             Is8StagesRandom = true;
             IsWeaponsRandom = true;
-            IsItemsRandom = true;
             IsTeleportersRandom = true;
-            IsColorsRandom = true;
+
+            // Flags for Rando Gameplay Modules
             IsWeaponBehaviorRandom = true;
             IsWeaknessRandom = true;
-            IsWeaknessEasy = false;
-            IsWeaknessHard = true;
+            IsBossInBossRoomRandom = true;
             IsBossAIRandom = true;
+            IsItemsRandom = true;
             IsEnemiesRandom = true;
+            IsEnemyWeaknessRandom = true;
             IsTilemapChangesEnabled = true;
-            IsBGMRandom = true;
+
+            // Flags for Rando Cosmetic Modules
             IsWeaponNamesRandom = true;
+            IsColorsRandom = true;
+            IsBGMRandom = true;
+
+            // Flags for Optional Gameplay Modules
             FastText = true;
             BurstChaserMode = false;
         }
 
-        private string seedString;
         /// <summary>
         /// Alphabetical string representation of the RandomMM2.Seed integer of the most
         /// recently generated ROM.
@@ -44,24 +61,15 @@ namespace MM2Randomizer
                 if (seedString != value)
                 {
                     seedString = value;
-                    OnPropertyChanged("SeedString");
+                    OnPropertyChanged();
 
                     // TODO: Check for better validity of seed
-                    if (seedString == "")
-                    {
-                        IsSeedValid = false;
-                    }
-                    else
-                    {
-                        IsSeedValid = true;
-                    }
-
+                    IsSeedValid = (seedString == "") ? false : true;
                     IsSourcePathAndSeedValid = IsSourcePathValid && IsSeedValid;
                 }
             }
         }
 
-        private string sourcePath;
         /// <summary>
         /// Full path to user-provided ROM to apply patch.
         /// </summary>
@@ -73,7 +81,7 @@ namespace MM2Randomizer
                 if (sourcePath != value)
                 {
                     sourcePath = value;
-                    OnPropertyChanged("SourcePath");
+                    OnPropertyChanged();
 
                     // Check if source path is valid
                     IsSourcePathValid = System.IO.File.Exists(value);
@@ -82,7 +90,6 @@ namespace MM2Randomizer
             }
         }
 
-        private bool isSourcePathValid;
         public bool IsSourcePathValid
         {
             get
@@ -94,12 +101,11 @@ namespace MM2Randomizer
                 if (isSourcePathValid != value)
                 {
                     isSourcePathValid = value;
-                    OnPropertyChanged("IsSourcePathValid");
+                    OnPropertyChanged();
                 }
             }
         }
 
-        private bool isSeedValid = true;
         public bool IsSeedValid
         {
             get { return isSeedValid; }
@@ -108,11 +114,11 @@ namespace MM2Randomizer
                 if (isSeedValid != value)
                 {
                     isSeedValid = value;
-                    OnPropertyChanged("IsSeedValid");
+                    OnPropertyChanged();
                 }
             }
         }
-        private bool isSourcePathAndSeedValid;
+
         public bool IsSourcePathAndSeedValid
         {
             get
@@ -124,15 +130,10 @@ namespace MM2Randomizer
                 if (isSourcePathAndSeedValid != value)
                 {
                     isSourcePathAndSeedValid = value;
-                    OnPropertyChanged("IsSourcePathAndSeedValid");
+                    OnPropertyChanged();
                 }
             }
         }
-
-        /// <summary>
-        /// Use ROM Rockman 2 (J).nes if true, Mega Man 2 (U).nes if false.
-        /// </summary>
-        public bool IsJapanese { get; set; }
 
         /// <summary>
         /// If True, the Robot Master stages will be shuffled and will not be indicated by the
@@ -162,17 +163,6 @@ namespace MM2Randomizer
         public bool IsWeaknessRandom { get; set; }
 
         /// <summary>
-        /// If True, and if IsWeaknessRandom is True, the damage tables for each weapon are shuffled.
-        /// </summary>
-        public bool IsWeaknessEasy { get; set; }
-
-        /// <summary>
-        /// If True, and if IsWeaknessRandom is True, the damage tables for each weapon are filled
-        /// with random values, within practical tolerances for each weapon.
-        /// </summary>
-        public bool IsWeaknessHard { get; set; }
-
-        /// <summary>
         /// 
         /// </summary>
         public bool IsBossAIRandom { get; set; }
@@ -187,9 +177,9 @@ namespace MM2Randomizer
         /// </summary>
         public bool IsEnemiesRandom { get; set; }
 
-        public bool IsEnemyWeaknessRandom { get; set; } = true;
+        public bool IsEnemyWeaknessRandom { get; set; } 
 
-        public bool IsBossInBossRoomRandom { get; set; } = true;
+        public bool IsBossInBossRoomRandom { get; set; }
 
         /// <summary>
         /// 
@@ -215,6 +205,7 @@ namespace MM2Randomizer
         /// TODO
         /// </summary>
         public bool BurstChaserMode { get; set; }
+
         public bool IsWeaponBehaviorRandom { get; set; }
         
         /// <summary>
@@ -234,13 +225,9 @@ namespace MM2Randomizer
         /// Raise event to update bound GUI controls
         /// </summary>
         /// <param name="name">Name of updated property.</param>
-        protected void OnPropertyChanged(string name)
+        protected void OnPropertyChanged([CallerMemberName]string propertyName = "")
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

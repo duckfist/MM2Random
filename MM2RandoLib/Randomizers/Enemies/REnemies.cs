@@ -13,30 +13,28 @@ namespace MM2Randomizer.Randomizers.Enemies
     /// </summary>
     public class REnemies : IRandomizer
     {
-        public static int Stage0EnemyScreenAddress = 0x3610;
-        public static int Stage0EnemyYAddress = 0x3810;
-        public static int Stage0EnemyIDAddress = 0x3910;
-        public static int StageLength = 0x4000;
+        private static int Stage0EnemyScreenAddress = 0x3610;
+        private static int Stage0EnemyYAddress = 0x3810;
+        private static int Stage0EnemyIDAddress = 0x3910;
+        private static int StageLength = 0x4000;
+        private static double CHANCE_MOLE = 0.25;
+        private static double CHANCE_PIPI = 0.4;
+        private static double CHANCE_M445 = 0.4;
+        private static double CHANCE_SHRINKSPAWNER = 0.25;
+        private static double CHANCE_SPRINGER = 0.10;
+        private static double CHANCE_TELLY = 0.15;
+        private static int MAX_MOLES = 2;
+        private static int MAX_PIPIS = 5;
+        private static int MAX_M445S = 7;
 
-        public static double CHANCE_MOLE = 0.25;
-        public static double CHANCE_PIPI = 0.4;
-        public static double CHANCE_M445 = 0.4;
-        public static double CHANCE_SHRINKSPAWNER = 0.25;
-        public static double CHANCE_SPRINGER = 0.10;
-        public static double CHANCE_TELLY = 0.15;
+        private List<EnemyType> EnemyTypes { get; set; } = new List<EnemyType>();
+        private List<EnemyInstance> EnemyInstances { get; set; } = new List<EnemyInstance>();
+        private Dictionary<EEnemyID, EnemyType> EnemiesByType { get; set; } = new Dictionary<EEnemyID, EnemyType>();
+        private List<SpriteBankRoomGroup> RoomGroups { get; set; } = new List<SpriteBankRoomGroup>();
 
-        public static int MAX_MOLES = 2;
-        public static int MAX_PIPIS = 5;
-        public static int MAX_M445S = 7;
-
-        public List<EnemyType> EnemyTypes { get; set; } = new List<EnemyType>();
-        public List<EnemyInstance> EnemyInstances { get; set; } = new List<EnemyInstance>();
-        public Dictionary<EEnemyID, EnemyType> EnemiesByType { get; set; } = new Dictionary<EEnemyID, EnemyType>();
-        public List<SpriteBankRoomGroup> RoomGroups { get; set; } = new List<SpriteBankRoomGroup>();
-
-        public int numMoles = 0;
-        public int numPipis = 0;
-        public int numM445s = 0;
+        private int numMoles = 0;
+        private int numPipis = 0;
+        private int numM445s = 0;
 
         public REnemies() { }
 

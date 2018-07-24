@@ -10,10 +10,47 @@ namespace MM2Randomizer.Randomizers
 {
     public class RWeaknesses : IRandomizer
     {
-        public static bool IsChaos = true;
-        public static int[,] BotWeaknesses = new int[8, 9];
-        public static int[,] WilyWeaknesses = new int[6, 8];
-        public static char[,] WilyWeaknessInfo = new char[6, 8];
+        // Robot Master damage table. If RWeaknesses module is not enabled, these default values will be used.
+        //           P H A W B F Q M C
+        // Heatman   2 0 2 0 6 0 2 1 0
+        // Airman    2 6 0 8 0 0 2 0 0
+        // Woodman   1 A 4 0 0 0 0 2 2
+        // Bubbleman 1 0 0 0 0 0 2 4 2
+        // Quickman  2 A 2 0 0 1 0 0 4
+        // Flashman  2 6 0 0 2 0 0 4 3
+        // Metalman  1 4 0 0 0 0 4 A 0
+        // Clashman  1 6 A 0 1 0 1 0 0
+        public static int[,] BotWeaknesses = new int[8, 9]
+        {
+            { 2, 0, 2, 0, 6, 0, 2, 1, 0, },
+            { 2, 6, 0, 8, 0, 0, 2, 0, 0, },
+            { 1,10, 4, 0, 0, 0, 0, 2, 2, },
+            { 1, 0, 0, 0, 0, 0, 2, 4, 2, },
+            { 2,10, 2, 0, 0, 1, 0, 0, 4, },
+            { 2, 6, 0, 0, 2, 0, 0, 4, 3, },
+            { 1, 4, 0, 0, 0, 0, 4,10, 0, },
+            { 1, 6,10, 0, 1, 0, 1, 0, 0, },
+        };
+
+        // Wily boss damage table. If module not enabled, these defaults will be used. Flash ignored.
+        //        P H A W B Q M C
+        // Dragon 1 8 0 0 0 1 0 1
+        // Pico   1 3 0 0 A 7 7 0
+        // Guts   1 8 0 0 1 2 0 1
+        // Bueb   0 0 0 0 0 0 0 B
+        // WilyM  1 E 1 0 0 1 1 4
+        // Alien  X X X X 1 X X X
+        public static int[,] WilyWeaknesses = new int[6, 8]
+        {
+            {  1,  8,  0,  0,  0,  1,  0,  1,},
+            {  1,  3,  0,  0, 10,  7,  7,  0,},
+            {  1,  8,  0,  0,  1,  2,  0,  1,},
+            {  0,  0,  0,  0,  0,  0,  0, 20,},
+            {  1, 10,  1,  0,  0,  1,  1,  4,},
+            {255,255,255,255,  1,255,255,255,},
+        };
+
+        private char[,] WilyWeaknessInfo = new char[6, 8];
 
         private StringBuilder debug = new StringBuilder();
         public override string ToString()
@@ -21,130 +58,13 @@ namespace MM2Randomizer.Randomizers
             return debug.ToString();
         }
 
-        public RWeaknesses(bool isChaos)
-        {
-            IsChaos = isChaos;
-        }
+        public RWeaknesses() { }
 
         public void Randomize(Patch p, Random r)
         {
             debug = new StringBuilder();
-            if (RandomMM2.Settings.IsJapanese)
-            {
-                RandomizeJ(r);
-            }
-            else
-            {
-                RandomizeU(p, r);
-            }
+            RandomizeU(p, r);
             RandomizeWilyUJ(p, r);
-        }
-
-        /// <summary>
-        /// Modify the damage values of each weapon against each Robot Master for Rockman 2 (J).
-        /// </summary>
-        private void RandomizeJ(Random r)
-        {
-            List<WeaponTable> Weapons = new List<WeaponTable>();
-
-            Weapons.Add(new WeaponTable()
-            {
-                Name = "Buster",
-                ID = 0,
-                Address = EDmgVsBoss.Buster,
-                RobotMasters = new int[8] { 2, 2, 1, 1, 2, 2, 1, 1 }
-                // Heat = 2,
-                // Air = 2,
-                // Wood = 1,
-                // Bubble = 1,
-                // Quick = 2,
-                // Flash = 2,
-                // Metal = 1,
-                // Clash = 1,
-            });
-
-            Weapons.Add(new WeaponTable()
-            {
-                Name = "Atomic Fire",
-                ID = 1,
-                Address = EDmgVsBoss.AtomicFire,
-                // Note: These values only affect a fully charged shot.  Partially charged shots use the Buster table.
-                RobotMasters = new int[8] { 0xFF, 6, 0x0E, 0, 0x0A, 6, 4, 6 }
-            });
-
-            Weapons.Add(new WeaponTable()
-            {
-                Name = "Air Shooter",
-                ID = 2,
-                Address = EDmgVsBoss.AirShooter,
-                RobotMasters = new int[8] { 2, 0, 4, 0, 2, 0, 0, 0x0A }
-            });
-
-            Weapons.Add(new WeaponTable()
-            {
-                Name = "Leaf Shield",
-                ID = 3,
-                Address = EDmgVsBoss.LeafShield,
-                RobotMasters = new int[8] { 0, 8, 0xFF, 0, 0, 0, 0, 0 }
-            });
-
-            Weapons.Add(new WeaponTable()
-            {
-                Name = "Bubble Lead",
-                ID = 4,
-                Address = EDmgVsBoss.BubbleLead,
-                RobotMasters = new int[8] { 6, 0, 0, 0xFF, 0, 2, 0, 1 }
-            });
-
-            Weapons.Add(new WeaponTable()
-            {
-                Name = "Quick Boomerang",
-                ID = 5,
-                Address = EDmgVsBoss.QuickBoomerang,
-                RobotMasters = new int[8] { 2, 2, 0, 2, 0, 0, 4, 1 }
-            });
-
-            Weapons.Add(new WeaponTable()
-            {
-                Name = "Time Stopper",
-                ID = 6,
-                Address = EDmgVsBoss.TimeStopper,
-                // NOTE: These values affect damage per tick
-                RobotMasters = new int[8] { 0, 0, 0, 0, 1, 0, 0, 0 }
-            });
-
-            Weapons.Add(new WeaponTable()
-            {
-                Name = "Metal Blade",
-                ID = 7,
-                Address = EDmgVsBoss.MetalBlade,
-                RobotMasters = new int[8] { 1, 0, 2, 4, 0, 4, 0x0E, 0 }
-            });
-
-            Weapons.Add(new WeaponTable()
-            {
-                Name = "Clash Bomber",
-                ID = 8,
-                Address = EDmgVsBoss.ClashBomber,
-                RobotMasters = new int[8] { 0xFF, 0, 2, 2, 4, 3, 0, 0 }
-            });
-
-            foreach (WeaponTable weapon in Weapons)
-            {
-                weapon.RobotMasters.Shuffle(r);
-            }
-
-            using (var stream = new FileStream(RandomMM2.TempFileName, FileMode.Open, FileAccess.ReadWrite))
-            {
-                foreach (WeaponTable weapon in Weapons)
-                {
-                    stream.Position = (long)weapon.Address;
-                    for (int i = 0; i < 8; i++)
-                    {
-                        stream.WriteByte((byte)weapon.RobotMasters[i]);
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -152,230 +72,101 @@ namespace MM2Randomizer.Randomizers
         /// </summary>
         private void RandomizeU(Patch Patch, Random r)
         {
-            // Chaos Mode Weaknesses
-            if (IsChaos)
+            List<EDmgVsBoss> bossPrimaryWeaknessAddresses = EDmgVsBoss.GetTables(false, true);
+            List<EDmgVsBoss> bossWeaknessShuffled = new List<EDmgVsBoss>(bossPrimaryWeaknessAddresses);
+            bossWeaknessShuffled.Shuffle(r);
+
+            // Preparation: Disable redundant Atomic Fire healing code
+            // (Note that 0xFF in any weakness table is sufficient to heal a boss)
+            Patch.Add(0x02E66D, 0xFF, "Atomic Fire Boss To Heal" ); // Normally "00" to indicate Heatman.
+
+            // Select 2 robots to be weak against Buster
+            List<int> busterList = new List<int>(new List<int>{ 0, 1, 2, 3, 4, 5, 6, 7 }.Shuffle(r)).GetRange(0,4);
+
+            // Foreach boss
+            for (int i = 0; i < 8; i++)
             {
-                List<EDmgVsBoss> bossPrimaryWeaknessAddresses = EDmgVsBoss.GetTables(false, true);
-                List<EDmgVsBoss> bossWeaknessShuffled = new List<EDmgVsBoss>(bossPrimaryWeaknessAddresses);
-                bossWeaknessShuffled.Shuffle(r);
-
-                // Preparation: Disable redundant Atomic Fire healing code
-                // (Note that 0xFF in any weakness table is sufficient to heal a boss)
-                Patch.Add(0x02E66D, 0xFF, "Atomic Fire Boss To Heal" ); // Normally "00" to indicate Heatman.
-
-                // Select 2 robots to be weak against Buster
-                List<int> busterList = new List<int>(new List<int>{ 0, 1, 2, 3, 4, 5, 6, 7 }.Shuffle(r)).GetRange(0,4);
-
-                // Foreach boss
-                for (int i = 0; i < 8; i++)
+                // First, fill in special weapon tables with a 50% chance to block or do 1 damage
+                for (int j = 0; j < bossPrimaryWeaknessAddresses.Count; j++)
                 {
-                    // First, fill in special weapon tables with a 50% chance to block or do 1 damage
-                    for (int j = 0; j < bossPrimaryWeaknessAddresses.Count; j++)
+                    double rTestImmune = r.NextDouble();
+                    byte damage = 0;
+                    if (rTestImmune > 0.5)
                     {
-                        double rTestImmune = r.NextDouble();
-                        byte damage = 0;
-                        if (rTestImmune > 0.5)
+                        if (bossPrimaryWeaknessAddresses[j] == EDmgVsBoss.U_DamageH)
                         {
-                            if (bossPrimaryWeaknessAddresses[j] == EDmgVsBoss.U_DamageH)
-                            {
-                                // ...except for Atomic Fire, which will do some more damage
-                                damage = (byte)(RWeaponBehavior.AmmoUsage[1] / 2);
-                            }
-                            else if (bossPrimaryWeaknessAddresses[j] == EDmgVsBoss.U_DamageF)
-                            {
-                                damage = 0x00;
-                            }
-                            else
-                            {
-                                damage = 0x01;
-                            }
+                            // ...except for Atomic Fire, which will do some more damage
+                            damage = (byte)(RWeaponBehavior.AmmoUsage[1] / 2);
                         }
-                        Patch.Add(bossPrimaryWeaknessAddresses[j] + i, damage, String.Format("{0} Damage to {1}", bossPrimaryWeaknessAddresses[j].WeaponName, (EDmgVsBoss.Offset)i));
-                        BotWeaknesses[i, j + 1] = damage;
+                        else if (bossPrimaryWeaknessAddresses[j] == EDmgVsBoss.U_DamageF)
+                        {
+                            damage = 0x00;
+                        }
+                        else
+                        {
+                            damage = 0x01;
+                        }
                     }
+                    Patch.Add(bossPrimaryWeaknessAddresses[j] + i, damage, String.Format("{0} Damage to {1}", bossPrimaryWeaknessAddresses[j].WeaponName, (EDmgVsBoss.Offset)i));
+                    BotWeaknesses[i, j + 1] = damage;
+                }
 
-                    // Write the primary weakness for this boss
-                    byte dmgPrimary = GetRoboDamagePrimary(r, bossWeaknessShuffled[i]);
-                    Patch.Add(bossWeaknessShuffled[i] + i, dmgPrimary, String.Format("{0} Damage to {1} (Primary)", bossWeaknessShuffled[i].WeaponName, (EDmgVsBoss.Offset)i));
+                // Write the primary weakness for this boss
+                byte dmgPrimary = GetRoboDamagePrimary(r, bossWeaknessShuffled[i]);
+                Patch.Add(bossWeaknessShuffled[i] + i, dmgPrimary, String.Format("{0} Damage to {1} (Primary)", bossWeaknessShuffled[i].WeaponName, (EDmgVsBoss.Offset)i));
 
-                    // Write the secondary weakness for this boss (next element in list)
-                    // Secondary weakness will either do 2 damage or 4 if it is Atomic Fire
-                    // Time Stopper cannot be a secondary weakness. Instead it will heal that boss.
-                    // As a result, one Robot Master will not have a secondary weakness
-                    int i2 = (i + 1 >= 8) ? 0 : i + 1;
-                    EDmgVsBoss weakWeap2 = bossWeaknessShuffled[i2];
-                    byte dmgSecondary = 0x02;
-                    if (weakWeap2 == EDmgVsBoss.U_DamageH)
-                    {
-                        dmgSecondary = 0x04;
-                    }
-                    else if (weakWeap2 == EDmgVsBoss.U_DamageF)
-                    {
-                        dmgSecondary = 0x00;
+                // Write the secondary weakness for this boss (next element in list)
+                // Secondary weakness will either do 2 damage or 4 if it is Atomic Fire
+                // Time Stopper cannot be a secondary weakness. Instead it will heal that boss.
+                // As a result, one Robot Master will not have a secondary weakness
+                int i2 = (i + 1 >= 8) ? 0 : i + 1;
+                EDmgVsBoss weakWeap2 = bossWeaknessShuffled[i2];
+                byte dmgSecondary = 0x02;
+                if (weakWeap2 == EDmgVsBoss.U_DamageH)
+                {
+                    dmgSecondary = 0x04;
+                }
+                else if (weakWeap2 == EDmgVsBoss.U_DamageF)
+                {
+                    dmgSecondary = 0x00;
 
-                        // Address in Time-Stopper code that normally heals Flashman, change to heal this boss instead
-                        Patch.Add(0x02C08F, (byte)i, String.Format("Time-Stopper Heals {0} (Special Code)", (EDmgVsBoss.Offset)i));
-                    }
-                    Patch.Add(weakWeap2 + i, dmgSecondary, String.Format("{0} Damage to {1} (Secondary)", weakWeap2.WeaponName, (EDmgVsBoss.Offset)i));
+                    // Address in Time-Stopper code that normally heals Flashman, change to heal this boss instead
+                    Patch.Add(0x02C08F, (byte)i, String.Format("Time-Stopper Heals {0} (Special Code)", (EDmgVsBoss.Offset)i));
+                }
+                Patch.Add(weakWeap2 + i, dmgSecondary, String.Format("{0} Damage to {1} (Secondary)", weakWeap2.WeaponName, (EDmgVsBoss.Offset)i));
                         
-                    // Add buster damage
-                    if (busterList.Contains(i))
-                    {
-                        Patch.Add(EDmgVsBoss.U_DamageP + i, 0x02, String.Format("Buster Damage to {0}", (EDmgVsBoss.Offset)i));
-                        BotWeaknesses[i, 0] = 0x02;
-                    }
-                    else
-                    {
-                        Patch.Add(EDmgVsBoss.U_DamageP + i, 0x01, String.Format("Buster Damage to {0}", (EDmgVsBoss.Offset)i));
-                        BotWeaknesses[i, 0] = 0x01;
-                    }
-
-                    // Save info
-                    int weapIndexPrimary = GetWeaponIndexFromAddress(bossWeaknessShuffled[i]);
-                    BotWeaknesses[i, weapIndexPrimary] = dmgPrimary;
-                    int weapIndexSecondary = GetWeaponIndexFromAddress(weakWeap2);
-                    BotWeaknesses[i, weapIndexSecondary] = dmgSecondary;
-                }
-
-                debug.AppendLine("Robot Master Weaknesses:");
-                debug.AppendLine("P\tH\tA\tW\tB\tQ\tF\tM\tC:");
-                debug.AppendLine("--------------------------------------------");
-                for (int i = 0; i < 8; i++)
+                // Add buster damage
+                if (busterList.Contains(i))
                 {
-                    for (int j = 0; j < 9; j++)
-                    {
-                        debug.Append(String.Format("{0}\t", BotWeaknesses[i, j]));
-                    }
-                    debug.AppendLine("< " + ((EDmgVsBoss.Offset)i).ToString());
+                    Patch.Add(EDmgVsBoss.U_DamageP + i, 0x02, String.Format("Buster Damage to {0}", (EDmgVsBoss.Offset)i));
+                    BotWeaknesses[i, 0] = 0x02;
                 }
-                debug.Append(Environment.NewLine);
+                else
+                {
+                    Patch.Add(EDmgVsBoss.U_DamageP + i, 0x01, String.Format("Buster Damage to {0}", (EDmgVsBoss.Offset)i));
+                    BotWeaknesses[i, 0] = 0x01;
+                }
+
+                // Save info
+                int weapIndexPrimary = GetWeaponIndexFromAddress(bossWeaknessShuffled[i]);
+                BotWeaknesses[i, weapIndexPrimary] = dmgPrimary;
+                int weapIndexSecondary = GetWeaponIndexFromAddress(weakWeap2);
+                BotWeaknesses[i, weapIndexSecondary] = dmgSecondary;
             }
 
-            // Easy Mode Weaknesses
-            else
+            debug.AppendLine("Robot Master Weaknesses:");
+            debug.AppendLine("P\tH\tA\tW\tB\tQ\tF\tM\tC:");
+            debug.AppendLine("--------------------------------------------");
+            for (int i = 0; i < 8; i++)
             {
-                List<WeaponTable> Weapons = new List<WeaponTable>();
-
-                Weapons.Add(new WeaponTable()
+                for (int j = 0; j < 9; j++)
                 {
-                    Name = "Buster",
-                    ID = 0,
-                    Address = EDmgVsBoss.U_DamageP,
-                    RobotMasters = new int[8] { 2, 2, 1, 1, 2, 2, 1, 1 }
-                    // Heat = 2,
-                    // Air = 2,
-                    // Wood = 1,
-                    // Bubble = 1,
-                    // Quick = 2,
-                    // Flash = 2,
-                    // Metal = 1,
-                    // Clash = 1,
-                    // Dragon = 1
-                    // Byte Unused = 0
-                    // Gutsdozer = 1
-                    // Unused = 0
-                });
-
-                Weapons.Add(new WeaponTable()
-                {
-                    Name = "Atomic Fire",
-                    ID = 1,
-                    Address = EDmgVsBoss.U_DamageH,
-                    // Note: These values only affect a fully charged shot.  Partially charged shots use the Buster table.
-                    RobotMasters = new int[8] { 0xFF, 6, 0x0E, 0, 0x0A, 6, 4, 6 }
-                    // Dragon = 8
-                    // Gutsdozer = 8
-                });
-
-                Weapons.Add(new WeaponTable()
-                {
-                    Name = "Air Shooter",
-                    ID = 2,
-                    Address = EDmgVsBoss.U_DamageA,
-                    RobotMasters = new int[8] { 2, 0, 4, 0, 2, 0, 0, 0x0A }
-                    // Dragon = 0
-                    // Gutsdozer = 0
-                });
-
-                Weapons.Add(new WeaponTable()
-                {
-                    Name = "Leaf Shield",
-                    ID = 3,
-                    Address = EDmgVsBoss.U_DamageW,
-                    RobotMasters = new int[8] { 0, 8, 0xFF, 0, 0, 0, 0, 0 }
-                    // Dragon = 0
-                    // Unused = 0
-                    // Gutsdozer = 0
-                });
-
-                Weapons.Add(new WeaponTable()
-                {
-                    Name = "Bubble Lead",
-                    ID = 4,
-                    Address = EDmgVsBoss.U_DamageB,
-                    RobotMasters = new int[8] { 6, 0, 0, 0xFF, 0, 2, 0, 1 }
-                    // Dragon = 0
-                    // Unused = 0
-                    // Gutsdozer = 1
-                });
-
-                Weapons.Add(new WeaponTable()
-                {
-                    Name = "Quick Boomerang",
-                    ID = 5,
-                    Address = EDmgVsBoss.U_DamageQ,
-                    RobotMasters = new int[8] { 2, 2, 0, 2, 0, 0, 4, 1 }
-                    // Dragon = 1
-                    // Unused = 0
-                    // Gutsdozer = 2
-                });
-
-                Weapons.Add(new WeaponTable()
-                {
-                    Name = "Time Stopper",
-                    ID = 6,
-                    Address = EDmgVsBoss.U_DamageF,
-                    // NOTE: These values affect damage per tick
-                    // NOTE: This table only has robot masters, no wily bosses
-                    RobotMasters = new int[8] { 0, 0, 0, 0, 1, 0, 0, 0 }
-
-                });
-
-                Weapons.Add(new WeaponTable()
-                {
-                    Name = "Metal Blade",
-                    ID = 7,
-                    Address = EDmgVsBoss.U_DamageM,
-                    RobotMasters = new int[8] { 1, 0, 2, 4, 0, 4, 0x0E, 0 }
-                    // Dragon = 0
-                    // Unused = 0
-                    // Gutsdozer = 0
-                });
-
-                Weapons.Add(new WeaponTable()
-                {
-                    Name = "Clash Bomber",
-                    ID = 8,
-                    Address = EDmgVsBoss.U_DamageC,
-                    RobotMasters = new int[8] { 0xFF, 0, 2, 2, 4, 3, 0, 0 }
-                    // Dragon = 1
-                    // Unused = 0
-                    // Gutsdozer = 1
-                });
-
-                foreach (WeaponTable weapon in Weapons)
-                {
-                    weapon.RobotMasters.Shuffle(r);
+                    debug.Append(String.Format("{0}\t", BotWeaknesses[i, j]));
                 }
-
-                foreach (WeaponTable weapon in Weapons)
-                {
-                    for (int i = 0; i < 8; i++)
-                    {
-                        Patch.Add(weapon.Address + i, (byte)weapon.RobotMasters[i], String.Format("Easy Weakness: {0} against {1}", weapon.Name, ((EDmgVsBoss.Offset)i).ToString() ));
-                    }
-                }
+                debug.AppendLine("< " + ((EDmgVsBoss.Offset)i).ToString());
             }
+            debug.Append(Environment.NewLine);
+
         }
 
         /// <summary>
@@ -447,8 +238,6 @@ namespace MM2Randomizer.Randomizers
         /// </summary>
         private void RandomizeWilyUJ(Patch Patch, Random r)
         {
-            if (IsChaos)
-            {
                 // List of special weapon damage tables for enemies
                 List<EDmgVsEnemy> dmgPtrEnemies = EDmgVsEnemy.GetTables(false);
                 EDmgVsEnemy enemyWeak1;
@@ -869,56 +658,7 @@ namespace MM2Randomizer.Randomizers
                     debug.AppendLine("< " + bossName);
                 }
                 debug.Append(Environment.NewLine);
-            } // end if
 
-            #region Easy Weakness
-
-            else
-            {
-                // First address for damage (buster v heatman)
-                int address = (RandomMM2.Settings.IsJapanese) ? (int)EDmgVsBoss.Buster : (int)EDmgVsBoss.U_DamageP;
-
-                // Skip Time Stopper
-                // Buster Air Wood Bubble Quick Clash Metal
-                byte[] dragon = new byte[] { 1, 0, 0, 0, 1, 0, 1 };
-                byte[] guts = new byte[] { 1, 0, 0, 1, 2, 0, 1 };
-                byte[] machine = new byte[] { 1, 1, 0, 0, 1, 1, 4 };
-                byte[] alien = new byte[] { 0xff, 0xff, 0xff, 1, 0xff, 0xff, 0xff };
-
-                // TODO: Scale damage based on ammo count w/ weapon class instead of this hard-coded table
-                // Buster Air Wood Bubble Quick Clash Metal
-                //double[] ammoUsed = new double[] { 0, 2, 3, 0.5, 0.25, 4, 0.25 };
-
-                dragon.Shuffle(r);
-                guts.Shuffle(r);
-                machine.Shuffle(r);
-                alien.Shuffle(r);
-
-                int j = 0;
-                for (int i = 0; i < 8; i++) // i = Buster plus 7 weapons, Time Stopper damage is located in another table (going to ignore it anyways)
-                {
-                    //// Skip Atomic Fire
-                    //if (i == 1) continue;
-
-                    int posDragon = address + 14 * i + 8;
-
-                    Patch.Add(posDragon, dragon[j], String.Format("Easy Weakness: ? against Dragon"));
-                    Patch.Add(posDragon+2, guts[j], String.Format("Easy Weakness: ? against Guts"));
-                    Patch.Add(posDragon+4, machine[j], String.Format("Easy Weakness: ? against Wily Machine"));
-
-                    // Scale damage against alien if using a high ammo usage weapon
-                    if (alien[j] == 1)
-                    {
-                        if (RWeaponBehavior.AmmoUsage[j] >= 1)
-                        {
-                            alien[j] = (byte)((double)RWeaponBehavior.AmmoUsage[j] * 1.3);
-                        }
-                    }
-                    Patch.Add(posDragon+5, alien[j], String.Format("Easy Weakness: ? against Alien"));
-                    j++;
-                }
-            }
-            #endregion
         } // End method RandomizeWilyUJ
 
 

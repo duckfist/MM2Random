@@ -38,15 +38,10 @@ namespace MM2Randomizer.Randomizers
             }
         }
         
-        public RBossRoom() { }
-
-        public List<BossRoomRandomComponent> Components { get; set; }
-
-        /// <summary>
-        /// Shuffle which Robot Master awards which weapon.
-        /// </summary>
-        public void Randomize(Patch Patch, Random r)
+        public RBossRoom()
         {
+            // Initialize BossRoomRandomComponents, and add to "Components" list.
+            // This list is still needed even if this module isn't enabled; it just won't get shuffled.
             BossRoomRandomComponent HeatManComponent = new BossRoomRandomComponent(
                     original: 0,
                     introValue: 0x0F, // 0x02C15E
@@ -203,7 +198,15 @@ namespace MM2Randomizer.Randomizers
                 MetalManComponent,
                 ClashManComponent,
             };
+        }
 
+        public List<BossRoomRandomComponent> Components { get; set; }
+
+        /// <summary>
+        /// Shuffle which Robot Master awards which weapon.
+        /// </summary>
+        public void Randomize(Patch Patch, Random r)
+        {
             Components.Shuffle(r);
             //DEBUG test a boss in a particular boss room, also comment out the corresponding boss from the Components list above
             //Components.Insert(3, BubbleManComponent);

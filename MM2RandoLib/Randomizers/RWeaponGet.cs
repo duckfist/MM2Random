@@ -9,7 +9,7 @@ namespace MM2Randomizer.Randomizers
 {
     public class RWeaponGet : IRandomizer
     {
-        public List<ERMWeaponValueBit> NewWeaponOrder;
+        private List<ERMWeaponValueBit> NewWeaponOrder;
 
         public RWeaponGet()
         {

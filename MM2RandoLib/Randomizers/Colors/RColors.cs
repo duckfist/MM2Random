@@ -13,13 +13,13 @@ namespace MM2Randomizer.Randomizers.Colors
     /// </summary>
     public class RColors : IRandomizer
     {
-        List<ColorSet> StagesColorSets { get; set; }
-        List<ColorSet> WeaponColorSets { get; set; }
-        List<ColorSet> IntroColorSets { get; set; }
-        List<ColorSet> StageSelectColorSets { get; set; }
+        private List<ColorSet> StagesColorSets { get; set; }
+        private List<ColorSet> WeaponColorSets { get; set; }
+        private List<ColorSet> IntroColorSets { get; set; }
+        private List<ColorSet> StageSelectColorSets { get; set; }
 
-        public static int MegaManColorAddressU = 0x03d314;
-        public static int MegaManColorAddressJ = 0x03d311;
+        private static int MegaManColorAddressU = 0x03d314;
+        private static int MegaManColorAddressJ = 0x03d311;
 
         public RColors() { }
 
@@ -261,7 +261,8 @@ namespace MM2Randomizer.Randomizers.Colors
             Queue<byte> LightColors = new Queue<byte>(PossibleLightColors.GetRange(0, 8));
 
             // Get starting address depending on game version
-            int startAddress = (RandomMM2.Settings.IsJapanese) ? MegaManColorAddressJ : MegaManColorAddressU;
+            //int startAddress = (RandomMM2.Settings.IsJapanese) ? MegaManColorAddressJ : MegaManColorAddressU;
+            int startAddress = MegaManColorAddressU;
 
             // Change 8 robot master weapon colors
             for (int i = 0; i < 8; i++)

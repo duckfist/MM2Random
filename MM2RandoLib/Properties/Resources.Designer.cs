@@ -311,18 +311,20 @@ namespace MM2Randomizer.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///    &quot;level_components&quot;: [
-        ///        {
-        ///            &quot;name&quot;: &quot;flash_room0_screen2&quot;,
-        ///            &quot;start_address&quot;: &quot;14590&quot;,
-        ///            &quot;end_address&quot;: &quot;145CF&quot;,
-        ///            &quot;variations&quot;: [
-        ///                {
-        ///                    &quot;name&quot;: &quot;default&quot;,
-        ///                    &quot;tsa_map&quot;: [&quot;59&quot;, &quot;2A&quot;, &quot;28&quot;, &quot;01&quot;, &quot;01&quot;, &quot;23&quot;, &quot;58&quot;, &quot;59&quot;, 
-        ///                                &quot;6B&quot;, &quot;33&quot;, &quot;25&quot;, &quot;1B&quot;, &quot;03&quot;, &quot;25&quot;, &quot;45&quot;, &quot;67&quot;, 
-        ///                                &quot;59&quot;, &quot;60&quot;, &quot;30&quot;, &quot;09&quot;, &quot;03&quot;, &quot;75&quot;, &quot;78&quot;, &quot;03&quot;, 
-        ///                  [rest of string was truncated]&quot;;.
+        ///  &quot;LevelComponents&quot;: [
+        ///      {
+        ///        &quot;Name&quot;: &quot;flash_room0_screen2&quot;,
+        ///        &quot;StartAddress&quot;: &quot;14590&quot;,
+        ///        &quot;EndAddress&quot;: &quot;145CF&quot;,
+        ///        &quot;Variations&quot;: [
+        ///          {
+        ///            &quot;Name&quot;: &quot;default&quot;,
+        ///            &quot;TsaMap&quot;: [
+        ///              &quot;59&quot;,&quot;2A&quot;,&quot;28&quot;,&quot;01&quot;,&quot;01&quot;,&quot;23&quot;,&quot;58&quot;,&quot;59&quot;, 
+        ///              &quot;6B&quot;,&quot;33&quot;,&quot;25&quot;,&quot;1B&quot;,&quot;03&quot;,&quot;25&quot;,&quot;45&quot;,&quot;67&quot;, 
+        ///              &quot;59&quot;,&quot;60&quot;,&quot;30&quot;,&quot;09&quot;,&quot;03&quot;,&quot;75&quot;,&quot;78&quot;,&quot;03&quot;, 
+        ///              &quot;59&quot;,&quot;23&quot;,&quot;2D&quot;,&quot;10&quot;,&quot;03&quot;,&quot;17&quot;,&quot;09&quot;,&quot;71&quot;, 
+        ///              &quot;61&quot;,&quot;29&quot;,&quot;22&quot;,&quot;0D&quot;,&quot;03&quot;,&quot;33&quot;,&quot;0B [rest of stri....
         /// </summary>
         internal static string level_components {
             get {

@@ -49,7 +49,7 @@ namespace MM2Randomizer.Utilities
         /// </summary>
         /// <param name="p"></param>
         /// <param name="jVersion"></param>
-        public static void SetWily5NoMusicChange(Patch p, bool jVersion)
+        public static void SetWily5NoMusicChange(Patch p)
         {
             p.Add(0x0383DA, 0xEA, "Disable Music on Boss Defeat 1");
             p.Add(0x0383DB, 0xEA, "Disable Music on Boss Defeat 2");
@@ -65,16 +65,17 @@ namespace MM2Randomizer.Utilities
         /// <summary>
         /// TODO
         /// </summary>
-        public static void SetFastText(Patch p, bool jVersion)
+        public static void SetFastText(Patch p)
         {
-            int address = (jVersion) ? 0x037C51 : 0x037D4A;
+            //int address = (jVersion) ? 0x037C51 : 0x037D4A;
+            int address = 0x037D4A;
             p.Add(address, 0x04, "Weapon Get Text Write Delay");
         }
 
         /// <summary>
         /// TODO
         /// </summary>
-        public static void SetBurstChaser(Patch p, bool jVersion)
+        public static void SetBurstChaser(Patch p)
         {
             p.Add(0x038147, 0x60, "READY Text Delay");
             p.Add(0x038921, 0x03, "Mega Man Walk X-Velocity Integer");
@@ -84,7 +85,8 @@ namespace MM2Randomizer.Utilities
             p.Add(0x0386EF, 0x01, "Mega Man Ladder Climb Up Integer");
             p.Add(0x03872E, 0xFE, "Mega Man Ladder Climb Down Integer");
 
-            int address = (jVersion) ? 0x03D4A4 : 0x03D4A7;
+            //int address = (jVersion) ? 0x03D4A4 : 0x03D4A7;
+            int address = 0x03D4A7;
             p.Add(address, 0x08, "Buster Projectile X-Velocity Integer");
         }
 

@@ -9,7 +9,7 @@ namespace MM2Randomizer.Randomizers.Stages
 {
     public class RStages : IRandomizer
     {
-        public static List<StageFromSelect> StageSelect;
+        private List<StageFromSelect> StageSelect;
         private StringBuilder debug = new StringBuilder();
 
         public RStages() { }

@@ -123,16 +123,23 @@ namespace MM2RandoHost
             // Process input if the user clicked OK.
             if (userClickedOK == true)
             {
-                trySetSourcePath(dlg.FileName);
+                ViewModel.RandoSettings.ValidateFile(dlg.FileName);
+                SetTextBoxFocusToEnd();
             }
         }
-        
+
+        private void tbxSource_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            ViewModel.RandoSettings.ValidateFile(ViewModel.RandoSettings.SourcePath);
+        }
+
         private void Window_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                trySetSourcePath(files[0]);
+                ViewModel.RandoSettings.ValidateFile(files[0]);
+                SetTextBoxFocusToEnd();
             }
             BorderShowHandler(false, e);
         }
@@ -142,7 +149,8 @@ namespace MM2RandoHost
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                trySetSourcePath(files[0]);
+                ViewModel.RandoSettings.ValidateFile(files[0]);
+                SetTextBoxFocusToEnd();
             }
             BorderShowHandler(false, e);
         }
@@ -181,11 +189,8 @@ namespace MM2RandoHost
             }
         }
 
-        private void trySetSourcePath(string path)
+        private void SetTextBoxFocusToEnd()
         {
-            // TODO error handling
-            ViewModel.RandoSettings.SourcePath = path;
-
             tbxSource.Focus();
             tbxSource.SelectionStart = tbxSource.Text.Length;
         }
@@ -194,5 +199,7 @@ namespace MM2RandoHost
         {
             MessageBox.Show("Caution: The randomizer is not balanced for Burst Chaser mode.\nIf it is your first time playing, consider using the default settings.");
         }
+
+
     }
 }

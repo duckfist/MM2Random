@@ -12,6 +12,7 @@ namespace MM2RandoHost.ViewModels
     {
         private RandoSettings _randoSettings;
         private bool _isCoreModulesChecked = true;
+        private string _statusMessage = "";
 
         public MainWindowViewModel()
         {
@@ -47,5 +48,18 @@ namespace MM2RandoHost.ViewModels
                 }
             }
         }
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                if (_statusMessage != value)
+                {
+                    _statusMessage = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
     }
 }

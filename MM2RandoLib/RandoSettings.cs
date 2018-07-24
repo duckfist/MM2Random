@@ -2,6 +2,8 @@
 using System.Reflection;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.IO;
 
 namespace MM2Randomizer
 {
@@ -12,7 +14,12 @@ namespace MM2Randomizer
         private bool isSourcePathValid;
         private bool isSeedValid;
         private bool isSourcePathAndSeedValid;
-
+        private string hashStringMD5;
+        private string hashStringSHA256;
+        private string hashValidationMessage;
+        private bool isHashValid;
+        public const string ExpectedMD5 = "caaeb9ee3b52839de261fd16f93103e6";
+        public const string ExpectedSHA256 = "27b5a635df33ed57ed339dfc7fd62fc603b39c1d1603adb5cdc3562a0b0d555b";
 
         public RandoSettings()
         {
@@ -22,6 +29,11 @@ namespace MM2Randomizer
             IsSeedValid = false;
             IsSourcePathValid = false;
             IsSourcePathAndSeedValid = false;
+            HashStringMD5 = "";
+            HashStringSHA256 = "";
+            HashValidationMessage = "";
+            IsHashValid = false;
+            GoodHashes = new List<string>();
 
             // Flags for Rando Core Modules
             Is8StagesRandom = true;
@@ -46,6 +58,7 @@ namespace MM2Randomizer
             // Flags for Optional Gameplay Modules
             FastText = true;
             BurstChaserMode = false;
+
         }
 
         /// <summary>
@@ -82,12 +95,84 @@ namespace MM2Randomizer
                 {
                     sourcePath = value;
                     OnPropertyChanged();
-
-                    // Check if source path is valid
-                    IsSourcePathValid = System.IO.File.Exists(value);
-                    IsSourcePathAndSeedValid = IsSourcePathValid && IsSeedValid;
                 }
             }
+        }
+
+        /// <summary>
+        /// This method checks that the file exists and then compares its checksum with known good ROMs.
+        /// If it fails any of this, the method returns false.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public bool ValidateFile(string path)
+        {
+            // Check if file even exists
+            SourcePath = path;
+            IsSourcePathValid = System.IO.File.Exists(SourcePath);
+            IsSourcePathAndSeedValid = IsSourcePathValid && IsSeedValid;
+
+            if (!IsSourcePathValid)
+            {
+                HashValidationMessage = "File does not exist.";
+                IsHashValid = false;
+                return false;
+            }
+
+            // Ensure file size is small so that we can take the hash
+            var info = new System.IO.FileInfo(path);
+            long size = info.Length;
+            if (size > 2000000)
+            {
+                decimal MB = (size / (decimal)(1024d * 1024d));
+                HashValidationMessage = $"File is {MB:0.00} MB, clearly not a NES ROM. WTF are you doing?";
+                IsSourcePathValid = false;
+                IsHashValid = false;
+                return false;
+            }
+
+            // Calculate the file's hash
+            string hashStrMd5 = "";
+            string hashStrSha256 = "";
+
+            // SHA256
+            using (var sha = new System.Security.Cryptography.SHA256Managed())
+            {
+                using (FileStream fs = new FileStream(path, FileMode.Open))
+                {
+                    byte[] hashSha256 = sha.ComputeHash(fs);
+                    hashStrSha256 = BitConverter.ToString(hashSha256).Replace("-", String.Empty).ToLowerInvariant();
+                }
+            }
+
+            // MD5
+            using (var md5 = System.Security.Cryptography.MD5.Create())
+            {
+                using (FileStream fs = new FileStream(path, FileMode.Open))
+                {
+                    var hashMd5 = md5.ComputeHash(fs);
+                    hashStrMd5 = BitConverter.ToString(hashMd5).Replace("-", "").ToLowerInvariant();
+                }
+            }
+
+            // Update hash strings
+            HashStringSHA256 = hashStrSha256;
+            HashStringMD5 = hashStrMd5;
+
+            // Check that the hash matches known hash
+            IsHashValid = (HashStringMD5 == ExpectedMD5 && HashStringSHA256 == ExpectedSHA256);
+            if (IsHashValid)
+            {
+                HashValidationMessage = "ROM checksum is valid, good to go!";
+            }
+            else
+            {
+                HashValidationMessage = "Wrong file checksum. Please try another ROM, or it may not work.";
+                return false;
+            }
+
+            // If we made it this far, the file looks good!
+            return true;
         }
 
         public bool IsSourcePathValid
@@ -207,7 +292,61 @@ namespace MM2Randomizer
         public bool BurstChaserMode { get; set; }
 
         public bool IsWeaponBehaviorRandom { get; set; }
-        
+
+
+        public string HashStringMD5
+        {
+            get => hashStringMD5;
+            set
+            {
+                if (value != hashStringMD5)
+                {
+                    hashStringMD5 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string HashStringSHA256
+        {
+            get => hashStringSHA256;
+            set
+            {
+                if (value != hashStringSHA256)
+                {
+                    hashStringSHA256 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string HashValidationMessage
+        {
+            get => hashValidationMessage;
+            set
+            {
+                if (value != hashValidationMessage)
+                {
+                    hashValidationMessage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsHashValid
+        {
+            get => isHashValid;
+            set
+            {
+                if (value != isHashValid)
+                {
+                    isHashValid = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public List<string> GoodHashes { get; set; }
+
         /// <summary>
         /// Get this assembly version as a bindable property.
         /// </summary>

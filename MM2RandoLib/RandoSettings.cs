@@ -21,6 +21,8 @@ namespace MM2Randomizer
         public const string ExpectedMD5 = "caaeb9ee3b52839de261fd16f93103e6";
         public const string ExpectedSHA256 = "27b5a635df33ed57ed339dfc7fd62fc603b39c1d1603adb5cdc3562a0b0d555b";
 
+        private bool isTournamentMode;
+
         public RandoSettings()
         {
             // Rando assembly state variables
@@ -58,7 +60,7 @@ namespace MM2Randomizer
             // Flags for Optional Gameplay Modules
             FastText = true;
             BurstChaserMode = false;
-
+            IsTournamentMode = true;
         }
 
         /// <summary>
@@ -293,6 +295,33 @@ namespace MM2Randomizer
 
         public bool IsWeaponBehaviorRandom { get; set; }
 
+        public bool IsTournamentMode
+        {
+            get => isTournamentMode;
+            set
+            {
+                if (isTournamentMode != value)
+                {
+                    isTournamentMode = value;
+                    OnPropertyChanged();
+
+                    if (value)
+                    {
+                        IsWeaponBehaviorRandom = true;
+                        IsWeaknessRandom = true;
+                        IsBossInBossRoomRandom = true;
+                        IsBossAIRandom = true;
+                        IsItemsRandom = true;
+                        IsEnemiesRandom = true;
+                        IsEnemyWeaknessRandom = true;
+                        IsTilemapChangesEnabled = true;
+
+                        FastText = true;
+                        BurstChaserMode = false;
+                    }
+                }
+            }
+        }
 
         public string HashStringMD5
         {

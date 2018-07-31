@@ -219,12 +219,11 @@ namespace MM2Randomizer
             {
                 MiscHacks.SetBurstChaser(Patch);
             }
-            MiscHacks.DrawTitleScreenChanges(Patch, Seed);
+            MiscHacks.DrawTitleScreenChanges(Patch, Seed, Settings.IsTournamentMode);
             MiscHacks.SetWily5NoMusicChange(Patch);
             MiscHacks.FixDamageValues(Patch);
             MiscHacks.SetETankKeep(Patch);
             MiscHacks.SkipItemGetPages(Patch);
-
 
             // Create file name based on seed and game region
             string seedAlpha = SeedConvert.ConvertBase10To26(Seed);

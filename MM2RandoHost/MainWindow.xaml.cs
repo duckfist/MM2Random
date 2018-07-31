@@ -8,14 +8,16 @@ using Microsoft.Win32;
 
 using MM2Randomizer;
 using MM2Randomizer.Utilities;
+
 using MM2RandoHost.ViewModels;
+using MM2RandoHost.Views.Primitives;
 
 namespace MM2RandoHost
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : CustomWindow
     {
         // TODO Remove
         MainWindowViewModel ViewModel;
@@ -123,14 +125,14 @@ namespace MM2RandoHost
             // Process input if the user clicked OK.
             if (userClickedOK == true)
             {
-                ViewModel.RandoSettings.ValidateFile(dlg.FileName);
+                TryFile(dlg.FileName);
                 SetTextBoxFocusToEnd();
             }
         }
 
         private void tbxSource_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            ViewModel.RandoSettings.ValidateFile(ViewModel.RandoSettings.SourcePath);
+            TryFile(ViewModel.RandoSettings.SourcePath);
         }
 
         private void Window_Drop(object sender, DragEventArgs e)
@@ -138,7 +140,7 @@ namespace MM2RandoHost
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                ViewModel.RandoSettings.ValidateFile(files[0]);
+                TryFile(files[0]);
                 SetTextBoxFocusToEnd();
             }
             BorderShowHandler(false, e);
@@ -149,7 +151,7 @@ namespace MM2RandoHost
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                ViewModel.RandoSettings.ValidateFile(files[0]);
+                TryFile(files[0]);
                 SetTextBoxFocusToEnd();
             }
             BorderShowHandler(false, e);
@@ -195,11 +197,21 @@ namespace MM2RandoHost
             tbxSource.SelectionStart = tbxSource.Text.Length;
         }
 
+        private void TryFile(string filename)
+        {
+            ViewModel.IsShowingHint = false;
+            ViewModel.RandoSettings.ValidateFile(filename);
+        }
+
         private void chkBurstChaser_Checked(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Caution: The randomizer is not balanced for Burst Chaser mode.\nIf it is your first time playing, consider using the default settings.");
         }
 
-
+        private void CustonWindow_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+                this.DragMove();
+        }
     }
 }

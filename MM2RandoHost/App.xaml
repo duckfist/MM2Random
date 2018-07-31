@@ -1,11 +1,20 @@
 ﻿<Application x:Class="MM2RandoHost.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MM2RandoHost"
              xmlns:viewmodels="clr-namespace:MM2RandoHost.ViewModels"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <viewmodels:MainWindowViewModel x:Key="MainWindowVM"/>
+        <ResourceDictionary>
+            
+            <!--Import styles-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources\Brushes\BrushesDark.xaml"/>
+                <ResourceDictionary Source="Resources\Styles\MainStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
+            <!--Initialize ViewModels-->
+            <viewmodels:MainWindowViewModel x:Key="MainWindowVM"/>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

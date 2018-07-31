@@ -13,7 +13,7 @@ namespace MM2RandoHost.Converters
     public class BoolToRedGreenBrushConverter : IValueConverter
     {
         private static readonly Brush red = new SolidColorBrush(Colors.Red);
-        private static readonly Brush green = new SolidColorBrush(Colors.Green);
+        private static readonly Brush green = new SolidColorBrush(Color.FromArgb(255, 125, 255, 128));
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -11,7 +11,7 @@ namespace MM2Randomizer.Utilities
 {
     public static class MiscHacks
     {
-        public static void DrawTitleScreenChanges(Patch p, int seed)
+        public static void DrawTitleScreenChanges(Patch p, int seed, bool isTourney)
         {
             // Draw version number
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(RandomMM2));
@@ -32,6 +32,38 @@ namespace MM2Randomizer.Utilities
 
                 // 'A' starts at C1 in the pattern table
                 p.Add(0x037387 + i, (byte)(0xC1 + charIndex), "Title Screen Seed");
+            }
+
+            // Draw flags
+
+            // Draw tournament mode
+            if (isTourney)
+            {
+                // 0x037367 = Start of row beneath "seed"
+                string flagsAlpha = "TOURNAMENT";
+                for (int i = 0; i < flagsAlpha.Length; i++)
+                {
+                    char ch = flagsAlpha.ElementAt(i);
+                    byte charIndex = (byte)(Convert.ToByte(ch) - Convert.ToByte('A'));
+
+                    p.Add(0x037564 + i, (byte)(0xC1 + charIndex), "Title Screen Tournament Text");
+                }
+
+                string flags2Alpha = "MODE";
+                for (int i = 0; i < flags2Alpha.Length; i++)
+                {
+                    char ch = flags2Alpha.ElementAt(i);
+                    byte charIndex = (byte)(Convert.ToByte(ch) - Convert.ToByte('A'));
+
+                    p.Add(0x03756F + i, (byte)(0xC1 + charIndex), "Title Screen Tournament Text");
+                }
+
+                // Draw Hash symbols
+                // Use $B8-$BF with custom gfx, previously unused tiles after converting from MM2U to RM2
+                p.Add(0x037367, (byte)(0xB0), "Title Screen Flags");
+                p.Add(0x037368, (byte)(0xB1), "Title Screen Flags");
+                p.Add(0x037369, (byte)(0xB2), "Title Screen Flags");
+                p.Add(0x03736A, (byte)(0xB3), "Title Screen Flags");
             }
         }
 

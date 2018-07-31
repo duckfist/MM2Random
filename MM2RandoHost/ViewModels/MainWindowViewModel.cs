@@ -12,7 +12,7 @@ namespace MM2RandoHost.ViewModels
     {
         private RandoSettings _randoSettings;
         private bool _isCoreModulesChecked = true;
-        private string _statusMessage = "";
+        private bool _isShowingHint = true;
 
         public MainWindowViewModel()
         {
@@ -48,18 +48,18 @@ namespace MM2RandoHost.ViewModels
                 }
             }
         }
-        public string StatusMessage
+
+        public bool IsShowingHint
         {
-            get => _statusMessage;
+            get => _isShowingHint;
             set
             {
-                if (_statusMessage != value)
+                if (_isShowingHint != value)
                 {
-                    _statusMessage = value;
+                    _isShowingHint = value;
                     NotifyPropertyChanged();
                 }
             }
         }
-
     }
 }

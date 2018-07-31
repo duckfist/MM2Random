@@ -6,7 +6,7 @@
         xmlns:converters="clr-namespace:MM2RandoHost.Converters"
         xmlns:primitives="clr-namespace:MM2RandoHost.Views.Primitives"
         mc:Ignorable="d"
-        Height="560" Width="420" AllowDrop="True"
+        Height="585" Width="420" AllowDrop="True"
         BorderThickness="1"
         BorderBrush="{DynamicResource Brush_WindowBorder}"
         Title="{Binding Path=RandoSettings.AssemblyVersion, StringFormat={}MM2 Randomizer v{0}}" 
@@ -43,15 +43,14 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="75"/>
             <RowDefinition Height="90"/>
             <RowDefinition Height="28"/>
             <RowDefinition Height="120"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="16" TextAlignment="Center" 
-                    Text="Mega Man 2 Randomizer" />
+        <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Stretch="None" Source="/MM2RandoHost;component/Resources/header.png"   />
 
         <!-- Re-enable this for users to provide their own roms -->
         <Grid Grid.Row="1" Grid.ColumnSpan="2">

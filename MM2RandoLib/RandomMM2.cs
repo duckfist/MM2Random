@@ -266,6 +266,7 @@ namespace MM2Randomizer
                 // Finish the copy/rename and open Explorer at that location
                 File.Move(TempFileName, newfilename);
                 RecentlyCreatedFileName = newfilename;
+                Settings.HashValidationMessage = "Successfully copied and patched! File: " + newfilename;
                 return newfilename;
             }
             else

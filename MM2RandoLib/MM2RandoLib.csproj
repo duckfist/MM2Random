@@ -104,6 +104,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -114,7 +115,6 @@
     <None Include="Resources\creditstext.csv" />
     <None Include="Resources\enemylist.csv" />
     <None Include="Resources\enemyweakness.csv" />
-    <EmbeddedResource Include="Resources\MM2.nes" />
     <None Include="Resources\level_components.json" />
     <None Include="Resources\mm2rng_musicpatch.ips" />
     <None Include="Resources\mm2rng_prepatch.ips" />

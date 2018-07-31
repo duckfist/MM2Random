@@ -68,7 +68,8 @@
             </Grid.ColumnDefinitions>
             
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TextAlignment="Center" FontSize="9"
-                       Text="To get started, drag a Mega Man 2 ROM onto this window, or click the &quot;...&quot; button to browse."
+                       Text="To get started, drag a Mega Man 2 ROM onto this window, or click the &quot;. . .&quot; button to browse."
+                       Foreground="{DynamicResource Brush_TextGreen}"
                        Visibility="{Binding IsShowingHint, Converter={StaticResource boolToVisibilityConverter}}"
                        Style="{StaticResource Style_TextBlock_FinePrint}"/>
             <Border Name="border" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" BorderThickness="3">
@@ -84,13 +85,14 @@
             </Border>
             <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Style_TextBlock_FinePrint}" TextAlignment="Right" Text="MD5:"/>
             <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource Style_TextBlock_FinePrint}" TextAlignment="Right" Text="SHA-256:"/>
-            <TextBlock Grid.Row="2" Grid.Column="1" Margin="4,0,0,0"
-                        Style="{StaticResource Style_TextBlock_FinePrintMono}"
+
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="4,0,0,0"
+                        Style="{StaticResource Style_TextBox_SelectableTextBlock}"
                         Visibility="{Binding Path=RandoSettings.IsSourcePathValid, Converter={StaticResource boolToVisibilityConverter}}"
                         Foreground="{Binding Path=RandoSettings.IsHashValid, Converter={StaticResource boolToRedGreenBrushConverter}}"
                         Text="{Binding RandoSettings.HashStringMD5}"/>
-            <TextBlock Grid.Row="3" Grid.Column="1"  Margin="4,0,0,0"
-                        Style="{StaticResource Style_TextBlock_FinePrintMono}"
+            <TextBox Grid.Row="3" Grid.Column="1"  Margin="4,0,0,0"
+                        Style="{StaticResource Style_TextBox_SelectableTextBlock}"
                         Visibility="{Binding Path=RandoSettings.IsSourcePathValid, Converter={StaticResource boolToVisibilityConverter}}"
                         Foreground="{Binding Path=RandoSettings.IsHashValid, Converter={StaticResource boolToRedGreenBrushConverter}}"
                         Text="{Binding RandoSettings.HashStringSHA256}"/>
@@ -112,19 +114,16 @@
         </DockPanel>
 
         <!--Buttons-->
-        <StackPanel Grid.Row="3" Orientation="Vertical" IsEnabled="{Binding RandoSettings.IsSourcePathValid}">
-            <StackPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin" Value="3"/>
-                </Style>
-            </StackPanel.Resources>
-            <Button Name="btnCreateROM" IsEnabled="{Binding Path=RandoSettings.IsSeedValid}" Click="btnCreateROM_Click" Height="30">
+        <StackPanel Grid.Row="3" Orientation="Vertical" 
+            IsEnabled="{Binding RandoSettings.IsSourcePathValid}">
+            <Button Name="btnCreateROM" Height="30" Margin="3"
+                    IsEnabled="{Binding Path=RandoSettings.IsSeedValid}" Click="btnCreateROM_Click" >
                 Create From Given Seed
             </Button>
-            <Button Name="btnCreateRandom" Click="btnCreateRandom_Click" Height="30">
+            <Button Name="btnCreateRandom" Click="btnCreateRandom_Click" Height="30" Margin="3">
                 Create From Random Seed
             </Button>
-            <Button Name="btnOpenFolder" Click="btnOpenFolder_Click" Height="30">
+            <Button Name="btnOpenFolder" Click="btnOpenFolder_Click" Height="30" Margin="3" >
                 Open Containing Folder
             </Button>
         </StackPanel>

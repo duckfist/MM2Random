@@ -234,7 +234,9 @@ namespace MM2Randomizer
             if (fromClientApp)
             {
                 //File.Copy(Settings.SourcePath, TempFileName, true);
-                using (Stream stream = assembly.GetManifestResourceStream("MM2Randomizer.Resources.MM2.nes"))
+                //using (Stream stream = assembly.GetManifestResourceStream("MM2Randomizer.Resources.MM2.nes"))
+                // Load user provided ROM
+                using (Stream stream = new FileStream(Settings.SourcePath, FileMode.Open))
                 {
                     using (Stream output = File.OpenWrite(TempFileName))
                     {
@@ -268,7 +270,7 @@ namespace MM2Randomizer
 
                 string serverPathTemp = Path.Combine(serverDir, TempFileName);
                 string serverPathNew = Path.Combine(serverDir, newfilename);
-                using (Stream stream = assembly.GetManifestResourceStream("MM2Randomizer.Resources.MM2.nes"))
+                using (Stream stream = new FileStream("MM2.nes", FileMode.Open))
                 {
                     using (Stream output = File.OpenWrite(serverPathTemp))
                     {

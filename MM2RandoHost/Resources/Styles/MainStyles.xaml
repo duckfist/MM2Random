@@ -20,6 +20,24 @@
         <Setter Property="FontFamily" Value="Consolas,Global Monospace"/>
     </Style>
 
+    <Style x:Key="Style_TextBox_SelectableTextBlock" TargetType="TextBox">
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush_TextNormal}"/>
+        <Setter Property="FontFamily" Value="Consolas,Global Monospace"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="8.5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border Name="Border" BorderThickness="0" Background="Transparent">
+                        <ScrollViewer Margin="0"
+                        x:Name="PART_ContentHost" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--CheckBox styles-->
     <SolidColorBrush x:Key="CheckBoxFillNormal" Color="Transparent"/>
     <SolidColorBrush x:Key="CheckBoxStroke" Color="#999999"/>
@@ -87,7 +105,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
                     <DockPanel>
-                        <TabPanel Panel.ZIndex="150" IsItemsHost="True" DockPanel.Dock="{TemplateBinding TabStripPlacement}"/>
+                        <TabPanel Panel.ZIndex="150" IsItemsHost="True" Margin="4,0,0,0" DockPanel.Dock="{TemplateBinding TabStripPlacement}"/>
 
                         <Border Panel.ZIndex="100" x:Name="ContentPanel" 
 	                        BorderThickness="{TemplateBinding BorderThickness}" 
@@ -172,57 +190,51 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Background="Transparent">
-                        <Ellipse x:Name="ellipseMinimizeButton" Visibility="Collapsed"
-                                 Fill="{DynamicResource Brush_WindowBtn_Hover}"/>
-                        <Border BorderThickness="1" Margin="8,14,14,8" x:Name="stroke1"
-                                BorderBrush="{DynamicResource Brush_TextDim}" />
-                        <Border BorderThickness="1" Margin="14,8,8,14" x:Name="stroke2"
-                                BorderBrush="{DynamicResource Brush_TextDim}" />
-                    </Grid>
+                    <Border x:Name="border" Background="{DynamicResource Brush_PanelBg_2}" CornerRadius="0,0,0,12">
+                        <Grid Margin="4,8">
+                            <Polygon StrokeThickness="1" Points="6,14 18,14" x:Name="stroke1"
+                                 Stroke="{DynamicResource Brush_TextDim}"/>
+                        </Grid>
+                    </Border>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Visibility" TargetName="ellipseMinimizeButton" Value="Visible" />
-                            <Setter Property="BorderBrush" TargetName="stroke1" Value="{DynamicResource Brush_TextNormal}"/>
-                            <Setter Property="BorderBrush" TargetName="stroke2" Value="{DynamicResource Brush_TextNormal}"/>
-                            <Setter Property="BorderThickness" TargetName="stroke1" Value="2"/>
-                            <Setter Property="BorderThickness" TargetName="stroke2" Value="2"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource Brush_WindowBtn_Hover}"/>
+                            <Setter Property="Stroke" TargetName="stroke1" Value="{DynamicResource Brush_TextNormal}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Width" Value="40"/>
-        <Setter Property="Height" Value="40"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
     </Style>
 
     <Style x:Key="Style_CustomCloseBtn" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Background="Transparent">
-                        <Ellipse x:Name="ellipseMinimizeButton" Visibility="Collapsed"
-                                 Fill="{DynamicResource Brush_WindowBtn_Hover}"/>
-                        <Polygon StrokeThickness="1" Margin="8" Points="0,24 24,0" x:Name="stroke1"
-                                 Stroke="{DynamicResource Brush_TextDim}"/>
-                        <Polygon StrokeThickness="1" Margin="8" Points="0,0 24,24" x:Name="stroke2"
-                                 Stroke="{DynamicResource Brush_TextDim}" />
-                    </Grid>
+                    <Border x:Name="border" Background="{DynamicResource Brush_PanelBg_2}" BorderThickness="1,0,0,0">
+                        <Grid>
+                            <Polygon StrokeThickness="1" Margin="4,8" Points="5,12 17,0" x:Name="stroke1"
+                                     Stroke="{DynamicResource Brush_TextDim}"/>
+                            <Polygon StrokeThickness="1" Margin="4,8" Points="5,0 17,12" x:Name="stroke2"
+                                     Stroke="{DynamicResource Brush_TextDim}" />
+                        </Grid>
+                    </Border>
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Visibility" TargetName="ellipseMinimizeButton" Value="Visible" />
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource Brush_WindowBtn_Hover}"/>
                             <Setter Property="Stroke" TargetName="stroke1" Value="{DynamicResource Brush_TextNormal}"/>
                             <Setter Property="Stroke" TargetName="stroke2" Value="{DynamicResource Brush_TextNormal}"/>
-                            <Setter Property="StrokeThickness" TargetName="stroke1" Value="2"/>
-                            <Setter Property="StrokeThickness" TargetName="stroke2" Value="2"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Width" Value="40"/>
-        <Setter Property="Height" Value="40"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
     </Style>
 
     <Style x:Key="Style_CustomWindow" TargetType="{x:Type primitives:CustomWindow}">

@@ -50,7 +50,7 @@ namespace MM2RandoHost.Views.Primitives
 
             Button restoreButton = GetTemplateChild("restoreButton") as Button;
             if (restoreButton != null)
-                restoreButton.Click += RestoreClick;
+                restoreButton.Click += MinimizeClick;
 
             Button closeButton = GetTemplateChild("closeButton") as Button;
             if (closeButton != null)

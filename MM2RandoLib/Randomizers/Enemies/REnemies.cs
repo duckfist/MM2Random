@@ -13,19 +13,18 @@ namespace MM2Randomizer.Randomizers.Enemies
     /// </summary>
     public class REnemies : IRandomizer
     {
-        private static int Stage0EnemyScreenAddress = 0x3610;
-        private static int Stage0EnemyYAddress = 0x3810;
-        private static int Stage0EnemyIDAddress = 0x3910;
-        private static int StageLength = 0x4000;
-        private static double CHANCE_MOLE = 0.25;
-        private static double CHANCE_PIPI = 0.4;
-        private static double CHANCE_M445 = 0.4;
-        private static double CHANCE_SHRINKSPAWNER = 0.25;
-        private static double CHANCE_SPRINGER = 0.10;
-        private static double CHANCE_TELLY = 0.15;
-        private static int MAX_MOLES = 2;
-        private static int MAX_PIPIS = 5;
-        private static int MAX_M445S = 7;
+        private static readonly int Stage0EnemyYAddress = 0x3810;
+        private static readonly int Stage0EnemyIDAddress = 0x3910;
+        private static readonly int StageLength = 0x4000;
+        private static readonly double CHANCE_MOLE = 0.25;
+        private static readonly double CHANCE_PIPI = 0.4;
+        private static readonly double CHANCE_M445 = 0.4;
+        private static readonly double CHANCE_SHRINKSPAWNER = 0.25;
+        private static readonly double CHANCE_SPRINGER = 0.10;
+        private static readonly double CHANCE_TELLY = 0.15;
+        private static readonly int MAX_MOLES = 2;
+        private static readonly int MAX_PIPIS = 5;
+        private static readonly int MAX_M445S = 7;
 
         private List<EnemyType> EnemyTypes { get; set; } = new List<EnemyType>();
         private List<EnemyInstance> EnemyInstances { get; set; } = new List<EnemyInstance>();

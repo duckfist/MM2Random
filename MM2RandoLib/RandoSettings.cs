@@ -18,8 +18,17 @@ namespace MM2Randomizer
         private string hashStringSHA256;
         private string hashValidationMessage;
         private bool isHashValid;
-        public const string ExpectedMD5 = "caaeb9ee3b52839de261fd16f93103e6";
-        public const string ExpectedSHA256 = "27b5a635df33ed57ed339dfc7fd62fc603b39c1d1603adb5cdc3562a0b0d555b";
+        public readonly string[] ExpectedMD5s = new string[]
+        {
+            "caaeb9ee3b52839de261fd16f93103e6", // Mega Man 2 (U)
+            "8e4bc5b03ffbd4ef91400e92e50dd294", // Mega Man 2 (USA)
+        };
+
+        public readonly string[] ExpectedSHA256s = new string[]
+        {
+            "27b5a635df33ed57ed339dfc7fd62fc603b39c1d1603adb5cdc3562a0b0d555b", // Mega Man 2 (U)
+            "49136b412ff61beac6e40d0bbcd8691a39a50cd2744fdcdde3401eed53d71edf", // Mega Man 2 (USA)
+        };
 
         private bool isTournamentMode;
 
@@ -161,8 +170,10 @@ namespace MM2Randomizer
             HashStringSHA256 = hashStrSha256;
             HashStringMD5 = hashStrMd5;
 
-            // Check that the hash matches known hash
-            IsHashValid = (HashStringMD5 == ExpectedMD5 && HashStringSHA256 == ExpectedSHA256);
+            // Check that the hash matches a supported hash
+            List<string> md5s = new List<string>(ExpectedMD5s);
+            List<string> sha256s = new List<string>(ExpectedSHA256s);
+            IsHashValid = (md5s.Contains(HashStringMD5) && sha256s.Contains(HashStringSHA256));
             if (IsHashValid)
             {
                 HashValidationMessage = "ROM checksum is valid, good to go!";

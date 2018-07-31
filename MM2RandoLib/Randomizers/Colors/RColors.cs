@@ -19,7 +19,6 @@ namespace MM2Randomizer.Randomizers.Colors
         private List<ColorSet> StageSelectColorSets { get; set; }
 
         private static int MegaManColorAddressU = 0x03d314;
-        private static int MegaManColorAddressJ = 0x03d311;
 
         public RColors() { }
 

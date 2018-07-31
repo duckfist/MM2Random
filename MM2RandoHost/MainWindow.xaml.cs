@@ -63,7 +63,7 @@ namespace MM2RandoHost
             Debug.WriteLine("\nSeed: " + seedAlpha + "\n");
 
             // Create log file if left shift is pressed while clicking
-            if (Keyboard.IsKeyDown(Key.LeftShift))
+            if (Keyboard.IsKeyDown(Key.LeftShift) && !ViewModel.RandoSettings.IsTournamentMode)
             {
                 //string logFileName = (ViewModel.RandoSettings.IsJapanese) ? "RM2" : "MM2";
                 string logFileName = "MM2";
@@ -132,7 +132,8 @@ namespace MM2RandoHost
 
         private void tbxSource_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            TryFile(ViewModel.RandoSettings.SourcePath);
+            if (ViewModel != null)
+                TryFile(ViewModel.RandoSettings.SourcePath);
         }
 
         private void Window_Drop(object sender, DragEventArgs e)

@@ -72,10 +72,10 @@ namespace MM2Randomizer
             ///==========================
             /// "GAMEPLAY SEED" MODULES
             ///==========================
-            // Caution: Depends on weaknesses, but can use default values if its not enabled.
+            // Caution: RWeaknesses depends on this
             randomWeaponBehavior = new RWeaponBehavior();
 
-            // Independent
+            // Depends on RWeaponBehavior (ammo), can use default values
             randomWeaknesses = new RWeaknesses();
 
             // Caution: RText depends on this, but default values will be used if not enabled.
@@ -185,6 +185,13 @@ namespace MM2Randomizer
             // Create randomization patch
             Patch = new Patch();
 
+            // In tournament mode, offset the seed by 1 call, making seeds mode-dependent
+            if (Settings.IsTournamentMode)
+            {
+                Random.Next();
+                RNGCosmetic.Next();
+            }
+
             // Conduct randomization of Gameplay Modules
             foreach (IRandomizer randomizer in Randomizers)
             {
@@ -195,7 +202,6 @@ namespace MM2Randomizer
             // Conduct randomization of Cosmetic Modules
             foreach (IRandomizer cosmetic in CosmeticRandomizers)
             {
-                RNGCosmetic = new Random(Seed);
                 cosmetic.Randomize(Patch, RNGCosmetic);
                 Debug.WriteLine(cosmetic);
             }

@@ -60,10 +60,10 @@ namespace MM2Randomizer.Utilities
 
                 // Draw Hash symbols
                 // Use $B8-$BF with custom gfx, previously unused tiles after converting from MM2U to RM2
-                p.Add(0x037367, (byte)(0xB0), "Title Screen Flags");
-                p.Add(0x037368, (byte)(0xB1), "Title Screen Flags");
-                p.Add(0x037369, (byte)(0xB2), "Title Screen Flags");
-                p.Add(0x03736A, (byte)(0xB3), "Title Screen Flags");
+                //p.Add(0x037367, (byte)(0xB0), "Title Screen Flags");
+                //p.Add(0x037368, (byte)(0xB1), "Title Screen Flags");
+                //p.Add(0x037369, (byte)(0xB2), "Title Screen Flags");
+                //p.Add(0x03736A, (byte)(0xB3), "Title Screen Flags");
             }
         }
 

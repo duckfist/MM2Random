@@ -18,6 +18,13 @@ namespace MM2RandoHost.ViewModels
         {
             RandoSettings = new RandoSettings();
             RandomMM2.Settings = RandoSettings;
+
+            // Try to load "MM2.nes" if one is in the local directory already to save time
+            if (System.IO.File.Exists("MM2.nes"))
+            {
+                RandoSettings.ValidateFile("MM2.nes");
+                IsShowingHint = false;
+            }
         }
 
         public RandoSettings RandoSettings

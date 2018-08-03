@@ -6,13 +6,16 @@
         xmlns:converters="clr-namespace:MM2RandoHost.Converters"
         xmlns:primitives="clr-namespace:MM2RandoHost.Views.Primitives"
         mc:Ignorable="d"
-        Height="585" Width="420" AllowDrop="True"
+        Height="585" Width="420"
+        AllowDrop="True"
         BorderThickness="1"
         BorderBrush="{DynamicResource Brush_WindowBorder}"
         Title="{Binding Path=RandoSettings.AssemblyVersion, StringFormat={}MM2 Randomizer v{0}}" 
         Style="{StaticResource Style_CustomWindow}"
         DataContext="{StaticResource MainWindowVM}"
-        Drop="Window_Drop" DragEnter="Window_DragEnter" DragLeave="Window_DragLeave"
+        Drop="Window_Drop" 
+        DragEnter="Window_DragEnter" 
+        DragLeave="Window_DragLeave"
         MouseDown="CustonWindow_MouseDown"
         >
     <primitives:CustomWindow.Resources>
@@ -76,7 +79,8 @@
                     <Button Width="24" Margin="0,0" Name="btnBrowse" Background="{StaticResource Brush_PanelBg_1}" Click="btnBrowse_Click">
                         <TextBlock Text="..."/>
                     </Button>
-                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="tbxSource" AllowDrop="True" Margin="4,0,0,0"
+                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                             Name="tbxSource" AllowDrop="True" Margin="4,0,0,0"
                             Text="{Binding Path=RandoSettings.SourcePath, UpdateSourceTrigger=PropertyChanged}" 
                             TextChanged="tbxSource_TextChanged"
                             Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
@@ -107,22 +111,30 @@
         <!--Seed textbox-->
         <DockPanel Grid.Row="2" HorizontalAlignment="Stretch" IsEnabled="{Binding RandoSettings.IsSourcePathValid}">
             <TextBlock Text="Seed:" DockPanel.Dock="Left"/>
-            <TextBox Name="tbxSeed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,3,3,3"
-                        Text="{Binding Path=RandoSettings.SeedString, UpdateSourceTrigger=PropertyChanged}" 
-                        Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
+            <TextBox Name="tbxSeed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                     Margin="0,3,3,3"
+                     Text="{Binding Path=RandoSettings.SeedString, UpdateSourceTrigger=PropertyChanged}" 
+                     Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
         </DockPanel>
 
         <!--Buttons-->
         <StackPanel Grid.Row="3" Orientation="Vertical" 
             IsEnabled="{Binding RandoSettings.IsSourcePathValid}">
-            <Button Name="btnCreateROM" Height="30" Margin="3"
-                    IsEnabled="{Binding Path=RandoSettings.IsSeedValid}" Click="btnCreateROM_Click" >
+            <Button Name="btnCreateROM" Height="30" Margin="2"
+                    IsEnabled="{Binding Path=RandoSettings.IsSeedValid}" 
+                    Click="btnCreateROM_Click"
+                    Style="{StaticResource Style_Button_Normal}"
+                    >
                 Create From Given Seed
             </Button>
-            <Button Name="btnCreateRandom" Click="btnCreateRandom_Click" Height="30" Margin="3">
+            <Button Name="btnCreateRandom" Click="btnCreateRandom_Click" 
+                    Height="30" Margin="2"
+                    Style="{StaticResource Style_Button_Normal}">
                 Create From Random Seed
             </Button>
-            <Button Name="btnOpenFolder" Click="btnOpenFolder_Click" Height="30" Margin="3" >
+            <Button Name="btnOpenFolder" Click="btnOpenFolder_Click" Height="30" Margin="2" 
+                    IsEnabled="{Binding HasGeneratedAROM}"
+                    Style="{StaticResource Style_Button_Normal}">
                 Open Containing Folder
             </Button>
         </StackPanel>
@@ -221,6 +233,12 @@
                                     Checked="chkBurstChaser_Checked"/>
                         </Grid>
 
+                        <Grid x:Name="gridChkStageNameHidden" DockPanel.Dock="Top">
+                            <CheckBox Content="Hide Stage Names" 
+                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
+                                    IsChecked="{Binding RandoSettings.IsStageNameHidden}" />
+                        </Grid>
+
                     </DockPanel>
                 </Grid>
             </TabItem>
@@ -285,6 +303,9 @@
 
                             <DataTrigger Binding="{Binding ElementName=gridChkFastText, Path=IsMouseOver}" Value="True">
                                 <Setter Property="Text" Value="On the Weapon Get screen, decrease the write-delay of each letter from 7 to 4 frames."/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=gridChkStageNameHidden, Path=IsMouseOver}" Value="True">
+                                <Setter Property="Text" Value="On the stage select screen, do not display the name of the stage by each portrait."/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=gridChkBurstChaser, Path=IsMouseOver}" Value="True">
                                 <Setter Property="Text" Value="Increase movement speed."/>

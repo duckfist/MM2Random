@@ -174,12 +174,30 @@ namespace MM2Randomizer.Randomizers.Stages
                 // Change portrait destination
                 stage.PortraitDestinationNew = StageSelect[newStageOrder[i]].PortraitDestinationOriginal;
 
-                // Change portrait text to match new destination
-                string newlabel = StageSelect[newStageOrder[i]].TextValues;
-                for (int j = 0; j < newlabel.Length; j++)
+                // Erase the portrait text if StageNameHidden flag is set
+                if (RandomMM2.Settings.IsStageNameHidden)
                 {
-                    char c = newlabel[j];
-                    Patch.Add((int)stage.TextAddress + j, RText.CreditsCipher[c], $"Stage Select Portrait Text");
+                    for (int k = 0; k < 6; k++)
+                    {
+                        // Write in a blank space at each letter ('f' by my cipher)
+                        Patch.Add((int)stage.TextAddress + k, RText.CreditsCipher['f'], $"Hide Stage Select Portrait Text");
+                    }
+
+                    for (int k = 0; k < 3; k++)
+                    {
+                        // Write in a blank space over "MAN"; 32 8-pixel tiles until the next row, 3 tiles until "MAN" text
+                        Patch.Add((int)stage.TextAddress + 32 + 3 + k, RText.CreditsCipher['f'], $"Hide Stage Select Portrait Text");
+                    }
+                }
+                // Change portrait text to match new destination
+                else
+                {
+                    string newlabel = StageSelect[newStageOrder[i]].TextValues;
+                    for (int j = 0; j < newlabel.Length; j++)
+                    {
+                        char c = newlabel[j];
+                        Patch.Add((int)stage.TextAddress + j, RText.CreditsCipher[c], $"Stage Select Portrait Text");
+                    }
                 }
 
                 debug.AppendLine($"{Enum.GetName(typeof(EStageID), stage.PortraitDestinationOriginal)}'s portrait -> {Enum.GetName(typeof(EStageID), StageSelect[i].PortraitDestinationNew)} stage");

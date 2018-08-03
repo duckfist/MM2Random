@@ -299,6 +299,8 @@ namespace MM2Randomizer
         /// </summary>
         public bool FastText { get; set; }
 
+        public bool IsStageNameHidden { get; set; }
+
         /// <summary>
         /// TODO
         /// </summary>
@@ -328,6 +330,7 @@ namespace MM2Randomizer
                         IsTilemapChangesEnabled = true;
 
                         FastText = true;
+                        IsStageNameHidden = false;
                         BurstChaserMode = false;
                     }
                 }

@@ -80,6 +80,9 @@ namespace MM2RandoHost
                     sw.Write(RandomMM2.Patch.GetStringSortedByAddress());
                 }
             }
+
+            // Flag UI as having created a ROM, enabling the "open folder" button
+            ViewModel.HasGeneratedAROM = true;
         }
 
         private void btnCreateRandom_Click(object sender, RoutedEventArgs e)

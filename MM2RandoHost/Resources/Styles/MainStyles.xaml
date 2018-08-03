@@ -38,6 +38,42 @@
         </Setter>
     </Style>
 
+    <!--Button Styles-->
+    <Style x:Key="Style_Button_Normal" TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource Brush_PanelBg_1}" />
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="Foreground" Value="{DynamicResource Brush_TextNormal}" />
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentControl x:Name="_Content"
+							Content="{TemplateBinding Content}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+							ContentTemplate="{TemplateBinding ContentTemplate}"
+ 							Focusable="False" 
+							Margin="10,0"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource Brush_TextDisabled}" />
+                <Setter Property="Background" Value="{DynamicResource Brush_PanelBg_2_Disabled}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource Brush_Border_MouseOver}" />
+                <Setter Property="Background" Value="{DynamicResource Brush_Fill_MouseOver}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!--CheckBox styles-->
     <SolidColorBrush x:Key="CheckBoxFillNormal" Color="Transparent"/>
     <SolidColorBrush x:Key="CheckBoxStroke" Color="#999999"/>
@@ -83,7 +119,7 @@
                             <Setter Property="Padding" Value="4,0,0,0"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{DynamicResource Brush_TextDim}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Brush_TextDisabled}"/>
                             <Setter TargetName="checkbox_decorator_border" Property="Background" Value="{DynamicResource Brush_PanelBg_1}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>

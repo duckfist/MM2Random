@@ -1,6 +1,6 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.4.0 beta
+version 0.4.1 beta
 
 vvv READ THIS BEFORE PLAYING vvvv
 vvv READ THIS BEFORE PLAYING vvvv
@@ -158,13 +158,23 @@ Development Tools
 - visine 2.8.2 by -=Fx3=- http://www.romhacking.net/utilities/172/
 - Rockman 2 Editor 1.0 by Rock5easily http://www.romhacking.net/utilities/836/
 - Tile Molestor Mod 0.19 http://www.romhacking.net/utilities/991/
-- Visual Studio Community 2015
+- Visual Studio Community 2017
 
-Special thanks to Binarynova and RaneofSoTN for their code contributions  
+Special thanks to Binarynova, RaneofSoTN, and Coltaho for their code contributions . 
 
 -----------------------------------------------------------------------------------------------
   
 Changelog
+
+v0.4.1-beta
+- Re-enabled user customizable flags, removing old obsolete flags and adding new ones
+- Added flag to hide stage names from the stage select screen
+- Created a partition of "Cosmetic Flags" that don't impact randomization logic
+- Added a "Tournament Mode", which selects preset flags, disables spoilers, and changes seed
+- Now requires the user to provide a ROM again. Sorry!
+- Added checksum validation of user's ROM, with 2 different MM2 dumps supported for now
+- Redesigned WPF GUI: New layout, custom styles, bindings
+- Updated assemblies from .NET Framework 4.0 to 4.5.
 
 v0.4.0-beta
 - E-Tanks in your inventory now persist through Game Overs

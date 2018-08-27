@@ -230,6 +230,7 @@ namespace MM2Randomizer
             MiscHacks.FixDamageValues(Patch);
             MiscHacks.SetETankKeep(Patch);
             MiscHacks.SkipItemGetPages(Patch);
+            MiscHacks.PreventETankUseAtFullLife(Patch);
 
             // Create file name based on seed and game region
             string seedAlpha = SeedConvert.ConvertBase10To26(Seed);
@@ -242,7 +243,7 @@ namespace MM2Randomizer
                 //File.Copy(Settings.SourcePath, TempFileName, true);
                 //using (Stream stream = assembly.GetManifestResourceStream("MM2Randomizer.Resources.MM2.nes"))
                 // Load user provided ROM
-                using (Stream stream = new FileStream(Settings.SourcePath, FileMode.Open))
+                using (Stream stream = new FileStream(Settings.SourcePath, FileMode.Open, FileAccess.Read))
                 {
                     using (Stream output = File.OpenWrite(TempFileName))
                     {

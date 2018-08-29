@@ -149,7 +149,7 @@ namespace MM2Randomizer
             // SHA256
             using (var sha = new System.Security.Cryptography.SHA256Managed())
             {
-                using (FileStream fs = new FileStream(path, FileMode.Open))
+                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
                     byte[] hashSha256 = sha.ComputeHash(fs);
                     hashStrSha256 = BitConverter.ToString(hashSha256).Replace("-", String.Empty).ToLowerInvariant();
@@ -159,7 +159,7 @@ namespace MM2Randomizer
             // MD5
             using (var md5 = System.Security.Cryptography.MD5.Create())
             {
-                using (FileStream fs = new FileStream(path, FileMode.Open))
+                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
                     var hashMd5 = md5.ComputeHash(fs);
                     hashStrMd5 = BitConverter.ToString(hashMd5).Replace("-", "").ToLowerInvariant();

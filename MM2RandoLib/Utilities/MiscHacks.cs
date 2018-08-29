@@ -226,5 +226,77 @@ namespace MM2Randomizer.Utilities
             p.Add(0x3A563, 0xEA, "Disable Changkey Maker palette swap 2");
             p.Add(0x3A564, 0xEA, "Disable Changkey Maker palette swap 2");
         }
+
+        /// <summary>
+        /// Prevents E-Tank use when MegaMan has full life.
+        /// </summary>
+        /// <param name="p">Patch to apply the data to.</param>
+        public static void PreventETankUseAtFullLife(Patch p)
+        {
+            // Original E-Tank Menu Command begins at 0D:9281:
+            // $9281: Menu Page and Menu Position Checking.        
+            // $9292:A5 A7     LDA $00A7 ;$00A7 is ETankCount
+            // $9294:F0 DE     BEQ $9274 ;Return if ETankCount == 0          
+            // $9296:C6 A7     DEC $00A7 ;Decrement ETankCount <=== Replacing this line.
+            // $9298:AD C0 06  LDA $06C0 ;$06C0 is Life
+            // $929B:C9 1C     CMP #$1C
+            // $929D:F0 D5     BEQ $9274 ;Return if Life == 28
+            // while (Life != 28)
+            // {
+            //      $929F:A5 1C     LDA $001C ;$001C is a FrameCounter.
+            //      $92A1:29 03     AND #$03
+            //      $92A3:D0 08     BNE $92AD ;if FrameCounter % 4 != 0 JMP $92AD
+            //      if(FrameCounter % 4 == 0)
+            //      {
+            //           $92A5: EE C0 06 INC Life  ;Raise Life by 1.
+            //           $92A8: A9 28    LDA #$28
+            //           $92AA: 20 51 C0 JSR $C051 ;Play Life Gain Sound
+            //      }
+            //
+            //      ; Not sure what the next 2 commands are doing.
+            //      ; Seem like part of the reglar game/draw loop since FrameCounter is updated.
+            //      $92AD: 20 96 93 JSR $9396
+            //      $92B0: 20 AB C0 JSR $C0AB
+            //      $92B3: 4C 98 92 JMP $9298 ;Loop while (Life != 28)
+            // }
+
+            // Change $9296 to call a subroutine. Choosing $BF77 for the location.
+            // $9296:20 77 BF   JSR $BF77
+            // ---
+            // $BF77:AD C0 06   LDA $06C0 ;$06C0 is Life
+            // $BF7A:C9 1C      CMP #$1C
+            // $BF7C:F0 02      BEQ $BF81 ;if(Life == 28) goto RTS
+            // $BF7E:C6 A7      DEC $00A7 ;Decrement ETankCount
+            // $BF81:60         RTS 
+
+            int prgOffset = 0x30010 - 0x4000;
+            // Inject new jump subroutine at 0D:9296 (should be 0x352A6).
+            int jsrLocation = 0x9296 + prgOffset;
+            var jsrBytes = new byte[]
+            {
+                0x20, 0x77, 0xBF,   // JSR $BF77
+            };
+            for(int offset = 0; offset < jsrBytes.Length; ++offset)
+            {
+                p.Add(jsrLocation + offset, jsrBytes[offset], "Prevent E-Tank Use at Full Life");
+            }
+
+            // Subroutine to decrement E-Tank Count. Skips decrement if Life == 28.
+            var eTankSubroutineBytes = new byte[]
+            {
+                0xAD, 0xC0, 0x06,       // LDA $06C0 ;$06C0 is Life
+                0xC9, 0x1C,             // CMP #$1C
+                0xF0, 0x02,             // BEQ 2 ;if(Life == 28) goto RTS
+                0xC6, 0xA7,             // DEC $00A7 ;Decrement ETankCount
+                0x60,                   // RTS 
+            };
+
+            // Start at 0D:BF77 (should be 0x37F87).
+            int etankLocation = 0xBF77 + prgOffset;
+            for(int offset = 0; offset < eTankSubroutineBytes.Length; ++offset)
+            {
+                p.Add(etankLocation + offset, eTankSubroutineBytes[offset], "Prevent E-Tank Use at Full Life");
+            }
+        }
     }
 }

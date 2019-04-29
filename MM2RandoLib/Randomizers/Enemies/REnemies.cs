@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+using MM2Randomizer.Properties;
 using MM2Randomizer.Enums;
 using MM2Randomizer.Patcher;
 
@@ -58,7 +59,7 @@ namespace MM2Randomizer.Randomizers.Enemies
         /// </summary>
         private void ReadEnemyInstancesFromFile()
         {
-            string[] lines = Properties.Resources.enemylist.Split(new string[] { Environment.NewLine }, StringSplitOptions.None );
+            string[] lines = Resources.enemylist.Split(new string[] { Environment.NewLine }, StringSplitOptions.None );
 
             foreach (string line in lines)
             {

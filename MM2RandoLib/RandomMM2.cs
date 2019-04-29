@@ -47,8 +47,10 @@ namespace MM2Randomizer
         /// Perform the randomization based on the seed and user-provided settings, and then
         /// generate the new ROM.
         /// </summary>
-        public static string RandomizerCreate(bool fromClientApp)
+        public static string RandomizerCreate(bool fromClientApp, int seed)
         {
+            Seed = seed;
+
             // List of randomizer modules to use; will add modules based on checkbox states
             Randomizers = new List<IRandomizer>();
             CosmeticRandomizers = new List<IRandomizer>();
@@ -186,7 +188,7 @@ namespace MM2Randomizer
             Patch = new Patch();
 
             // In tournament mode, offset the seed by 1 call, making seeds mode-dependent
-            if (Settings.IsTournamentMode)
+            if (Settings.IsSpoilerFree)
             {
                 Random.Next();
                 RNGCosmetic.Next();
@@ -225,7 +227,7 @@ namespace MM2Randomizer
             {
                 MiscHacks.SetBurstChaser(Patch);
             }
-            MiscHacks.DrawTitleScreenChanges(Patch, Seed, Settings.IsTournamentMode);
+            MiscHacks.DrawTitleScreenChanges(Patch, Seed, Settings.IsSpoilerFree);
             MiscHacks.SetWily5NoMusicChange(Patch);
             MiscHacks.FixDamageValues(Patch);
             MiscHacks.SetETankKeep(Patch);
@@ -237,7 +239,6 @@ namespace MM2Randomizer
             string newfilename = $"MM2-RNG-{seedAlpha}.nes";
 
             // Apply patch and deliver the ROM; different routine for client vs. web app
-            var assembly = Assembly.GetExecutingAssembly();
             if (fromClientApp)
             {
                 //File.Copy(Settings.SourcePath, TempFileName, true);

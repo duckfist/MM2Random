@@ -152,54 +152,46 @@
                         <!--CheckBoxes are placed inside Grids, so we can have MouseOver behavior while CheckBoxes are disabled-->
                         <Grid x:Name="gridChkCoreModules">
                             <CheckBox Content="Randomizer Core" IsEnabled="False" 
-                                IsChecked="{Binding IsCoreModulesChecked}"/>
+                                IsChecked="{Binding IsCoreModulesChecked, Mode=OneWay}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkWeaponBehave">
                             <CheckBox Content="Weapon Behavior" 
-                                IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                 IsChecked="{Binding Path=RandoSettings.IsWeaponBehaviorRandom}" Grid.ColumnSpan="2" />
                         </Grid>
 
                         <Grid x:Name="gridChkWeakness">
                             <CheckBox Content="Boss Weaknesses" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsWeaknessRandom}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkBossRoom">
                             <CheckBox Content="Boss Room" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsBossInBossRoomRandom}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkBossAI">
                             <CheckBox Content="Boss AI" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsBossAIRandom}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkItems">
                             <CheckBox Content="Items 1, 2, and 3 Get" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsItemsRandom}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkEnemies">
                             <CheckBox Content="Enemy Locations" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsEnemiesRandom}" />
                         </Grid>
 
                         <Grid x:Name="gridChkEnemyWeaknesses">
                             <CheckBox Content="Enemy Weaknesses" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsEnemyWeaknessRandom}" />
                         </Grid>
 
                         <Grid x:Name="gridChkTilemap">
                             <CheckBox Content="Stage Layouts" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsTilemapChangesEnabled}" />
                         </Grid>
 
@@ -209,7 +201,8 @@
 
                         <CheckBox Name="chkTournamentMode" Content="Tournament Mode" DockPanel.Dock="Bottom"
                                   HorizontalAlignment="Right"
-                                  IsChecked="{Binding Path=RandoSettings.IsTournamentMode}">
+                                  Visibility="Hidden"
+                                  IsChecked="{Binding Path=RandoSettings.IsSpoilerFree}">
                             <CheckBox.LayoutTransform>
                                 <TransformGroup>
                                     <ScaleTransform ScaleX="1.25" ScaleY="1.25"/>
@@ -222,20 +215,17 @@
 
                         <Grid x:Name="gridChkFastText" DockPanel.Dock="Top">
                             <CheckBox Content="Faster Text" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.FastText}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkBurstChaser" DockPanel.Dock="Top">
                             <CheckBox Content="Burst Chaser Mode" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.BurstChaserMode}" 
                                     Checked="chkBurstChaser_Checked"/>
                         </Grid>
 
                         <Grid x:Name="gridChkStageNameHidden" DockPanel.Dock="Top">
                             <CheckBox Content="Hide Stage Names" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding RandoSettings.IsStageNameHidden}" />
                         </Grid>
 

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Diagnostics;
 
 using MM2Randomizer.Enums;
 using MM2Randomizer.Patcher;
-using System.Text;
-using System.Linq;
 
 namespace MM2Randomizer.Randomizers
 {
@@ -16,23 +17,25 @@ namespace MM2Randomizer.Randomizers
         public static readonly int INTRO_LINE3_MAXCHARS = 11;
         public static readonly int INTRO_LINE4_MAXCHARS = 25;
 
-        public static readonly int offsetLetters = 0x037e22;
-        public static readonly int offsetAtomicFire = 0x037e2e;
+        public static readonly int offsetLetters         = 0x037E22;
+        public static readonly int offsetAtomicFire      = 0x037E2E;
         public static readonly int offsetCutscenePage1L1 = 0x036D56;
-        public static readonly int offsetIntroLine1 = 0x036EA8;
-        public static readonly int offsetIntroLine2 = 0x036EBE;
-        public static readonly int offsetIntroLine3 = 0x036EE0;
-        public static readonly int offsetIntroLine4 = 0x036EEE;
+        public static readonly int offsetIntroLine1      = 0x036EA8;
+        public static readonly int offsetIntroLine2      = 0x036EBE;
+        public static readonly int offsetIntroLine3      = 0x036EE0;
+        public static readonly int offsetIntroLine4      = 0x036EEE;
 
-        private List<string> countryNames = new List<string>();
-        private List<string> companyNames = new List<string>();
-        private string[] newWeaponNames = new string[8];
-        private char[] newWeaponLetters = new char[9]; // Original order: P H A W B Q F M C
+        private readonly List<string> countryNames = new List<string>();
+        private readonly List<string> companyNames = new List<string>();
+        private readonly string[] newWeaponNames = new string[8];
+        private readonly char[] newWeaponLetters = new char[9]; // Original order: P H A W B Q F M C
 
         public RText() { }
 
         public void Randomize(Patch p, Random r)
         {
+            Debug.Assert(AssertIntroTexts());
+
             int numIntros = IntroTexts.GetLength(0);
             int introIndex = r.Next(numIntros);
             char[] introText = IntroTexts[introIndex].ToCharArray();
@@ -440,6 +443,11 @@ namespace MM2Randomizer.Randomizers
         };
         // STAFF == D3 D4 C1 C6 C6
 
+        /// <summary>
+        /// Verify that the hard-coded IntroTexts array has strings of the correct length (270 chars)
+        /// and that each char is a valid, renderable character in the intro sequence.
+        /// </summary>
+        /// <returns>True if all text in the array is of the correct length and has valid characters.</returns>
         static bool AssertIntroTexts()
         {
             foreach (string intro in IntroTexts)
@@ -729,8 +737,6 @@ namespace MM2Randomizer.Randomizers
 
         private string GetRandomName(Random r)
         {
-            string finalName = "";
-
             // Start with random list
             int l = r.Next(1);
             string name0, name1;
@@ -792,6 +798,7 @@ namespace MM2Randomizer.Randomizers
             }
 
             // Handle cases for only one name
+            string finalName;
             if (name0.Length == 0)
             {
                 finalName = name1;

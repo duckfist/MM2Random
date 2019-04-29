@@ -2,7 +2,6 @@
 using MM2Randomizer.Randomizers.Stages.Components;
 using Newtonsoft.Json;
 using System;
-using System.IO;
 
 namespace MM2Randomizer.Randomizers
 {

@@ -62,7 +62,7 @@ namespace MM2Randomizer.Randomizers
                 companyNames.Add(line);
             }
             companyStr = companyNames[r.Next(companyNames.Count)];
-            company = ($"©2018 {companyStr}").ToCharArray();
+            company = ($"©2019 {companyStr}").ToCharArray();
             char[] companyPadded = Enumerable.Repeat(' ', INTRO_LINE1_MAXCHARS).ToArray();
             startChar = (INTRO_LINE1_MAXCHARS - company.Length) / 2;
             for (int i = 0; i < company.Length; i++)

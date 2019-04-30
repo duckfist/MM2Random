@@ -6,6 +6,7 @@ using System.Linq;
 using MM2Randomizer.Properties;
 using MM2Randomizer.Enums;
 using MM2Randomizer.Patcher;
+using MM2Randomizer.Utilities;
 
 namespace MM2Randomizer.Randomizers.Enemies
 {
@@ -51,7 +52,7 @@ namespace MM2Randomizer.Randomizers.Enemies
             InitializeRooms();
             Execute(p, r);
 
-            Utilities.MiscHacks.DisableChangkeyMakerPaletteSwap(p);
+            MiscHacks.DisableChangkeyMakerPaletteSwap(p);
         }
 
         /// <summary>

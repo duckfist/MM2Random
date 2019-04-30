@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Reflection;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace MM2Randomizer
 {
@@ -244,6 +243,23 @@ namespace MM2Randomizer
         public bool IsWeaponBehaviorRandom { get; set; }
 
         #endregion
+
+        public string GetFlagsString()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (Is8StagesRandom)         sb.Append('A');    else sb.Append(' ');
+            if (IsWeaponsRandom)         sb.Append('B');    else sb.Append(' ');
+            if (IsTeleportersRandom)     sb.Append('C');    else sb.Append(' ');
+            if (IsWeaponBehaviorRandom)  sb.Append('D');    else sb.Append(' ');
+            if (IsWeaknessRandom)        sb.Append('E');    else sb.Append(' ');
+            if (IsBossInBossRoomRandom)  sb.Append('F');    else sb.Append(' ');
+            if (IsBossAIRandom)          sb.Append('G');    else sb.Append(' ');
+            if (IsItemsRandom)           sb.Append('H');    else sb.Append(' ');
+            if (IsEnemiesRandom)         sb.Append('I');    else sb.Append(' ');
+            if (IsEnemyWeaknessRandom)   sb.Append('J');    else sb.Append(' ');
+            if (IsTilemapChangesEnabled) sb.Append('K');    else sb.Append(' ');
+            return sb.ToString();
+        }
 
         /// <summary>
         /// This method checks that a file exists and then compares its checksum with known good Mega Man 2 ROMs.

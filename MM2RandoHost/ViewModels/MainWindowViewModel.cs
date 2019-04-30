@@ -1,13 +1,9 @@
 ﻿using MM2Randomizer;
+using MM2Randomizer.Utilities;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
-using MM2Randomizer.Utilities;
+using System.Diagnostics;
 
 namespace MM2RandoHost.ViewModels
 {
@@ -67,7 +63,7 @@ namespace MM2RandoHost.ViewModels
             // Get A-Z representation of seed
             string seedAlpha = SeedConvert.ConvertBase10To26(RandomMM2.Seed);
             RandoSettings.SeedString = seedAlpha;
-            System.Diagnostics.Debug.WriteLine("\nSeed: " + seedAlpha + "\n");
+            Debug.WriteLine("\nSeed: " + seedAlpha + "\n");
 
             // Create log file if left shift is pressed while clicking
             if (tryCreateLogFile && !RandoSettings.IsSpoilerFree)

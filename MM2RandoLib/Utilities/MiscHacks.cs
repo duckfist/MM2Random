@@ -3,41 +3,41 @@ using MM2Randomizer.Patcher;
 using MM2Randomizer.Randomizers;
 using MM2Randomizer.Randomizers.Stages;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MM2Randomizer.Utilities
 {
     public static class MiscHacks
     {
-        public static void DrawTitleScreenChanges(Patch p, int seed, bool isTourney)
+        public static void DrawTitleScreenChanges(Patch p, int seed, RandoSettings settings)
         {
             // Draw version number
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(RandomMM2));
-            string version = assembly.GetName().Version.ToString();
-
+            string version = "VER.|" + assembly.GetName().Version.ToString();
             for (int i = 0; i < version.Length; i++)
             {
-                byte value = TitleChars.GetChar(version[i]).ID;
-                p.Add(0x0373C7 + i, value, "Title Screen Version Number");
+                byte value = RText.IntroCipher[version[i]];
+                p.Add(0x037402 + i, value, "Title Screen Version Number");
             }
 
             // Draw seed
-            string seedAlpha = SeedConvert.ConvertBase10To26(seed);
+            string seedAlpha = "SEED|" + SeedConvert.ConvertBase10To26(seed);
             for (int i = 0; i < seedAlpha.Length; i++)
             {
-                char ch = seedAlpha.ElementAt(i);
-                byte charIndex = (byte)(Convert.ToByte(ch) - Convert.ToByte('A'));
-
-                // 'A' starts at C1 in the pattern table
-                p.Add(0x037387 + i, (byte)(0xC1 + charIndex), "Title Screen Seed");
+                byte value = RText.IntroCipher[seedAlpha[i]];
+                p.Add(0x0373C2 + i, value, "Title Screen Seed");
             }
 
             // Draw flags
+            string flags = "FLAG|" + settings.GetFlagsString();
+            for (int i = 0; i < flags.Length; i++)
+            {
+                byte value = RText.IntroCipher[flags[i]];
+                p.Add(0x037382 + i, value, $"Title Screen Flags: {flags[i]}");
+            }
 
-            // Draw tournament mode
-            if (isTourney)
+            // Draw tournament mode/spoiler free information
+            if (settings.IsSpoilerFree)
             {
                 // 0x037367 = Start of row beneath "seed"
                 string flagsAlpha = "TOURNAMENT";

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Diagnostics;
-using System.Reflection;
 
 using MM2Randomizer.Patcher;
-using MM2Randomizer.Enums;
 using MM2Randomizer.Randomizers;
 using MM2Randomizer.Randomizers.Enemies;
 using MM2Randomizer.Randomizers.Colors;
@@ -227,7 +224,7 @@ namespace MM2Randomizer
             {
                 MiscHacks.SetBurstChaser(Patch);
             }
-            MiscHacks.DrawTitleScreenChanges(Patch, Seed, Settings.IsSpoilerFree);
+            MiscHacks.DrawTitleScreenChanges(Patch, Seed, Settings);
             MiscHacks.SetWily5NoMusicChange(Patch);
             MiscHacks.FixDamageValues(Patch);
             MiscHacks.SetETankKeep(Patch);

@@ -527,7 +527,7 @@ namespace MM2Randomizer.Randomizers
 
             //0x02CDEE - Clash Bomber velocity, 0x06, do from 2 to 8
             rInt = r.Next(7) + 2;
-            Patch.Add(0x02CD2A, (byte)rInt, "Clashman Clash Bomber X-Velocity");
+            Patch.Add(0x02CDEE, (byte)rInt, "Clashman Clash Bomber X-Velocity");
         }
     }
 }

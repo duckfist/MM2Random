@@ -218,7 +218,10 @@ namespace MM2Randomizer
             // Apply final optional gameplay modifications
             if (Settings.FastText)
             {
-                MiscHacks.SetFastText(Patch);
+                MiscHacks.SetFastWeaponGetText(Patch);
+                MiscHacks.SetFastReadyText(Patch);
+                MiscHacks.SetFastWilyMap(Patch);
+                MiscHacks.SkipItemGetPages(Patch);
             }
             if (Settings.BurstChaserMode)
             {
@@ -226,10 +229,10 @@ namespace MM2Randomizer
             }
             MiscHacks.DrawTitleScreenChanges(Patch, Seed, Settings);
             MiscHacks.SetWily5NoMusicChange(Patch);
-            MiscHacks.FixDamageValues(Patch);
+            MiscHacks.NerfDamageValues(Patch);
             MiscHacks.SetETankKeep(Patch);
-            MiscHacks.SkipItemGetPages(Patch);
             MiscHacks.PreventETankUseAtFullLife(Patch);
+            MiscHacks.SetFastBossDefeatTeleport(Patch);
 
             // Create file name based on seed and game region
             string seedAlpha = SeedConvert.ConvertBase10To26(Seed);

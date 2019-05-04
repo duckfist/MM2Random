@@ -265,6 +265,13 @@ namespace MM2Randomizer.Utilities
             }
         }
 
+        // TODO;
+        public static void FixWeaponLetters(Patch Patch, RWeaponGet randomWeaponGet, RStages randomStages, RText rText)
+        {
+            int[] shuffledWeapons = randomWeaponGet.GetShuffleIndexPermutation();
+            rText.FixWeaponLetters(Patch, shuffledWeapons);
+        }
+
         /// <summary>
         /// No longer needed since press is included in enemy damage rando table
         /// </summary>

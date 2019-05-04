@@ -11,29 +11,33 @@ namespace MM2Randomizer.Utilities
     {
         public static void DrawTitleScreenChanges(Patch p, int seed, RandoSettings settings)
         {
+            // Adjust cursor positions
+            p.Add(0x0362D4, 0x90, "Title screen Cursor top position"); // default 0x98
+            p.Add(0x0362D5, 0xA0, "Title screen Cursor bottom position"); // default 0xA8
+
             // Draw version number
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(RandomMM2));
-            string version = "VER.|" + assembly.GetName().Version.ToString();
+            string version = assembly.GetName().Version.ToString();
             for (int i = 0; i < version.Length; i++)
             {
                 byte value = RText.IntroCipher[version[i]];
-                p.Add(0x037402 + i, value, "Title Screen Version Number");
+                p.Add(0x037408 + i, value, "Title Screen Version Number");
             }
 
             // Draw seed
-            string seedAlpha = "SEED|" + SeedConvert.ConvertBase10To26(seed);
+            string seedAlpha = SeedConvert.ConvertBase10To26(seed);
             for (int i = 0; i < seedAlpha.Length; i++)
             {
                 byte value = RText.IntroCipher[seedAlpha[i]];
-                p.Add(0x0373C2 + i, value, "Title Screen Seed");
+                p.Add(0x0373C8 + i, value, "Title Screen Seed");
             }
 
             // Draw flags
-            string flags = "FLAG|" + settings.GetFlagsString();
+            string flags = settings.GetFlagsString();
             for (int i = 0; i < flags.Length; i++)
             {
                 byte value = RText.IntroCipher[flags[i]];
-                p.Add(0x037382 + i, value, $"Title Screen Flags: {flags[i]}");
+                p.Add(0x037388 + i, value, $"Title Screen Flags: {flags[i]}");
             }
 
             // Draw tournament mode/spoiler free information
@@ -111,8 +115,8 @@ namespace MM2Randomizer.Utilities
         public static void SetFastWilyMap(Patch p)
         {
             // This is the number of frames to wait after drawing the path on the map before fade out.
-            // Default value 0x7D (125 frames), change to 0x01.
-            p.Add(0x0359B8, 0x01, "Fast Wily Map");
+            // Default value 0x7D (125 frames), change to 0x10.
+            p.Add(0x0359B8, 0x10, "Fast Wily Map");
         }
 
         /// <summary>

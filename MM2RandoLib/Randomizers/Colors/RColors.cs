@@ -13,11 +13,6 @@ namespace MM2Randomizer.Randomizers.Colors
     /// </summary>
     public class RColors : IRandomizer
     {
-        private List<ColorSet> StagesColorSets { get; set; }
-        private List<ColorSet> WeaponColorSets { get; set; }
-        private List<ColorSet> IntroColorSets { get; set; }
-        private List<ColorSet> StageSelectColorSets { get; set; }
-
         private static int MegaManColorAddressU = 0x03d314;
 
         public RColors() { }
@@ -33,7 +28,7 @@ namespace MM2Randomizer.Randomizers.Colors
 
         private void RandomizeMenuColors(Patch p, Random r)
         {
-            StageSelectColorSets = new List<ColorSet>()
+            List<ColorSet> StageSelectColorSets = new List<ColorSet>()
             {
                 new ColorSet() { // Start/Password background color data
                     addresses = new int[] {
@@ -225,6 +220,209 @@ namespace MM2Randomizer.Randomizers.Colors
                 ColorBytes = new List<EColorsHex[]>(StageSelectColorSets[0].ColorBytes),
             });
 
+
+            // Wily Map color set: Blue sky, castle walls, radar dish, shadows
+            ColorSet wilyMap1 = new ColorSet()
+            {
+                addresses = new int[] {
+                    0x035E99, 0x035EA5, // dark 1, 2
+                    0x035EB9, 0x035EBA, // mid 1, 2
+                    0x035EC5, 0x035EDA, // mid 3, 4
+                    0x035ED9, 0x035EE5, // light 1, 2
+                },
+
+                ColorBytes = new List<EColorsHex[]>()
+                {
+                    new EColorsHex[] { // Dark gray
+                        (EColorsHex)0x1d,(EColorsHex)0x1d,
+                        (EColorsHex)0x2d,(EColorsHex)0x2d,
+                        (EColorsHex)0x2d,(EColorsHex)0x2d,
+                        (EColorsHex)0x3d,(EColorsHex)0x3d,
+                    },
+                }
+            };
+            for (int i = 0; i < 12; i++)
+            {
+                // Add the standard range of palette color shades (starting with default blue)
+                wilyMap1.ColorBytes.Add(new EColorsHex[]
+                {
+                    (EColorsHex)0x01 + i,(EColorsHex)0x01 + i,
+                    (EColorsHex)0x11 + i,(EColorsHex)0x11 + i,
+                    (EColorsHex)0x11 + i,(EColorsHex)0x11 + i,
+                    (EColorsHex)0x21 + i,(EColorsHex)0x21 + i,
+                });
+            }
+            StageSelectColorSets.Add(wilyMap1);
+
+
+            // Wily Map color set: Blue sky, castle walls, radar dish, shadows
+            ColorSet wilyMap2 = new ColorSet()
+            {
+                addresses = new int[] {
+                    0x035EA1, // dark orange, $06
+                    0x035EC1, // mid orange, $16
+                    0x035EE1, // lite orange, $26
+                    0x035EC2, // dark red, $05
+                    0x035EE2, // mid red, $15
+                },
+
+                ColorBytes = new List<EColorsHex[]>() { }
+            };
+            for (int i = 1; i <= 12; i++)
+            {
+                // Add the standard range of palette color shades (i = 0 is default colors)
+                wilyMap2.ColorBytes.Add(new EColorsHex[]
+                {
+                    (EColorsHex)0x00 + ((0x06 + i) % 12),
+                    (EColorsHex)0x10 + ((0x06 + i) % 12),
+                    (EColorsHex)0x20 + ((0x06 + i) % 12),
+                    (EColorsHex)0x00 + ((0x05 + i) % 12),
+                    (EColorsHex)0x10 + ((0x05 + i) % 12),
+                });
+            }
+            StageSelectColorSets.Add(wilyMap2);
+
+
+            // Wily Map color set: Wily logo
+            ColorSet wilyMap3 = new ColorSet()
+            {
+                addresses = new int[] {
+                    0x035EA9, 0x035EC9, // dark green 1, mid green 1
+                    0x035EE9, 0x035EEA, // light green 1, dark green 2
+                },
+
+                ColorBytes = new List<EColorsHex[]>()
+                {
+                    new EColorsHex[] { // Dark gray
+                        (EColorsHex)0x1d,(EColorsHex)0x2d,
+                        (EColorsHex)0x3d,(EColorsHex)0x1d,
+                    },
+                }
+            };
+            for (int i = 1; i <= 12; i++)
+            {
+                // Add the standard range of palette color shades (starting with default)
+                wilyMap3.ColorBytes.Add(new EColorsHex[]
+                {
+                    (EColorsHex)0x00 + ((0x09 + i) % 12), (EColorsHex)0x10 + ((0x09 + i) % 12),
+                    (EColorsHex)0x20 + ((0x09 + i) % 12), (EColorsHex)0x00 + ((0x09 + i) % 12),
+                });
+            }
+            StageSelectColorSets.Add(wilyMap3);
+
+
+            // Wily Map color set: Wily logo stroke
+            ColorSet wilyMap4 = new ColorSet()
+            {
+                addresses = new int[] {
+                    0x035EC8, 0x035EE8, // dark orange, mid orange
+                },
+
+                ColorBytes = new List<EColorsHex[]>()
+                {
+                    new EColorsHex[] { // Dark gray
+                        (EColorsHex)0x1d,(EColorsHex)0x2d,
+                    },
+                }
+            };
+            for (int i = 1; i <= 12; i++)
+            {
+                // Add the standard range of palette color shades (starting with default)
+                wilyMap4.ColorBytes.Add(new EColorsHex[]
+                {
+                    (EColorsHex)0x00 + ((0x06 + i) % 12), (EColorsHex)0x10 + ((0x06 + i) % 12),
+                });
+            }
+            StageSelectColorSets.Add(wilyMap4);
+
+
+            // Wily Map color set: Ground/cliffs
+            ColorSet wilyMap5 = new ColorSet()
+            {
+                addresses = new int[] {
+                    0x035EC4, 0x035EE4, 0x035EE6, 0x035BD0, 0x035BD2 // dark brown, mid brown, dark brown, mid brown, dark brown
+                },
+
+                ColorBytes = new List<EColorsHex[]>()
+                {
+                    new EColorsHex[] { // Gray
+                        (EColorsHex)0x2d,(EColorsHex)0x3d,(EColorsHex)0x2d,(EColorsHex)0x3d,(EColorsHex)0x2d
+                    },
+                }
+            };
+            for (int i = 1; i <= 12; i++)
+            {
+                // Add the standard range of palette color shades (starting with default)
+                wilyMap5.ColorBytes.Add(new EColorsHex[]
+                {
+                    (EColorsHex)0x00 + ((0x07 + i) % 12),
+                    (EColorsHex)0x10 + ((0x07 + i) % 12),
+                    (EColorsHex)0x00 + ((0x07 + i) % 12),
+                    (EColorsHex)0x10 + ((0x07 + i) % 12),
+                    (EColorsHex)0x00 + ((0x07 + i) % 12),
+                });
+            }
+            StageSelectColorSets.Add(wilyMap5);
+
+
+            // Wily Map color set: Palette flash
+            ColorSet wilyMap6 = new ColorSet()
+            {
+                addresses = new int[] {
+                    0x035BC4, 0x035BC8, 0x035BCC, 0x035BC5, 0x035BC9, 0x035BCD, 0x035BC6, 0x035BCA, 0x035BCE, 0x035BD1
+                },
+
+                ColorBytes = new List<EColorsHex[]>()
+                {
+                    new EColorsHex[] { // Gray
+                        (EColorsHex)0x2d,(EColorsHex)0x2d,(EColorsHex)0x2d,(EColorsHex)0x2d,(EColorsHex)0x2d,(EColorsHex)0x2d,(EColorsHex)0x2d,(EColorsHex)0x2d,(EColorsHex)0x2d,(EColorsHex)0x2d
+                    },
+                }
+            };
+            for (int i = 1; i <= 12; i++)
+            {
+                wilyMap6.ColorBytes.Add(
+                    new EColorsHex[]{
+                        (EColorsHex)(0x10 + i),
+                        (EColorsHex)(0x10 + i),
+                        (EColorsHex)(0x10 + i),
+                        (EColorsHex)(0x10 + i),
+                        (EColorsHex)(0x10 + i),
+                        (EColorsHex)(0x10 + i),
+                        (EColorsHex)(0x10 + i),
+                        (EColorsHex)(0x10 + i),
+                        (EColorsHex)(0x10 + i),
+                        (EColorsHex)(0x10 + i),
+                    });
+            }
+            StageSelectColorSets.Add(wilyMap6);
+
+
+            // Wily Map color set: Line path
+            ColorSet wilyMap7 = new ColorSet()
+            {
+                addresses = new int[] {
+                    0x035BC2, 0x035BE2
+                },
+
+                ColorBytes = new List<EColorsHex[]>()
+                {
+                    new EColorsHex[] { // Gray
+                        (EColorsHex)0x2C,(EColorsHex)0x2C
+                    },
+                }
+            };
+            for (int i = 1; i <= 12; i++)
+            {
+                wilyMap7.ColorBytes.Add(new EColorsHex[] {
+                    (EColorsHex)(0x10 + i),
+                    (EColorsHex)(0x10 + i),
+                });
+            }
+            StageSelectColorSets.Add(wilyMap7);
+
+
+            // Execute randomization
             for (int i = 0; i < StageSelectColorSets.Count; i++)
             {
                 ColorSet set = StageSelectColorSets[i];
@@ -542,7 +740,7 @@ namespace MM2Randomizer.Randomizers.Colors
 
         private void RandomizeIntroColors(Patch p, Random r)
         {
-            IntroColorSets = new List<ColorSet>()
+            List<ColorSet> IntroColorSets = new List<ColorSet>()
             {
                 new ColorSet() { // Building 1
                     addresses = new int[] {
@@ -707,7 +905,7 @@ namespace MM2Randomizer.Randomizers.Colors
 
         private void RandomizeStageColors(Patch p, Random r)
         {
-            StagesColorSets = new List<ColorSet>()
+            List<ColorSet> StagesColorSets = new List<ColorSet>()
             {
                 #region 01 Heatman
 

@@ -15,7 +15,6 @@ namespace MM2Randomizer.Randomizers
             this.OriginalStartAddress = originalStartAddress;
             this.SongName = songname;
 
-
             // Parse song bytes from hex string
             List<byte> songBytes = new List<byte>();
             while (songBytesStr.Length > 0)
@@ -148,6 +147,11 @@ namespace MM2Randomizer.Randomizers
             ImportMusic(p, r);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="r"></param>
         public void ImportMusic(Patch p, Random r)
         {
             List<Song> songs = new List<Song>();
@@ -300,10 +304,8 @@ namespace MM2Randomizer.Randomizers
                 // Song Data: Traverse stream and change loop pointers
                 for (int i = 0; i < song.SongData.Count; i++)
                 {
-                    //Do not parse loop pointers for vibrato
-                    //TODO: Check the length of the vibrato string, or even better, use separate lists for
-
-                    //each channel!
+                    // Do not parse loop pointers for vibrato
+                    // TODO: Check the length of the vibrato string, or even better, use separate lists for each channel!
                     if (i >= song.VibratoIndex && i < song.VibratoLength)
                     {
                         continue;
@@ -343,6 +345,7 @@ namespace MM2Randomizer.Randomizers
                             song.SongData[i + 2] = (byte)(newLoopOffset % 256);
                             song.SongData[i + 3] = (byte)(newLoopOffset / 256);
 
+                            // Validation check when testing out newly ripped songs to make sure I didn't miss any loops
                             if (relLoopOffset > song.TotalLength || relLoopOffset < 0)
                                 debug.AppendLine($"WARNING: Song {song.SongName} has external loop point.");
 
@@ -376,6 +379,19 @@ namespace MM2Randomizer.Randomizers
                     songStartRom++;
                 }
             }
+
+            // Play a random song during wily 6
+            int w6song = r.Next(11);
+            if (w6song == 10)
+            {
+                // Wily 5 song was saved to 0x0C, don't use 0x0A  
+                p.Add(0x0381ED, 0x0C, $"Random Wily 6 Song: Song #{w6song}, {stageSongs[w6song].SongName}");
+            }
+            else
+            {
+                p.Add(0x0381ED, (byte)w6song, $"Random Wily 6 Song: Song #{w6song}, {stageSongs[w6song].SongName}");
+            }
+            debug.AppendLine($"Wily 6 stage song: {stageSongs[w6song].SongName} (#{w6song})");
 
             // Play a random stage song during the credits
             Song creditsSong = stageSongs[r.Next(numTracks)];

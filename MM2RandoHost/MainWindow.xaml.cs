@@ -33,63 +33,29 @@ namespace MM2RandoHost
         private void btnCreateROM_Click(object sender, RoutedEventArgs e)
         {
             int seed = -1;
+
             // Check if textbox contains a valid seed string
             if (!String.IsNullOrEmpty(tbxSeed.Text))
             {
                 try
                 {
-                    int base10 = SeedConvert.ConvertBase26To10(tbxSeed.Text);
-                    seed = base10;
-
                     // Use the provided seed so that a specific ROM may be generated.
-                    RandomMM2.Seed = seed;
+                    seed = SeedConvert.ConvertBase26To10(tbxSeed.Text);
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("Exception in parsing Seed. Using random seed. Message:/n" + ex.ToString());
+                    Debug.WriteLine("Exception in parsing Seed. Using random seed. Message:/n" + ex.ToString());
                     seed = -1;
                 }
             }
 
             // Perform randomization based on settings, then generate the ROM.
-            RandomMM2.RandomizerCreate(true);
-            UpdateSeedString(e);
-        }
-
-        private void UpdateSeedString(RoutedEventArgs e)
-        {
-            string seedAlpha = SeedConvert.ConvertBase10To26(RandomMM2.Seed);
-            ViewModel.RandoSettings.SeedString = String.Format("{0}", seedAlpha);
-            Debug.WriteLine("\nSeed: " + seedAlpha + "\n");
-
-            // Create log file if left shift is pressed while clicking
-            if (Keyboard.IsKeyDown(Key.LeftShift) && !ViewModel.RandoSettings.IsTournamentMode)
-            {
-                //string logFileName = (ViewModel.RandoSettings.IsJapanese) ? "RM2" : "MM2";
-                string logFileName = "MM2";
-                logFileName = String.Format("{0}-RNG-{1}.log", logFileName, seedAlpha);
-                using (StreamWriter sw = new StreamWriter(logFileName, false))
-                {
-                    sw.WriteLine("Mega Man 2 Randomizer");
-                    sw.WriteLine(String.Format("Version {0}", ViewModel.RandoSettings.AssemblyVersion.ToString()));
-                    sw.WriteLine(String.Format("Seed {0}\n", seedAlpha));
-                    sw.WriteLine(RandomMM2.randomStages.ToString());
-                    sw.WriteLine(RandomMM2.randomWeaponBehavior.ToString());
-                    sw.WriteLine(RandomMM2.randomEnemyWeakness.ToString());
-                    sw.WriteLine(RandomMM2.randomWeaknesses.ToString());
-                    sw.Write(RandomMM2.Patch.GetStringSortedByAddress());
-                }
-            }
-
-            // Flag UI as having created a ROM, enabling the "open folder" button
-            ViewModel.HasGeneratedAROM = true;
+            ViewModel.PerformRandomization(seed, Keyboard.IsKeyDown(Key.LeftShift));
         }
 
         private void btnCreateRandom_Click(object sender, RoutedEventArgs e)
         {
-            RandomMM2.Seed = -1;
-            RandomMM2.RandomizerCreate(true);
-            UpdateSeedString(e);
+            ViewModel.PerformRandomization(-1, Keyboard.IsKeyDown(Key.LeftShift));
         }
 
         private void btnOpenFolder_Click(object sender, RoutedEventArgs e)

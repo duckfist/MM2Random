@@ -1,37 +1,34 @@
 Mega Man 2 Randomizer
 by duckfist
-version 0.4.1 beta
+version 0.5.0 beta
 
 vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
-vvv READ THIS BEFORE PLAYING vvvv
+
+
+
+-----------------------------------------------------------------------------------------------
+
+PREREQUISITES
+
+The Mega Man 2 Randomizer desktop application (MM2RandoHost.exe) requires the use of Windows 7 
+or newer, with the .NET Framework 4.7.2 runtime installed. You can find the link to install
+the .NET Framework 4.7.2 from Microsoft here:
+https://support.microsoft.com/en-us/help/4054530/microsoft-net-framework-4-7-2-offline-installer-for-windows
+
 
 -----------------------------------------------------------------------------------------------
 
 CAUTION: KNOWN MAJOR GLITCHES
 
---- Softlock/zip out of Bubbleman's Boss room ---
-If there significant lag and you are facing left as you defeat the boss in Bubbleman's room,
-the game can suddenly consider the water to be solid and zip you out of the room, depriving you
-of credit for beating the stage, and respawning you in a glitched version of Wily 4. You can
-revert this by Game Overing and then choosing Stage Select. To avoid this, take extra care in
-Bubbleman's boss room, especially if Bubble himself spawns there, which, ironically, is when it
-happens the most. If you are facing Right as you defeat the boss, there's no risk.
-tldr; IF BUBBLE MAN APPEARS IN HIS OWN BOSS ROOM ON BUBBLE MAN STAGE, AS YOU DELIVER THE FINAL
-HIT TO DEFEAT HIM, MAKE SURE YOU ARE FACING _RIGHT_.
+--- Passwords do not work ---
+The Password function is broken and cannot be relied upon. This happened due to one of the
+many reshufflings that this program performs, and will be fixed at a later date. Please use
+savestates or be very careful not to cause a softlock or crash.
+
+--- Touching the boss door in a boss room sometimes glithces the game ---
+This can occur in Mega Man 2 in any boss room under the right circumstances, more often when
+the game is lagging due to many sprites. It has been observed in the randomizer as well,
+such as in the Wily 4 boss room. Avoid touching the left sides of any boss room.
 
 --- Bird despawns Mega Man ---
 In some very rare circumstances, a Pipi can sometimes despawn Mega Man himself when it leaves
@@ -41,8 +38,11 @@ move. If you see this occur and you have video footage of it, please let me know
 All known bugs are tracked here:
 https://github.com/duckfist/MM2Random/issues?q=is%3Aopen+is%3Aissue+label%3Abug
   
+
   
-BEFORE YOU PLAY MEGA MAN 2 RANDOMZIER
+-----------------------------------------------------------------------------------------------  
+  
+NEW PLAYERS: BEFORE YOU PLAY MEGA MAN 2 RANDOMZIER
 
 Basic knowledge of Mega Man 2 game mechanics is highly recommended before playing. A few other
 intermediate tricks can significantly help with some painfully synergistic enemy combinations.
@@ -63,96 +63,208 @@ situations easier.
 stuck in the wall while one is on screen. If you can't kill them, use Time-Stopper to resume 
 zipping.
 
-- Leaf Shield and Atomic Fire tend to be very effective against enemies - don't forget to try
-them out, along with other weapons, if enemies get too tough.
+- Leaf Shield, Atomic Fire, and Clash Bomber tend to be very effective against enemies - don't
+forget to try them out, along with other weapons, if enemies get too tough.
 
-- On Easy Mode, every weapon simply does double damage to everything. That is the only
-difference. (Same goes for the original Mega Man 2's Normal Mode).
-
-
-SOME ENEMY RANDOMIZER NOTES
-
-- The layouts of a few stages have been edited to allow for more enemy variety, particularly
-the first room of Airman stage.
-- Yoku blocks in Heatman stage and Drop Platforms in Bubbleman stage still appear, slightly
-reducing enemy variety in those rooms.
-- Frienders (wolves) still spawn like normal, due to dependence on solid blocks in their rooms.
-- Big Fish (wily 3 fish) do not spawn anywhere yet, TODO.
-- Anko (angler in bubble stage) do not spawn anymore.
-- Acid still appears like normal in Wily 6. Although, I could easily replace them with tons of 
-enemies. Do you really want that?
+- On Easy Mode, every weapon simply does double damage to everything. Also, the drop rate for
+Large Weapon Capsules, Large Energy Capsules, and Extra Lives is increased. These are the only
+differences. (Same goes for the original Mega Man 2's Normal Mode).
 
 
-OTHER MODIFICATIONS
 
-- All Wily bosses have a small chance to take damage from the Mega Buster; don't forget to try
-the Buster on these bosses to save some weapon energy!
+-----------------------------------------------------------------------------------------------  
+
+OTHER MODIFICATIONS TO THE BASE GAME
+
+- When you Game Over, your E-Tanks are not lost
+- You can no longer accidentally use an E-Tank when already at full HP
+- All Wily bosses now only have a 25% chance each to take any damage from the Mega Buster,
+  except Wily Machine, which has a 75% chance. Don't forget to try the Buster on these bosses 
+  to save some weapon energy!
 - No Wily boss will be weak to Time Stopper, so don't bother trying it.
 - Additional large weapon capsules have been placed in Wily 5 and Wily 6.
 - The ceilings have been removed from a few Robot Master boss rooms
-
+- Woodman's leaf shield now only does 4 damage to you instead of 8
 
 
 
 -----------------------------------------------------------------------------------------------
 
-Featured Randomizer Modules
+RANDOMIZER FLAGS OVERVIEW
 
-- Robot Master Portraits: The boss portraits on the Stage Select point to different stages.
+Gameplay Settings
 
-- Robot Master Spawn: Boss rooms may contain a different boss.
+- Randomizer Core: Default ON. Cannot be disabled.
+  This primary component shuffles the weapons you obtain from Robot Masters. It also changes
+  the portrait names on the stage select screen, and the teleporter destinations in Wily 5,
+  which are all related. Other small modifications are performed. All other randomizer modules
+  depend on this setting. Note that the portrait position on the stage select screen will still
+  correspond to the actual stage you play (not the Robot Master that appears there, or the
+  weapon that is rewarded; enable "Hide Stage Names" to make this a surprise). 
 
-- Weapon Behavior: Movement properties and ammo usage of each weapon are changed.
-
-- Enemy Weaknesses: Damage done to each enemy by each weapon is changed.
-
-- Boss Weaknesses: The damage done by each weapon against each boss is changed.
+- Weapon Behavior: Movement properties, sounds, and ammo usage of each weapon are changed.
+  
+  > Mega Buster is unchanged
+  
+  > Atomic Fire may only have 2 charge levels, or may instantly charge. It is generally quite
+    a bit more effective than it was in the original Mega Man 2. Its charge speeds and X-
+    velocity is also randomized. Atomic Fire tends to have lower ammo consumption than vanilla.
+    20% chance to have old charge Behavior
+    40% chance to skip the level 1 charge
+    40% chance to skip all charge levels and instantly shoot at a full charge
+  
+  > Air Shooter may shoot between 1 and 3 projectiles, each of which having random X and Y-
+    accelerations and initial X and Y-velocities.
+    60% chance to have 3 projectiles
+    20% chance to have 2 projectiles
+    10% chance to have 1 projectile
+    
+  > Leaf Shield is generally very effective against normal enemies. Its deployment time, launch
+    directions, and movement speeds are randomized.
+    - Random deployment time, from 0 to 34 frames (vanilla is 12)
+    - 50% chance to invert the X launch direction
+    - 50% chance to invert the Y launch direction
+    - X and Y-velocity on launch can range from 2 to 8 pixels per frame (vanilla is 4)
+    
+  > Bubble Lead has random number of maximum projectiles, inital X and Y velocities, random
+    surface-crawling speed, and random X and Y falling speeds (after traversing a surface).
+    - There may be between 1 and 4 maximum projectiles (vanilla is 3), with an even probability
+    - Initial X-velocity is between 1 and 3 pixels per frame (vanilla is 1)
+    - Initial Y-velocity is between 0 and 6 pixels per frame (upwards; vanilla is 2)
+    - Surface X-velocity is between 1 and 5 pixels per frame (vanilla is 2)
+    - Falling X-velocity is between 0 and 5 pixels per frame, with a 50% chance to be 0 and the
+      rest with an even probability (vanilla is 0)
+    - Falling Y-velocity is between -6 and 6 (vanilla is -2)
+    
+  > Quick Boomerang has several random parameters that affect its trajectory when fired, and is
+    generally very effective for its low ammo consumption.
+    - Autofire cooldown is between 5 and 18 frames (vanilla 11)
+    - Maximum projectiles on screen is between 2 and 6 shots (vanilla is 5)
+  
+  > Time Stopper has a 75% chance of being modified to be reusable, like the Rockman 4 version.
+    How much ammo it consumes and its duration of activation is also randomized.
+    
+  > Metal Blade has a random number of maximum projectiles, randomized component velocities,
+    and tends to have a higher ammo consumption than vanilla 
+    - Maximum number of projectiles is between 1 and 4 (vanilla is 3)
+    
+  > Clash Bomber has a random velocity, and tends to have lower ammo consumption than vanilla.
+    - Ammo consumption is between 1 and 3 ticks (vanilla is 4)
+    - 25% chance to have its explosion drift upwards slightly
+    - Initial X-velocity is between 2 and 7 (vanilla is 4)
+    - Delay before exploding is between 1 and 192 frames (vanilla is 126)
+    - 50% chance to change the explosion behavior to a "single explosion"
+    
+  > Item 1 has a randomized delay before it begins flashing and the time it takes to disappear,
+    as well as its Y-velocity.
+    - 25% chance to have a Y-velocity of 0
+    
+- Boss Weaknesses: Default ON.
+  The damage done by each weapon against each boss is changed.
   > Four Robot Masters take 2x damage from Buster.
-  > Every Robot Master will have a primary weakness and secondary weakness. 
+  > Every Robot Master will have a primary weakness and secondary weakness.
+  > In addition to primary and secondary, one robot master will have one "great" weakness for
+    increased damage, and another will have one "ultimate" weakness for even more damage.
   > Damage values are, on average, lower than in vanilla Mega Man 2.
   > Wily bosses are also affected, including Boobeam Trap and its Barriers.
   > There is a 25% chance for each Wily boss to take damage from buster.
   > Time Stopper will never do damage to Wily bosses.
+  > With Atomic Fire, only a full charge will deal weakness damage.
   > Damage is scaled based on Ammo consumption
 
-- Boss AI: Properties of Robot Master attack patterns are changed.
+- Boss Room: Default ON.
+  Robot Master rooms may contain a different Robot Master.
+       
+- Boss AI: Default ON.
+  Properties of Robot Master attack patterns are changed.
+  TODO: Details!
 
-- Weapon Get: The weapons awarded from defeating Robot Masters are shuffled.
+- Items 1, 2, and 3 Get: Default ON.
+  Which Robot Master awards each of the 3 Items is shuffled.
 
-- Items 1, 2, and 3 Get: Which Robot Master awards each of the 3 Items is shuffled.
-
-- Wily 5 Teleporters: The Robot Masters inside of each Wily 5 teleporter has been shuffled.
-
-- Enemy Types: The enemy IDs for most enemy instances have been changed. 
+- Enemy Locations: Default ON.
+  The enemy IDs for most enemy instances have been changed. 
   > Sprite banks for each room are modified to support different enemy combinations appearing.
   > A few enemies are not yet supported.
+  > The layouts of a few stages have been edited to allow for more enemy variety, particularly
+    the first room of Airman stage.
+  > Yoku blocks in Heatman stage and Drop Platforms in Bubbleman stage still appear, slightly
+    reducing enemy variety in those rooms.
+  > Frienders (wolves) still spawn like normal, due to dependence on solid blocks in their rooms.
+  > Big Fish (wily 3 fish) do not spawn anywhere yet, TODO.
+  > Anko (angler in bubble stage) do not spawn anymore.
+  > Acid still appears like normal in Wily 6. Although, I could easily replace them with tons of 
+    enemies. Do you really want that?
+  
+- Enemy Weaknesses: Default ON.
+  The damage done by each weapon against each normal enemy is changed.
+  > This includes the Clash Barrier and Press objects (although only exactly 1 weapon will be
+    able to damage Clash Barriers)
+  > Note that all enemies in the game have 20 HP, weapons simply do different damage to each
+  > Buster will always do 1 damage to Friender (Woodman miniboss) 
+  > The original damage tables have been slightly modified before the shuffling occurs, so that
+    a more balanced and interesting range of damage is applied
+  > Atomic Fire, Leaf Shield, and Clash Bomber are generally more effective than in the original
+    Mega Man 2, due to the nature of shuffling the existing damage values
+  > Time Stopper will never do damage to normal enemies
 
-- Colors: Stage backgrounds, Robot Master colors, Mega Man's weapon colors, and a few Wily
-bosses have randomly assigned colors.
+- Stage Layouts: Default ON.
+  Randomize tile structures and the design of individual stages.
+  > Currently only the false floors in Wily 4 are affected. More to come in the future.
 
-- BGM: The background music for all stages are changed, and include several tracks from Mega
-Man 2 romhacks and other Capcom games.
+- Faster Text: Default ON.
+  Several cutscene timers have been reduced to provide less downtime.
+  > Weapon Get cutscene text is much faster (7 frame-per-character delay to 4 frames)
+  > Weapon Get cutscenes skip several of the extra pages when getting an item
+  > On stage start, the "READY" message and time to teleport in has been reduced
+  > The Wily Map cutscenes advance faster
+  > When defeating a boss, you immediately teleport out of the room. 
+    NOTE: This also keeps a pretty nasty glitch from happening. Leave this setting on!
+      
+- Burst Chaser Mode: Default OFF.
+  Greatly increase movement speed.
+  > This will be replaced in the future with a more comprehensive set of optional parameters.
+  <TODO details>
 
-- Random Text:
+- Hide Stage Names: Default OFF.
+  Disable the portrait names on the Stage Select screen. Since the names normally correspond to
+  the stage that you play, enable this setting to have each stage be a surprise. Note that this
+  removes the early game strategy of going to easy stages, impacting races.
+
+
+Cosmetic Options
+
+- Random Colors: Default ON.
+  Stage backgrounds, the Start/Password screen, Stage Select screen, Stage Intro screen, Weapon
+  Get screen, Wily Map screen, Robot Master colors, Mega Man's weapon colors, and the Wily bosses
+  have randomly assigned colors.
+
+- Random New Music: Default ON.
+  The background music for all stages are changed, and include several tracks from Mega Man 2
+  romhacks and other Capcom games.
+  > There are 11 total shuffled songs: 8 for the Robot Master Stages, and 3 for the Wily stages.
+  > Wily 1 and 2 will play the same track, Wily 3 and 4 will play the same track, and Wily 5 has
+    been modified to play a unique 11th track.
+  > Wily 6 and the second half of the credits will play a random stage track as well
+  > There are currently 102 different songs that can be played
+
+- Random Text Content: Default ON.
   > The story in the intro cutscene will be different.
   > In the Weapon Get screen, the weapon name and letter will be randomized.
 
-- And a few surprises
+- New Player Sprite: Default Rockman.
+  Choose to replace the Rockman sprite with Roll, Bass, or Protoman!
 
-Other Features
+  
+Custom Variables
 
-- Fast Text: To compensate for the U version being slower, text delay is increased from 7
-frames to 4 frames.
+- <TODO>
 
-- Burst Chaser Mode: Increase Mega Man's movement speed, and reduce a few other delay timers.
-
-- The layouts of a few stages have been modified to accomodate the randomizer, such as some
-tile edits in Airman stage, tiles in a few boss rooms, and some large weapon energy capsules.
 
   
 -----------------------------------------------------------------------------------------------
   
-Development Tools
+DEVELOPMENT TOOLS AND CREDITS
 
 - FCEUX 2.2.3 http://www.fceux.com/web/home.html
 - visine 2.8.2 by -=Fx3=- http://www.romhacking.net/utilities/172/
@@ -160,11 +272,47 @@ Development Tools
 - Tile Molestor Mod 0.19 http://www.romhacking.net/utilities/991/
 - Visual Studio Community 2017
 
-Special thanks to Binarynova, RaneofSoTN, and Coltaho for their code contributions . 
+Protoman sprite ripped from "Mega Man II - Protoman mode" by Riffman81.
+https://www.romhacking.net/hacks/861/
+
+Roll sprite ripped from "Roll-chan 2" by Zynk Oxhyde.
+https://www.romhacking.net/hacks/2265/
+
+Bass sprite ripped from "The Adventure of Bass II" by Sivak
+https://www.romhacking.net/hacks/9/
+
+Thanks to every Mega Man 1 and Mega Man 2 romhack author/composer that I ripped music from.
+
+Special thanks to Binarynova, RaneofSoTN, Coltaho, ramon-rocha, NARFNra, and BrooklynS for
+their code contributions. 
+
+Mega Man 2 Randomizer lead developer: duckfist
+twitch.tv/duckfist
+twitter.com/regularduck
 
 -----------------------------------------------------------------------------------------------
   
-Changelog
+CHANGELOG
+
+v0.5.0-beta
+- When at full HP, prevent E-tank consumption
+- Added "Great" and "Ultimate" weaknesses to Robot Masters
+- Added random colors to the Wily Map screen
+- Added Protoman, Roll, and Bass sprite replacement options
+- Added the display of flags on the title screen
+- The pause menu now displays different weapon letters
+- Modified title screen text spacing
+- Reduced the time spent on the Wily Map screen
+- Wily 6 now plays a random stage song
+- Now instantly teleport out of a boss chamber upon victory
+- Fixed Bubbleman's boss room issue of zipping out-of-bounds (thanks to the above)
+- Fixed Clashman's Clash Bomber X-velocity
+- Fixed Game Over theme glitching
+- Fixed Metal Blades sometimes being invisible in Airman's boss room
+- Removed Tournament Mode for now; a more generic spoiler-free mode will be available later
+- Converted MM2RandoLib from .NET Framework 4.5 to .NET Standard 2.0.
+- Updated MM2RandoHost from .NET Framework 4.5 to .NET Framework 4.7.2.
+- Lots of code refactoring
 
 v0.4.1-beta
 - Re-enabled user customizable flags, removing old obsolete flags and adding new ones

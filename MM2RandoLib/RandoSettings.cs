@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Reflection;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace MM2Randomizer
 {
-    public class RandoSettings : INotifyPropertyChanged
+    public class RandoSettings : ObservableBase
     {
         private string seedString;
         private string sourcePath;
@@ -18,6 +17,10 @@ namespace MM2Randomizer
         private string hashStringSHA256;
         private string hashValidationMessage;
         private bool isHashValid;
+        private bool isSpoilerFree;
+
+        private PlayerSprite _selectedPlayer;
+
         public readonly string[] ExpectedMD5s = new string[]
         {
             "caaeb9ee3b52839de261fd16f93103e6", // Mega Man 2 (U)
@@ -29,8 +32,6 @@ namespace MM2Randomizer
             "27b5a635df33ed57ed339dfc7fd62fc603b39c1d1603adb5cdc3562a0b0d555b", // Mega Man 2 (U)
             "49136b412ff61beac6e40d0bbcd8691a39a50cd2744fdcdde3401eed53d71edf", // Mega Man 2 (USA)
         };
-
-        private bool isTournamentMode;
 
         public RandoSettings()
         {
@@ -44,9 +45,8 @@ namespace MM2Randomizer
             HashStringSHA256 = "";
             HashValidationMessage = "";
             IsHashValid = false;
-            GoodHashes = new List<string>();
 
-            // Flags for Rando Core Modules
+            // Flags for Rando Core Modules (Interdependent, cannot be changed from UI)
             Is8StagesRandom = true;
             IsWeaponsRandom = true;
             IsTeleportersRandom = true;
@@ -65,12 +65,15 @@ namespace MM2Randomizer
             IsWeaponNamesRandom = true;
             IsColorsRandom = true;
             IsBGMRandom = true;
+            SelectedPlayer = PlayerSprite.Rockman;
 
             // Flags for Optional Gameplay Modules
             FastText = true;
             BurstChaserMode = false;
-            IsTournamentMode = true;
+            IsSpoilerFree = false;
         }
+
+        #region Meta Properties
 
         /// <summary>
         /// Alphabetical string representation of the RandomMM2.Seed integer of the most
@@ -78,14 +81,14 @@ namespace MM2Randomizer
         /// </summary>
         public string SeedString
         {
-            get { return seedString; }
+            get => seedString;
             set
             {
                 value = value.ToUpper();
                 if (seedString != value)
                 {
                     seedString = value;
-                    OnPropertyChanged();
+                    NotifyPropertyChanged();
 
                     // TODO: Check for better validity of seed
                     IsSeedValid = (seedString == "") ? false : true;
@@ -99,19 +102,189 @@ namespace MM2Randomizer
         /// </summary>
         public string SourcePath
         {
-            get { return sourcePath; }
-            set
-            {
-                if (sourcePath != value)
-                {
-                    sourcePath = value;
-                    OnPropertyChanged();
-                }
-            }
+            get => sourcePath;
+            set => SetProperty(ref sourcePath, value);
+        }
+
+        public bool IsSourcePathValid
+        {
+            get => isSourcePathValid;
+            set => SetProperty(ref isSourcePathValid, value);
+        }
+
+        public bool IsSeedValid
+        {
+            get => isSeedValid;
+            set => SetProperty(ref isSeedValid, value);
+        }
+
+        // TODO need this?
+        public bool IsSourcePathAndSeedValid
+        {
+            get => isSourcePathAndSeedValid;
+            set => SetProperty(ref isSourcePathAndSeedValid, value);
+        }
+
+        public bool IsSpoilerFree
+        {
+            get => isSpoilerFree;
+            set => SetProperty(ref isSpoilerFree, value);
+        }
+
+        public string HashStringMD5
+        {
+            get => hashStringMD5;
+            set => SetProperty(ref hashStringMD5, value);
+        }
+
+        public string HashStringSHA256
+        {
+            get => hashStringSHA256;
+            set => SetProperty(ref hashStringSHA256, value);
+        }
+
+        public string HashValidationMessage
+        {
+            get => hashValidationMessage;
+            set => SetProperty(ref hashValidationMessage, value);
+        }
+
+        public bool IsHashValid
+        {
+            get => isHashValid;
+            set => SetProperty(ref isHashValid, value);
         }
 
         /// <summary>
-        /// This method checks that the file exists and then compares its checksum with known good ROMs.
+        /// Get this assembly version as a bindable property.
+        /// </summary>
+        public Version AssemblyVersion
+        {
+            get
+            {
+                return Assembly.GetAssembly(typeof(RandomMM2)).GetName().Version;
+            }
+        }
+
+        #endregion
+
+        #region Randomizer Flags
+
+        /// <summary>
+        /// If True, the Robot Master stages will be shuffled and will not be indicated by the
+        /// portraits on the Stage Select screen.
+        /// </summary>
+        public bool Is8StagesRandom { get; set; }
+
+        /// <summary>
+        /// If True, the weapons awarded from each Robot Master is shuffled.
+        /// </summary>
+        public bool IsWeaponsRandom { get; set; }
+
+        /// <summary>
+        /// If True, Items 1, 2, and 3 will be awarded from random Robot Masters.
+        /// </summary>
+        public bool IsItemsRandom { get; set; }
+
+        /// <summary>
+        /// If true, in Wily 5, the Robot Master locations in each teleporter is randomized.
+        /// </summary>
+        public bool IsTeleportersRandom { get; set; }
+
+        /// <summary>
+        /// If True, the damage each weapon does against each Robot Master is changed. The manner in
+        /// which it is changed depends on if IsWeaknessEasy is True or if IsWeaknessHard is True.
+        /// </summary>
+        public bool IsWeaknessRandom { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsBossAIRandom { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public bool IsColorsRandom { get;  set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public bool IsEnemiesRandom { get; set; }
+
+        public bool IsEnemyWeaknessRandom { get; set; } 
+
+        public bool IsBossInBossRoomRandom { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsTilemapChangesEnabled { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public bool IsBGMRandom { get; set; }
+
+        /// <summary>
+        /// Change this value to set Mega Man's sprite graphic.
+        /// </summary>
+        public PlayerSprite SelectedPlayer
+        {
+            get => _selectedPlayer;
+            set => SetProperty(ref _selectedPlayer, value);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsWeaponNamesRandom { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public bool FastText { get; set; }
+
+        public bool IsStageNameHidden { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public bool BurstChaserMode { get; set; }
+
+        public bool IsWeaponBehaviorRandom { get; set; }
+
+        #endregion
+
+        public string GetFlagsString()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (Is8StagesRandom && IsWeaponsRandom && IsTeleportersRandom)
+                                         sb.Append('!');    else sb.Append(' ');
+            //if (Is8StagesRandom)         sb.Append('A');    else sb.Append(' ');
+            //if (IsWeaponsRandom)         sb.Append('B');    else sb.Append(' ');
+            //if (IsTeleportersRandom)     sb.Append('C');    else sb.Append(' ');
+            if (IsWeaponBehaviorRandom)  sb.Append('A');    else sb.Append(' ');
+            if (IsWeaknessRandom)        sb.Append('B');    else sb.Append(' ');
+            if (IsBossInBossRoomRandom)  sb.Append('C');    else sb.Append(' ');
+            if (IsBossAIRandom)          sb.Append('D');    else sb.Append(' ');
+            if (IsItemsRandom)           sb.Append('E');    else sb.Append(' ');
+            if (IsEnemiesRandom)         sb.Append('F');    else sb.Append(' ');
+            if (IsEnemyWeaknessRandom)   sb.Append('G');    else sb.Append(' ');
+            if (IsTilemapChangesEnabled) sb.Append('H');    else sb.Append(' ');
+
+            if (IsWeaponNamesRandom)     sb.Append('1');    else sb.Append(' ');
+            if (IsColorsRandom)          sb.Append('2');    else sb.Append(' ');
+            if (IsBGMRandom)             sb.Append('3');    else sb.Append(' ');
+
+            if (FastText)                sb.Append('t');    else sb.Append(' ');
+            if (BurstChaserMode)         sb.Append('©');    else sb.Append(' ');
+            if (IsStageNameHidden)       sb.Append('?');    else sb.Append(' ');
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// This method checks that a file exists and then compares its checksum with known good Mega Man 2 ROMs.
         /// If it fails any of this, the method returns false.
         /// </summary>
         /// <param name="path"></param>
@@ -187,229 +360,13 @@ namespace MM2Randomizer
             // If we made it this far, the file looks good!
             return true;
         }
+    }
 
-        public bool IsSourcePathValid
-        {
-            get
-            {
-                return isSourcePathValid;
-            }
-            set
-            {
-                if (isSourcePathValid != value)
-                {
-                    isSourcePathValid = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool IsSeedValid
-        {
-            get { return isSeedValid; }
-            set
-            {
-                if (isSeedValid != value)
-                {
-                    isSeedValid = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool IsSourcePathAndSeedValid
-        {
-            get
-            {
-                return isSourcePathAndSeedValid;
-            }
-            set
-            {
-                if (isSourcePathAndSeedValid != value)
-                {
-                    isSourcePathAndSeedValid = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// If True, the Robot Master stages will be shuffled and will not be indicated by the
-        /// portraits on the Stage Select screen.
-        /// </summary>
-        public bool Is8StagesRandom { get; set; }
-
-        /// <summary>
-        /// If True, the weapons awarded from each Robot Master is shuffled.
-        /// </summary>
-        public bool IsWeaponsRandom { get; set; }
-
-        /// <summary>
-        /// If True, Items 1, 2, and 3 will be awarded from random Robot Masters.
-        /// </summary>
-        public bool IsItemsRandom { get; set; }
-
-        /// <summary>
-        /// If true, in Wily 5, the Robot Master locations in each teleporter is randomized.
-        /// </summary>
-        public bool IsTeleportersRandom { get; set; }
-
-        /// <summary>
-        /// If True, the damage each weapon does against each Robot Master is changed. The manner in
-        /// which it is changed depends on if IsWeaknessEasy is True or if IsWeaknessHard is True.
-        /// </summary>
-        public bool IsWeaknessRandom { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsBossAIRandom { get; set; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public bool IsColorsRandom { get;  set; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public bool IsEnemiesRandom { get; set; }
-
-        public bool IsEnemyWeaknessRandom { get; set; } 
-
-        public bool IsBossInBossRoomRandom { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsTilemapChangesEnabled { get; set; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public bool IsBGMRandom { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsWeaponNamesRandom { get; set; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public bool FastText { get; set; }
-
-        public bool IsStageNameHidden { get; set; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public bool BurstChaserMode { get; set; }
-
-        public bool IsWeaponBehaviorRandom { get; set; }
-
-        public bool IsTournamentMode
-        {
-            get => isTournamentMode;
-            set
-            {
-                if (isTournamentMode != value)
-                {
-                    isTournamentMode = value;
-                    OnPropertyChanged();
-
-                    if (value)
-                    {
-                        IsWeaponBehaviorRandom = true;
-                        IsWeaknessRandom = true;
-                        IsBossInBossRoomRandom = true;
-                        IsBossAIRandom = true;
-                        IsItemsRandom = true;
-                        IsEnemiesRandom = true;
-                        IsEnemyWeaknessRandom = true;
-                        IsTilemapChangesEnabled = true;
-
-                        FastText = true;
-                        IsStageNameHidden = false;
-                        BurstChaserMode = false;
-                    }
-                }
-            }
-        }
-
-        public string HashStringMD5
-        {
-            get => hashStringMD5;
-            set
-            {
-                if (value != hashStringMD5)
-                {
-                    hashStringMD5 = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string HashStringSHA256
-        {
-            get => hashStringSHA256;
-            set
-            {
-                if (value != hashStringSHA256)
-                {
-                    hashStringSHA256 = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string HashValidationMessage
-        {
-            get => hashValidationMessage;
-            set
-            {
-                if (value != hashValidationMessage)
-                {
-                    hashValidationMessage = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool IsHashValid
-        {
-            get => isHashValid;
-            set
-            {
-                if (value != isHashValid)
-                {
-                    isHashValid = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public List<string> GoodHashes { get; set; }
-
-        /// <summary>
-        /// Get this assembly version as a bindable property.
-        /// </summary>
-        public Version AssemblyVersion
-        {
-            get
-            {
-                return Assembly.GetAssembly(typeof(RandomMM2)).GetName().Version;
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Raise event to update bound GUI controls
-        /// </summary>
-        /// <param name="name">Name of updated property.</param>
-        protected void OnPropertyChanged([CallerMemberName]string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+    public enum PlayerSprite
+    {
+        Rockman,
+        Protoman,
+        Roll,
+        Bass
     }
 }

@@ -22,7 +22,7 @@ namespace MM2Randomizer.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace MM2Randomizer.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MM2Randomizer.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MM2RandoLib.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace MM2Randomizer.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -128,7 +128,7 @@ namespace MM2Randomizer.Properties {
         ///STONE
         ///C [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string bossnames {
+        public static string bossnames {
             get {
                 return ResourceManager.GetString("bossnames", resourceCulture);
             }
@@ -175,7 +175,7 @@ namespace MM2Randomizer.Properties {
         ///ENIX
         ///MINDSCAPE.
         /// </summary>
-        internal static string companynames {
+        public static string companynames {
             get {
                 return ResourceManager.GetString("companynames", resourceCulture);
             }
@@ -233,7 +233,7 @@ namespace MM2Randomizer.Properties {
         ///DJIBOUTI
         ///DO [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string countrylist {
+        public static string countrylist {
             get {
                 return ResourceManager.GetString("countrylist", resourceCulture);
             }
@@ -262,7 +262,7 @@ namespace MM2Randomizer.Properties {
         ///20|E7|GUTS                
         ///23|24|B [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string creditstext {
+        public static string creditstext {
             get {
                 return ResourceManager.GetString("creditstext", resourceCulture);
             }
@@ -284,7 +284,7 @@ namespace MM2Randomizer.Properties {
         ///08,00,00,04,true,21,28,58,58,58,false
         ///09,00,00,04,tru [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string enemylist {
+        public static string enemylist {
             get {
                 return ResourceManager.GetString("enemylist", resourceCulture);
             }
@@ -303,7 +303,7 @@ namespace MM2Randomizer.Properties {
         ///Robbit               ,17,2,20,0,20,7,4,20,4
         ///Friender(Instance)   ,19,1,20,0,20,0,2, [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string enemyweakness {
+        public static string enemyweakness {
             get {
                 return ResourceManager.GetString("enemyweakness", resourceCulture);
             }
@@ -326,7 +326,7 @@ namespace MM2Randomizer.Properties {
         ///              &quot;59&quot;,&quot;23&quot;,&quot;2D&quot;,&quot;10&quot;,&quot;03&quot;,&quot;17&quot;,&quot;09&quot;,&quot;71&quot;, 
         ///              &quot;61&quot;,&quot;29&quot;,&quot;22&quot;,&quot;0D&quot;,&quot;03&quot;,&quot;33&quot;,&quot;0B [rest of stri....
         /// </summary>
-        internal static string level_components {
+        public static string level_components {
             get {
                 return ResourceManager.GetString("level_components", resourceCulture);
             }
@@ -335,7 +335,7 @@ namespace MM2Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] mm2rng_musicpatch {
+        public static byte[] mm2rng_musicpatch {
             get {
                 object obj = ResourceManager.GetObject("mm2rng_musicpatch", resourceCulture);
                 return ((byte[])(obj));
@@ -345,7 +345,7 @@ namespace MM2Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] mm2rng_prepatch {
+        public static byte[] mm2rng_prepatch {
             get {
                 object obj = ResourceManager.GetObject("mm2rng_prepatch", resourceCulture);
                 return ((byte[])(obj));
@@ -366,9 +366,39 @@ namespace MM2Randomizer.Properties {
         ///#
         ///# The 11 songs chosen  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string music {
+        public static string music {
             get {
                 return ResourceManager.GetString("music", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SpriteSwap_Bass {
+            get {
+                object obj = ResourceManager.GetObject("SpriteSwap_Bass", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SpriteSwap_Proto {
+            get {
+                object obj = ResourceManager.GetObject("SpriteSwap_Proto", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SpriteSwap_Roll {
+            get {
+                object obj = ResourceManager.GetObject("SpriteSwap_Roll", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

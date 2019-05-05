@@ -3,7 +3,6 @@ using MM2Randomizer.Patcher;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MM2Randomizer.Randomizers
 {
@@ -78,6 +77,28 @@ namespace MM2Randomizer.Randomizers
         public void FixPortraits(ref byte[] portraitBG_x, ref byte[] portraitBG_y)
         {
             // Since the acquired-weapons table's elements are powers of two, get a new array of their 0-7 index
+            int[] newWeaponIndex = GetShuffleIndexPermutation();
+
+            // Permute portrait x/y values via the shuffled acquired-weapons array 
+            byte[] cpy = new byte[8];
+            for (int i = 0; i < 8; i++)
+                cpy[newWeaponIndex[i]] = portraitBG_y[i];
+            Array.Copy(cpy, portraitBG_y, 8);
+
+            for (int i = 0; i < 8; i++)
+                cpy[newWeaponIndex[i]] = portraitBG_x[i];
+            Array.Copy(cpy, portraitBG_x, 8);
+        }
+
+        /// <summary>
+        /// Get an array of the shuffled acquired-weapons' 0-7 index, since the original table's elements are bitwise/powers of 2.
+        /// Uses the field <see cref="NewWeaponOrder"/>. Must be called after <see cref="Randomize(Patch, Random)"/>.
+        /// </summary>
+        /// <returns>An array of the new locations of the 8 awarded weapons. The index represents the original robot master index,
+        /// in the order H A W B Q F M C. The value represents the index of the new location.
+        /// </returns>
+        public int[] GetShuffleIndexPermutation()
+        {
             int[] newWeaponIndex = new int[8];
             for (int i = 0; i < 8; i++)
             {
@@ -90,16 +111,7 @@ namespace MM2Randomizer.Randomizers
                 }
                 newWeaponIndex[i] = j - 1;
             }
-
-            // Permute portrait x/y values via the shuffled acquired-weapons array 
-            byte[] cpy = new byte[8];
-            for (int i = 0; i < 8; i++)
-                cpy[newWeaponIndex[i]] = portraitBG_y[i];
-            Array.Copy(cpy, portraitBG_y, 8);
-
-            for (int i = 0; i < 8; i++)
-                cpy[newWeaponIndex[i]] = portraitBG_x[i];
-            Array.Copy(cpy, portraitBG_x, 8);
+            return newWeaponIndex;
         }
     }
 }

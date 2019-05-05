@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Diagnostics;
-using System.Reflection;
 
 using MM2Randomizer.Patcher;
-using MM2Randomizer.Enums;
 using MM2Randomizer.Randomizers;
 using MM2Randomizer.Randomizers.Enemies;
 using MM2Randomizer.Randomizers.Colors;
@@ -47,8 +44,10 @@ namespace MM2Randomizer
         /// Perform the randomization based on the seed and user-provided settings, and then
         /// generate the new ROM.
         /// </summary>
-        public static string RandomizerCreate(bool fromClientApp)
+        public static string RandomizerCreate(bool fromClientApp, int seed)
         {
+            Seed = seed;
+
             // List of randomizer modules to use; will add modules based on checkbox states
             Randomizers = new List<IRandomizer>();
             CosmeticRandomizers = new List<IRandomizer>();
@@ -186,7 +185,7 @@ namespace MM2Randomizer
             Patch = new Patch();
 
             // In tournament mode, offset the seed by 1 call, making seeds mode-dependent
-            if (Settings.IsTournamentMode)
+            if (Settings.IsSpoilerFree)
             {
                 Random.Next();
                 RNGCosmetic.Next();
@@ -210,6 +209,7 @@ namespace MM2Randomizer
             if (Settings.Is8StagesRandom || Settings.IsWeaponsRandom)
             {
                 MiscHacks.FixPortraits(Patch, Settings.Is8StagesRandom, randomStages, Settings.IsWeaponsRandom, randomWeaponGet);
+                MiscHacks.FixWeaponLetters(Patch, randomWeaponGet, randomStages, rWeaponNames);
             }
             if (Settings.IsEnemiesRandom)
             {
@@ -219,25 +219,27 @@ namespace MM2Randomizer
             // Apply final optional gameplay modifications
             if (Settings.FastText)
             {
-                MiscHacks.SetFastText(Patch);
+                MiscHacks.SetFastWeaponGetText(Patch);
+                MiscHacks.SetFastReadyText(Patch);
+                MiscHacks.SetFastWilyMap(Patch);
+                MiscHacks.SkipItemGetPages(Patch);
             }
             if (Settings.BurstChaserMode)
             {
                 MiscHacks.SetBurstChaser(Patch);
             }
-            MiscHacks.DrawTitleScreenChanges(Patch, Seed, Settings.IsTournamentMode);
+            MiscHacks.DrawTitleScreenChanges(Patch, Seed, Settings);
             MiscHacks.SetWily5NoMusicChange(Patch);
-            MiscHacks.FixDamageValues(Patch);
+            MiscHacks.NerfDamageValues(Patch);
             MiscHacks.SetETankKeep(Patch);
-            MiscHacks.SkipItemGetPages(Patch);
             MiscHacks.PreventETankUseAtFullLife(Patch);
+            MiscHacks.SetFastBossDefeatTeleport(Patch);
 
             // Create file name based on seed and game region
             string seedAlpha = SeedConvert.ConvertBase10To26(Seed);
             string newfilename = $"MM2-RNG-{seedAlpha}.nes";
 
             // Apply patch and deliver the ROM; different routine for client vs. web app
-            var assembly = Assembly.GetExecutingAssembly();
             if (fromClientApp)
             {
                 //File.Copy(Settings.SourcePath, TempFileName, true);
@@ -251,9 +253,10 @@ namespace MM2Randomizer
                     }
                 }
 
-                // Apply pre-patch changes via IPS patch (manual title screen, stage select, and stage changes)
+                // Apply pre-patch changes via IPS patch (manual title screen, stage select, stage changes, player sprite)
                 Patch.ApplyIPSPatch(TempFileName, Properties.Resources.mm2rng_musicpatch);
                 Patch.ApplyIPSPatch(TempFileName, Properties.Resources.mm2rng_prepatch);
+                MiscHacks.SetNewMegaManSprite(Patch, TempFileName, Settings.SelectedPlayer);
 
                 // Apply patch with randomized content
                 Patch.ApplyRandoPatch(TempFileName);

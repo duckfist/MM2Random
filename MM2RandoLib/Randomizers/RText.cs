@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Diagnostics;
 
 using MM2Randomizer.Enums;
 using MM2Randomizer.Patcher;
-using System.Text;
-using System.Linq;
 
 namespace MM2Randomizer.Randomizers
 {
@@ -16,23 +17,25 @@ namespace MM2Randomizer.Randomizers
         public static readonly int INTRO_LINE3_MAXCHARS = 11;
         public static readonly int INTRO_LINE4_MAXCHARS = 25;
 
-        public static readonly int offsetLetters = 0x037e22;
-        public static readonly int offsetAtomicFire = 0x037e2e;
+        public static readonly int offsetWpnGetLetters   = 0x037E22;
+        public static readonly int offsetAtomicFire      = 0x037E2E;
         public static readonly int offsetCutscenePage1L1 = 0x036D56;
-        public static readonly int offsetIntroLine1 = 0x036EA8;
-        public static readonly int offsetIntroLine2 = 0x036EBE;
-        public static readonly int offsetIntroLine3 = 0x036EE0;
-        public static readonly int offsetIntroLine4 = 0x036EEE;
+        public static readonly int offsetIntroLine1      = 0x036EA8;
+        public static readonly int offsetIntroLine2      = 0x036EBE;
+        public static readonly int offsetIntroLine3      = 0x036EE0;
+        public static readonly int offsetIntroLine4      = 0x036EEE;
 
-        private List<string> countryNames = new List<string>();
-        private List<string> companyNames = new List<string>();
-        private string[] newWeaponNames = new string[8];
-        private char[] newWeaponLetters = new char[9]; // Original order: P H A W B Q F M C
+        private readonly List<string> countryNames = new List<string>();
+        private readonly List<string> companyNames = new List<string>();
+        private readonly string[] newWeaponNames = new string[8];
+        private readonly char[] newWeaponLetters = new char[9]; // Original order: P H A W B Q F M C
 
         public RText() { }
 
         public void Randomize(Patch p, Random r)
         {
+            Debug.Assert(AssertIntroTexts());
+
             int numIntros = IntroTexts.GetLength(0);
             int introIndex = r.Next(numIntros);
             char[] introText = IntroTexts[introIndex].ToCharArray();
@@ -62,7 +65,7 @@ namespace MM2Randomizer.Randomizers
                 companyNames.Add(line);
             }
             companyStr = companyNames[r.Next(companyNames.Count)];
-            company = ($"©2018 {companyStr}").ToCharArray();
+            company = ($"©2019 {companyStr}").ToCharArray();
             char[] companyPadded = Enumerable.Repeat(' ', INTRO_LINE1_MAXCHARS).ToArray();
             startChar = (INTRO_LINE1_MAXCHARS - company.Length) / 2;
             for (int i = 0; i < company.Length; i++)
@@ -154,7 +157,7 @@ namespace MM2Randomizer.Randomizers
                     }
                     else
                     {
-                        p.Add(offset + j, Convert.ToByte('@'), String.Format("Weapon Name {0} Char #{1}: @", ((EDmgVsBoss.Offset)i).Name, j));
+                        p.Add(offset + j, Convert.ToByte('@'), $"Weapon Name {((EDmgVsBoss.Offset)i).Name} Char #{j}: @");
                     }
                 }
             }
@@ -182,25 +185,33 @@ namespace MM2Randomizer.Randomizers
                     char tryLetter = newWeaponNames[i][0];
                     if (alphabet.Contains(tryLetter))
                     {
-                        newWeaponLetters[i] = tryLetter;
+                        newWeaponLetters[i + 1] = tryLetter;
                         alphabet.Remove(tryLetter);
                     }
                     // Otherwise use a random letter from the remaining letters
                     else
                     {
                         rLetterIndex = r.Next(alphabet.Count);
-                        newWeaponLetters[i] = alphabet[rLetterIndex];
+                        newWeaponLetters[i + 1] = alphabet[rLetterIndex];
                         alphabet.RemoveAt(rLetterIndex);
                     }
                 }
             }
 
             // Write in new weapon letters
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 9; i++)
             {
-                // Get index of the chosen letter
+                // Write to Weapon Get screen (note: Buster value is unused here)
                 int newLetter = 0x41 + Alphabet.IndexOf(newWeaponLetters[i]); // unicode
-                p.Add(offsetLetters + i, (byte)newLetter, String.Format($"Weapon Get {((EDmgVsBoss.Offset)i).Name} Letter: {newWeaponLetters[i]}"));
+                p.Add(offsetWpnGetLetters + i, (byte)newLetter, $"Weapon Get {((EDmgVsBoss.Offset)i).Name} Letter: {newWeaponLetters[i]}");
+
+                // Write to pause menu
+                int[] pauseLetterBytes = PauseScreenCipher[newWeaponLetters[i]];
+                int wpnLetterAddress = PauseScreenWpnAddressByBossIndex[i];
+                for (int j = 0; j < pauseLetterBytes.Length; j++)
+                {
+                    p.Add(wpnLetterAddress + j, (byte)pauseLetterBytes[j], $"Pause menu weapon letter GFX for \'{newWeaponLetters[i]}\', byte #{j}");
+                }
             }
 
             // Credits: Text content and line lengths (Starting with "Special Thanks")
@@ -314,6 +325,36 @@ namespace MM2Randomizer.Randomizers
             }
         }
 
+        public void FixWeaponLetters(Patch p, int[] permutation)
+        {
+            // Re-order the letters array to match the ordering of the shuffled weapons
+            char[] newLettersPermutation = new char[9];
+            newLettersPermutation[0] = newWeaponLetters[0];
+            for (int i = 0; i < 8; i++)
+            {
+                newLettersPermutation[i + 1] = newWeaponLetters[permutation[i] + 1];
+            }
+
+            // Write new weapon letters to weapon get screen
+            for (int i = 1; i < 9; i++)
+            {
+                // Write to Weapon Get screen (note: Buster value is unused here)
+                int newLetter = 0x41 + Alphabet.IndexOf(newLettersPermutation[i]); // unicode
+                p.Add(offsetWpnGetLetters + i - 1, (byte)newLetter, $"Weapon Get {((EDmgVsBoss.Offset)i).Name} Letter: {newWeaponLetters[i]}");
+            }
+
+            //// Write new weapon letters to pause menu
+            //for (int i = 0; i < 9; i++)
+            //{
+                //int[] pauseLetterBytes = PauseScreenCipher[newWeaponLetters[i + 1]];
+                //int wpnLetterAddress = PauseScreenWpnAddressByBossIndex[permutedIndex + 1];
+                //for (int j = 0; j < pauseLetterBytes.Length; j++)
+                //{
+                //    p.Add(wpnLetterAddress + j, (byte)pauseLetterBytes[j], $"Pause menu weapon letter GFX for \'{newWeaponLetters[permutedIndex]}\', byte #{j}");
+                //}
+            //}
+        }
+
         static char GetBossWeaknessDamageChar(int dmg)
         {
             char c;
@@ -338,9 +379,59 @@ namespace MM2Randomizer.Randomizers
 
         public static string Alphabet { get; set; } = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        public static Dictionary<char, object> PauseScreenCipher = new Dictionary<char, object>()
+        /// <summary>
+        /// These arrays represent the raw graphical data for each letter, A-Z, to be rendered on the pause menu. To 
+        /// replace a weapon letter's graphic on the pause screen, use <see cref="PauseScreenWpnAddressByBossIndex"/>
+        /// to get the address of the desired weapon letter to replace, and then write in the 16 bytes for the desired
+        /// new letter from this dictionary.
+        /// </summary>
+        public static Dictionary<char, int[]> PauseScreenCipher = new Dictionary<char, int[]>()
         {
-            { 'A', 0x00 },
+            // Kept as int, to prevent a thousand (byte) casts clogging this up. Cast to byte in a loop later.
+            { 'A', new int[] { 0x02, 0x39, 0x21, 0x21, 0x01, 0x39, 0x21, 0xE7, 0x7C, 0xC6, 0xC6, 0xC6, 0xFE, 0xC6, 0xC6, 0x00 } },
+            { 'B', new int[] { 0x02, 0x39, 0x21, 0x02, 0x39, 0x21, 0x02, 0xFC, 0xFC, 0xC6, 0xC6, 0xFC, 0xC6, 0xC6, 0xFC, 0x00 } },
+            { 'C', new int[] { 0x00, 0x38, 0x26, 0x20, 0x20, 0x20, 0x82, 0x7C, 0x7C, 0xC6, 0xC0, 0xC0, 0xC0, 0xC6, 0x7C, 0x00 } },
+            { 'D', new int[] { 0x02, 0x39, 0x21, 0x21, 0x21, 0x21, 0x02, 0xFC, 0xFC, 0xC6, 0xC6, 0xC6, 0xC6, 0xC6, 0xFC, 0x00 } },
+            { 'E', new int[] { 0x00, 0x3E, 0x20, 0x00, 0x3C, 0x20, 0x00, 0xFE, 0xFE, 0xC0, 0xC0, 0xFC, 0xC0, 0xC0, 0xFE, 0x00 } },
+            { 'F', new int[] { 0x00, 0x3E, 0x20, 0x00, 0x3C, 0x20, 0x20, 0xE0, 0xFE, 0xC0, 0xC0, 0xFC, 0xC0, 0xC0, 0xC0, 0x00 } },
+            { 'G', new int[] { 0x02, 0x39, 0x27, 0x21, 0x39, 0x21, 0x83, 0x7E, 0x7C, 0xC6, 0xC0, 0xDE, 0xC6, 0xC6, 0x7C, 0x00 } },
+            { 'H', new int[] { 0x21, 0x21, 0x21, 0x01, 0x39, 0x21, 0x21, 0xE7, 0xC6, 0xC6, 0xC6, 0xFE, 0xC6, 0xC6, 0xC6, 0x00 } },
+            { 'I', new int[] { 0x02, 0xCE, 0x08, 0x08, 0x08, 0x08, 0x02, 0xFE, 0xFC, 0x30, 0x30, 0x30, 0x30, 0x30, 0xFC, 0x00 } },
+            { 'J', new int[] { 0x02, 0x02, 0x02, 0x02, 0x12, 0x12, 0x46, 0x3C, 0x0C, 0x0C, 0x0C, 0x0C, 0x6C, 0x6C, 0x38, 0x00 } },
+            { 'K', new int[] { 0x22, 0x26, 0x0C, 0x18, 0x08, 0x24, 0x32, 0xEE, 0xCC, 0xD8, 0xF0, 0xE0, 0xF0, 0xD8, 0xCC, 0x00 } },
+            { 'L', new int[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x02, 0xFE, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xFC, 0x00 } },
+            { 'M', new int[] { 0x01, 0x01, 0x01, 0x29, 0x31, 0x21, 0x21, 0xE7, 0xC6, 0xEE, 0xFE, 0xD6, 0xC6, 0xC6, 0xC6, 0x00 } },
+            { 'N', new int[] { 0x21, 0x01, 0x01, 0x21, 0x31, 0x29, 0x21, 0xE7, 0xC6, 0xE6, 0xF6, 0xDE, 0xCE, 0xC6, 0xC6, 0x00 } },
+            { 'O', new int[] { 0x02, 0x39, 0x21, 0x21, 0x21, 0x21, 0x82, 0x7C, 0x7C, 0xC6, 0xC6, 0xC6, 0xC6, 0xC6, 0x7C, 0x00 } },
+            { 'P', new int[] { 0x02, 0x39, 0x21, 0x21, 0x02, 0x3C, 0x20, 0xE0, 0xFC, 0xC6, 0xC6, 0xC6, 0xFC, 0xC0, 0xC0, 0x00 } },
+            { 'Q', new int[] { 0x02, 0x39, 0x21, 0x21, 0x21, 0x31, 0x82, 0x7C, 0x7C, 0xC6, 0xC6, 0xC6, 0xDE, 0xCE, 0x7C, 0x00 } },
+            { 'R', new int[] { 0x02, 0x39, 0x21, 0x21, 0x02, 0x32, 0x09, 0xC7, 0xFC, 0xC6, 0xC6, 0xC6, 0xFC, 0xCC, 0xC6, 0x00 } },
+            { 'S', new int[] { 0x02, 0x39, 0x27, 0x82, 0x79, 0x21, 0x83, 0x7E, 0x7C, 0xC6, 0xC0, 0x7C, 0x06, 0xC6, 0x7C, 0x00 } },
+            { 'T', new int[] { 0x02, 0xCE, 0x08, 0x08, 0x08, 0x08, 0x08, 0x38, 0xFC, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x00 } },
+            { 'U', new int[] { 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x82, 0x7C, 0xC6, 0xC6, 0xC6, 0xC6, 0xC6, 0xC6, 0x7C, 0x00 } },
+            { 'V', new int[] { 0x21, 0x21, 0x21, 0x21, 0x93, 0x46, 0x2C, 0x18, 0xC6, 0xC6, 0xC6, 0xC6, 0x6C, 0x38, 0x10, 0x00 } },
+            { 'W', new int[] { 0x21, 0x21, 0x21, 0x21, 0x01, 0x11, 0x21, 0xC7, 0xC6, 0xC6, 0xC6, 0xD6, 0xFE, 0xEE, 0xC6, 0x00 } },
+            { 'X', new int[] { 0x22, 0x22, 0x84, 0x48, 0x00, 0x32, 0x22, 0xCE, 0xCC, 0xCC, 0x78, 0x30, 0x78, 0xCC, 0xCC, 0x00 } },
+            { 'Y', new int[] { 0x22, 0x22, 0x22, 0x84, 0x48, 0x08, 0x08, 0x38, 0xCC, 0xCC, 0xCC, 0x78, 0x30, 0x30, 0x30, 0x00 } },
+            { 'Z', new int[] { 0x02, 0x72, 0x84, 0x08, 0x10, 0x22, 0x02, 0xFE, 0xFC, 0x8C, 0x18, 0x30, 0x60, 0xC4, 0xFC, 0x00 } },
+        };
+
+        /// <summary>
+        /// These ROM addresses point to the graphical data of the sprites in the pause menu, namely the weapon 
+        /// letters. Use the data at <see cref="PauseScreenCipher"/> to write new values at these locations to
+        /// change the weapon letter graphics.
+        /// </summary>
+        public static int[] PauseScreenWpnAddressByBossIndex = new int[]
+        {
+            0x001B00, // "P"
+            0x001A00, // "H"
+            0x0019C0, // "A"
+            0x0019A0, // "W"
+            0x0019E0, // "B"
+            0x0019D0, // "Q"
+            0x0019B0, // "F"
+            0x0019F0, // "M"
+            0x001A10, // "C"
         };
 
         public static Dictionary<char, byte> CreditsCipher = new Dictionary<char, byte>()
@@ -440,6 +531,11 @@ namespace MM2Randomizer.Randomizers
         };
         // STAFF == D3 D4 C1 C6 C6
 
+        /// <summary>
+        /// Verify that the hard-coded IntroTexts array has strings of the correct length (270 chars)
+        /// and that each char is a valid, renderable character in the intro sequence.
+        /// </summary>
+        /// <returns>True if all text in the array is of the correct length and has valid characters.</returns>
         static bool AssertIntroTexts()
         {
             foreach (string intro in IntroTexts)
@@ -729,8 +825,6 @@ namespace MM2Randomizer.Randomizers
 
         private string GetRandomName(Random r)
         {
-            string finalName = "";
-
             // Start with random list
             int l = r.Next(1);
             string name0, name1;
@@ -792,6 +886,7 @@ namespace MM2Randomizer.Randomizers
             }
 
             // Handle cases for only one name
+            string finalName;
             if (name0.Length == 0)
             {
                 finalName = name1;

@@ -3,8 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:MM2Lib="clr-namespace:MM2Randomizer;assembly=MM2RandoLib"
         xmlns:converters="clr-namespace:MM2RandoHost.Converters"
         xmlns:primitives="clr-namespace:MM2RandoHost.Views.Primitives"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Height="585" Width="420"
         AllowDrop="True"
@@ -34,6 +36,7 @@
 
             <Style TargetType="TabControl" BasedOn="{StaticResource Style_TabControl}"/>
             <Style TargetType="TabItem" BasedOn="{StaticResource Style_TabItem}"/>
+            <Style TargetType="ComboBox" BasedOn="{StaticResource Style_ComboBox_Another}"/>
 
             <Style TargetType="TextBox">
                 <Setter Property="VerticalAlignment" Value="Center"/>
@@ -141,7 +144,7 @@
 
         <!--Settings Tabs-->
         <TabControl Grid.Row="4" Grid.ColumnSpan="2" Margin="-1,8,-1,-1">
-            <TabItem Header="Gameplay Variables">
+            <TabItem Header="Gameplay Settings">
                 <Grid Margin="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -152,54 +155,46 @@
                         <!--CheckBoxes are placed inside Grids, so we can have MouseOver behavior while CheckBoxes are disabled-->
                         <Grid x:Name="gridChkCoreModules">
                             <CheckBox Content="Randomizer Core" IsEnabled="False" 
-                                IsChecked="{Binding IsCoreModulesChecked}"/>
+                                IsChecked="{Binding IsCoreModulesChecked, Mode=OneWay}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkWeaponBehave">
                             <CheckBox Content="Weapon Behavior" 
-                                IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                 IsChecked="{Binding Path=RandoSettings.IsWeaponBehaviorRandom}" Grid.ColumnSpan="2" />
                         </Grid>
 
                         <Grid x:Name="gridChkWeakness">
                             <CheckBox Content="Boss Weaknesses" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsWeaknessRandom}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkBossRoom">
                             <CheckBox Content="Boss Room" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsBossInBossRoomRandom}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkBossAI">
                             <CheckBox Content="Boss AI" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsBossAIRandom}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkItems">
                             <CheckBox Content="Items 1, 2, and 3 Get" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsItemsRandom}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkEnemies">
                             <CheckBox Content="Enemy Locations" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsEnemiesRandom}" />
                         </Grid>
 
                         <Grid x:Name="gridChkEnemyWeaknesses">
                             <CheckBox Content="Enemy Weaknesses" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsEnemyWeaknessRandom}" />
                         </Grid>
 
                         <Grid x:Name="gridChkTilemap">
                             <CheckBox Content="Stage Layouts" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.IsTilemapChangesEnabled}" />
                         </Grid>
 
@@ -209,7 +204,8 @@
 
                         <CheckBox Name="chkTournamentMode" Content="Tournament Mode" DockPanel.Dock="Bottom"
                                   HorizontalAlignment="Right"
-                                  IsChecked="{Binding Path=RandoSettings.IsTournamentMode}">
+                                  Visibility="Hidden"
+                                  IsChecked="{Binding Path=RandoSettings.IsSpoilerFree}">
                             <CheckBox.LayoutTransform>
                                 <TransformGroup>
                                     <ScaleTransform ScaleX="1.25" ScaleY="1.25"/>
@@ -222,20 +218,17 @@
 
                         <Grid x:Name="gridChkFastText" DockPanel.Dock="Top">
                             <CheckBox Content="Faster Text" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.FastText}"/>
                         </Grid>
 
                         <Grid x:Name="gridChkBurstChaser" DockPanel.Dock="Top">
                             <CheckBox Content="Burst Chaser Mode" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding Path=RandoSettings.BurstChaserMode}" 
                                     Checked="chkBurstChaser_Checked"/>
                         </Grid>
 
                         <Grid x:Name="gridChkStageNameHidden" DockPanel.Dock="Top">
                             <CheckBox Content="Hide Stage Names" 
-                                    IsEnabled="{Binding RandoSettings.IsTournamentMode, Converter={StaticResource inverseBooleanConverter}}"
                                     IsChecked="{Binding RandoSettings.IsStageNameHidden}" />
                         </Grid>
 
@@ -244,15 +237,99 @@
             </TabItem>
 
             <TabItem Header="Cosmetic Options">
-                <StackPanel Margin="4">
-                    <CheckBox Name="chkColors" Content="Colors" 
-                        IsChecked="{Binding Path=RandoSettings.IsColorsRandom}"/>
-                    <CheckBox Name="chkBGM" Content="Stage Music" 
-                        IsChecked="{Binding Path=RandoSettings.IsBGMRandom}" />
-                    <CheckBox Name="chkText" Content="Text Content" 
-                        IsChecked="{Binding Path=RandoSettings.IsWeaponNamesRandom}">
-                    </CheckBox>
-                </StackPanel>
+                <TabItem.Resources>
+                    <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+                        <ObjectDataProvider.MethodParameters>
+                            <x:Type TypeName="MM2Lib:PlayerSprite"/>
+                        </ObjectDataProvider.MethodParameters>
+                    </ObjectDataProvider>
+                </TabItem.Resources>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="4">
+                        <CheckBox Name="chkColors" Content="Random Colors" 
+                            IsChecked="{Binding Path=RandoSettings.IsColorsRandom}"/>
+                        <CheckBox Name="chkBGM" Content="Random New Music" 
+                            IsChecked="{Binding Path=RandoSettings.IsBGMRandom}" />
+                        <CheckBox Name="chkText" Content="Random Text Content" 
+                            IsChecked="{Binding Path=RandoSettings.IsWeaponNamesRandom}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Margin="4">
+                        <TextBlock Text="Choose your Player Sprite" HorizontalAlignment="Center"/>
+                        <ComboBox x:Name="cbxPlayerSprite" Margin="32,0"
+                            ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                            SelectedItem="{Binding Path=RandoSettings.SelectedPlayer}"/>
+                        <!--Grid to hold all 4 player sprite images. All images are collapsed, except the one 
+                        image that corresponds to the ComboBox SelectedItem, which is Visible. -->
+                        <Grid>
+                            <Image Width="104" Height="96" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Source="Resources/SpriteImages/sprite_rock.png" >
+                                <Image.Style>
+                                    <Style>
+                                        <Setter Property="Image.Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=cbxPlayerSprite, Path=SelectedIndex}" Value="0">
+                                                <Setter Property="Image.Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <Image Width="104" Height="96" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Source="Resources/SpriteImages/sprite_proto.png" >
+                                <Image.Style>
+                                    <Style>
+                                        <Setter Property="Image.Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=cbxPlayerSprite, Path=SelectedIndex}" Value="1">
+                                                <Setter Property="Image.Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <Image Width="104" Height="96" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Source="Resources/SpriteImages/sprite_roll.png" >
+                                <Image.Style>
+                                    <Style>
+                                        <Setter Property="Image.Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=cbxPlayerSprite, Path=SelectedIndex}" Value="2">
+                                                <Setter Property="Image.Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <Image Width="104" Height="96" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Source="Resources/SpriteImages/sprite_bass.png" >
+                                <Image.Style>
+                                    <Style>
+                                        <Setter Property="Image.Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=cbxPlayerSprite, Path=SelectedIndex}" Value="3">
+                                                <Setter Property="Image.Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+
+            </TabItem>
+
+            <TabItem Header="Custom Variables" IsEnabled="False">
+                <Grid>
+                    <CheckBox Content="Burst Chaser Mode" 
+                                    IsChecked="{Binding Path=RandoSettings.BurstChaserMode}" 
+                                    Checked="chkBurstChaser_Checked"/>
+                </Grid>
             </TabItem>
         </TabControl>
 

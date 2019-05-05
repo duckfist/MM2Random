@@ -80,8 +80,18 @@ namespace MM2Randomizer.Randomizers
             // (Note that 0xFF in any weakness table is sufficient to heal a boss)
             Patch.Add(0x02E66D, 0xFF, "Atomic Fire Boss To Heal" ); // Normally "00" to indicate Heatman.
 
-            // Select 2 robots to be weak against Buster
+            // Select 4 robots to be weak against Buster
             List<int> busterList = new List<int>(new List<int>{ 0, 1, 2, 3, 4, 5, 6, 7 }.Shuffle(r)).GetRange(0,4);
+
+            // Select 2 robots to be very weak to some weapon
+            List<int> veryWeakBots = new List<int>(new List<int> { 0, 1, 2, 3, 4, 5, 6, 7 }.Shuffle(r)).GetRange(0, 2);
+            int bossWithGreatWeakness = veryWeakBots[0];
+            int bossWithUltimateWeakness = veryWeakBots[1];
+            // Select 2 weapons to deal great damage to the 2 bosses above (exclude buster, flash)
+            List<int> greatWeaknessWeapons = new List<int>(new List<int> { 0, 1, 2, 3, 4, 5, 6, }.Shuffle(r)).GetRange(0, 2);
+            int weaponGreatWeakness = greatWeaknessWeapons[0];
+            int weaponUltimateWeakness = greatWeaknessWeapons[1];
+
 
             // Foreach boss
             for (int i = 0; i < 8; i++)
@@ -113,7 +123,7 @@ namespace MM2Randomizer.Randomizers
 
                 // Write the primary weakness for this boss
                 byte dmgPrimary = GetRoboDamagePrimary(r, bossWeaknessShuffled[i]);
-                Patch.Add(bossWeaknessShuffled[i] + i, dmgPrimary, String.Format("{0} Damage to {1} (Primary)", bossWeaknessShuffled[i].WeaponName, (EDmgVsBoss.Offset)i));
+                Patch.Add(bossWeaknessShuffled[i] + i, dmgPrimary, $"{bossWeaknessShuffled[i].WeaponName} Damage to {(EDmgVsBoss.Offset)i} (Primary)");
 
                 // Write the secondary weakness for this boss (next element in list)
                 // Secondary weakness will either do 2 damage or 4 if it is Atomic Fire
@@ -131,19 +141,19 @@ namespace MM2Randomizer.Randomizers
                     dmgSecondary = 0x00;
 
                     // Address in Time-Stopper code that normally heals Flashman, change to heal this boss instead
-                    Patch.Add(0x02C08F, (byte)i, String.Format("Time-Stopper Heals {0} (Special Code)", (EDmgVsBoss.Offset)i));
+                    Patch.Add(0x02C08F, (byte)i, $"Time-Stopper Heals {(EDmgVsBoss.Offset)i} (Special Code)");
                 }
-                Patch.Add(weakWeap2 + i, dmgSecondary, String.Format("{0} Damage to {1} (Secondary)", weakWeap2.WeaponName, (EDmgVsBoss.Offset)i));
+                Patch.Add(weakWeap2 + i, dmgSecondary, $"{weakWeap2.WeaponName} Damage to {(EDmgVsBoss.Offset)i} (Secondary)");
                         
                 // Add buster damage
                 if (busterList.Contains(i))
                 {
-                    Patch.Add(EDmgVsBoss.U_DamageP + i, 0x02, String.Format("Buster Damage to {0}", (EDmgVsBoss.Offset)i));
+                    Patch.Add(EDmgVsBoss.U_DamageP + i, 0x02, $"Buster Damage to {(EDmgVsBoss.Offset)i}");
                     BotWeaknesses[i, 0] = 0x02;
                 }
                 else
                 {
-                    Patch.Add(EDmgVsBoss.U_DamageP + i, 0x01, String.Format("Buster Damage to {0}", (EDmgVsBoss.Offset)i));
+                    Patch.Add(EDmgVsBoss.U_DamageP + i, 0x01, $"Buster Damage to {(EDmgVsBoss.Offset)i}");
                     BotWeaknesses[i, 0] = 0x01;
                 }
 
@@ -152,8 +162,26 @@ namespace MM2Randomizer.Randomizers
                 BotWeaknesses[i, weapIndexPrimary] = dmgPrimary;
                 int weapIndexSecondary = GetWeaponIndexFromAddress(weakWeap2);
                 BotWeaknesses[i, weapIndexSecondary] = dmgSecondary;
+
+                // Independently, apply a great weakness and an ultimate weakness (potentially overriding a previous weakness)
+                if (bossWithGreatWeakness == i)
+                {
+                    // Great weakness. Can't be Buster or Flash. Deal 7 damage.
+                    EDmgVsBoss wpn = EDmgVsBoss.GetTables(false, false)[weaponGreatWeakness];
+                    Patch.Add(wpn.Address + i, 0x07, $"{wpn.WeaponName} Damage to {(EDmgVsBoss.Offset)i} (Great)");
+                    BotWeaknesses[i, wpn.Index] = 0x07;
+                }
+                else if (bossWithUltimateWeakness == i)
+                {
+                    // Ultimate weakness. Can't be Buster or Flash. Deal 10 damage.
+                    EDmgVsBoss wpn = EDmgVsBoss.GetTables(false, false)[weaponUltimateWeakness];
+                    Patch.Add(wpn.Address + i, 0x0A, $"{wpn.WeaponName} Damage to {(EDmgVsBoss.Offset)i} (Ultimate)");
+                    BotWeaknesses[i, wpn.Index] = 0x0A;
+                }
             }
 
+            // TODO: Fix this debug output, it's incorrect. It corresponds to the stages, not bosses. Needs
+            // to be permuted based on random bosses in boss room.
             debug.AppendLine("Robot Master Weaknesses:");
             debug.AppendLine("P\tH\tA\tW\tB\tQ\tF\tM\tC:");
             debug.AppendLine("--------------------------------------------");

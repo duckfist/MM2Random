@@ -264,7 +264,7 @@ Custom Variables
   
 -----------------------------------------------------------------------------------------------
   
-DEVELOPMENT TOOLS
+DEVELOPMENT TOOLS AND CREDITS
 
 - FCEUX 2.2.3 http://www.fceux.com/web/home.html
 - visine 2.8.2 by -=Fx3=- http://www.romhacking.net/utilities/172/
@@ -272,12 +272,23 @@ DEVELOPMENT TOOLS
 - Tile Molestor Mod 0.19 http://www.romhacking.net/utilities/991/
 - Visual Studio Community 2017
 
+Protoman sprite ripped from "Mega Man II - Protoman mode" by Riffman81.
+https://www.romhacking.net/hacks/861/
+
+Roll sprite ripped from "Roll-chan 2" by Zynk Oxhyde.
+https://www.romhacking.net/hacks/2265/
+
+Bass sprite ripped from "The Adventure of Bass II" by Sivak
+https://www.romhacking.net/hacks/9/
+
 Thanks to every Mega Man 1 and Mega Man 2 romhack author/composer that I ripped music from.
 
 Special thanks to Binarynova, RaneofSoTN, Coltaho, ramon-rocha, NARFNra, and BrooklynS for
 their code contributions. 
 
-
+Mega Man 2 Randomizer lead developer: duckfist
+twitch.tv/duckfist
+twitter.com/regularduck
 
 -----------------------------------------------------------------------------------------------
   

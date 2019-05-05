@@ -327,12 +327,16 @@ namespace MM2Randomizer.Randomizers
 
         public void FixWeaponLetters(Patch p, int[] permutation)
         {
-            // Write in new weapon letters
-            for (int i = 0; i < 9; i++)
+            char[] newLettersPermutation = new char[9];
+            newLettersPermutation[0] = newWeaponLetters[0];
+            for (int i = 0; i < 8; i++)
             {
-                int permutedIndex = i;
-                if (i > 0) permutedIndex = permutation[permutedIndex - 1] + 1;
+                newLettersPermutation[i + 1] = newWeaponLetters[permutation[i] + 1];
+            }
 
+            // Write in new weapon letters
+            for (int i = 1; i < 9; i++)
+            {
                 //if (i > 0)
                 //{
                 //    for (int m = 0; m < RandomMM2.randomBossInBossRoom.Components.Count; m++)
@@ -347,16 +351,16 @@ namespace MM2Randomizer.Randomizers
                 //}
 
                 // Write to Weapon Get screen (note: Buster value is unused here)
-                int newLetter = 0x41 + Alphabet.IndexOf(newWeaponLetters[i]); // unicode
-                p.Add(offsetWpnGetLetters + i, (byte)newLetter, $"Weapon Get {((EDmgVsBoss.Offset)i).Name} Letter: {newWeaponLetters[i]}");
+                int newLetter = 0x41 + Alphabet.IndexOf(newLettersPermutation[i]); // unicode
+                p.Add(offsetWpnGetLetters + i - 1, (byte)newLetter, $"Weapon Get {((EDmgVsBoss.Offset)i).Name} Letter: {newWeaponLetters[i]}");
 
                 // Write to pause menu
-                int[] pauseLetterBytes = PauseScreenCipher[newWeaponLetters[permutedIndex]];
-                int wpnLetterAddress = PauseScreenWpnAddressByBossIndex[i];
-                for (int j = 0; j < pauseLetterBytes.Length; j++)
-                {
-                    p.Add(wpnLetterAddress + j, (byte)pauseLetterBytes[j], $"Pause menu weapon letter GFX for \'{newWeaponLetters[permutedIndex]}\', byte #{j}");
-                }
+                //int[] pauseLetterBytes = PauseScreenCipher[newWeaponLetters[i + 1]];
+                //int wpnLetterAddress = PauseScreenWpnAddressByBossIndex[permutedIndex + 1];
+                //for (int j = 0; j < pauseLetterBytes.Length; j++)
+                //{
+                //    p.Add(wpnLetterAddress + j, (byte)pauseLetterBytes[j], $"Pause menu weapon letter GFX for \'{newWeaponLetters[permutedIndex]}\', byte #{j}");
+                //}
             }
         }
 

@@ -114,5 +114,18 @@ namespace MM2Randomizer.Randomizers
             }
             return newWeaponIndex;
         }
+
+        public int[] GetShuffleIndexPermutationInverted()
+        {
+            int[] asdf = GetShuffleIndexPermutation();
+            int[] inverted = new int[asdf.Length];
+
+            for (int i = 0; i < asdf.Length; i++)
+            {
+                int j = asdf[i];
+                inverted[j] = i;
+            }
+            return inverted;
+        }
     }
 }

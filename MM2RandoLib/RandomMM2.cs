@@ -209,7 +209,7 @@ namespace MM2Randomizer
             if (Settings.Is8StagesRandom || Settings.IsWeaponsRandom)
             {
                 MiscHacks.FixPortraits(Patch, Settings.Is8StagesRandom, randomStages, Settings.IsWeaponsRandom, randomWeaponGet);
-                //MiscHacks.FixWeaponLetters(Patch, randomWeaponGet, randomStages, rWeaponNames);
+                MiscHacks.FixWeaponLetters(Patch, randomWeaponGet, randomStages, rWeaponNames);
             }
             if (Settings.IsEnemiesRandom)
             {

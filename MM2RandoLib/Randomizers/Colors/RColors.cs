@@ -497,7 +497,7 @@ namespace MM2Randomizer.Randomizers.Colors
             List<int> SolidColorSolo = new List<int>
             {
                 0x00B4EA, // Wood leaf color 0x29
-                0x01B4A1, // Metal blade color 0x30
+                //0x01B4A1, // Metal blade color 0x30 // WARNING: This should be synchronized with some stage BG colors, or else can appear invisible.
             };
 
             List<int> SolidColorPair1Main = new List<int> {

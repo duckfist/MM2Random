@@ -334,27 +334,17 @@ namespace MM2Randomizer.Randomizers
                 newLettersPermutation[i + 1] = newWeaponLetters[permutation[i] + 1];
             }
 
-            // Write in new weapon letters
+            // Write new weapon letters to weapon get screen
             for (int i = 1; i < 9; i++)
             {
-                //if (i > 0)
-                //{
-                //    for (int m = 0; m < RandomMM2.randomBossInBossRoom.Components.Count; m++)
-                //    {
-                //        var room = RandomMM2.randomBossInBossRoom.Components[m];
-                //        if (room.OriginalBossIndex == permutedIndex - 1)
-                //        {
-                //            permutedIndex = m + 1;
-                //            break;
-                //        }
-                //    }
-                //}
-
                 // Write to Weapon Get screen (note: Buster value is unused here)
                 int newLetter = 0x41 + Alphabet.IndexOf(newLettersPermutation[i]); // unicode
                 p.Add(offsetWpnGetLetters + i - 1, (byte)newLetter, $"Weapon Get {((EDmgVsBoss.Offset)i).Name} Letter: {newWeaponLetters[i]}");
+            }
 
-                // Write to pause menu
+            // Write new weapon letters to pause menu
+            for (int i = 0; i < 9; i++)
+            {
                 //int[] pauseLetterBytes = PauseScreenCipher[newWeaponLetters[i + 1]];
                 //int wpnLetterAddress = PauseScreenWpnAddressByBossIndex[permutedIndex + 1];
                 //for (int j = 0; j < pauseLetterBytes.Length; j++)

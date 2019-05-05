@@ -253,9 +253,10 @@ namespace MM2Randomizer
                     }
                 }
 
-                // Apply pre-patch changes via IPS patch (manual title screen, stage select, and stage changes)
+                // Apply pre-patch changes via IPS patch (manual title screen, stage select, stage changes, player sprite)
                 Patch.ApplyIPSPatch(TempFileName, Properties.Resources.mm2rng_musicpatch);
                 Patch.ApplyIPSPatch(TempFileName, Properties.Resources.mm2rng_prepatch);
+                MiscHacks.SetNewMegaManSprite(Patch, TempFileName, Settings.SelectedPlayer);
 
                 // Apply patch with randomized content
                 Patch.ApplyRandoPatch(TempFileName);

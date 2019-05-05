@@ -86,7 +86,7 @@ namespace MM2Randomizer.Patcher
         /// </summary>
         /// <param name="romname"></param>
         /// <param name="patchBytes"></param>
-        public static void ApplyIPSPatch(string romname, byte[] patchBytes)
+        public void ApplyIPSPatch(string romname, byte[] patchBytes)
         {
             // Noobish Noobsicle wrote this IPS patching code
             // romname is the original ROM, patchname is the patch to apply

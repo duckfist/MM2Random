@@ -241,7 +241,7 @@
                     <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">
                         <ObjectDataProvider.MethodParameters>
-                            <x:Type TypeName="MM2Lib:Player"/>
+                            <x:Type TypeName="MM2Lib:PlayerSprite"/>
                         </ObjectDataProvider.MethodParameters>
                     </ObjectDataProvider>
                 </TabItem.Resources>
@@ -260,8 +260,65 @@
                     </StackPanel>
                     <StackPanel Grid.Column="2" Margin="4">
                         <TextBlock Text="Choose your Player Sprite" HorizontalAlignment="Center"/>
-                        <ComboBox ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                        <ComboBox x:Name="cbxPlayerSprite" Margin="32,0"
+                            ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                             SelectedItem="{Binding Path=RandoSettings.SelectedPlayer}"/>
+                        <!--Grid to hold all 4 player sprite images. All images are collapsed, except the one 
+                        image that corresponds to the ComboBox SelectedItem, which is Visible. -->
+                        <Grid>
+                            <Image Width="104" Height="96" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Source="Resources/SpriteImages/sprite_rock.png" >
+                                <Image.Style>
+                                    <Style>
+                                        <Setter Property="Image.Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=cbxPlayerSprite, Path=SelectedIndex}" Value="0">
+                                                <Setter Property="Image.Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <Image Width="104" Height="96" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Source="Resources/SpriteImages/sprite_proto.png" >
+                                <Image.Style>
+                                    <Style>
+                                        <Setter Property="Image.Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=cbxPlayerSprite, Path=SelectedIndex}" Value="1">
+                                                <Setter Property="Image.Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <Image Width="104" Height="96" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Source="Resources/SpriteImages/sprite_roll.png" >
+                                <Image.Style>
+                                    <Style>
+                                        <Setter Property="Image.Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=cbxPlayerSprite, Path=SelectedIndex}" Value="2">
+                                                <Setter Property="Image.Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <Image Width="104" Height="96" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Source="Resources/SpriteImages/sprite_bass.png" >
+                                <Image.Style>
+                                    <Style>
+                                        <Setter Property="Image.Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=cbxPlayerSprite, Path=SelectedIndex}" Value="3">
+                                                <Setter Property="Image.Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </Grid>
                     </StackPanel>
                 </Grid>
 

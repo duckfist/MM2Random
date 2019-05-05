@@ -19,7 +19,7 @@ namespace MM2Randomizer
         private bool isHashValid;
         private bool isSpoilerFree;
 
-        private Player _selectedPlayer;
+        private PlayerSprite _selectedPlayer;
 
         public readonly string[] ExpectedMD5s = new string[]
         {
@@ -65,7 +65,7 @@ namespace MM2Randomizer
             IsWeaponNamesRandom = true;
             IsColorsRandom = true;
             IsBGMRandom = true;
-            SelectedPlayer = Player.Rockman;
+            SelectedPlayer = PlayerSprite.Rockman;
 
             // Flags for Optional Gameplay Modules
             FastText = true;
@@ -229,7 +229,7 @@ namespace MM2Randomizer
         /// <summary>
         /// Change this value to set Mega Man's sprite graphic.
         /// </summary>
-        public Player SelectedPlayer
+        public PlayerSprite SelectedPlayer
         {
             get => _selectedPlayer;
             set => SetProperty(ref _selectedPlayer, value);
@@ -362,7 +362,7 @@ namespace MM2Randomizer
         }
     }
 
-    public enum Player
+    public enum PlayerSprite
     {
         Rockman,
         Protoman,

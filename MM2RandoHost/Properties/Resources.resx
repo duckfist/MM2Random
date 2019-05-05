@@ -121,4 +121,16 @@
   <data name="header" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\header.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="sprite_bass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SpriteImages\sprite_bass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sprite_proto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SpriteImages\sprite_proto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sprite_rock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SpriteImages\sprite_rock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sprite_roll" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SpriteImages\sprite_roll.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

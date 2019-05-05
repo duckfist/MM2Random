@@ -390,5 +390,33 @@ namespace MM2Randomizer.Utilities
                 p.Add(etankLocation + offset, eTankSubroutineBytes[offset], "Prevent E-Tank Use at Full Life");
             }
         }
+
+        /// <summary>
+        /// Replace the player's sprite graphics with a different sprite.
+        /// This method applies the graphics patch directly to the ROM at tempFileName. If Rockman
+        /// is the sprite, no patch is applied./>
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="tempFileName"></param>
+        /// <param name="sprite"></param>
+        public static void SetNewMegaManSprite(Patch p, string tempFileName, PlayerSprite sprite)
+        {
+            switch (sprite)
+            {
+                case PlayerSprite.Bass:
+                    p.ApplyIPSPatch(tempFileName, Properties.Resources.SpriteSwap_Bass);
+                    break;
+                case PlayerSprite.Protoman:
+                    p.ApplyIPSPatch(tempFileName, Properties.Resources.SpriteSwap_Proto);
+                    break;
+                case PlayerSprite.Roll:
+                    p.ApplyIPSPatch(tempFileName, Properties.Resources.SpriteSwap_Roll);
+                    break;
+                case PlayerSprite.Rockman:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

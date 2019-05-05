@@ -19,7 +19,7 @@ namespace MM2Randomizer.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -369,6 +369,36 @@ namespace MM2Randomizer.Properties {
         public static string music {
             get {
                 return ResourceManager.GetString("music", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SpriteSwap_Bass {
+            get {
+                object obj = ResourceManager.GetObject("SpriteSwap_Bass", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SpriteSwap_Proto {
+            get {
+                object obj = ResourceManager.GetObject("SpriteSwap_Proto", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SpriteSwap_Roll {
+            get {
+                object obj = ResourceManager.GetObject("SpriteSwap_Roll", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

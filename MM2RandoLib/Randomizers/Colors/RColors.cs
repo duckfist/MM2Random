@@ -225,10 +225,10 @@ namespace MM2Randomizer.Randomizers.Colors
             ColorSet wilyMap1 = new ColorSet()
             {
                 addresses = new int[] {
-                    0x035E99, 0x035EA5, // dark 1, 2
-                    0x035EB9, 0x035EBA, // mid 1, 2
-                    0x035EC5, 0x035EDA, // mid 3, 4
-                    0x035ED9, 0x035EE5, // light 1, 2
+                    0x035E99, 0x035EA5, // dark 1, 2 ($01)
+                    0x035EB9, 0x035EBA, // mid 1, 2  ($11)
+                    0x035EC5, 0x035EDA, 0x035BA6, // mid 3-5  ($11)
+                    0x035ED9, 0x035EE5, 0x035BA5, 0x035BB1, // lite 1-4 ($21)
                 },
 
                 ColorBytes = new List<EColorsHex[]>()
@@ -236,8 +236,8 @@ namespace MM2Randomizer.Randomizers.Colors
                     new EColorsHex[] { // Dark gray
                         (EColorsHex)0x1d,(EColorsHex)0x1d,
                         (EColorsHex)0x2d,(EColorsHex)0x2d,
-                        (EColorsHex)0x2d,(EColorsHex)0x2d,
-                        (EColorsHex)0x3d,(EColorsHex)0x3d,
+                        (EColorsHex)0x2d,(EColorsHex)0x2d,(EColorsHex)0x2d,
+                        (EColorsHex)0x3d,(EColorsHex)0x3d,(EColorsHex)0x3d,(EColorsHex)0x3d,
                     },
                 }
             };
@@ -248,22 +248,22 @@ namespace MM2Randomizer.Randomizers.Colors
                 {
                     (EColorsHex)0x01 + i,(EColorsHex)0x01 + i,
                     (EColorsHex)0x11 + i,(EColorsHex)0x11 + i,
-                    (EColorsHex)0x11 + i,(EColorsHex)0x11 + i,
-                    (EColorsHex)0x21 + i,(EColorsHex)0x21 + i,
+                    (EColorsHex)0x11 + i,(EColorsHex)0x11 + i,(EColorsHex)0x11 + i,
+                    (EColorsHex)0x21 + i,(EColorsHex)0x21 + i,(EColorsHex)0x21 + i,(EColorsHex)0x21 + i,
                 });
             }
             StageSelectColorSets.Add(wilyMap1);
 
 
-            // Wily Map color set: Blue sky, castle walls, radar dish, shadows
+            // Wily Map color set: Roofs, turret
             ColorSet wilyMap2 = new ColorSet()
             {
                 addresses = new int[] {
-                    0x035EA1, // dark orange, $06
-                    0x035EC1, // mid orange, $16
-                    0x035EE1, // lite orange, $26
-                    0x035EC2, // dark red, $05
-                    0x035EE2, // mid red, $15
+                    0x035EA1, // dark orange, $06 (fade in only)
+                    0x035EC1, // mid orange, $16 (fade in only)
+                    0x035EE1, 0x035BAD, // lite orange, $26
+                    0x035EC2, // dark red, $05 (fade in only)
+                    0x035EE2, 0x035BAE, // mid red, $15
                 },
 
                 ColorBytes = new List<EColorsHex[]>() { }
@@ -275,9 +275,9 @@ namespace MM2Randomizer.Randomizers.Colors
                 {
                     (EColorsHex)0x00 + ((0x06 + i) % 12),
                     (EColorsHex)0x10 + ((0x06 + i) % 12),
-                    (EColorsHex)0x20 + ((0x06 + i) % 12),
+                    (EColorsHex)0x20 + ((0x06 + i) % 12),(EColorsHex)0x20 + ((0x06 + i) % 12),
                     (EColorsHex)0x00 + ((0x05 + i) % 12),
-                    (EColorsHex)0x10 + ((0x05 + i) % 12),
+                    (EColorsHex)0x10 + ((0x05 + i) % 12),(EColorsHex)0x10 + ((0x05 + i) % 12),
                 });
             }
             StageSelectColorSets.Add(wilyMap2);
@@ -287,15 +287,20 @@ namespace MM2Randomizer.Randomizers.Colors
             ColorSet wilyMap3 = new ColorSet()
             {
                 addresses = new int[] {
-                    0x035EA9, 0x035EC9, // dark green 1, mid green 1
-                    0x035EE9, 0x035EEA, // light green 1, dark green 2
+                    0x035EA9, // dark green 1 ($09)
+                    0x035EEA, // dark green 2 ($09)
+                    0x035BB6, // dark green 3 ($09)
+                    0x035EC9, // mid green 1  ($19)
+                    0x035EE9, // light green 1 ($29)
+                    0x035BB5, // light green 2 ($29)
                 },
 
                 ColorBytes = new List<EColorsHex[]>()
                 {
                     new EColorsHex[] { // Dark gray
-                        (EColorsHex)0x1d,(EColorsHex)0x2d,
-                        (EColorsHex)0x3d,(EColorsHex)0x1d,
+                        (EColorsHex)0x1d,(EColorsHex)0x1d,(EColorsHex)0x1d,
+                        (EColorsHex)0x2d,
+                        (EColorsHex)0x3d,(EColorsHex)0x3d,
                     },
                 }
             };
@@ -304,8 +309,9 @@ namespace MM2Randomizer.Randomizers.Colors
                 // Add the standard range of palette color shades (starting with default)
                 wilyMap3.ColorBytes.Add(new EColorsHex[]
                 {
-                    (EColorsHex)0x00 + ((0x09 + i) % 12), (EColorsHex)0x10 + ((0x09 + i) % 12),
-                    (EColorsHex)0x20 + ((0x09 + i) % 12), (EColorsHex)0x00 + ((0x09 + i) % 12),
+                    (EColorsHex)0x00 + ((0x09 + i) % 12),(EColorsHex)0x00 + ((0x09 + i) % 12),(EColorsHex)0x00 + ((0x09 + i) % 12),
+                    (EColorsHex)0x10 + ((0x09 + i) % 12),
+                    (EColorsHex)0x20 + ((0x09 + i) % 12),(EColorsHex)0x20 + ((0x09 + i) % 12),
                 });
             }
             StageSelectColorSets.Add(wilyMap3);
@@ -315,13 +321,15 @@ namespace MM2Randomizer.Randomizers.Colors
             ColorSet wilyMap4 = new ColorSet()
             {
                 addresses = new int[] {
-                    0x035EC8, 0x035EE8, // dark orange, mid orange
+                    0x035EC8,           // dark orange
+                    0x035EE8, 0x035BB4, // mid orange
                 },
 
                 ColorBytes = new List<EColorsHex[]>()
                 {
                     new EColorsHex[] { // Dark gray
-                        (EColorsHex)0x1d,(EColorsHex)0x2d,
+                        (EColorsHex)0x1d,
+                        (EColorsHex)0x2d,(EColorsHex)0x2d,
                     },
                 }
             };
@@ -330,7 +338,8 @@ namespace MM2Randomizer.Randomizers.Colors
                 // Add the standard range of palette color shades (starting with default)
                 wilyMap4.ColorBytes.Add(new EColorsHex[]
                 {
-                    (EColorsHex)0x00 + ((0x06 + i) % 12), (EColorsHex)0x10 + ((0x06 + i) % 12),
+                    (EColorsHex)0x00 + ((0x06 + i) % 12),
+                    (EColorsHex)0x10 + ((0x06 + i) % 12),(EColorsHex)0x10 + ((0x06 + i) % 12),
                 });
             }
             StageSelectColorSets.Add(wilyMap4);
@@ -340,13 +349,15 @@ namespace MM2Randomizer.Randomizers.Colors
             ColorSet wilyMap5 = new ColorSet()
             {
                 addresses = new int[] {
-                    0x035EC4, 0x035EE4, 0x035EE6, 0x035BD0, 0x035BD2 // dark brown, mid brown, dark brown, mid brown, dark brown
+                    0x035EC4, 0x035EE6, 0x035BD2, 0x035BB2, // dark brown
+                    0x035EE4, 0x035BD0, 0x035BB0, // mid brown
                 },
 
                 ColorBytes = new List<EColorsHex[]>()
                 {
                     new EColorsHex[] { // Gray
-                        (EColorsHex)0x2d,(EColorsHex)0x3d,(EColorsHex)0x2d,(EColorsHex)0x3d,(EColorsHex)0x2d
+                        (EColorsHex)0x2d,(EColorsHex)0x2d,(EColorsHex)0x2d,(EColorsHex)0x2d,
+                        (EColorsHex)0x3d,(EColorsHex)0x3d,(EColorsHex)0x3d
                     },
                 }
             };
@@ -355,11 +366,8 @@ namespace MM2Randomizer.Randomizers.Colors
                 // Add the standard range of palette color shades (starting with default)
                 wilyMap5.ColorBytes.Add(new EColorsHex[]
                 {
-                    (EColorsHex)0x00 + ((0x07 + i) % 12),
-                    (EColorsHex)0x10 + ((0x07 + i) % 12),
-                    (EColorsHex)0x00 + ((0x07 + i) % 12),
-                    (EColorsHex)0x10 + ((0x07 + i) % 12),
-                    (EColorsHex)0x00 + ((0x07 + i) % 12),
+                    (EColorsHex)0x00 + ((0x07 + i) % 12),(EColorsHex)0x00 + ((0x07 + i) % 12),(EColorsHex)0x00 + ((0x07 + i) % 12),(EColorsHex)0x00 + ((0x07 + i) % 12),
+                    (EColorsHex)0x10 + ((0x07 + i) % 12),(EColorsHex)0x10 + ((0x07 + i) % 12),(EColorsHex)0x10 + ((0x07 + i) % 12),
                 });
             }
             StageSelectColorSets.Add(wilyMap5);

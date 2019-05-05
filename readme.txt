@@ -117,7 +117,7 @@ Gameplay Settings
     accelerations and initial X and Y-velocities.
     60% chance to have 3 projectiles
     20% chance to have 2 projectiles
-    10% chance to have 1 projectile
+    20% chance to have 1 projectile
     
   > Leaf Shield is generally very effective against normal enemies. Its deployment time, launch
     directions, and movement speeds are randomized.

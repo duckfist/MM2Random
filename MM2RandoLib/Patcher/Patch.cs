@@ -15,6 +15,12 @@ namespace MM2Randomizer.Patcher
             Bytes = new Dictionary<int, ChangeByteRecord>();
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="value"></param>
+        /// <param name="note"></param>
         public void Add(int address, byte value, string note = "")
         {
             ChangeByteRecord newByte = new ChangeByteRecord(address, value, note);
@@ -30,6 +36,10 @@ namespace MM2Randomizer.Patcher
             }
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="filename"></param>
         public void ApplyRandoPatch(string filename)
         {
             using (var stream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite))
@@ -54,22 +64,28 @@ namespace MM2Randomizer.Patcher
             return ConvertDictToString((IOrderedEnumerable<KeyValuePair<int, ChangeByteRecord>>)Bytes);
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
         private string ConvertDictToString(IOrderedEnumerable<KeyValuePair<int, ChangeByteRecord>> dict)
         {
             StringBuilder sb = new StringBuilder();
             foreach (KeyValuePair<int, ChangeByteRecord> kvp in dict)
             {
                 ChangeByteRecord b = kvp.Value;
-                sb.Append(String.Format(
-                    "0x{0:X6}\t{1:X2}\t{2}",
-                    b.Address,
-                    b.Value,
-                    b.Note));
+                sb.Append($"0x{b.Address:X6}\t{b.Value:X2}\t{b.Note}");
                 sb.Append(Environment.NewLine);
             }
             return sb.ToString();
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="romname"></param>
+        /// <param name="patchBytes"></param>
         public static void ApplyIPSPatch(string romname, byte[] patchBytes)
         {
             // Noobish Noobsicle wrote this IPS patching code

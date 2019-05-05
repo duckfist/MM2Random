@@ -327,6 +327,7 @@ namespace MM2Randomizer.Randomizers
 
         public void FixWeaponLetters(Patch p, int[] permutation)
         {
+            // Re-order the letters array to match the ordering of the shuffled weapons
             char[] newLettersPermutation = new char[9];
             newLettersPermutation[0] = newWeaponLetters[0];
             for (int i = 0; i < 8; i++)
@@ -342,16 +343,16 @@ namespace MM2Randomizer.Randomizers
                 p.Add(offsetWpnGetLetters + i - 1, (byte)newLetter, $"Weapon Get {((EDmgVsBoss.Offset)i).Name} Letter: {newWeaponLetters[i]}");
             }
 
-            // Write new weapon letters to pause menu
-            for (int i = 0; i < 9; i++)
-            {
+            //// Write new weapon letters to pause menu
+            //for (int i = 0; i < 9; i++)
+            //{
                 //int[] pauseLetterBytes = PauseScreenCipher[newWeaponLetters[i + 1]];
                 //int wpnLetterAddress = PauseScreenWpnAddressByBossIndex[permutedIndex + 1];
                 //for (int j = 0; j < pauseLetterBytes.Length; j++)
                 //{
                 //    p.Add(wpnLetterAddress + j, (byte)pauseLetterBytes[j], $"Pause menu weapon letter GFX for \'{newWeaponLetters[permutedIndex]}\', byte #{j}");
                 //}
-            }
+            //}
         }
 
         static char GetBossWeaknessDamageChar(int dmg)

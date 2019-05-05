@@ -19,6 +19,8 @@ namespace MM2Randomizer
         private bool isHashValid;
         private bool isSpoilerFree;
 
+        private Player _selectedPlayer;
+
         public readonly string[] ExpectedMD5s = new string[]
         {
             "caaeb9ee3b52839de261fd16f93103e6", // Mega Man 2 (U)
@@ -44,7 +46,7 @@ namespace MM2Randomizer
             HashValidationMessage = "";
             IsHashValid = false;
 
-            // Flags for Rando Core Modules
+            // Flags for Rando Core Modules (Interdependent, cannot be changed from UI)
             Is8StagesRandom = true;
             IsWeaponsRandom = true;
             IsTeleportersRandom = true;
@@ -63,6 +65,7 @@ namespace MM2Randomizer
             IsWeaponNamesRandom = true;
             IsColorsRandom = true;
             IsBGMRandom = true;
+            SelectedPlayer = Player.Rockman;
 
             // Flags for Optional Gameplay Modules
             FastText = true;
@@ -224,6 +227,15 @@ namespace MM2Randomizer
         public bool IsBGMRandom { get; set; }
 
         /// <summary>
+        /// Change this value to set Mega Man's sprite graphic.
+        /// </summary>
+        public Player SelectedPlayer
+        {
+            get => _selectedPlayer;
+            set => SetProperty(ref _selectedPlayer, value);
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         public bool IsWeaponNamesRandom { get; set; }
@@ -247,17 +259,27 @@ namespace MM2Randomizer
         public string GetFlagsString()
         {
             StringBuilder sb = new StringBuilder();
-            if (Is8StagesRandom)         sb.Append('A');    else sb.Append(' ');
-            if (IsWeaponsRandom)         sb.Append('B');    else sb.Append(' ');
-            if (IsTeleportersRandom)     sb.Append('C');    else sb.Append(' ');
-            if (IsWeaponBehaviorRandom)  sb.Append('D');    else sb.Append(' ');
-            if (IsWeaknessRandom)        sb.Append('E');    else sb.Append(' ');
-            if (IsBossInBossRoomRandom)  sb.Append('F');    else sb.Append(' ');
-            if (IsBossAIRandom)          sb.Append('G');    else sb.Append(' ');
-            if (IsItemsRandom)           sb.Append('H');    else sb.Append(' ');
-            if (IsEnemiesRandom)         sb.Append('I');    else sb.Append(' ');
-            if (IsEnemyWeaknessRandom)   sb.Append('J');    else sb.Append(' ');
-            if (IsTilemapChangesEnabled) sb.Append('K');    else sb.Append(' ');
+            if (Is8StagesRandom && IsWeaponsRandom && IsTeleportersRandom)
+                                         sb.Append('!');    else sb.Append(' ');
+            //if (Is8StagesRandom)         sb.Append('A');    else sb.Append(' ');
+            //if (IsWeaponsRandom)         sb.Append('B');    else sb.Append(' ');
+            //if (IsTeleportersRandom)     sb.Append('C');    else sb.Append(' ');
+            if (IsWeaponBehaviorRandom)  sb.Append('A');    else sb.Append(' ');
+            if (IsWeaknessRandom)        sb.Append('B');    else sb.Append(' ');
+            if (IsBossInBossRoomRandom)  sb.Append('C');    else sb.Append(' ');
+            if (IsBossAIRandom)          sb.Append('D');    else sb.Append(' ');
+            if (IsItemsRandom)           sb.Append('E');    else sb.Append(' ');
+            if (IsEnemiesRandom)         sb.Append('F');    else sb.Append(' ');
+            if (IsEnemyWeaknessRandom)   sb.Append('G');    else sb.Append(' ');
+            if (IsTilemapChangesEnabled) sb.Append('H');    else sb.Append(' ');
+
+            if (IsWeaponNamesRandom)     sb.Append('1');    else sb.Append(' ');
+            if (IsColorsRandom)          sb.Append('2');    else sb.Append(' ');
+            if (IsBGMRandom)             sb.Append('3');    else sb.Append(' ');
+
+            if (FastText)                sb.Append('t');    else sb.Append(' ');
+            if (BurstChaserMode)         sb.Append('©');    else sb.Append(' ');
+            if (IsStageNameHidden)       sb.Append('?');    else sb.Append(' ');
             return sb.ToString();
         }
 
@@ -338,5 +360,13 @@ namespace MM2Randomizer
             // If we made it this far, the file looks good!
             return true;
         }
+    }
+
+    public enum Player
+    {
+        Rockman,
+        Protoman,
+        Roll,
+        Bass
     }
 }

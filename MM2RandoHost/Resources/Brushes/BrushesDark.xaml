@@ -4,7 +4,9 @@
 
     <SolidColorBrush x:Key="Brush_PanelBg_1" Color="#FF606060"/>
     <SolidColorBrush x:Key="Brush_PanelBg_2" Color="#FF202020"/>
+    <SolidColorBrush x:Key="Brush_PanelBg_3" Color="#FF303030"/>
     <SolidColorBrush x:Key="Brush_PanelBg_2_Disabled" Color="#FF202020"/>
+    <SolidColorBrush x:Key="Brush_Tab_Border_Disabled" Color="#FF383838"/>
 
     <SolidColorBrush x:Key="Brush_WindowBtn_Hover" Color="#FFDD5555"/>
 
@@ -29,6 +31,8 @@
     <SolidColorBrush x:Key="Brush_TextDisabled" Color="#666666"/>
     <SolidColorBrush x:Key="Brush_TextDim" Color="#666666"/>
     <SolidColorBrush x:Key="Brush_TextRibbonLabel" Color="#FF2B5575"/>
+    
     <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
     <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
+    
 </ResourceDictionary>

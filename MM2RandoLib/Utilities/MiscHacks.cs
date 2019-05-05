@@ -21,7 +21,7 @@ namespace MM2Randomizer.Utilities
             for (int i = 0; i < version.Length; i++)
             {
                 byte value = RText.IntroCipher[version[i]];
-                p.Add(0x037408 + i, value, "Title Screen Version Number");
+                p.Add(0x037407 + i, value, "Title Screen Version Number");
             }
 
             // Draw seed
@@ -29,7 +29,7 @@ namespace MM2Randomizer.Utilities
             for (int i = 0; i < seedAlpha.Length; i++)
             {
                 byte value = RText.IntroCipher[seedAlpha[i]];
-                p.Add(0x0373C8 + i, value, "Title Screen Seed");
+                p.Add(0x0373C7 + i, value, "Title Screen Seed");
             }
 
             // Draw flags
@@ -37,7 +37,14 @@ namespace MM2Randomizer.Utilities
             for (int i = 0; i < flags.Length; i++)
             {
                 byte value = RText.IntroCipher[flags[i]];
-                p.Add(0x037388 + i, value, $"Title Screen Flags: {flags[i]}");
+                if (i < 14)
+                {
+                    p.Add(0x037387 + i, value, $"Title Screen Flags: {flags[i]}");
+                }
+                else
+                {
+                    p.Add(0x037367 + i - 14, value, $"Title Screen Flags: {flags[i]}");
+                }
             }
 
             // Draw tournament mode/spoiler free information

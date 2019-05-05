@@ -3,8 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:MM2Lib="clr-namespace:MM2Randomizer;assembly=MM2RandoLib"
         xmlns:converters="clr-namespace:MM2RandoHost.Converters"
         xmlns:primitives="clr-namespace:MM2RandoHost.Views.Primitives"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Height="585" Width="420"
         AllowDrop="True"
@@ -34,6 +36,7 @@
 
             <Style TargetType="TabControl" BasedOn="{StaticResource Style_TabControl}"/>
             <Style TargetType="TabItem" BasedOn="{StaticResource Style_TabItem}"/>
+            <Style TargetType="ComboBox" BasedOn="{StaticResource Style_ComboBox_Another}"/>
 
             <Style TargetType="TextBox">
                 <Setter Property="VerticalAlignment" Value="Center"/>
@@ -141,7 +144,7 @@
 
         <!--Settings Tabs-->
         <TabControl Grid.Row="4" Grid.ColumnSpan="2" Margin="-1,8,-1,-1">
-            <TabItem Header="Gameplay Variables">
+            <TabItem Header="Gameplay Settings">
                 <Grid Margin="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -234,15 +237,42 @@
             </TabItem>
 
             <TabItem Header="Cosmetic Options">
-                <StackPanel Margin="4">
-                    <CheckBox Name="chkColors" Content="Colors" 
-                        IsChecked="{Binding Path=RandoSettings.IsColorsRandom}"/>
-                    <CheckBox Name="chkBGM" Content="Stage Music" 
-                        IsChecked="{Binding Path=RandoSettings.IsBGMRandom}" />
-                    <CheckBox Name="chkText" Content="Text Content" 
-                        IsChecked="{Binding Path=RandoSettings.IsWeaponNamesRandom}">
-                    </CheckBox>
-                </StackPanel>
+                <TabItem.Resources>
+                    <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+                        <ObjectDataProvider.MethodParameters>
+                            <x:Type TypeName="MM2Lib:Player"/>
+                        </ObjectDataProvider.MethodParameters>
+                    </ObjectDataProvider>
+                </TabItem.Resources>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="4">
+                        <CheckBox Name="chkColors" Content="Random Colors" 
+                            IsChecked="{Binding Path=RandoSettings.IsColorsRandom}"/>
+                        <CheckBox Name="chkBGM" Content="Random New Music" 
+                            IsChecked="{Binding Path=RandoSettings.IsBGMRandom}" />
+                        <CheckBox Name="chkText" Content="Random Text Content" 
+                            IsChecked="{Binding Path=RandoSettings.IsWeaponNamesRandom}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Margin="4">
+                        <TextBlock Text="Choose your Player Sprite" HorizontalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                            SelectedItem="{Binding Path=RandoSettings.SelectedPlayer}"/>
+                    </StackPanel>
+                </Grid>
+
+            </TabItem>
+
+            <TabItem Header="Custom Variables" IsEnabled="False">
+                <Grid>
+                    <CheckBox Content="Burst Chaser Mode" 
+                                    IsChecked="{Binding Path=RandoSettings.BurstChaserMode}" 
+                                    Checked="chkBurstChaser_Checked"/>
+                </Grid>
             </TabItem>
         </TabControl>
 

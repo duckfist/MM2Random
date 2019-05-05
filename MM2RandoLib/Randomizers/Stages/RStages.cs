@@ -35,14 +35,6 @@ namespace MM2Randomizer.Randomizers.Stages
             for (int i = 0; i < 8; i++)
                 cpy[newOrder[i]] = portraitBG_x[i];
             Array.Copy(cpy, portraitBG_x, 8);
-
-            //for (int i = 0; i < 8; i++)
-            //    cpy[i] = portraitSprite_y[newOrder[i]];
-            //Array.Copy(cpy, portraitSprite_y, 8);
-
-            //for (int i = 0; i < 8; i++)
-            //    cpy[i] = portraitSprite_x[newOrder[i]];
-            //Array.Copy(cpy, portraitSprite_x, 8);
         }
 
         /// <summary>

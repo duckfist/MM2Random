@@ -3,7 +3,6 @@ using MM2Randomizer.Patcher;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MM2Randomizer.Randomizers
 {
@@ -113,19 +112,6 @@ namespace MM2Randomizer.Randomizers
                 newWeaponIndex[i] = j - 1;
             }
             return newWeaponIndex;
-        }
-
-        public int[] GetShuffleIndexPermutationInverted()
-        {
-            int[] asdf = GetShuffleIndexPermutation();
-            int[] inverted = new int[asdf.Length];
-
-            for (int i = 0; i < asdf.Length; i++)
-            {
-                int j = asdf[i];
-                inverted[j] = i;
-            }
-            return inverted;
         }
     }
 }

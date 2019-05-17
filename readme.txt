@@ -6,6 +6,8 @@ vvv READ THIS BEFORE PLAYING vvvv
 
 
 
+<TODO INSTALL INSTRUCTIONS, extract folder from zip file, ensure dll is in same dir>
+
 -----------------------------------------------------------------------------------------------
 
 PREREQUISITES
@@ -81,7 +83,8 @@ OTHER MODIFICATIONS TO THE BASE GAME
 - All Wily bosses now only have a 25% chance each to take any damage from the Mega Buster,
   except Wily Machine, which has a 75% chance. Don't forget to try the Buster on these bosses 
   to save some weapon energy!
-- No Wily boss will be weak to Time Stopper, so don't bother trying it.
+- No Wily boss will be weak to Time Stopper, so don't bother trying it. One of the Robot
+  Masters will, though, so try it in the Wily 5 refights.
 - Additional large weapon capsules have been placed in Wily 5 and Wily 6.
 - The ceilings have been removed from a few Robot Master boss rooms
 - Woodman's leaf shield now only does 4 damage to you instead of 8
@@ -102,7 +105,8 @@ Gameplay Settings
   correspond to the actual stage you play (not the Robot Master that appears there, or the
   weapon that is rewarded; enable "Hide Stage Names" to make this a surprise). 
 
-- Weapon Behavior: Movement properties, sounds, and ammo usage of each weapon are changed.
+- Weapon Behavior: Default ON.
+  Movement properties, sounds, and ammo usage of each weapon are changed.
   
   > Mega Buster is unchanged
   
@@ -123,7 +127,7 @@ Gameplay Settings
     directions, and movement speeds are randomized.
     - Random deployment time, from 0 to 34 frames (vanilla is 12)
     - 50% chance to invert the X launch direction
-    - 50% chance to invert the Y launch direction
+    - Another 50% chance to invert the Y launch direction
     - X and Y-velocity on launch can range from 2 to 8 pixels per frame (vanilla is 4)
     
   > Bubble Lead has random number of maximum projectiles, inital X and Y velocities, random

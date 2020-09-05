@@ -62,7 +62,6 @@ namespace MM2RandoHost.ViewModels
 
             // Get A-Z representation of seed
             string seedAlpha = SeedConvert.ConvertBase10To26(RandomMM2.Seed);
-            RandoSettings.SeedString = seedAlpha;
             Debug.WriteLine("\nSeed: " + seedAlpha + "\n");
 
             // Create log file if left shift is pressed while clicking

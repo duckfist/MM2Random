@@ -14,6 +14,26 @@ easy to make new releases or for our beta testers to try out a new feature.
 If you have a change you want us to consider, please open a pull request where we can review it
 and discuss the design.
 
+# Branch Hierarchy
+
+As previously mentioned, the `master` branch should be ready to release at any time. As a contributor,
+you should create your own branches from the `develop` branch. Pull requests from contributors which
+are attempting to merge into `master` will be rejected. Once develop is in a stable state, it can be
+merged into `master` by a direct contributor. Release branches will be made from `master`, and should
+follow a format similar to this:
+
+    yyyy/MM/dd/v<version>-<stage>
+	
+    * yyyy -> The year (example: 2020)
+	* MM -> The month (example: 08)
+	* dd -> The day (example: 17)
+	* <version> -> The release version (example: 0.6)
+	* <stage> -> The release stage (examples: alpha, beta, release)
+
+An example release branch would be: 2020/08/17/v0.6-beta
+
+At no time should a release branch be merged back into `master`.
+
 # Coding style
 
 Where possible, try to match the conventions in the code that you're modying.

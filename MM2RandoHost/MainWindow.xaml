@@ -147,10 +147,11 @@
             <TabItem Header="Gameplay Settings">
                 <Grid Margin="4">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="93*"/>
+                        <ColumnDefinition Width="113*"/>
+                        <ColumnDefinition Width="205*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                    <StackPanel Grid.Column="0" Orientation="Vertical" Grid.ColumnSpan="2">
 
                         <!--CheckBoxes are placed inside Grids, so we can have MouseOver behavior while CheckBoxes are disabled-->
                         <Grid x:Name="gridChkCoreModules">
@@ -200,7 +201,7 @@
 
                     </StackPanel>
 
-                    <DockPanel Grid.Column="1" VerticalAlignment="Stretch" >
+                    <DockPanel Grid.Column="2" VerticalAlignment="Stretch" >
 
                         <CheckBox Name="chkTournamentMode" Content="Tournament Mode" DockPanel.Dock="Bottom"
                                   HorizontalAlignment="Right"
@@ -229,7 +230,7 @@
 
                         <Grid x:Name="gridChkStageNameHidden" DockPanel.Dock="Top">
                             <CheckBox Content="Hide Stage Names" 
-                                    IsChecked="{Binding RandoSettings.IsStageNameHidden}" />
+                                    IsChecked="{Binding RandoSettings.IsStageNameHidden}" Margin="2,2,2,115" />
                         </Grid>
 
                     </DockPanel>

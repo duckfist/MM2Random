@@ -1,0 +1,179 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:RandomizerHost.ViewModels;assembly=RandomizerHost"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:RandomizerHost.Converters"
+        xmlns:MM2Lib="clr-namespace:MM2Randomizer;assembly=MM2RandoLib"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RandomizerHost.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="RandomizerHost">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <!--
+    <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+    </Window.Resources>
+    -->
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="28"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- The main header image for the host -->
+        <Image
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Stretch="None"
+            Source="/Assets/Header.png"/>
+
+        <Grid
+            Grid.Row="1"
+            Grid.ColumnSpan="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="28"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="48"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                TextAlignment="Center"
+                FontSize="9"
+                Text="To get started, drag a Mega Man 2 ROM onto this window, or click the &quot;. . .&quot; button to browse."
+                IsVisible="{Binding IsShowingHint}"
+                />
+
+            <Border
+                Name="border"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                BorderThickness="3">
+
+                <DockPanel>
+                    <Button
+                        Name="BrowseButton"
+                        Width="24"
+                        Margin="0,0"
+                        Click="BrowseButton_OnClick">
+                        ...
+                    </Button>
+                    <TextBox
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Name="RomSourceTextBox"
+                        Margin="4,0,0,0"
+                        />
+                </DockPanel>
+            </Border>
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                TextAlignment="Right"
+                Text="MD5:"/>
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                TextAlignment="Right"
+                Text="SHA-256:"/>
+
+            <TextBox
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="4,0,0,0"
+                IsVisible="{Binding RandoSettings.IsSourcePathValid}"
+                Text="{Binding RandoSettings.HashStringMD5}"/>
+
+            <TextBox
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="4,0,0,0"
+                IsVisible="{Binding RandoSettings.IsSourcePathValid}"
+                Text="{Binding RandoSettings.HashStringSHA256}"/>
+
+            <TextBlock
+                Grid.Row="4"
+                Grid.ColumnSpan="2"
+                TextAlignment="Center" FontWeight="Bold"
+                Text="{Binding RandoSettings.HashValidationMessage}"/>
+
+
+            <!--
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                TextAlignment="Center"
+                FontSize="9"
+                Text="To get started, drag a Mega Man 2 ROM onto this window, or click the &quot;. . .&quot; button to browse."
+                Foreground="{DynamicResource Brush_TextGreen}"
+                Visibility="{Binding IsShowingHint, Converter={StaticResource boolToVisibilityConverter}}"
+                Style="{StaticResource Style_TextBlock_FinePrint}"/>
+
+
+            <Border Name="border" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" BorderThickness="3">
+                <DockPanel>
+                    <Button Width="24" Margin="0,0" Name="btnBrowse" Background="{StaticResource Brush_PanelBg_1}" Click="btnBrowse_Click">
+                        <TextBlock Text="..."/>
+                    </Button>
+                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                             Name="tbxSource" AllowDrop="True" Margin="4,0,0,0"
+                            Text="{Binding Path=RandoSettings.SourcePath, UpdateSourceTrigger=PropertyChanged}"
+                            TextChanged="tbxSource_TextChanged"
+                            Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
+                </DockPanel>
+            </Border>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Style_TextBlock_FinePrint}" TextAlignment="Right" Text="MD5:"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource Style_TextBlock_FinePrint}" TextAlignment="Right" Text="SHA-256:"/>
+
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="4,0,0,0"
+                        Style="{StaticResource Style_TextBox_SelectableTextBlock}"
+                        Visibility="{Binding Path=RandoSettings.IsSourcePathValid, Converter={StaticResource boolToVisibilityConverter}}"
+                        Foreground="{Binding Path=RandoSettings.IsHashValid, Converter={StaticResource boolToRedGreenBrushConverter}}"
+                        Text="{Binding RandoSettings.HashStringMD5}"/>
+            <TextBox Grid.Row="3" Grid.Column="1"  Margin="4,0,0,0"
+                        Style="{StaticResource Style_TextBox_SelectableTextBlock}"
+                        Visibility="{Binding Path=RandoSettings.IsSourcePathValid, Converter={StaticResource boolToVisibilityConverter}}"
+                        Foreground="{Binding Path=RandoSettings.IsHashValid, Converter={StaticResource boolToRedGreenBrushConverter}}"
+                        Text="{Binding RandoSettings.HashStringSHA256}"/>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="2"
+                        Style="{StaticResource Style_TextBlock_FinePrint}"
+                        TextAlignment="Center" FontWeight="Bold"
+                        Foreground="{Binding Path=RandoSettings.IsHashValid, Converter={StaticResource boolToRedGreenBrushConverter}}"
+                        Text="{Binding RandoSettings.HashValidationMessage}"/>
+                        -->
+        </Grid>
+
+
+        <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+
+</Window>

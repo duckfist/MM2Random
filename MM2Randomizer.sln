@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MM2RandoHost", "MM2RandoHost\MM2RandoHost.csproj", "{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MM2RandoHost", "MM2RandoHost\MM2RandoHost.csproj", "{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MM2RandoLib", "MM2RandoLib\MM2RandoLib.csproj", "{2F96FE8D-29DC-46F3-9D26-FC85DC2225C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomizerHost", "RandomizerHost\RandomizerHost.csproj", "{38EECF7E-6242-4407-9D3B-6B8CAC414C44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{2F96FE8D-29DC-46F3-9D26-FC85DC2225C8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F96FE8D-29DC-46F3-9D26-FC85DC2225C8}.Release|x64.ActiveCfg = Release|x64
 		{2F96FE8D-29DC-46F3-9D26-FC85DC2225C8}.Release|x64.Build.0 = Release|x64
+		{38EECF7E-6242-4407-9D3B-6B8CAC414C44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38EECF7E-6242-4407-9D3B-6B8CAC414C44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38EECF7E-6242-4407-9D3B-6B8CAC414C44}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{38EECF7E-6242-4407-9D3B-6B8CAC414C44}.Debug|x64.Build.0 = Debug|Any CPU
+		{38EECF7E-6242-4407-9D3B-6B8CAC414C44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38EECF7E-6242-4407-9D3B-6B8CAC414C44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38EECF7E-6242-4407-9D3B-6B8CAC414C44}.Release|x64.ActiveCfg = Release|Any CPU
+		{38EECF7E-6242-4407-9D3B-6B8CAC414C44}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

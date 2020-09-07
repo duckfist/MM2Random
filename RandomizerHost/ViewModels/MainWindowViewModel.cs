@@ -67,7 +67,7 @@ namespace RandomizerHost.ViewModels
         // Public Methods
         //
 
-        public void PerformRandomization(int seed, bool tryCreateLogFile)
+        public void PerformRandomization(Int32 seed, Boolean tryCreateLogFile)
         {
             // Perform randomization based on settings, then generate the ROM.
             RandomMM2.RandomizerCreate(true, seed);

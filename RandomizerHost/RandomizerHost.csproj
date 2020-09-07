@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -9,6 +9,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\header.png" />
+    <None Remove="Assets\sprite_bass.png" />
+    <None Remove="Assets\sprite_proto.png" />
+    <None Remove="Assets\sprite_rock.png" />
+    <None Remove="Assets\sprite_roll.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.9.11" />

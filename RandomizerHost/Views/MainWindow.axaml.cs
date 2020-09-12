@@ -40,8 +40,8 @@ namespace RandomizerHost.Views
         {
             AvaloniaXamlLoader.Load(this);
 
+            // Set up the custom sprite ComboBox
             ComboBox cbxPlayerSprite = this.Find<ComboBox>("cbxPlayerSprite");
-
             cbxPlayerSprite.Items = Enum.GetValues(typeof(PlayerSprite));
             cbxPlayerSprite.SelectedIndex = 0;
         }
@@ -118,7 +118,6 @@ namespace RandomizerHost.Views
 
         private void Instance_PropertyChanged(Object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         public void CreateRandomButton_OnClick(Object in_Sender, RoutedEventArgs in_Args)

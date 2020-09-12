@@ -10,6 +10,10 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="RandomizerHost">
 
+    <Window.Resources>
+        <converters:PlayerSpriteToBooleanConverter x:Key="PlayerSpriteToBooleanConverter"/>
+    </Window.Resources>
+
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
@@ -406,7 +410,8 @@
                         <ComboBox
                             x:Name="cbxPlayerSprite"
                             Margin="32,0"
-                            SelectedItem="{Binding Path=RandoSettings.SelectedPlayer}">
+                            SelectedItem="{Binding Path=RandoSettings.SelectedPlayer}"
+                            >
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -418,62 +423,37 @@
                         <!--
                             Grid to hold all 4 player sprite images. All images are collapsed,
                             except the one image that corresponds to the ComboBox SelectedItem,
-                            which is Visible. -->
+                            which is Visible.
+                        -->
                         <Grid>
-                            <!--
                             <Image
                                 Width="104"
                                 Height="96"
-                                RenderOptions.BitmapInterpolationMode="NearestNeighbor"
-                                Source="/Assets/sprite_rock.png">
-
-                                <Image.Styles>
-                                    <Style>
-                                        <Setter Property="IsVisible" Value="{Binding if #cbxPlayerSprite.SelectedItem == 0 then true else false}"/>
-                                    </Style>
-                                </Image.Styles>
-                            </Image>
+                                Source="/Assets/sprite_rock.png"
+                                IsVisible="{Binding RandoSettings.SelectedPlayer, Converter={StaticResource PlayerSpriteToBooleanConverter}, ConverterParameter=Rockman}"
+                            />
 
                             <Image
                                 Width="104"
                                 Height="96"
-                                RenderOptions.BitmapInterpolationMode="NearestNeighbor"
-                                Source="/Assets/sprite_proto.png">
-
-                                <Image.Styles>
-                                    <Style>
-                                        <Setter Property="IsVisible" Value="{Binding cbxPlayerSprite[SelectedItem=Protoman]}"/>
-                                    </Style>
-                                </Image.Styles>
-                            </Image>
+                                Source="/Assets/sprite_proto.png"
+                                IsVisible="{Binding RandoSettings.SelectedPlayer, Converter={StaticResource PlayerSpriteToBooleanConverter}, ConverterParameter=Protoman}"
+                            />
 
                             <Image
                                 Width="104"
                                 Height="96"
-                                RenderOptions.BitmapInterpolationMode="NearestNeighbor"
-                                Source="/Assets/sprite_roll.png">
-
-                                <Image.Styles>
-                                    <Style>
-                                        <Setter Property="IsVisible" Value="{Binding cbxPlayerSprite[SelectedItem=Roll]}"/>
-                                    </Style>
-                                </Image.Styles>
-                            </Image>
+                                Source="/Assets/sprite_roll.png"
+                                IsVisible="{Binding RandoSettings.SelectedPlayer, Converter={StaticResource PlayerSpriteToBooleanConverter}, ConverterParameter=Roll}"
+                            />
 
                             <Image
                                 Width="104"
                                 Height="96"
-                                RenderOptions.BitmapInterpolationMode="NearestNeighbor"
-                                Source="/Assets/sprite_bass.png">
-
-                                <Image.Styles>
-                                    <Style>
-                                        <Setter Property="IsVisible" Value="{Binding cbxPlayerSprite[SelectedItem=Bass]}"/>
-                                    </Style>
-                                </Image.Styles>
-                            </Image>
-                            -->
-                        </Grid>
+                                Source="/Assets/sprite_bass.png"
+                                IsVisible="{Binding RandoSettings.SelectedPlayer, Converter={StaticResource PlayerSpriteToBooleanConverter}, ConverterParameter=Bass}"
+                            />
+                            </Grid>
                     </StackPanel>
                 </Grid>
             </TabItem>

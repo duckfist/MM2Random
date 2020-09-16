@@ -18,6 +18,7 @@ namespace MM2Randomizer
         private string hashValidationMessage;
         private bool isHashValid;
         private bool isSpoilerFree;
+        private Boolean mCreateLogFile = false;
 
         private PlayerSprite _selectedPlayer;
 
@@ -153,6 +154,12 @@ namespace MM2Randomizer
         {
             get => isHashValid;
             set => SetProperty(ref isHashValid, value);
+        }
+
+        public Boolean CreateLogFile
+        {
+            get => this.mCreateLogFile;
+            set => SetProperty(ref this.mCreateLogFile, value);
         }
 
         /// <summary>

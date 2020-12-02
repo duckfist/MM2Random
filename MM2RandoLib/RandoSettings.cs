@@ -8,92 +8,74 @@ namespace MM2Randomizer
 {
     public class RandoSettings : ObservableBase
     {
-        private string seedString;
-        private string sourcePath;
-        private bool isSourcePathValid;
-        private bool isSeedValid;
-        private bool isSourcePathAndSeedValid;
-        private string hashStringMD5;
-        private string hashStringSHA256;
-        private string hashValidationMessage;
-        private bool isHashValid;
-        private bool isSpoilerFree;
-        private Boolean mCreateLogFile = false;
-
-        private PlayerSprite _selectedPlayer;
-
-        public readonly string[] ExpectedMD5s = new string[]
-        {
-            "caaeb9ee3b52839de261fd16f93103e6", // Mega Man 2 (U)
-            "8e4bc5b03ffbd4ef91400e92e50dd294", // Mega Man 2 (USA)
-        };
-
-        public readonly string[] ExpectedSHA256s = new string[]
-        {
-            "27b5a635df33ed57ed339dfc7fd62fc603b39c1d1603adb5cdc3562a0b0d555b", // Mega Man 2 (U)
-            "49136b412ff61beac6e40d0bbcd8691a39a50cd2744fdcdde3401eed53d71edf", // Mega Man 2 (USA)
-        };
+        //
+        // Constructor
+        //
 
         public RandoSettings()
         {
             // Rando assembly state variables
-            SeedString = "";
-            SourcePath = "";
-            IsSeedValid = false;
-            IsSourcePathValid = false;
-            IsSourcePathAndSeedValid = false;
-            HashStringMD5 = "";
-            HashStringSHA256 = "";
-            HashValidationMessage = "";
-            IsHashValid = false;
+            this.SeedString = "";
+            this.SourcePath = "";
+            this.IsSeedValid = false;
+            this.IsSourcePathValid = false;
+            this.IsSourcePathAndSeedValid = false;
+            this.HashStringMD5 = "";
+            this.HashStringSHA256 = "";
+            this.HashValidationMessage = "";
+            this.IsHashValid = false;
 
             // Flags for Rando Core Modules (Interdependent, cannot be changed from UI)
-            Is8StagesRandom = true;
-            IsWeaponsRandom = true;
-            IsTeleportersRandom = true;
+            this.Is8StagesRandom = true;
+            this.IsWeaponsRandom = true;
+            this.IsTeleportersRandom = true;
 
             // Flags for Rando Gameplay Modules
-            IsWeaponBehaviorRandom = true;
-            IsWeaknessRandom = true;
-            IsBossInBossRoomRandom = true;
-            IsBossAIRandom = true;
-            IsItemsRandom = true;
-            IsEnemiesRandom = true;
-            IsEnemyWeaknessRandom = true;
-            IsTilemapChangesEnabled = true;
+            this.IsWeaponBehaviorRandom = true;
+            this.IsWeaknessRandom = true;
+            this.IsBossInBossRoomRandom = true;
+            this.IsBossAIRandom = true;
+            this.IsItemsRandom = true;
+            this.IsEnemiesRandom = true;
+            this.IsEnemyWeaknessRandom = true;
+            this.IsTilemapChangesEnabled = true;
 
             // Flags for Rando Cosmetic Modules
-            IsWeaponNamesRandom = true;
-            IsColorsRandom = true;
-            IsBGMRandom = true;
-            SelectedPlayer = PlayerSprite.Rockman;
+            this.IsWeaponNamesRandom = true;
+            this.IsColorsRandom = true;
+            this.IsBGMRandom = true;
+            this.SelectedPlayer = PlayerSprite.Rockman;
 
             // Flags for Optional Gameplay Modules
-            FastText = true;
-            BurstChaserMode = false;
-            IsSpoilerFree = false;
+            this.FastText = true;
+            this.BurstChaserMode = false;
+            this.IsSpoilerFree = false;
         }
 
-        #region Meta Properties
+
+        //
+        // Public Properties
+        //
 
         /// <summary>
         /// Alphabetical string representation of the RandomMM2.Seed integer of the most
         /// recently generated ROM.
         /// </summary>
-        public string SeedString
+        public String SeedString
         {
-            get => seedString;
+            get => mSeedString;
             set
             {
                 value = value.ToUpper();
-                if (seedString != value)
+
+                if (this.mSeedString != value)
                 {
-                    seedString = value;
-                    NotifyPropertyChanged();
+                    this.mSeedString = value;
+                    this.NotifyPropertyChanged();
 
                     // TODO: Check for better validity of seed
-                    IsSeedValid = (seedString == "") ? false : true;
-                    IsSourcePathAndSeedValid = IsSourcePathValid && IsSeedValid;
+                    this.IsSeedValid = !String.IsNullOrEmpty(this.mSeedString);
+                    this.IsSourcePathAndSeedValid = this.IsSourcePathValid && this.IsSeedValid;
                 }
             }
         }
@@ -101,65 +83,71 @@ namespace MM2Randomizer
         /// <summary>
         /// Full path to user-provided ROM to apply patch.
         /// </summary>
-        public string SourcePath
+        public String SourcePath
         {
-            get => sourcePath;
-            set => SetProperty(ref sourcePath, value);
+            get => this.mSourcePath;
+
+            set
+            {
+                //IsShowingHint = false;
+                this.ValidateFile(value);
+                this.SetProperty(ref this.mSourcePath, value);
+            }
         }
 
-        public bool IsSourcePathValid
+        public Boolean IsSourcePathValid
         {
-            get => isSourcePathValid;
-            set => SetProperty(ref isSourcePathValid, value);
+            get => this.mIsSourcePathValid;
+            set => this.SetProperty(ref this.mIsSourcePathValid, value);
         }
 
-        public bool IsSeedValid
+        public Boolean IsSeedValid
         {
-            get => isSeedValid;
-            set => SetProperty(ref isSeedValid, value);
+            get => this.mIsSeedValid;
+            set => this.SetProperty(ref this.mIsSeedValid, value);
         }
 
         // TODO need this?
-        public bool IsSourcePathAndSeedValid
+        public Boolean IsSourcePathAndSeedValid
         {
-            get => isSourcePathAndSeedValid;
-            set => SetProperty(ref isSourcePathAndSeedValid, value);
+            get => this.mIsSourcePathAndSeedValid;
+            set => this.SetProperty(ref this.mIsSourcePathAndSeedValid, value);
         }
 
-        public bool IsSpoilerFree
+        public Boolean IsSpoilerFree
         {
-            get => isSpoilerFree;
-            set => SetProperty(ref isSpoilerFree, value);
+            get => this.mIsSpoilerFree;
+            set => this.SetProperty(ref this.mIsSpoilerFree, value);
         }
 
-        public string HashStringMD5
+        public String HashStringMD5
         {
-            get => hashStringMD5;
-            set => SetProperty(ref hashStringMD5, value);
+            get => this.mHashStringMD5;
+            set => this.SetProperty(ref this.mHashStringMD5, value);
         }
 
-        public string HashStringSHA256
+        public String HashStringSHA256
         {
-            get => hashStringSHA256;
-            set => SetProperty(ref hashStringSHA256, value);
+            get => this.mHashStringSHA256;
+            set => this.SetProperty(ref this.mHashStringSHA256, value);
         }
 
-        public string HashValidationMessage
+        public String HashValidationMessage
         {
-            get => hashValidationMessage;
-            set => SetProperty(ref hashValidationMessage, value);
+            get => this.mHashValidationMessage;
+            set => this.SetProperty(ref this.mHashValidationMessage, value);
         }
 
-        public bool IsHashValid
+        public Boolean IsHashValid
         {
-            get => isHashValid;
-            set => SetProperty(ref isHashValid, value);
+            get => this.mIsHashValid;
+            set => this.SetProperty(ref this.mIsHashValid, value);
         }
 
         public Boolean CreateLogFile
         {
             get => this.mCreateLogFile;
-            set => SetProperty(ref this.mCreateLogFile, value);
+            set => this.SetProperty(ref this.mCreateLogFile, value);
         }
 
         /// <summary>
@@ -173,122 +161,130 @@ namespace MM2Randomizer
             }
         }
 
-        #endregion
 
-        #region Randomizer Flags
+        //
+        // Flags
+        //
 
         /// <summary>
         /// If True, the Robot Master stages will be shuffled and will not be indicated by the
         /// portraits on the Stage Select screen.
         /// </summary>
-        public bool Is8StagesRandom { get; set; }
+        public Boolean Is8StagesRandom { get; set; }
 
         /// <summary>
         /// If True, the weapons awarded from each Robot Master is shuffled.
         /// </summary>
-        public bool IsWeaponsRandom { get; set; }
+        public Boolean IsWeaponsRandom { get; set; }
 
         /// <summary>
         /// If True, Items 1, 2, and 3 will be awarded from random Robot Masters.
         /// </summary>
-        public bool IsItemsRandom { get; set; }
+        public Boolean IsItemsRandom { get; set; }
 
         /// <summary>
         /// If true, in Wily 5, the Robot Master locations in each teleporter is randomized.
         /// </summary>
-        public bool IsTeleportersRandom { get; set; }
+        public Boolean IsTeleportersRandom { get; set; }
 
         /// <summary>
         /// If True, the damage each weapon does against each Robot Master is changed. The manner in
         /// which it is changed depends on if IsWeaknessEasy is True or if IsWeaknessHard is True.
         /// </summary>
-        public bool IsWeaknessRandom { get; set; }
+        public Boolean IsWeaknessRandom { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public bool IsBossAIRandom { get; set; }
+        public Boolean IsBossAIRandom { get; set; }
 
         /// <summary>
         /// TODO
         /// </summary>
-        public bool IsColorsRandom { get;  set; }
+        public Boolean IsColorsRandom { get;  set; }
 
         /// <summary>
         /// TODO
         /// </summary>
-        public bool IsEnemiesRandom { get; set; }
+        public Boolean IsEnemiesRandom { get; set; }
 
-        public bool IsEnemyWeaknessRandom { get; set; } 
+        public Boolean IsEnemyWeaknessRandom { get; set; } 
 
-        public bool IsBossInBossRoomRandom { get; set; }
+        public Boolean IsBossInBossRoomRandom { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public bool IsTilemapChangesEnabled { get; set; }
+        public Boolean IsTilemapChangesEnabled { get; set; }
 
         /// <summary>
         /// TODO
         /// </summary>
-        public bool IsBGMRandom { get; set; }
+        public Boolean IsBGMRandom { get; set; }
 
         /// <summary>
         /// Change this value to set Mega Man's sprite graphic.
         /// </summary>
         public PlayerSprite SelectedPlayer
         {
-            get => _selectedPlayer;
-            set => SetProperty(ref _selectedPlayer, value);
+            get => this.mSelectedPlayer;
+            set => this.SetProperty(ref this.mSelectedPlayer, value);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public bool IsWeaponNamesRandom { get; set; }
+        public Boolean IsWeaponNamesRandom { get; set; }
 
         /// <summary>
         /// TODO
         /// </summary>
-        public bool FastText { get; set; }
+        public Boolean FastText { get; set; }
 
-        public bool IsStageNameHidden { get; set; }
+        public Boolean IsStageNameHidden { get; set; }
 
         /// <summary>
         /// TODO
         /// </summary>
-        public bool BurstChaserMode { get; set; }
+        public Boolean BurstChaserMode { get; set; }
 
-        public bool IsWeaponBehaviorRandom { get; set; }
+        public Boolean IsWeaponBehaviorRandom { get; set; }
 
-        #endregion
 
-        public string GetFlagsString()
+        //
+        // Public Methods
+        //
+
+        public String GetFlagsString()
         {
             StringBuilder sb = new StringBuilder();
-            if (Is8StagesRandom && IsWeaponsRandom && IsTeleportersRandom)
-                                         sb.Append('!');    else sb.Append(' ');
+
+            sb.Append((true == this.Is8StagesRandom && true == this.IsWeaponsRandom && true == this.IsTeleportersRandom) ? '!' : ' ');
+
             //if (Is8StagesRandom)         sb.Append('A');    else sb.Append(' ');
             //if (IsWeaponsRandom)         sb.Append('B');    else sb.Append(' ');
             //if (IsTeleportersRandom)     sb.Append('C');    else sb.Append(' ');
-            if (IsWeaponBehaviorRandom)  sb.Append('A');    else sb.Append(' ');
-            if (IsWeaknessRandom)        sb.Append('B');    else sb.Append(' ');
-            if (IsBossInBossRoomRandom)  sb.Append('C');    else sb.Append(' ');
-            if (IsBossAIRandom)          sb.Append('D');    else sb.Append(' ');
-            if (IsItemsRandom)           sb.Append('E');    else sb.Append(' ');
-            if (IsEnemiesRandom)         sb.Append('F');    else sb.Append(' ');
-            if (IsEnemyWeaknessRandom)   sb.Append('G');    else sb.Append(' ');
-            if (IsTilemapChangesEnabled) sb.Append('H');    else sb.Append(' ');
 
-            if (IsWeaponNamesRandom)     sb.Append('1');    else sb.Append(' ');
-            if (IsColorsRandom)          sb.Append('2');    else sb.Append(' ');
-            if (IsBGMRandom)             sb.Append('3');    else sb.Append(' ');
+            sb.Append(true == this.IsWeaponBehaviorRandom ? 'A' : ' ');
+            sb.Append(true == this.IsWeaknessRandom ? 'B' : ' ');
+            sb.Append(true == this.IsBossInBossRoomRandom ? 'C' : ' ');
+            sb.Append(true == this.IsBossAIRandom ? 'D' : ' ');
+            sb.Append(true == this.IsItemsRandom ? 'E' : ' ');
+            sb.Append(true == this.IsEnemiesRandom ? 'F' : ' ');
+            sb.Append(true == this.IsEnemyWeaknessRandom ? 'G' : ' ');
+            sb.Append(true == this.IsTilemapChangesEnabled ? 'H' : ' ');
 
-            if (FastText)                sb.Append('t');    else sb.Append(' ');
-            if (BurstChaserMode)         sb.Append('©');    else sb.Append(' ');
-            if (IsStageNameHidden)       sb.Append('?');    else sb.Append(' ');
+            sb.Append(true == this.IsWeaponNamesRandom ? '1' : ' ');
+            sb.Append(true == this.IsColorsRandom ? '2' : ' ');
+            sb.Append(true == this.IsBGMRandom ? '3' : ' ');
+
+            sb.Append(true == this.FastText ? 't' : ' ');
+            sb.Append(true == this.BurstChaserMode ? '@' : ' ');
+            sb.Append(true == this.IsStageNameHidden ? '?' : ' ');
+
             return sb.ToString();
         }
+
 
         /// <summary>
         /// This method checks that a file exists and then compares its checksum with known good Mega Man 2 ROMs.
@@ -296,77 +292,112 @@ namespace MM2Randomizer
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public bool ValidateFile(string path)
+        public Boolean ValidateFile(String path)
         {
             // Check if file even exists
-            SourcePath = path;
-            IsSourcePathValid = System.IO.File.Exists(SourcePath);
-            IsSourcePathAndSeedValid = IsSourcePathValid && IsSeedValid;
+            //SourcePath = path;
+            this.IsSourcePathValid = System.IO.File.Exists(path);
+            this.IsSourcePathAndSeedValid = this.IsSourcePathValid && this.IsSeedValid;
 
-            if (!IsSourcePathValid)
+            if (false == this.IsSourcePathValid)
             {
-                HashValidationMessage = "File does not exist.";
-                IsHashValid = false;
+                this.HashValidationMessage = "File does not exist.";
+                this.IsHashValid = false;
                 return false;
             }
 
             // Ensure file size is small so that we can take the hash
-            var info = new System.IO.FileInfo(path);
-            long size = info.Length;
+            FileInfo info = new System.IO.FileInfo(path);
+            Int64 size = info.Length;
+
             if (size > 2000000)
             {
-                decimal MB = (size / (decimal)(1024d * 1024d));
-                HashValidationMessage = $"File is {MB:0.00} MB, clearly not a NES ROM. WTF are you doing?";
-                IsSourcePathValid = false;
-                IsHashValid = false;
+                Decimal MB = (size / (decimal)(1024d * 1024d));
+
+                this.HashValidationMessage = $"File is {MB:0.00} MB, clearly not a NES ROM. WTF are you doing?";
+                this.IsSourcePathValid = false;
+                this.IsHashValid = false;
                 return false;
             }
 
             // Calculate the file's hash
-            string hashStrMd5 = "";
-            string hashStrSha256 = "";
+            String hashStrMd5 = "";
+            String hashStrSha256 = "";
 
             // SHA256
-            using (var sha = new System.Security.Cryptography.SHA256Managed())
+            using (System.Security.Cryptography.SHA256Managed sha = new System.Security.Cryptography.SHA256Managed())
             {
                 using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
-                    byte[] hashSha256 = sha.ComputeHash(fs);
+                    Byte[] hashSha256 = sha.ComputeHash(fs);
                     hashStrSha256 = BitConverter.ToString(hashSha256).Replace("-", String.Empty).ToLowerInvariant();
                 }
             }
 
             // MD5
-            using (var md5 = System.Security.Cryptography.MD5.Create())
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
             {
                 using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
-                    var hashMd5 = md5.ComputeHash(fs);
+                    Byte[] hashMd5 = md5.ComputeHash(fs);
                     hashStrMd5 = BitConverter.ToString(hashMd5).Replace("-", "").ToLowerInvariant();
                 }
             }
 
             // Update hash strings
-            HashStringSHA256 = hashStrSha256;
-            HashStringMD5 = hashStrMd5;
+            this.HashStringSHA256 = hashStrSha256;
+            this.HashStringMD5 = hashStrMd5;
 
             // Check that the hash matches a supported hash
-            List<string> md5s = new List<string>(ExpectedMD5s);
-            List<string> sha256s = new List<string>(ExpectedSHA256s);
-            IsHashValid = (md5s.Contains(HashStringMD5) && sha256s.Contains(HashStringSHA256));
-            if (IsHashValid)
+            List<String> md5s = new List<String>(EXPECTED_MD5_HASH_LIST);
+            List<String> sha256s = new List<String>(EXPECTED_SHA256_HASH_LIST);
+
+            this.IsHashValid = (md5s.Contains(this.HashStringMD5) && sha256s.Contains(this.HashStringSHA256));
+
+            if (this.IsHashValid)
             {
-                HashValidationMessage = "ROM checksum is valid, good to go!";
+                this.HashValidationMessage = "ROM checksum is valid, good to go!";
             }
             else
             {
-                HashValidationMessage = "Wrong file checksum. Please try another ROM, or it may not work.";
+                this.HashValidationMessage = "Wrong file checksum. Please try another ROM, or it may not work.";
                 return false;
             }
 
             // If we made it this far, the file looks good!
             return true;
         }
+
+
+        //
+        // Private Data Members
+        //
+
+        private String mSeedString;
+        private String mSourcePath;
+        private Boolean mIsSourcePathValid;
+        private Boolean mIsSeedValid;
+        private Boolean mIsSourcePathAndSeedValid;
+        private String mHashStringMD5;
+        private String mHashStringSHA256;
+        private String mHashValidationMessage;
+        private Boolean mIsHashValid;
+        private Boolean mIsSpoilerFree;
+        private Boolean mCreateLogFile = false;
+
+        private PlayerSprite mSelectedPlayer;
+
+        public readonly String[] EXPECTED_MD5_HASH_LIST = new String[]
+        {
+            "caaeb9ee3b52839de261fd16f93103e6", // Mega Man 2 (U)
+            "8e4bc5b03ffbd4ef91400e92e50dd294", // Mega Man 2 (USA)
+        };
+
+        public readonly String[] EXPECTED_SHA256_HASH_LIST = new String[]
+        {
+            "27b5a635df33ed57ed339dfc7fd62fc603b39c1d1603adb5cdc3562a0b0d555b", // Mega Man 2 (U)
+            "49136b412ff61beac6e40d0bbcd8691a39a50cd2744fdcdde3401eed53d71edf", // Mega Man 2 (USA)
+        };
     }
 
     public enum PlayerSprite

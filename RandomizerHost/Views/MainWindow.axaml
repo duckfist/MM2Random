@@ -136,53 +136,6 @@
                 FontWeight="Bold"
                 Text="{Binding RandoSettings.HashValidationMessage}"
             />
-
-
-            <!--
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                TextAlignment="Center"
-                FontSize="9"
-                Text="To get started, drag a Mega Man 2 ROM onto this window, or click the &quot;. . .&quot; button to browse."
-                Foreground="{DynamicResource Brush_TextGreen}"
-                Visibility="{Binding IsShowingHint, Converter={StaticResource boolToVisibilityConverter}}"
-                Style="{StaticResource Style_TextBlock_FinePrint}"/>
-
-
-            <Border Name="border" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" BorderThickness="3">
-                <DockPanel>
-                    <Button Width="24" Margin="0,0" Name="btnBrowse" Background="{StaticResource Brush_PanelBg_1}" Click="btnBrowse_Click">
-                        <TextBlock Text="..."/>
-                    </Button>
-                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-                             Name="tbxSource" AllowDrop="True" Margin="4,0,0,0"
-                            Text="{Binding Path=RandoSettings.SourcePath, UpdateSourceTrigger=PropertyChanged}"
-                            TextChanged="tbxSource_TextChanged"
-                            Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
-                </DockPanel>
-            </Border>
-
-            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Style_TextBlock_FinePrint}" TextAlignment="Right" Text="MD5:"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource Style_TextBlock_FinePrint}" TextAlignment="Right" Text="SHA-256:"/>
-
-            <TextBox Grid.Row="2" Grid.Column="1" Margin="4,0,0,0"
-                        Style="{StaticResource Style_TextBox_SelectableTextBlock}"
-                        Visibility="{Binding Path=RandoSettings.IsSourcePathValid, Converter={StaticResource boolToVisibilityConverter}}"
-                        Foreground="{Binding Path=RandoSettings.IsHashValid, Converter={StaticResource boolToRedGreenBrushConverter}}"
-                        Text="{Binding RandoSettings.HashStringMD5}"/>
-            <TextBox Grid.Row="3" Grid.Column="1"  Margin="4,0,0,0"
-                        Style="{StaticResource Style_TextBox_SelectableTextBlock}"
-                        Visibility="{Binding Path=RandoSettings.IsSourcePathValid, Converter={StaticResource boolToVisibilityConverter}}"
-                        Foreground="{Binding Path=RandoSettings.IsHashValid, Converter={StaticResource boolToRedGreenBrushConverter}}"
-                        Text="{Binding RandoSettings.HashStringSHA256}"/>
-            <TextBlock Grid.Row="4" Grid.ColumnSpan="2"
-                        Style="{StaticResource Style_TextBlock_FinePrint}"
-                        TextAlignment="Center" FontWeight="Bold"
-                        Foreground="{Binding Path=RandoSettings.IsHashValid, Converter={StaticResource boolToRedGreenBrushConverter}}"
-                        Text="{Binding RandoSettings.HashValidationMessage}"/>
-                        -->
         </Grid>
 
         <!--Seed textbox-->
@@ -225,6 +178,7 @@
                 Name="Button_CreateFromRandomSeed"
                 Height="30"
                 Margin="2"
+                IsEnabled="{Binding RandoSettings.IsHashValid}"
                 Command="{Binding CreateFromRandomSeedCommand}"
             >
                 Create From Random Seed
@@ -234,7 +188,7 @@
                 Name="Button_OpenContainingFolder"
                 Height="30"
                 Margin="2"
-                IsEnabled="{Binding HasGeneratedAROM}"
+                IsEnabled="{Binding CanOpenFileLocation}"
                 Command="{Binding OpenContainFolderCommand}"
             >
                 Open Containing Folder
@@ -301,35 +255,35 @@
                             />
                         </Grid>
 
-                        <Grid x:Name="gridChkBossAI">
+                        <Grid x:Name="Grid_BossAI">
                             <CheckBox
                                 Content="Boss AI"
                                 IsChecked="{Binding Path=RandoSettings.IsBossAIRandom}"
                             />
                         </Grid>
 
-                        <Grid x:Name="gridChkItems">
+                        <Grid x:Name="Grid_Items">
                             <CheckBox
                                 Content="Items 1, 2, and 3 Get"
                                 IsChecked="{Binding Path=RandoSettings.IsItemsRandom}"
                             />
                         </Grid>
 
-                        <Grid x:Name="gridChkEnemies">
+                        <Grid x:Name="Grid_EnemyLocations">
                             <CheckBox
                                 Content="Enemy Locations"
                                 IsChecked="{Binding Path=RandoSettings.IsEnemiesRandom}"
                             />
                         </Grid>
 
-                        <Grid x:Name="gridChkEnemyWeaknesses">
+                        <Grid x:Name="Grid_EnemyWeaknesses">
                             <CheckBox
                                 Content="Enemy Weaknesses"
                                 IsChecked="{Binding Path=RandoSettings.IsEnemyWeaknessRandom}"
                             />
                         </Grid>
 
-                        <Grid x:Name="gridChkTilemap">
+                        <Grid x:Name="Grid_StageLayouts">
                             <CheckBox
                                 Content="Stage Layouts"
                                 IsChecked="{Binding Path=RandoSettings.IsTilemapChangesEnabled}"
@@ -342,7 +296,7 @@
                         VerticalAlignment="Stretch">
 
                         <CheckBox
-                            Name="chkTournamentMode"
+                            Name="CheckBox_TournamentMode"
                             Content="Tournament Mode"
                             DockPanel.Dock="Bottom"
                             HorizontalAlignment="Right"
@@ -362,7 +316,7 @@
                         </CheckBox>
 
                         <Grid
-                            x:Name="gridChkFastText"
+                            x:Name="Grid_FastText"
                             DockPanel.Dock="Top"
                         >
                             <CheckBox
@@ -372,7 +326,7 @@
                         </Grid>
 
                         <Grid
-                            x:Name="gridChkBurstChaser"
+                            x:Name="Grid_BurstChaser"
                             DockPanel.Dock="Top"
                         >
                             <CheckBox
@@ -382,7 +336,7 @@
                         </Grid>
 
                         <Grid
-                            x:Name="gridChkStageNameHidden"
+                            x:Name="Grid_HideStageNames"
                             DockPanel.Dock="Top"
                         >
                             <CheckBox
@@ -404,17 +358,17 @@
 
                     <StackPanel Grid.Column="0" Margin="4">
                         <CheckBox
-                            Name="chkColors"
+                            Name="CheckBox_Colors"
                             Content="Random Colors"
                             IsChecked="{Binding Path=RandoSettings.IsColorsRandom}"/>
 
                         <CheckBox
-                            Name="chkBGM"
+                            Name="CheckBox_Music"
                             Content="Random New Music"
                             IsChecked="{Binding Path=RandoSettings.IsBGMRandom}"/>
 
                         <CheckBox
-                            Name="chkText"
+                            Name="CheckBox_TextContent"
                             Content="Random Text Content"
                             IsChecked="{Binding Path=RandoSettings.IsWeaponNamesRandom}"/>
                     </StackPanel>
@@ -426,7 +380,7 @@
                             HorizontalAlignment="Center"/>
 
                         <ComboBox
-                            x:Name="cbxPlayerSprite"
+                            x:Name="ComboBox_PlayerSprite"
                             Margin="32,0"
                             SelectedItem="{Binding Path=RandoSettings.SelectedPlayer}"
                             >

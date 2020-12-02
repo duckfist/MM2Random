@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MM2RandoHost", "MM2RandoHost\MM2RandoHost.csproj", "{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MM2RandoLib", "MM2RandoLib\MM2RandoLib.csproj", "{2F96FE8D-29DC-46F3-9D26-FC85DC2225C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomizerHost", "RandomizerHost\RandomizerHost.csproj", "{38EECF7E-6242-4407-9D3B-6B8CAC414C44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomizerHost", "RandomizerHost\RandomizerHost.csproj", "{38EECF7E-6242-4407-9D3B-6B8CAC414C44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +15,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}.Debug|x64.ActiveCfg = Debug|x64
-		{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}.Debug|x64.Build.0 = Debug|x64
-		{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}.Release|x64.ActiveCfg = Release|x64
-		{F12A49E8-C7A7-4FDE-BB7C-EA80451D5B96}.Release|x64.Build.0 = Release|x64
 		{2F96FE8D-29DC-46F3-9D26-FC85DC2225C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F96FE8D-29DC-46F3-9D26-FC85DC2225C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F96FE8D-29DC-46F3-9D26-FC85DC2225C8}.Debug|x64.ActiveCfg = Debug|x64

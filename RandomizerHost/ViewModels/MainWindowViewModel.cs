@@ -9,6 +9,7 @@ using MM2Randomizer.Utilities;
 using ReactiveUI;
 using Avalonia.Controls;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace RandomizerHost.ViewModels
 {
@@ -30,7 +31,8 @@ namespace RandomizerHost.ViewModels
 
             if (File.Exists(tryLocalpath))
             {
-                RandoSettings.ValidateFile(tryLocalpath);
+                this.mRandoSettings.SourcePath = tryLocalpath;
+                //RandoSettings.ValidateFile(tryLocalpath);
                 IsShowingHint = false;
             }
 
@@ -61,19 +63,19 @@ namespace RandomizerHost.ViewModels
             set => this.RaiseAndSetIfChanged(ref this.mRandoSettings, value);
         }
 
-        public bool IsShowingHint
+        public Boolean IsShowingHint
         {
             get => this.mIsShowingHint;
             set => this.RaiseAndSetIfChanged(ref this.mIsShowingHint, value);
         }
 
-        public bool HasGeneratedAROM
+        public Boolean CanOpenContainngFolder
         {
-            get => this.mHasGeneratedAROM;
-            set => this.RaiseAndSetIfChanged(ref this.mHasGeneratedAROM, value);
+            get => this.mCanOpenContainngFolder;
+            set => this.RaiseAndSetIfChanged(ref this.mCanOpenContainngFolder, value);
         }
 
-        public bool IsCoreModulesChecked
+        public Boolean IsCoreModulesChecked
         {
             get => RandoSettings.Is8StagesRandom &&
                    RandoSettings.IsWeaponsRandom &&
@@ -116,7 +118,7 @@ namespace RandomizerHost.ViewModels
                 String fileName = dialogResult[0];
 
                 this.IsShowingHint = false;
-                RandoSettings.ValidateFile(fileName);
+                this.mRandoSettings.SourcePath = fileName;
 
                 TextBox romFile = in_Window.FindControl<TextBox>("TextBox_RomFile");
                 romFile.Focus();
@@ -213,7 +215,7 @@ namespace RandomizerHost.ViewModels
             }
 
             // Flag UI as having created a ROM, enabling the "open folder" button
-            HasGeneratedAROM = true;
+            this.CanOpenContainngFolder = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         }
 
 
@@ -222,7 +224,7 @@ namespace RandomizerHost.ViewModels
         //
 
         private RandoSettings mRandoSettings;
-        private bool mIsShowingHint = true;
-        private bool mHasGeneratedAROM = false;
+        private Boolean mIsShowingHint = true;
+        private Boolean mCanOpenContainngFolder = false;
     }
 }

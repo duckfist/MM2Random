@@ -41,17 +41,20 @@ namespace RandomizerHost.Views
             DragDrop.SetAllowDrop(textBoxRomFile, true);
             textBoxRomFile.AddHandler(DragDrop.DragOverEvent, this.DragOver);
             textBoxRomFile.AddHandler(DragDrop.DropEvent, this.Drop);
+            textBoxRomFile.PropertyChanged += this.TextBoxRomFile_PropertyChanged;
         }
 
+        private void TextBoxRomFile_PropertyChanged(Object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+        }
 
         private void DragOver(Object sender, DragEventArgs in_DragEventArgs)
         {
-            // Only allow Copy or Link as Drop Operations.
-
-            // Only allow if the dragged data contains text or filenames.
+            // Only allow if the dragged data contains text or filenames
             if (true == in_DragEventArgs.Data.Contains(DataFormats.Text) ||
                 true == in_DragEventArgs.Data.Contains(DataFormats.FileNames))
             {
+                // Only allow copy or link as drop operations
                 in_DragEventArgs.DragEffects = in_DragEventArgs.DragEffects & (DragDropEffects.Copy | DragDropEffects.Link);
             }
             else

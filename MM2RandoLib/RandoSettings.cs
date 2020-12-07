@@ -14,17 +14,6 @@ namespace MM2Randomizer
 
         public RandoSettings()
         {
-            // Rando assembly state variables
-            this.SeedString = "";
-            this.SourcePath = "";
-            this.IsSeedValid = false;
-            this.IsSourcePathValid = false;
-            this.IsSourcePathAndSeedValid = false;
-            this.HashStringMD5 = "";
-            this.HashStringSHA256 = "";
-            this.HashValidationMessage = "";
-            this.IsHashValid = false;
-
             // Flags for Rando Core Modules (Interdependent, cannot be changed from UI)
             this.Is8StagesRandom = true;
             this.IsWeaponsRandom = true;
@@ -64,6 +53,7 @@ namespace MM2Randomizer
         public String SeedString
         {
             get => mSeedString;
+
             set
             {
                 value = value.ToUpper();
@@ -89,7 +79,6 @@ namespace MM2Randomizer
 
             set
             {
-                //IsShowingHint = false;
                 this.ValidateFile(value);
                 this.SetProperty(ref this.mSourcePath, value);
             }
@@ -135,7 +124,10 @@ namespace MM2Randomizer
         public String HashValidationMessage
         {
             get => this.mHashValidationMessage;
-            set => this.SetProperty(ref this.mHashValidationMessage, value);
+            set
+            {
+                Boolean result = this.SetProperty(ref this.mHashValidationMessage, value);
+            }
         }
 
         public Boolean IsHashValid
@@ -301,8 +293,8 @@ namespace MM2Randomizer
 
             if (false == this.IsSourcePathValid)
             {
-                this.HashValidationMessage = "File does not exist.";
                 this.IsHashValid = false;
+                this.HashValidationMessage = "File does not exist.";
                 return false;
             }
 
@@ -353,6 +345,7 @@ namespace MM2Randomizer
             List<String> sha256s = new List<String>(EXPECTED_SHA256_HASH_LIST);
 
             this.IsHashValid = (md5s.Contains(this.HashStringMD5) && sha256s.Contains(this.HashStringSHA256));
+
 
             if (this.IsHashValid)
             {

@@ -1,19 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Input;
-using Avalonia;
+using Avalonia.Controls;
 using MM2Randomizer;
 using MM2Randomizer.Utilities;
 using ReactiveUI;
-using Avalonia.Controls;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace RandomizerHost.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ReactiveObject
     {
         //
         // Constructor
@@ -32,13 +31,12 @@ namespace RandomizerHost.ViewModels
             if (File.Exists(tryLocalpath))
             {
                 this.mRandoSettings.SourcePath = tryLocalpath;
-                //RandoSettings.ValidateFile(tryLocalpath);
                 IsShowingHint = false;
             }
 
-            this.OpenContainingFolderCommand = ReactiveCommand.Create(this.OpenContainngFolder);
-            this.CreateFromGivenSeedCommand = ReactiveCommand.Create(this.CreateFromGivenSeed);
-            this.CreateFromGivenSeedCommand = ReactiveCommand.Create(this.CreateFromRandomSeed);
+            this.OpenContainingFolderCommand = ReactiveCommand.Create(this.OpenContainngFolder, this.WhenAnyValue(x => x.CanOpenContainngFolder));
+            this.CreateFromGivenSeedCommand = ReactiveCommand.Create(this.CreateFromGivenSeed, this.WhenAnyValue(x => x.RandoSettings.IsSeedValid));
+            this.CreateFromRandomSeedCommand = ReactiveCommand.Create(this.CreateFromRandomSeed, this.WhenAnyValue(x => x.RandoSettings.IsHashValid));
             this.OpenRomFileCommand = ReactiveCommand.Create<Window>(this.OpenRomFile);
         }
 

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0</TargetFrameworks>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <SignAssembly>True</SignAssembly>
         <Title>MM2RandoLib</Title>
         <Version>0.5.0</Version>

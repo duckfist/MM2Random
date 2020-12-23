@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 using MM2Randomizer.Enums;
 using MM2Randomizer.Patcher;
+using MM2Randomizer.Utilities;
 
 namespace MM2Randomizer.Randomizers
 {
@@ -58,20 +59,27 @@ namespace MM2Randomizer.Randomizers
             string companyStr;
             char[] company;
 
-            lines = Properties.Resources.companynames.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            foreach (string line in lines)
+            CompanyNameSet companyNameSet = Properties.Resources.CompanyNameConfig.Deserialize<CompanyNameSet>();
+
+            foreach (CompanyName companyName in companyNameSet)
             {
-                if (line.StartsWith("#")) continue; // Ignore comment lines
-                companyNames.Add(line);
+                if (true == companyName.Enabled)
+                {
+                    companyNames.Add(companyName.Name);
+                }
             }
+
             companyStr = companyNames[r.Next(companyNames.Count)];
-            company = ($"©2019 {companyStr}").ToCharArray();
-            char[] companyPadded = Enumerable.Repeat(' ', INTRO_LINE1_MAXCHARS).ToArray();
+            company = ($"©{DateTime.Now.Year} {companyStr}").ToCharArray();
+            Char[] companyPadded = Enumerable.Repeat(' ', INTRO_LINE1_MAXCHARS).ToArray();
             startChar = (INTRO_LINE1_MAXCHARS - company.Length) / 2;
+
+
             for (int i = 0; i < company.Length; i++)
             {
                 companyPadded[startChar + i] = company[i];
             }
+
             for (int i = 0; i < INTRO_LINE1_MAXCHARS; i++)
             {
                 byte charByte = IntroCipher[companyPadded[i]];
@@ -106,12 +114,16 @@ namespace MM2Randomizer.Randomizers
             }
 
             // Line 4: <Country>
-            lines = Properties.Resources.countrylist.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            foreach (string line in lines)
+            CountryNameSet countryNameSet = Properties.Resources.CountryNameConfig.Deserialize<CountryNameSet>();
+
+            foreach (CountryName countryName in countryNameSet)
             {
-                if (line.StartsWith("#")) continue; // Ignore comment lines
-                countryNames.Add(line);
+                if (true == countryName.Enabled)
+                {
+                    countryNames.Add(countryName.Name);
+                }
             }
+
             char[] country = countryNames[r.Next(countryNames.Count)].ToCharArray();
             char[] countryPadded = Enumerable.Repeat(' ', INTRO_LINE4_MAXCHARS).ToArray();
             startChar = (INTRO_LINE4_MAXCHARS - country.Length) / 2;
@@ -215,19 +227,24 @@ namespace MM2Randomizer.Randomizers
             }
 
             // Credits: Text content and line lengths (Starting with "Special Thanks")
-            StringBuilder creditsSb = new StringBuilder();
-            lines = Properties.Resources.creditstext.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            int k = 0;
-            foreach (string line in lines)
-            {
-                if (line.StartsWith("#")) continue; // Ignore comment lines
-                string[] args = line.Split('|');
+            CreditTextSet creditTextSet = Properties.Resources.CreditTextConfig.Deserialize<CreditTextSet>();
 
-                p.Add(0x024C78 + k, (byte)args[2].Length, $"Credits Line {k} Length");
-                byte asdf = Convert.ToByte(args[1], 16);
-                p.Add(0x024C3C + k, asdf, $"Credits Line {k} X-Pos");
-                k++;
-                creditsSb.Append(args[2]); // Content of line of text
+            StringBuilder creditsSb = new StringBuilder();
+
+            Int32 k = 0;
+            foreach (CreditText creditText in creditTextSet)
+            {
+                if (true == creditText.Enabled)
+                {
+                    p.Add(0x024C78 + k, (Byte)creditText.Text.Length, $"Credits Line {k} Length");
+                    Byte value = Convert.ToByte(creditText.Value, 16);
+                    p.Add(0x024C3C + k, value, $"Credits Line {k} X-Pos");
+
+                    k++;
+
+                    // Content of line of text
+                    creditsSb.Append(creditText.Text);
+                }
             }
 
             startChar = 0x024D36; // First byte of credits text
@@ -245,8 +262,6 @@ namespace MM2Randomizer.Randomizers
             }
             p.Add(0x024CA4, (byte)companyStr.Length, "Credits Company Line Length");
 
-            
-            
             int[] txtRobos = new int[8] {
                 0x024D6B, // Heat
                 0x024D83, // Air

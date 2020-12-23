@@ -19,7 +19,7 @@ namespace MM2Randomizer.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -135,177 +135,143 @@ namespace MM2Randomizer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HUDSON SOFT
-        ///NINTENDO
-        ///TREASURE
-        ///KONAMI
-        ///DATA EAST
-        ///SNK PLAYMORE
-        ///ACTIVISION
-        ///JALECO
-        ///TECMO
-        ///SUNSOFT
-        ///TAITO
-        ///SONY
-        ///SEGA CO.LTD
-        ///IREM
-        ///COMPILE
-        ///KOEI
-        ///TENGEN
-        ///KEMCO
-        ///RARE
-        ///ATLUS
-        ///HALKEN
-        ///LUCASARTS
-        ///WESTWOOD
-        ///INTERPLAY
-        ///TOSE CO.LTD
-        ///NAMCO LTD.
-        ///NATSUME
-        ///SQUARE CO.LTD
-        ///COMCEPT
-        ///INTI CREATES
-        ///RAINBOW ARTS
-        ///OCEAN LTD.
-        ///FACTOR 5
-        ///VIC TOKAI
-        ///ASCII
-        ///THQ
-        ///QUINTET
-        ///ENIX
-        ///MINDSCAPE.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///
+        ///&lt;CompanyNameSet&gt;
+        ///    &lt;CompanyName&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Name&gt;HUDSON SOFT&lt;/Name&gt;
+        ///    &lt;/CompanyName&gt;
+        ///    &lt;CompanyName&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Name&gt;NINTENDO&lt;/Name&gt;
+        ///    &lt;/CompanyName&gt;
+        ///    &lt;CompanyName&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Name&gt;TREASURE&lt;/Name&gt;
+        ///    &lt;/CompanyName&gt;
+        ///    &lt;CompanyName&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Name&gt;KONAMI&lt;/Name&gt;
+        ///    &lt;/CompanyName&gt;
+        ///    &lt;CompanyName&gt;
+        ///        &lt;Enabled&gt;tr [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string companynames {
+        public static string CompanyNameConfig {
             get {
-                return ResourceManager.GetString("companynames", resourceCulture);
+                return ResourceManager.GetString("CompanyNameConfig", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AFGHANISTAN
-        ///ALBANIA
-        ///ALGERIA
-        ///ANDORRA
-        ///ANGOLA
-        ///ANTIGUA AND BARBUDA
-        ///ARGENTINA
-        ///ARMENIA
-        ///ARUBA
-        ///AUSTRALIA
-        ///AUSTRIA
-        ///AZERBAIJAN
-        ///ANTARCTICA
-        ///THE BAHAMAS
-        ///BAHRAIN
-        ///BANGLADESH
-        ///BARBADOS
-        ///BELARUS
-        ///BELGIUM
-        ///BELIZE
-        ///BENIN
-        ///BHUTAN
-        ///BOLIVIA
-        ///BOSNIA AND HERZEGOVINA
-        ///BOTSWANA
-        ///BRAZIL
-        ///BRUNEI
-        ///BULGARIA
-        ///BURKINA FASO
-        ///BURMA
-        ///BURUNDI
-        ///CAMBODIA
-        ///CAMEROON
-        ///CANADA
-        ///CABO VERDE
-        ///CENTRAL AFRICAN REPUBLIC
-        ///CHAD
-        ///CHILE
-        ///CHINA
-        ///COLOMBIA
-        ///THE CONGO
-        ///COSTA RICA
-        ///CROATIA
-        ///CUBA
-        ///CURACAO
-        ///CYPRUS
-        ///CZECH REPUBLIC
-        ///DENMARK
-        ///DJIBOUTI
-        ///DO [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///
+        ///&lt;CountryNameSet&gt;
+        ///    &lt;CountryName&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Name&gt;AFGHANISTAN&lt;/Name&gt;
+        ///    &lt;/CountryName&gt;
+        ///    &lt;CountryName&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Name&gt;ALBANIA&lt;/Name&gt;
+        ///    &lt;/CountryName&gt;
+        ///    &lt;CountryName&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Name&gt;ALGERIA&lt;/Name&gt;
+        ///    &lt;/CountryName&gt;
+        ///    &lt;CountryName&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Name&gt;ANDORRA&lt;/Name&gt;
+        ///    &lt;/CountryName&gt;
+        ///    &lt;CountryName&gt;
+        ///        &lt;Enabled&gt;tru [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string countrylist {
+        public static string CountryNameConfig {
             get {
-                return ResourceManager.GetString("countrylist", resourceCulture);
+                return ResourceManager.GetString("CountryNameConfig", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 14|09|MM2 RANDOMIZER
-        ///13|2A|ROBOT MASTERS
-        ///01|61|f
-        ///17|AB|P H A W B Q F M C
-        ///25|E3|HEATMAN 2   3     1     2
-        ///24|24|AIRMAN 1 2   1 2       4
-        ///25|63|WOODMAN 1   1 1 3 2      
-        ///27|A1|BUBBLEMAN 2 4   1 1 3   1  
-        ///26|E2|QUICKMAN 1 5 1 1 1     2  
-        ///26|22|FLASHMAN 1 2   1   1   3 1
-        ///26|62|METALMAN 1 2 1 2   1 1 1  
-        ///26|A2|CLASHMAN 1 2 2 3 1        
-        ///01|E1|f
-        ///01|21|f
-        ///11|6B|WILY BOSSES
-        ///01|A1|f
-        ///15|2C|P H A W B Q M C
-        ///22|65|DRAGON                
-        ///24|A3|PICOPICO                
-        ///20|E7|GUTS                
-        ///23|24|B [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///
+        ///&lt;CreditTextSet&gt;
+        ///    &lt;CreditText&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Value&gt;09&lt;/Value&gt;
+        ///        &lt;Text&gt;MM2 RANDOMIZER&lt;/Text&gt;
+        ///    &lt;/CreditText&gt;
+        ///    &lt;CreditText&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Value&gt;2A&lt;/Value&gt;
+        ///        &lt;Text&gt;ROBOT MASTERS&lt;/Text&gt;
+        ///    &lt;/CreditText&gt;
+        ///    &lt;CreditText&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Value&gt;61&lt;/Value&gt;
+        ///        &lt;Text&gt;f&lt;/Text&gt;
+        ///    &lt;/CreditText&gt;
+        ///    &lt;CreditText&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Valu [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string creditstext {
+        public static string CreditTextConfig {
             get {
-                return ResourceManager.GetString("creditstext", resourceCulture);
+                return ResourceManager.GetString("CreditTextConfig", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to #Index,StageNum,RoomNum,ScreenNum,IsActive,EnemyID,XPosOriginal,YPosOriginal,YPosAir,YPosGround,FaceRight
-        ///###
-        ///### Heat Man / Wily 1 Stage
-        ///###
-        ///00,00,00,01,true,2B,70,10,24,A4,false
-        ///01,00,00,01,true,2B,F0,10,24,A4,false
-        ///02,00,00,02,true,2B,90,10,28,A4,false
-        ///03,00,00,02,true,21,A8,58,58,58,false
-        ///04,00,00,02,true,21,E8,78,78,78,false
-        ///05,00,00,03,true,21,48,48,48,48,false
-        ///06,00,00,03,true,21,88,68,68,68,false
-        ///07,00,00,03,true,21,D8,98,98,98,false
-        ///08,00,00,04,true,21,28,58,58,58,false
-        ///09,00,00,04,tru [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///
+        ///&lt;EnemySet&gt;
+        ///    &lt;!--
+        ///        Heat Man / Wily 1 Stage
+        ///    --&gt;
+        ///    &lt;Enemy&gt;
+        ///        &lt;Index&gt;00&lt;/Index&gt;
+        ///        &lt;StageNumber&gt;00&lt;/StageNumber&gt;
+        ///        &lt;RoomNumber&gt;00&lt;/RoomNumber&gt;
+        ///        &lt;ScreenNumber&gt;01&lt;/ScreenNumber&gt;
+        ///        &lt;IsActive&gt;true&lt;/IsActive&gt;
+        ///        &lt;EnemyId&gt;2B&lt;/EnemyId&gt;
+        ///        &lt;PositionX&gt;70&lt;/PositionX&gt;
+        ///        &lt;PositionY&gt;10&lt;/PositionY&gt;
+        ///        &lt;PositionAir&gt;24&lt;/PositionAir&gt;
+        ///        &lt;PositionGround&gt;A4&lt;/PositionGround&gt;
+        ///        &lt;FaceRight&gt;false&lt;/Fa [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string enemylist {
+        public static string EnemySet {
             get {
-                return ResourceManager.GetString("enemylist", resourceCulture);
+                return ResourceManager.GetString("EnemySet", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to #EnemyName,#OffsetHex,#P,#H,#A,#W,#B,#Q,#C,#M
-        ///Shrink               ,00,7,20,0,10,20,7,10,10
-        ///#Shrink(From Angler)  ,01,7,20,0,10,20,7,10,10
-        ///M445(Instance)       ,04,20,20,20,20,0,20,20,20
-        ///Claw(Instance)       ,08,20,20,10,10,20,7,10,10
-        ///Tanishi	             ,0A,10,20,0,10,0,4,10,4
-        ///Kerog                ,0C,2,20,0,0,4,4,0,2
-        ///Kerog(Small)         ,0D,20,20,10,10,20,20,10,10
-        ///Batton               ,16,10,20,10,10,0,10,10,20
-        ///Robbit               ,17,2,20,0,20,7,4,20,4
-        ///Friender(Instance)   ,19,1,20,0,20,0,2, [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///
+        ///&lt;EnemyWeaknessSet&gt;
+        ///    &lt;EnemyWeakness&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Name&gt;Shrink&lt;/Name&gt;
+        ///        &lt;Offset&gt;00&lt;/Offset&gt;
+        ///        &lt;Buster&gt;7&lt;/Buster&gt;
+        ///        &lt;Heat&gt;20&lt;/Heat&gt;
+        ///        &lt;Air&gt;0&lt;/Air&gt;
+        ///        &lt;Wood&gt;10&lt;/Wood&gt;
+        ///        &lt;Bubble&gt;20&lt;/Bubble&gt;
+        ///        &lt;Quick&gt;7&lt;/Quick&gt;
+        ///        &lt;Crash&gt;10&lt;/Crash&gt;
+        ///        &lt;Metal&gt;10&lt;/Metal&gt;
+        ///    &lt;/EnemyWeakness&gt;
+        ///    &lt;EnemyWeakness&gt;
+        ///        &lt;Enabled&gt;false&lt;/Enabled&gt;
+        ///        &lt;Name&gt;Shrink (From Angler)&lt;/Name&gt;
+        ///         [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string enemyweakness {
+        public static string EnemyWeaknessSet {
             get {
-                return ResourceManager.GetString("enemyweakness", resourceCulture);
+                return ResourceManager.GetString("EnemyWeaknessSet", resourceCulture);
             }
         }
         
@@ -353,22 +319,20 @@ namespace MM2Randomizer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to # Mega Man 2 Song Interpreter
-        ///#
-        ///# Each line is one song, and of comma-separated value format
-        ///#
-        ///# Example:
-        ///# SongName,OriginalStartAddress,SongData
-        ///#	where   
-        ///#		SongName = Any string to identify the song, such as the name and what game/hack it comes from
-        ///#		OriginalStartAddress = The address of the first byte of the song&apos;s header (value 0F) in the song&apos;s original ROM
-        ///#		SongData = Stream of bytes representing the song, each byte a pair of adjacent characters in the string
-        ///#
-        ///# The 11 songs chosen  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///
+        ///&lt;!--
+        ///    Mega Man 2 Sound Track Config File
+        ///
+        ///    SongName = Any string to identify the song, such as the name and what game/hack it comes from
+        ///    OriginalStartAddress = The address of the first byte of the song&apos;s header (value 0F) in the song&apos;s original ROM
+        ///    SongData = Stream of bytes representing the song, each byte a pair of adjacent characters in the string
+        ///
+        ///    The 11 songs chosen for stages should not exceed 9438 (0x24DE) total bytes. Don&apos;t make too [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string music {
+        public static string SoundTrackConfiguration {
             get {
-                return ResourceManager.GetString("music", resourceCulture);
+                return ResourceManager.GetString("SoundTrackConfiguration", resourceCulture);
             }
         }
         

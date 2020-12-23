@@ -60,27 +60,24 @@ namespace MM2Randomizer.Randomizers.Enemies
         /// </summary>
         private void ReadEnemyInstancesFromFile()
         {
-            string[] lines = Resources.enemylist.Split(new string[] { Environment.NewLine }, StringSplitOptions.None );
+            EnemySet enemySet = Properties.Resources.EnemySet.Deserialize<EnemySet>();
 
-            foreach (string line in lines)
+            foreach (Enemy enemy in enemySet)
             {
-                if (line.StartsWith("#")) continue; // Ignore comment lines
+                EnemyInstance enemyInstance = new EnemyInstance(
+                    Convert.ToInt32(enemy.Index, 16),
+                    Convert.ToInt32(enemy.StageNumber, 16),
+                    Convert.ToInt32(enemy.RoomNumber, 16),
+                    Convert.ToInt32(enemy.ScreenNumber, 16),
+                    enemy.IsActive,
+                    Convert.ToInt32(enemy.EnemyId, 16),
+                    Convert.ToInt32(enemy.PositionX, 16),
+                    Convert.ToInt32(enemy.PositionY, 16),
+                    Convert.ToInt32(enemy.PositionAir, 16),
+                    Convert.ToInt32(enemy.PositionGround, 16),
+                    enemy.FaceRight);
 
-                string[] cols = line.Split(new char[] { ',' });
-
-                EnemyInstance enemy = new EnemyInstance(
-                    Convert.ToInt32(cols[0], 16), // Index
-                    Convert.ToInt32(cols[1], 16), // StageNum
-                    Convert.ToInt32(cols[2], 16), // RoomNum
-                    Convert.ToInt32(cols[3], 16), // ScreenNum
-                    Convert.ToBoolean(cols[4]),   // IsActive
-                    Convert.ToInt32(cols[5], 16), // EnemyID
-                    Convert.ToInt32(cols[6], 16), // XPosOriginal
-                    Convert.ToInt32(cols[7], 16), // YPosOriginal
-                    Convert.ToInt32(cols[8], 16), // YPosAir
-                    Convert.ToInt32(cols[9], 16), // YPosGround
-                    Convert.ToBoolean(cols[10])); // FaceRight
-                EnemyInstances.Add(enemy);
+                EnemyInstances.Add(enemyInstance);
             }
         }
 

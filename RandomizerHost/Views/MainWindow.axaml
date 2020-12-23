@@ -1,0 +1,472 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:RandomizerHost.ViewModels;assembly=RandomizerHost"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:RandomizerHost.Converters"
+        xmlns:MM2Lib="clr-namespace:MM2Randomizer;assembly=MM2RandoLib"
+        mc:Ignorable="d"
+        d:DesignWidth="500"
+        d:DesignHeight="600"
+        Width="500"
+        Height="600"
+        x:Class="RandomizerHost.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="RandomizerHost"
+        x:Name="MainWindow">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <!-- Static Resources -->
+    <Window.Resources>
+        <converters:PlayerSpriteToBooleanConverter x:Key="PlayerSpriteToBooleanConverter"/>
+    </Window.Resources>
+
+    <!-- Main Body -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="148"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- The main header image for the host -->
+        <Image
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Stretch="None"
+            Source="/Assets/Header.png"
+        />
+
+        <!-- This grid holds the open file dialog button -->
+        <Grid
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+        >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="32"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="48"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Row 0 -->
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                TextAlignment="Center"
+                FontSize="9"
+                Text="To get started, drag a Mega Man 2 ROM onto this window, or click the &quot;. . .&quot; button to browse."
+                IsVisible="{Binding IsShowingHint}"
+            />
+
+            <!-- Row 1 -->
+            <Border
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                BorderThickness="3"
+            >
+                <DockPanel>
+                    <Button
+                        Name="Button_OpenRomFile"
+                        Width="24"
+                        Margin="0,0"
+                        Command="{Binding OpenRomFileCommand}"
+                        CommandParameter="{Binding ElementName=MainWindow}"
+                    >
+                        ...
+                    </Button>
+
+                    <TextBox
+                        Name="TextBox_RomFile"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Margin="4,0,0,0"
+                        Text="{Binding RandoSettings.SourcePath}"
+                    />
+                </DockPanel>
+            </Border>
+
+
+            <!-- Row 2 -->
+            <Border
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                BorderThickness="3"
+            >
+                <DockPanel>
+                    <TextBlock
+                        TextAlignment="Right"
+                        Text="MD5:"
+                        VerticalAlignment="Center"
+                    />
+
+                    <TextBox
+                        Margin="4,0,0,0"
+                        IsVisible="{Binding RandoSettings.IsSourcePathValid}"
+                        Text="{Binding RandoSettings.HashStringMD5}"
+                    />
+                </DockPanel>
+            </Border>
+
+            <!-- Row 3 -->
+            <Border
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                BorderThickness="3"
+            >
+                <DockPanel>
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        TextAlignment="Right"
+                        Text="SHA-256:"
+                        VerticalAlignment="Center"
+                    />
+
+                    <TextBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="4,0,0,0"
+                        IsVisible="{Binding RandoSettings.IsSourcePathValid}"
+                        Text="{Binding RandoSettings.HashStringSHA256}"
+                    />
+                </DockPanel>
+            </Border>
+
+            <!-- Row 4 -->
+            <Border
+                Grid.Row="4"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                BorderThickness="3"
+            >
+                <!--
+                    NOTE:
+                        Avalonia issue #1625: Do not use TextAlignment="Center"
+                        See: https://github.com/AvaloniaUI/Avalonia/issues/1625
+
+                <TextBlock
+                    FontWeight="Bold"
+                    TextAlignment="Center"
+                    Text="{Binding RandoSettings.HashValidationMessage}"
+                -->
+
+                <TextBlock
+                    FontWeight="Bold"
+                    Text="{Binding RandoSettings.HashValidationMessage}"
+                />
+            </Border>
+        </Grid>
+
+        <!-- Seed textbox -->
+        <DockPanel
+            Grid.Row="2"
+            HorizontalAlignment="Stretch"
+            IsEnabled="{Binding RandoSettings.IsSourcePathValid}"
+        >
+            <TextBlock
+                Text="Seed:"
+                DockPanel.Dock="Left"
+                VerticalAlignment="Center"
+            />
+
+            <TextBox
+                Name="TextBox_Seed"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Margin="0,3,3,3"
+                Text="{Binding Path=RandoSettings.SeedString}"
+            />
+        </DockPanel>
+
+        <!-- Buttons -->
+        <StackPanel
+            Grid.Row="3"
+            Orientation="Vertical"
+        >
+            <Button
+                Name="Button_CreateFromGivenSeed"
+                Height="30"
+                Margin="2"
+                Command="{Binding CreateFromGivenSeedCommand}"
+                CommandParameter="{Binding ElementName=MainWindow}"
+            >
+                Create From Given Seed
+            </Button>
+
+            <Button
+                Name="Button_CreateFromRandomSeed"
+                Height="30"
+                Margin="2"
+                Command="{Binding CreateFromRandomSeedCommand}"
+                CommandParameter="{Binding ElementName=MainWindow}"
+            >
+                Create From Random Seed
+            </Button>
+
+            <Button
+                Name="Button_OpenContainingFolder"
+                Height="30"
+                Margin="2"
+                Command="{Binding OpenContainingFolderCommand}"
+            >
+                Open Containing Folder
+            </Button>
+
+            <CheckBox
+                Name="CheckBox_CreateLogFile"
+                IsChecked="{Binding RandoSettings.CreateLogFile}"
+            >
+                Create Log File
+            </CheckBox>
+        </StackPanel>
+
+        <!--Settings Tabs-->
+        <TabControl
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            Margin="-1,8,-1,-1"
+        >
+            <TabItem Header="Gameplay Settings">
+                <Grid Margin="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="93*"/>
+                        <ColumnDefinition Width="113*"/>
+                        <ColumnDefinition Width="205*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Orientation="Vertical"
+                    >
+                        <!--
+                            CheckBoxes are placed inside Grids, so we canhave
+                            MouseOver behavior while CheckBoxes are disabled
+                        -->
+                        <Grid x:Name="Grid_CoreModules">
+                            <CheckBox
+                                Content="Randomizer Core"
+                                IsEnabled="False"
+                                IsChecked="{Binding IsCoreModulesChecked, Mode=OneWay}"
+                            />
+                        </Grid>
+
+                        <Grid x:Name="Grid_WeaponBehavior">
+                            <CheckBox
+                                Grid.ColumnSpan="2"
+                                Content="Weapon Behavior"
+                                IsChecked="{Binding Path=RandoSettings.IsWeaponBehaviorRandom}"
+                            />
+                        </Grid>
+
+                        <Grid x:Name="Grid_BossWeaknesses">
+                            <CheckBox
+                                Content="Boss Weaknesses"
+                                IsChecked="{Binding Path=RandoSettings.IsWeaknessRandom}"
+                            />
+                        </Grid>
+
+                        <Grid x:Name="Grid_BossRoom">
+                            <CheckBox
+                                Content="Boss Room"
+                                IsChecked="{Binding Path=RandoSettings.IsBossInBossRoomRandom}"
+                            />
+                        </Grid>
+
+                        <Grid x:Name="Grid_BossAI">
+                            <CheckBox
+                                Content="Boss AI"
+                                IsChecked="{Binding Path=RandoSettings.IsBossAIRandom}"
+                            />
+                        </Grid>
+
+                        <Grid x:Name="Grid_Items">
+                            <CheckBox
+                                Content="Items 1, 2, and 3 Get"
+                                IsChecked="{Binding Path=RandoSettings.IsItemsRandom}"
+                            />
+                        </Grid>
+
+                        <Grid x:Name="Grid_EnemyLocations">
+                            <CheckBox
+                                Content="Enemy Locations"
+                                IsChecked="{Binding Path=RandoSettings.IsEnemiesRandom}"
+                            />
+                        </Grid>
+
+                        <Grid x:Name="Grid_EnemyWeaknesses">
+                            <CheckBox
+                                Content="Enemy Weaknesses"
+                                IsChecked="{Binding Path=RandoSettings.IsEnemyWeaknessRandom}"
+                            />
+                        </Grid>
+
+                        <Grid x:Name="Grid_StageLayouts">
+                            <CheckBox
+                                Content="Stage Layouts"
+                                IsChecked="{Binding Path=RandoSettings.IsTilemapChangesEnabled}"
+                            />
+                        </Grid>
+                    </StackPanel>
+
+                    <DockPanel
+                        Grid.Column="2"
+                        VerticalAlignment="Stretch">
+
+                        <CheckBox
+                            Name="CheckBox_TournamentMode"
+                            Content="Tournament Mode"
+                            DockPanel.Dock="Bottom"
+                            HorizontalAlignment="Right"
+                            IsVisible="False"
+                            IsChecked="{Binding Path=RandoSettings.IsSpoilerFree}">
+                        </CheckBox>
+
+                        <Grid
+                            x:Name="Grid_FastText"
+                            DockPanel.Dock="Top"
+                        >
+                            <CheckBox
+                                Content="Faster Text"
+                                IsChecked="{Binding Path=RandoSettings.FastText}"
+                            />
+                        </Grid>
+
+                        <Grid
+                            x:Name="Grid_BurstChaser"
+                            DockPanel.Dock="Top"
+                        >
+                            <CheckBox
+                                Content="Burst Chaser Mode"
+                                IsChecked="{Binding Path=RandoSettings.BurstChaserMode}"
+                            />
+                        </Grid>
+
+                        <Grid
+                            x:Name="Grid_HideStageNames"
+                            DockPanel.Dock="Top"
+                        >
+                            <CheckBox
+                                Content="Hide Stage Names"
+                                IsChecked="{Binding RandoSettings.IsStageNameHidden}"
+                                VerticalAlignment="Top"
+                            />
+                        </Grid>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Cosmetic Options">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="4">
+                        <CheckBox
+                            Name="CheckBox_Colors"
+                            Content="Random Colors"
+                            IsChecked="{Binding Path=RandoSettings.IsColorsRandom}"/>
+
+                        <CheckBox
+                            Name="CheckBox_Music"
+                            Content="Random New Music"
+                            IsChecked="{Binding Path=RandoSettings.IsBGMRandom}"/>
+
+                        <CheckBox
+                            Name="CheckBox_TextContent"
+                            Content="Random Text Content"
+                            IsChecked="{Binding Path=RandoSettings.IsWeaponNamesRandom}"/>
+                    </StackPanel>
+
+                    <!-- Custom Sprite Selection -->
+                    <StackPanel Grid.Column="2" Margin="4">
+                        <TextBlock
+                            Text="Choose your Player Sprite"
+                            HorizontalAlignment="Center"/>
+
+                        <ComboBox
+                            x:Name="ComboBox_PlayerSprite"
+                            Margin="32,0"
+                            SelectedItem="{Binding Path=RandoSettings.SelectedPlayer}"
+                            >
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <!--
+                            Grid to hold all 4 player sprite images. All images are collapsed,
+                            except the one image that corresponds to the ComboBox SelectedItem,
+                            which is Visible.
+                        -->
+                        <Grid>
+                            <Image
+                                Width="104"
+                                Height="96"
+                                Source="/Assets/sprite_rock.png"
+                                IsVisible="{Binding RandoSettings.SelectedPlayer, Converter={StaticResource PlayerSpriteToBooleanConverter}, ConverterParameter=Rockman}"
+                            />
+
+                            <Image
+                                Width="104"
+                                Height="96"
+                                Source="/Assets/sprite_proto.png"
+                                IsVisible="{Binding RandoSettings.SelectedPlayer, Converter={StaticResource PlayerSpriteToBooleanConverter}, ConverterParameter=Protoman}"
+                            />
+
+                            <Image
+                                Width="104"
+                                Height="96"
+                                Source="/Assets/sprite_roll.png"
+                                IsVisible="{Binding RandoSettings.SelectedPlayer, Converter={StaticResource PlayerSpriteToBooleanConverter}, ConverterParameter=Roll}"
+                            />
+
+                            <Image
+                                Width="104"
+                                Height="96"
+                                Source="/Assets/sprite_bass.png"
+                                IsVisible="{Binding RandoSettings.SelectedPlayer, Converter={StaticResource PlayerSpriteToBooleanConverter}, ConverterParameter=Bass}"
+                            />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Custom Variables" IsEnabled="False">
+                <Grid>
+                    <CheckBox
+                        Content="Burst Chaser Mode"
+                        IsChecked="{Binding Path=RandoSettings.BurstChaserMode}"
+                    />
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+
+</Window>

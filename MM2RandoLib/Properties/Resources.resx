@@ -121,26 +121,8 @@
   <data name="bossnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bossnames.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="companynames" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\companynames.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="countrylist" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\countrylist.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="creditstext" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\creditstext.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="enemylist" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\enemylist.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="enemyweakness" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\enemyweakness.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="mm2rng_prepatch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mm2rng_prepatch.ips;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="music" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\music.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="mm2rng_musicpatch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mm2rng_musicpatch.ips;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -156,5 +138,23 @@
   </data>
   <data name="SpriteSwap_Roll" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SpritePatches\SpriteSwap_Roll.ips;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CompanyNameConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CompanyNameConfig.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="CountryNameConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CountryNameConfig.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="CreditTextConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CreditTextConfig.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="EnemySet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EnemySet.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="EnemyWeaknessSet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EnemyWeaknessSet.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SoundTrackConfiguration" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SoundTrackConfiguration.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

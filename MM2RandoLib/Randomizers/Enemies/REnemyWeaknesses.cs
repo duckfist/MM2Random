@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MM2Randomizer.Patcher;
+using MM2Randomizer.Utilities;
 
 namespace MM2Randomizer.Randomizers.Enemies
 {
@@ -41,23 +42,23 @@ namespace MM2Randomizer.Randomizers.Enemies
 
         public void Randomize(Patch p, Random r)
         {
-            string[] lines = Properties.Resources.enemyweakness.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            foreach (string line in lines)
+            EnemyWeaknessSet enemyWeaknessSet = Properties.Resources.EnemyWeaknessSet.Deserialize<EnemyWeaknessSet>();
+
+            foreach (EnemyWeakness enemyWeakness in enemyWeaknessSet)
             {
-                if (line.StartsWith("#")) continue; // Ignore comment lines
-
-                string[] cols = line.Split(new char[] { ',' });
-
-                enemyNames.Add(cols[0]); // Enemy name
-                offsets.Add(Convert.ToInt32(cols[1], 16)); // Offset
-                shotP.Add(byte.Parse(cols[2])); // Buster
-                shotH.Add(byte.Parse(cols[3])); // Heat
-                shotA.Add(byte.Parse(cols[4])); // Air
-                shotW.Add(byte.Parse(cols[5])); // Wood
-                shotB.Add(byte.Parse(cols[6])); // Bubble
-                shotQ.Add(byte.Parse(cols[7])); // Quick
-                shotC.Add(byte.Parse(cols[8])); // Clash
-                shotM.Add(byte.Parse(cols[9])); // Metal
+                if (true == enemyWeakness.Enabled)
+                {
+                    enemyNames.Add(enemyWeakness.Name);
+                    offsets.Add(Convert.ToInt32(enemyWeakness.Offset, 16));
+                    shotP.Add(Byte.Parse(enemyWeakness.Buster));
+                    shotH.Add(Byte.Parse(enemyWeakness.Heat));
+                    shotA.Add(Byte.Parse(enemyWeakness.Air));
+                    shotW.Add(Byte.Parse(enemyWeakness.Wood));
+                    shotB.Add(Byte.Parse(enemyWeakness.Bubble));
+                    shotQ.Add(Byte.Parse(enemyWeakness.Quick));
+                    shotC.Add(Byte.Parse(enemyWeakness.Crash));
+                    shotM.Add(Byte.Parse(enemyWeakness.Metal));
+                }
             }
 
             shotP.Shuffle(r);

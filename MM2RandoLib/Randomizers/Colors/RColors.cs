@@ -1562,22 +1562,22 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() {
-                    addresses = new int[] { 0xbe1f, 0x03a118, },
+                    addresses = new int[] { 0xbe1f, 0x03a118, 0x03a11b, },
                     ColorBytes = new List<EColorsHex[]>() {
                         // Wood | UndergroundBG | Default
-                        new EColorsHex[] {  EColorsHex.Brown,  EColorsHex.Brown },
+                        new EColorsHex[] {  EColorsHex.Brown,  EColorsHex.Brown,  EColorsHex.Brown },
                         // Wood | UndergroundBG | Dark Purple
-                        new EColorsHex[] {  EColorsHex.DarkMagenta,  EColorsHex.DarkMagenta },
+                        new EColorsHex[] {  EColorsHex.DarkMagenta,  EColorsHex.DarkMagenta,  EColorsHex.DarkMagenta },
                         // Wood | UndergroundBG | Dark Red
-                        new EColorsHex[] {  EColorsHex.Crimson,  EColorsHex.Crimson },
+                        new EColorsHex[] {  EColorsHex.Crimson,  EColorsHex.Crimson,  EColorsHex.Crimson },
                         // Wood | UndergroundBG | Dark Green
-                        new EColorsHex[] {  EColorsHex.Kelp,  EColorsHex.Kelp },
+                        new EColorsHex[] {  EColorsHex.Kelp,  EColorsHex.Kelp,  EColorsHex.Kelp },
                         // Wood | UndergroundBG | Dark Teal
-                        new EColorsHex[] {  EColorsHex.DarkGreen,  EColorsHex.DarkGreen },
+                        new EColorsHex[] {  EColorsHex.DarkGreen,  EColorsHex.DarkGreen,  EColorsHex.DarkGreen },
                         // Wood | UndergroundBG | Dark Blue1
-                        new EColorsHex[] {  EColorsHex.DarkTeal,  EColorsHex.DarkTeal },
+                        new EColorsHex[] {  EColorsHex.DarkTeal, EColorsHex.DarkTeal,  EColorsHex.DarkTeal },
                         // Wood | UndergroundBG | Dark Blue2
-                        new EColorsHex[] {  EColorsHex.RoyalBlue,  EColorsHex.RoyalBlue },
+                        new EColorsHex[] {  EColorsHex.RoyalBlue,  EColorsHex.RoyalBlue,  EColorsHex.RoyalBlue },
                     }
                 },
 

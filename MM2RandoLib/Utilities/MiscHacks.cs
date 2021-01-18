@@ -116,6 +116,46 @@ namespace MM2Randomizer.Utilities
         }
 
         /// <summary>
+        /// </summary>
+        public static void SetHitPointChargingSpeed(Patch p, ChargingSpeed chargingSpeed)
+        {
+            int address = 0x03831B;
+            p.Add(address, (Byte)chargingSpeed, "Hit Point Charging Speed");
+        }
+
+        /// <summary>
+        /// </summary>
+        public static void SetWeaponEnergyChargingSpeed(Patch p, ChargingSpeed chargingSpeed)
+        {
+            int address = 0x03835A;
+            p.Add(address, (Byte)chargingSpeed, "Weapon Energy Charging Speed");
+        }
+
+        /// <summary>
+        /// </summary>
+        public static void SetEnergyTankChargingSpeed(Patch p, ChargingSpeed chargingSpeed)
+        {
+            int address = 0x0352B2;
+            p.Add(address, (Byte)chargingSpeed, "Energy Tank Charging Speed");
+        }
+
+        /// <summary>
+        /// </summary>
+        public static void SetRobotMasterEnergyChargingSpeed(Patch p, ChargingSpeed chargingSpeed)
+        {
+            int address = 0x02C142;
+            p.Add(address, (Byte)chargingSpeed, "Robot Master Energy Charging Speed");
+        }
+
+        /// <summary>
+        /// </summary>
+        public static void SetCastleBossEnergyChargingSpeed(Patch p, ChargingSpeed chargingSpeed)
+        {
+            int address = 0x02E12B;
+            p.Add(address, (Byte)chargingSpeed, "Castle Boss Energy Charging Speed");
+        }
+
+        /// <summary>
         /// This will speed up the wily map cutscene in between Wily stages by about 2 seconds
         /// </summary>
         /// <param name="p"></param>

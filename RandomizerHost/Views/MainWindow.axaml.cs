@@ -34,7 +34,26 @@ namespace RandomizerHost.Views
             // Set up the custom sprite ComboBox
             ComboBox comboBoxPlayerSprite = this.Find<ComboBox>("ComboBox_PlayerSprite");
             comboBoxPlayerSprite.Items = Enum.GetValues(typeof(PlayerSprite));
-            comboBoxPlayerSprite.SelectedIndex = 0;
+
+            // Set up the hit point charging speed ComboBox
+            ComboBox comboBoxHitPointChargingSpeed = this.Find<ComboBox>("ComboBox_HitPointChargingSpeed");
+            comboBoxHitPointChargingSpeed.Items = Enum.GetValues(typeof(ChargingSpeed));
+
+            // Set up the weapon energy charging speed ComboBox
+            ComboBox comboBoxWeaponEnergyChargingSpeed = this.Find<ComboBox>("ComboBox_WeaponEnergyChargingSpeed");
+            comboBoxWeaponEnergyChargingSpeed.Items = Enum.GetValues(typeof(ChargingSpeed));
+
+            // Set up the energy tank charging speed ComboBox
+            ComboBox comboBoxEnergyTankChargingSpeed = this.Find<ComboBox>("ComboBox_EnergyTankChargingSpeed");
+            comboBoxEnergyTankChargingSpeed.Items = Enum.GetValues(typeof(ChargingSpeed));
+
+            // Set up the robot master energy charging speed ComboBox
+            ComboBox comboBoxRobotMasterEnergyChargingSpeed = this.Find<ComboBox>("ComboBox_RobotMasterEnergyChargingSpeed");
+            comboBoxRobotMasterEnergyChargingSpeed.Items = Enum.GetValues(typeof(ChargingSpeed));
+
+            // Set up the castle boss energy charging speed ComboBox
+            ComboBox comboBoxCastleBossEnergyChargingSpeed = this.Find<ComboBox>("ComboBox_CastleBossEnergyChargingSpeed");
+            comboBoxCastleBossEnergyChargingSpeed.Items = Enum.GetValues(typeof(ChargingSpeed));
 
             // Set up drag and drop for the rom file path text box
             TextBox textBoxRomFile = this.Find<TextBox>("TextBox_RomFile");

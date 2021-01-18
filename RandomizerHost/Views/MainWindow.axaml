@@ -458,12 +458,134 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Custom Variables" IsEnabled="False">
+            <TabItem Header="Charging Speeds" IsEnabled="True">
                 <Grid>
-                    <CheckBox
-                        Content="Burst Chaser Mode"
-                        IsChecked="{Binding Path=RandoSettings.BurstChaserMode}"
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                        <!-- Hit point charging speed -->
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="Hit Point:"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
                     />
+
+                    <ComboBox
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        x:Name="ComboBox_HitPointChargingSpeed"
+                        Margin="32,4"
+                        SelectedItem="{Binding Path=RandoSettings.HitPointChargingSpeed}"
+                    >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                        <!-- Weapon energy charging speed -->
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="Weapon Energy:"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                    />
+
+                    <ComboBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        x:Name="ComboBox_WeaponEnergyChargingSpeed"
+                        Margin="32,4"
+                        SelectedItem="{Binding Path=RandoSettings.WeaponEnergyChargingSpeed}"
+                    >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <!-- Energy tank charging speed -->
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Text="Energy Tank:"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                    />
+
+                    <ComboBox
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        x:Name="ComboBox_EnergyTankChargingSpeed"
+                        Margin="32,4"
+                        SelectedItem="{Binding Path=RandoSettings.EnergyTankChargingSpeed}"
+                    >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <!-- Robot master energy charging speed -->
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Text="Robot Master Energy:"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                    />
+
+                    <ComboBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        x:Name="ComboBox_RobotMasterEnergyChargingSpeed"
+                        Margin="32,4"
+                        SelectedItem="{Binding Path=RandoSettings.RobotMasterEnergyChargingSpeed}"
+                    >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <!-- Castle boss energy charging speed -->
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Text="Castle Boss Energy:"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                    />
+
+                    <ComboBox
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        x:Name="ComboBox_CastleBossEnergyChargingSpeed"
+                        Margin="32,4"
+                        SelectedItem="{Binding Path=RandoSettings.CastleBossEnergyChargingSpeed}"
+                    >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
             </TabItem>
         </TabControl>

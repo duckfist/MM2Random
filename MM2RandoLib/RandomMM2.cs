@@ -224,10 +224,18 @@ namespace MM2Randomizer
                 MiscHacks.SetFastWilyMap(Patch);
                 MiscHacks.SkipItemGetPages(Patch);
             }
+
             if (Settings.BurstChaserMode)
             {
                 MiscHacks.SetBurstChaser(Patch);
             }
+
+            MiscHacks.SetHitPointChargingSpeed(Patch, Settings.HitPointChargingSpeed);
+            MiscHacks.SetWeaponEnergyChargingSpeed(Patch, Settings.WeaponEnergyChargingSpeed);
+            MiscHacks.SetEnergyTankChargingSpeed(Patch, Settings.EnergyTankChargingSpeed);
+            MiscHacks.SetRobotMasterEnergyChargingSpeed(Patch, Settings.RobotMasterEnergyChargingSpeed);
+            MiscHacks.SetCastleBossEnergyChargingSpeed(Patch, Settings.CastleBossEnergyChargingSpeed);
+
             MiscHacks.DrawTitleScreenChanges(Patch, Seed, Settings);
             MiscHacks.SetWily5NoMusicChange(Patch);
             MiscHacks.NerfDamageValues(Patch);

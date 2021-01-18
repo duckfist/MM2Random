@@ -34,17 +34,17 @@
     <CreditText>
         <Enabled>true</Enabled>
         <Value>63</Value>
-        <Text>WOODMAN 1   1 1 3 2</Text>
+        <Text>WOODMAN 1   1 1 3 2      </Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>A1</Value>
-        <Text>BUBBLEMAN 2 4   1 1 3   1</Text>
+        <Text>BUBBLEMAN 2 4   1 1 3   1  </Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>E2</Value>
-        <Text>QUICKMAN 1 5 1 1 1     2</Text>
+        <Text>QUICKMAN 1 5 1 1 1     2  </Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
@@ -54,12 +54,12 @@
     <CreditText>
         <Enabled>true</Enabled>
         <Value>62</Value>
-        <Text>METALMAN 1 2 1 2   1 1 1</Text>
+        <Text>METALMAN 1 2 1 2   1 1 1  </Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>A2</Value>
-        <Text>CLASHMAN 1 2 2 3 1</Text>
+        <Text>CLASHMAN 1 2 2 3 1        </Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
@@ -89,27 +89,27 @@
     <CreditText>
         <Enabled>true</Enabled>
         <Value>65</Value>
-        <Text>DRAGON</Text>
+        <Text>DRAGON                </Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>A3</Value>
-        <Text>PICOPICO</Text>
+        <Text>PICOPICO                </Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>E7</Value>
-        <Text>GUTS</Text>
+        <Text>GUTS                </Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>24</Value>
-        <Text>BOOBEAM</Text>
+        <Text>BOOBEAM                </Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>64</Value>
-        <Text>MACHINE</Text>
+        <Text>MACHINE                </Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>

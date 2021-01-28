@@ -40,6 +40,9 @@ namespace MM2Randomizer
             this.FastText = true;
             this.BurstChaserMode = false;
             this.IsSpoilerFree = false;
+
+            // Flags for Quality of life
+            this.ReduceLag = true; // TODO: expose in UI
         }
 
 
@@ -256,6 +259,10 @@ namespace MM2Randomizer
 
         public Boolean IsWeaponBehaviorRandom { get; set; }
 
+        /// <summary>
+        /// Apply patches that reduce lag
+        /// </summary>
+        public Boolean ReduceLag { get; set; }
 
         //
         // Public Methods

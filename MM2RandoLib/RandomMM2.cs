@@ -37,6 +37,7 @@ namespace MM2Randomizer
         public static RColors randomColors;
         public static RMusic randomMusic;
         public static RText rWeaponNames;
+        public static ReduceLag reduceLag;
         public static List<IRandomizer> Randomizers;
         public static List<IRandomizer> CosmeticRandomizers;
 
@@ -108,6 +109,9 @@ namespace MM2Randomizer
             // Independent
             randomMusic = new RMusic();
 
+            // TODO: move this to a quality of life section
+            reduceLag = new ReduceLag();
+
 
 
 
@@ -175,6 +179,10 @@ namespace MM2Randomizer
             if (Settings.IsWeaponNamesRandom)
             {
                 CosmeticRandomizers.Add(rWeaponNames);
+            }
+            if (Settings.ReduceLag)
+            {
+                CosmeticRandomizers.Add(reduceLag);
             }
 
 

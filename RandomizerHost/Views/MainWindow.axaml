@@ -399,6 +399,11 @@
                             Name="CheckBox_TextContent"
                             Content="Random Text Content"
                             IsChecked="{Binding Path=RandoSettings.IsWeaponNamesRandom}"/>
+
+                      <CheckBox
+                          Name="CheckBox_DisableFlashing"
+                          Content="Disable Screen Flashing"
+                          IsChecked="{Binding Path=RandoSettings.IsFlashingDisabled}"/>
                     </StackPanel>
 
                     <!-- Custom Sprite Selection -->

@@ -103,7 +103,7 @@ namespace MM2Randomizer
             rWeaponNames = new RText();
 
             // Independent
-            randomColors = new RColors();
+            randomColors = new RColors(Settings.IsFlashingDisabled);
 
             // Independent
             randomMusic = new RMusic();
@@ -177,7 +177,7 @@ namespace MM2Randomizer
                 CosmeticRandomizers.Add(rWeaponNames);
             }
 
-                
+
             // Instantiate RNG object r based on RandomMM2.Seed
             InitializeSeed();
 
@@ -228,6 +228,11 @@ namespace MM2Randomizer
             if (Settings.BurstChaserMode)
             {
                 MiscHacks.SetBurstChaser(Patch);
+            }
+
+            if (Settings.IsFlashingDisabled)
+            {
+                MiscHacks.DisableScreenFlashing(Patch, Settings);
             }
 
             MiscHacks.SetHitPointChargingSpeed(Patch, Settings.HitPointChargingSpeed);

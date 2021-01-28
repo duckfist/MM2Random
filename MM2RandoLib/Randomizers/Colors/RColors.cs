@@ -15,7 +15,11 @@ namespace MM2Randomizer.Randomizers.Colors
     {
         private static int MegaManColorAddressU = 0x03d314;
 
-        public RColors() { }
+        private bool flashing_disabled;
+
+        public RColors(bool flashing_disabled) {
+            this.flashing_disabled = flashing_disabled;
+        }
 
         public void Randomize(Patch p, Random r)
         {
@@ -624,11 +628,17 @@ namespace MM2Randomizer.Randomizers.Colors
             // choose front color
             rColor = r.Next(mediumOnly.Count);
             shade0 = mediumOnly[rColor];
-            shade1 = (byte)(shade0 + 0x20);
+            shade1 = (byte)(shade0 + 0x10);
+            shade2 = (byte)(shade1 + 0x20);
 
             p.Add(0x02D7D1, shade0, "Wily Machine Red 1 Color"); // 0x15
             p.Add(0x02D7D9, shade0, "Wily Machine Red 2 Color"); // 0x15
-            p.Add(0x02D7D3, shade1, "Wily Machine Light Red 1 Color"); // 0x15
+            p.Add(0x02D7D3, shade2, "Wily Machine Light Red 1 Color"); // 0x15
+            if (flashing_disabled)
+            {
+                p.Add(0x2DA94, shade1, "Wily Machine Flash Color");
+                p.Add(0x2DA21, shade2, "Wily Machine Restore Color");
+            }
 
             // Dragon
             // choose orange replacement
@@ -643,6 +653,11 @@ namespace MM2Randomizer.Randomizers.Colors
             p.Add(0x02CF97, shade2, "Dragon Orange Color 2");
             p.Add(0x0034C6, shade3, "Dragon Orange Mouth");
             p.Add(0x0034C7, shade2, "Dragon Orange Color 3");
+            if (flashing_disabled)
+            {
+                p.Add(0x002D1B0, shade3, "Dragon Hit Flash Color");
+                p.Add(0x002D185, shade2, "Dragon Hit Restore Color");
+            }
 
             // Choose green replacement
             rColor = r.Next(darkOnly.Count);

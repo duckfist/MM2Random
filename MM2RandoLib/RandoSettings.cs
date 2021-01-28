@@ -33,6 +33,7 @@ namespace MM2Randomizer
             this.IsWeaponNamesRandom = true;
             this.IsColorsRandom = true;
             this.IsBGMRandom = true;
+            this.IsFlashingDisabled = true;
             this.SelectedPlayer = PlayerSprite.Rockman;
 
             // Flags for Optional Gameplay Modules
@@ -238,6 +239,8 @@ namespace MM2Randomizer
         /// 
         /// </summary>
         public Boolean IsWeaponNamesRandom { get; set; }
+
+        public bool IsFlashingDisabled { get; set; }
 
         /// <summary>
         /// TODO

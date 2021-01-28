@@ -157,4 +157,7 @@
   <data name="SoundTrackConfiguration" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SoundTrackConfiguration.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="IntroStoryConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IntroStoryConfig.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

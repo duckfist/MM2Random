@@ -276,6 +276,28 @@ namespace MM2Randomizer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///
+        ///&lt;IntroStorySet&gt;
+        ///    &lt;!-- Castlevania III: Dracula&apos;s Curse --&gt;
+        ///    &lt;IntroStory&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;Lines&gt;
+        ///            &lt;Line&gt;DURING 15TH CENTURY EUROPE &lt;/Line&gt;
+        ///            &lt;Line&gt;  THERE LIVED A PERSON     &lt;/Line&gt;
+        ///            &lt;Line&gt;    NAMED DRACULA. HE      &lt;/Line&gt;
+        ///            &lt;Line&gt;PRACTICED SORCERY IN ORDER &lt;/Line&gt;
+        ///            &lt;Line&gt;   TO CREATE A BAD WORLD   &lt;/Line&gt;
+        ///            &lt;Line&gt;     FILLED WITH EVIL.     &lt;/Line&gt;
+        ///            &lt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string IntroStoryConfig {
+            get {
+                return ResourceManager.GetString("IntroStoryConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///  &quot;LevelComponents&quot;: [
         ///      {

@@ -231,8 +231,8 @@ namespace MM2Randomizer.Utilities
             p.Add(0x2C9FF, 0x0F, "Flash Man Fire Flash Color");
             p.Add(0x2CC7C, 0x0F, "Metal Man Periodic Flash Color");
 
-            p.Add(0x37A18, 0xEA, "NOP Ending Palette Flash");
-            p.Add(0x377AB, 0x00, "Disable Ending Screen Flash");
+            p.Add(0x37A1A, 0xEA, "NOP Ending Palette Flash");
+            p.Add(0x377A5, 0x00, "Disable Ending Screen Flash");
 
             // Dragon
             p.Add(0x2D1B2, 0x63, "Dragon Hit Flash Palette Index");

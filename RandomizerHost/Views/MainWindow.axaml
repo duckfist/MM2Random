@@ -6,9 +6,9 @@
         xmlns:converters="clr-namespace:RandomizerHost.Converters"
         xmlns:MM2Lib="clr-namespace:MM2Randomizer;assembly=MM2RandoLib"
         mc:Ignorable="d"
-        d:DesignWidth="500"
+        d:DesignWidth="550"
         d:DesignHeight="600"
-        Width="500"
+        Width="550"
         Height="600"
         x:Class="RandomizerHost.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -592,6 +592,29 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </Grid>
+            </TabItem>
+            <TabItem Header="Experimental" IsEnabled="True">
+              <Grid Margin="4">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="93*"/>
+                  <ColumnDefinition Width="113*"/>
+                  <ColumnDefinition Width="205*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Orientation="Vertical"
+                    >
+                  <CheckBox Name="CheckBox_ReduceLag"
+                            Content="Reduce lag"
+                            IsChecked="{Binding Path=RandoSettings.ReduceLag}"/>
+                  <CheckBox Name="CheckBox_DisableDelayScrolling"
+                            Content="Disable delay scrolling"
+                            IsChecked="{Binding Path=RandoSettings.DisableDelayScrolling}"/>
+
+                </StackPanel>
+              </Grid>
             </TabItem>
         </TabControl>
     </Grid>

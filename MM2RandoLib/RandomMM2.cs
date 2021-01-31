@@ -37,7 +37,6 @@ namespace MM2Randomizer
         public static RColors randomColors;
         public static RMusic randomMusic;
         public static RText rWeaponNames;
-        public static ReduceLag reduceLag;
         public static List<IRandomizer> Randomizers;
         public static List<IRandomizer> CosmeticRandomizers;
 
@@ -109,11 +108,6 @@ namespace MM2Randomizer
             // Independent
             randomMusic = new RMusic();
 
-            // TODO: move this to a quality of life section
-            reduceLag = new ReduceLag();
-
-
-
 
 
             // Add randomizers according to each flag
@@ -179,10 +173,6 @@ namespace MM2Randomizer
             if (Settings.IsWeaponNamesRandom)
             {
                 CosmeticRandomizers.Add(rWeaponNames);
-            }
-            if (Settings.ReduceLag)
-            {
-                CosmeticRandomizers.Add(reduceLag);
             }
 
 
@@ -255,6 +245,15 @@ namespace MM2Randomizer
             MiscHacks.SetETankKeep(Patch);
             MiscHacks.PreventETankUseAtFullLife(Patch);
             MiscHacks.SetFastBossDefeatTeleport(Patch);
+
+            if(Settings.ReduceLag)
+            {
+                MiscHacks.ReduceLag(Patch);
+            }
+            if(Settings.DisableDelayScrolling)
+            {
+                MiscHacks.DisableDelayScroll(Patch);
+            }
 
             // Create file name based on seed and game region
             string seedAlpha = SeedConvert.ConvertBase10To26(Seed);

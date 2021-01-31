@@ -501,5 +501,26 @@ namespace MM2Randomizer.Utilities
                     break;
             }
         }
+
+        /// <summary>
+        /// Reduces lag in various places (underwater, end of boss fight, and possibly other places) by disabling a subroutine
+        /// that just delays until an NMI occurs.
+        /// </summary>
+        /// <param name="p"></param>
+        public static void ReduceLag(Patch p)
+        {
+            p.Add((int)ESubroutineAddress.WasteAFrame, (byte)EInstruction.RTS, "Turn the 'waste a frame' subroutine into a NOP");
+        }
+
+        /// <summary>
+        /// This disables delay scrolling by preventing the audio subsystem from running at certain times.
+        /// More details can be found here: http://www.yuko2ch.net/rockman/howtodelayscroll_eng.htm
+        /// </summary>
+        /// <param name="p"></param>
+        public static void DisableDelayScroll(Patch p)
+        {
+            p.Add((int)ESubroutineAddress.ChangeBankBNE, (byte)EInstruction.NOP, "Disable the delayed audio processing branch");
+            p.Add((int)ESubroutineAddress.ChangeBankBNE + 1, (byte)EInstruction.NOP, "The branch instruction is 2 bytes");
+        }
     }
 }

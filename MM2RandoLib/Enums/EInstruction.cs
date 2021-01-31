@@ -8,5 +8,6 @@ namespace MM2Randomizer.Enums
     {
         // We can add more later if useful
         RTS = 0x60,
+        NOP = 0xEA,
     }
 }

@@ -42,7 +42,8 @@ namespace MM2Randomizer
             this.IsSpoilerFree = false;
 
             // Flags for Quality of life
-            this.ReduceLag = true; // TODO: expose in UI
+            this.ReduceLag = true;
+            this.DisableDelayScrolling = true;
         }
 
 
@@ -263,6 +264,7 @@ namespace MM2Randomizer
         /// Apply patches that reduce lag
         /// </summary>
         public Boolean ReduceLag { get; set; }
+        public Boolean DisableDelayScrolling { get; set; }
 
         //
         // Public Methods

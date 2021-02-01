@@ -250,6 +250,7 @@ namespace MM2Randomizer
             {
                 MiscHacks.ReduceLag(Patch);
             }
+
             if(Settings.DisableDelayScrolling)
             {
                 MiscHacks.DisableDelayScroll(Patch);

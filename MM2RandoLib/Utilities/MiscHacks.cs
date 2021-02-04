@@ -228,7 +228,7 @@ namespace MM2Randomizer.Utilities
                 // This sequence is disabled by FastText, and the patch conflicts with it.
                 p.Add(0x37C98, 0x0F, "Item Get Flash Color");
 
-            p.Add(0x2C9FF, 0x0F, "Flash Man Fire Flash Color");
+            p.Add(0x2CA04, 0x0F, "Flash Man Fire Flash Color");
             p.Add(0x2CC7C, 0x0F, "Metal Man Periodic Flash Color");
 
             p.Add(0x37A1A, 0xEA, "NOP Ending Palette Flash");

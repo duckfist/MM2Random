@@ -48,7 +48,10 @@ namespace MM2Randomizer.Randomizers
             int tileB = r.Next(4);
 
             // Make sure 2nd tile chosen is different
-            if (tileB == tileA) tileB++;
+            if (tileB == tileA)
+            {
+                tileB++;
+            }
 
             for (int i = 0; i < 5; i++)
             {

@@ -3,20 +3,20 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <SignAssembly>True</SignAssembly>
         <Title>MM2RandoLib</Title>
-        <Version>0.5.0</Version>
-        <Copyright>Copyright 2019 duckfist</Copyright>
+        <Version>0.6.0</Version>
+        <Copyright></Copyright>
         <Description>.NET library that can generate a randomized ROM patch for Mega Man 2.</Description>
-        <Authors>duckfist</Authors>
-        <PackageLicenseUrl>https://github.com/duckfist/MM2Random/blob/master/LICENSE</PackageLicenseUrl>
-        <PackageProjectUrl>https://github.com/duckfist/MM2Random/</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/duckfist/MM2Random/</RepositoryUrl>
+        <Authors>duckfist, squidman, dagit</Authors>
+        <PackageProjectUrl>https://github.com/squid-man/MegaMan2Randomizer2</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/squid-man/MegaMan2Randomizer2</RepositoryUrl>
         <PackageTags></PackageTags>
-        <PackageReleaseNotes>migrated to .netstandard 2.0</PackageReleaseNotes>
-        <AssemblyVersion>0.5.0.*</AssemblyVersion>
-        <FileVersion>0.5.0.0</FileVersion>
+        <PackageReleaseNotes></PackageReleaseNotes>
+        <AssemblyVersion>0.6.0.*</AssemblyVersion>
+        <FileVersion>0.6.0.0</FileVersion>
         <Deterministic>false</Deterministic>
         <NeutralLanguage>en-US</NeutralLanguage>
         <Platforms>AnyCPU;x64</Platforms>
+        <Company />
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
       <DefineConstants>DEBUG;TRACE</DefineConstants>

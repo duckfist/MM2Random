@@ -1,9 +1,9 @@
-﻿using MM2Randomizer.Enums;
-using MM2Randomizer.Patcher;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MM2Randomizer.Enums;
+using MM2Randomizer.Extensions;
+using MM2Randomizer.Patcher;
 
 namespace MM2Randomizer.Randomizers.Stages
 {
@@ -24,16 +24,25 @@ namespace MM2Randomizer.Randomizers.Stages
             // Get the new stage order
             int[] newOrder = new int[8];
             foreach (StageFromSelect stage in StageSelect)
+            {
                 newOrder[stage.PortraitDestinationOriginal] = stage.PortraitDestinationNew;
+            }
 
             // Permute portrait x/y values via the shuffled stage-order array 
             byte[] cpy = new byte[8];
+
             for (int i = 0; i < 8; i++)
+            {
                 cpy[newOrder[i]] = portraitBG_y[i];
+            }
+
             Array.Copy(cpy, portraitBG_y, 8);
 
             for (int i = 0; i < 8; i++)
+            {
                 cpy[newOrder[i]] = portraitBG_x[i];
+            }
+
             Array.Copy(cpy, portraitBG_x, 8);
         }
 
@@ -77,7 +86,7 @@ namespace MM2Randomizer.Randomizers.Stages
                 StageClearDestinationOriginal = 2,
                 StageClearDestinationNew = 2,
                 TextAddress = ERMPortraitText.AirMan,
-                TextValues = "fAIRfff"
+                TextValues = "`AIR```"
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -89,7 +98,7 @@ namespace MM2Randomizer.Randomizers.Stages
                 StageClearDestinationOriginal = 16,
                 StageClearDestinationNew = 16,
                 TextAddress = ERMPortraitText.QuickMan,
-                TextValues = "QUICKf"
+                TextValues = "QUICK`"
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -101,7 +110,7 @@ namespace MM2Randomizer.Randomizers.Stages
                 StageClearDestinationOriginal = 4,
                 StageClearDestinationNew = 4,
                 TextAddress = ERMPortraitText.WoodMan,
-                TextValues = "WOODff",
+                TextValues = "WOOD``",
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -113,7 +122,7 @@ namespace MM2Randomizer.Randomizers.Stages
                 StageClearDestinationOriginal = 128,
                 StageClearDestinationNew = 128,
                 TextAddress = ERMPortraitText.CrashMan,
-                TextValues = "CRASHf",
+                TextValues = "CRASH`",
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -125,7 +134,7 @@ namespace MM2Randomizer.Randomizers.Stages
                 StageClearDestinationOriginal = 32,
                 StageClearDestinationNew = 32,
                 TextAddress = ERMPortraitText.FlashMan,
-                TextValues = "FLASHf",
+                TextValues = "FLASH`",
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -137,7 +146,7 @@ namespace MM2Randomizer.Randomizers.Stages
                 StageClearDestinationOriginal = 64,
                 StageClearDestinationNew = 64,
                 TextAddress = ERMPortraitText.MetalMan,
-                TextValues = "METALf",
+                TextValues = "METAL`",
             });
             StageSelect.Add(new StageFromSelect()
             {
@@ -149,12 +158,16 @@ namespace MM2Randomizer.Randomizers.Stages
                 StageClearDestinationOriginal = 1,
                 StageClearDestinationNew = 1,
                 TextAddress = ERMPortraitText.HeatMan,
-                TextValues = "HEATff",
+                TextValues = "HEAT``",
             });
 
 
             List<byte> newStageOrder = new List<byte>();
-            for (byte i = 0; i < 8; i++) newStageOrder.Add(i);
+
+            for (byte i = 0; i < 8; i++)
+            {
+                newStageOrder.Add(i);
+            }
 
             newStageOrder.Shuffle(r);
 
@@ -172,13 +185,13 @@ namespace MM2Randomizer.Randomizers.Stages
                     for (int k = 0; k < 6; k++)
                     {
                         // Write in a blank space at each letter ('f' by my cipher)
-                        Patch.Add((int)stage.TextAddress + k, RText.CreditsCipher['f'], $"Hide Stage Select Portrait Text");
+                        Patch.Add((int)stage.TextAddress + k, '`'.AsCreditsCharacter(), $"Hide Stage Select Portrait Text");
                     }
 
                     for (int k = 0; k < 3; k++)
                     {
                         // Write in a blank space over "MAN"; 32 8-pixel tiles until the next row, 3 tiles until "MAN" text
-                        Patch.Add((int)stage.TextAddress + 32 + 3 + k, RText.CreditsCipher['f'], $"Hide Stage Select Portrait Text");
+                        Patch.Add((int)stage.TextAddress + 32 + 3 + k, '`'.AsCreditsCharacter(), $"Hide Stage Select Portrait Text");
                     }
                 }
                 // Change portrait text to match new destination
@@ -188,7 +201,7 @@ namespace MM2Randomizer.Randomizers.Stages
                     for (int j = 0; j < newlabel.Length; j++)
                     {
                         char c = newlabel[j];
-                        Patch.Add((int)stage.TextAddress + j, RText.CreditsCipher[c], $"Stage Select Portrait Text");
+                        Patch.Add((int)stage.TextAddress + j, c.AsCreditsCharacter(), $"Stage Select Portrait Text");
                     }
                 }
 

@@ -19,6 +19,46 @@
         </Lines>
     </IntroStory>
 
+    <!-- Bad Dudes -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Bad Dudes</Title>
+        <Lines>
+            <Line>     Emergency Order!!     </Line>
+            <Line></Line>
+            <Line>  Doctor Thomas Light has  </Line>
+            <Line> been kidnapped by ninjas. </Line>
+            <Line>    Rescue Doctor Light    </Line>
+            <Line>            ASAP           </Line>
+            <Line> Are you a bad enough dude </Line>
+            <Line>   to rescue the Doctor?   </Line>
+            <Line>  We're counting on you!!  </Line>
+            <Line></Line>
+        </Lines>
+    </IntroStory>
+
+    <!-- Battle Toads -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Battle Toads</Title>
+        <Lines>
+            <Line>     The Story So Far      </Line>
+            <Line>    One day, Pimple...     </Line>
+
+            <Line>   and Princess Angelica   </Line>
+            <Line>     were out cruisin'     </Line>
+
+            <Line> When suddenly, they were  </Line>
+            <Line> capture by the Dark Queen </Line>
+
+            <Line>      and taken to a       </Line>
+            <Line>      nearby planet.       </Line>
+
+            <Line>  Meanwhile, back on the   </Line>
+            <Line>   Spaceship Vulture...    </Line>
+        </Lines>
+    </IntroStory>
+
     <!-- Batman -->
     <IntroStory>
         <Enabled>true</Enabled>
@@ -41,6 +81,28 @@
         </Lines>
     </IntroStory>
 
+    <!-- Bubble Bobble -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Bubble Bobble</Title>
+        <Lines>
+            <Line>Now it is the beginning...</Line>
+            <Line></Line>
+
+            <Line>  of a fantastic story!   </Line>
+            <Line></Line>
+
+            <Line> Let us make a journey... </Line>
+            <Line></Line>
+
+            <Line> to the cave of monsters! </Line>
+            <Line></Line>
+
+            <Line>        Good Luck!        </Line>
+            <Line></Line>
+        </Lines>
+    </IntroStory>
+
     <!-- Castlevania III: Dracula's Curse -->
     <IntroStory>
         <Enabled>true</Enabled>
@@ -59,6 +121,72 @@
         </Lines>
     </IntroStory>
 
+    <!-- Chrono Trigger -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Chrono Trigger</Title>
+        <Lines>
+            <Line>Mega Man...</Line>
+            <Line></Line>
+
+            <Line>Mega Man!</Line>
+            <Line>Good Morning, Mega Man!</Line>
+
+            <Line>Come on, sleepy head!</Line>
+            <Line>Get up!</Line>
+
+            <Line>You were so excited about</Line>
+            <Line>the millennial fair</Line>
+
+            <Line>that you didn't sleep well,</Line>
+            <Line>did you...?</Line>
+        </Lines>
+    </IntroStory>
+
+    <!-- Contra -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Contra</Title>
+        <Lines>
+            <Line>In the year 200X A.D.,</Line>
+            <Line>a mysterious meteorite fell</Line>
+
+            <Line>into the Galuga archipelago</Line>
+            <Line>near New Zealand.</Line>
+
+            <Line>Two years later,</Line>
+            <Line>a mysterious invader</Line>
+
+            <Line>calling itself 'red falcon'</Line>
+            <Line>plots the downfall of earth</Line>
+
+            <Line>by fortifying the</Line>
+            <Line>entire Galuga archipelago.</Line>
+        </Lines>
+    </IntroStory>
+
+    <!-- Darkman -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Darkman</Title>
+        <Lines>
+            <Line>Darkman is trapped...</Line>
+            <Line></Line>
+
+            <Line>inside a deserted warehouse</Line>
+            <Line>by Durant's men.</Line>
+
+            <Line>You must escape the complex</Line>
+            <Line></Line>
+
+            <Line>and carry out your plan</Line>
+            <Line></Line>
+
+            <Line>of revenge...</Line>
+            <Line></Line>
+        </Lines>
+    </IntroStory>
+
     <!-- Diablo -->
     <IntroStory>
         <Enabled>true</Enabled>
@@ -74,6 +202,28 @@
             <Line>REALM OF MANKIND. YOU MUST </Line>
             <Line>  FIND AND DESTROY DIABLO  </Line>
             <Line>   BEFORE IT IS TOO LATE!  </Line>
+        </Lines>
+    </IntroStory>
+
+    <!-- Dragon Quest II -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Dragon Quest II</Title>
+        <Lines>
+            <Line>Ages ago...</Line>
+            <Line></Line>
+
+            <Line>A young descendant of the</Line>
+            <Line>legendary warrior Roto</Line>
+
+            <Line>defeated Dragon King, and</Line>
+            <Line>returned light to the world</Line>
+
+            <Line>The young man, together</Line>
+            <Line>with his bride...</Line>
+
+            <Line>left on a journey to build</Line>
+            <Line>several new countries.</Line>
         </Lines>
     </IntroStory>
 
@@ -164,6 +314,24 @@
             <Line>ETERNITY, IT BRINGS ANOTHER</Line>
             <Line>PROMISE TO MOTHER EARTH</Line>
             <Line>WITH A BOUNTY AND MERCY</Line>
+        </Lines>
+    </IntroStory>
+
+    <!-- Final Fantasy VI -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Final Fantasy VI</Title>
+        <Lines>
+            <Line>Long ago, the War of the</Line>
+            <Line>Magi scorched the world...</Line>
+            <Line>And magic simply ceased</Line>
+            <Line>to exist.</Line>
+            <Line>1000 years have passed and</Line>
+            <Line>high technology reigns.</Line>
+            <Line>But there are some who</Line>
+            <Line>would enslave the world...</Line>
+            <Line>by reviving the destructive</Line>
+            <Line>force known as 'magic'...</Line>
         </Lines>
     </IntroStory>
 
@@ -296,6 +464,50 @@
         </Lines>
     </IntroStory>
 
+    <!-- The Legend of Zelda: A Link to the Past -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>The Legend of Zelda: A Link to the Past</Title>
+        <Lines>
+            <Line>Help me...</Line>
+            <Line>Please help me...</Line>
+
+            <Line>I am a prisoner in the</Line>
+            <Line>castle dungeon.</Line>
+
+            <Line>Doctor Wily has done</Line>
+            <Line>something terrible...</Line>
+
+            <Line>Doctor Wily has seized</Line>
+            <Line>control of the castle...</Line>
+
+            <Line>and is trying to open the</Line>
+            <Line>Sages' Seal.</Line>
+        </Lines>
+    </IntroStory>
+
+    <!-- Low G Man-->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Low G Man</Title>
+        <Lines>
+            <Line>It was a robot producing</Line>
+            <Line>exploration planet...</Line>
+
+            <Line>like any other.</Line>
+            <Line></Line>
+
+            <Line>Large cities...</Line>
+            <Line>Beautiful sunsets...</Line>
+
+            <Line>But then they came.....</Line>
+            <Line></Line>
+
+            <Line>We'll send in Mega Man</Line>
+            <Line></Line>
+        </Lines>
+    </IntroStory>
+
     <!-- Meegah Mem 2 -->
     <IntroStory>
         <Enabled>true</Enabled>
@@ -365,6 +577,28 @@
             <Line>  THIS TIME THE TOURNAMENT </Line>
             <Line>  FELL INTO SHANG TSUNG'S  </Line>
             <Line> HANDS AND WAS CORRUPTED...</Line>
+        </Lines>
+    </IntroStory>
+
+    <!-- Nightshade -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Nightshade</Title>
+        <Lines>
+            <Line>The streets were safe once.</Line>
+            <Line></Line>
+
+            <Line>A person could walk around</Line>
+            <Line>wihtout any worries.</Line>
+
+            <Line>The kind of place where you</Line>
+            <Line>knew your kids were safe.</Line>
+
+            <Line>But as time passed, bad</Line>
+            <Line>seeds started to grow</Line>
+
+            <Line>and Mega Man, Metro City's</Line>
+            <Line>protector, was outnumbered.</Line>
         </Lines>
     </IntroStory>
 
@@ -469,6 +703,28 @@
         </Lines>
     </IntroStory>
 
+    <!-- Rygar -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Rygar</Title>
+        <Lines>
+            <Line>Once there was a holy place</Line>
+            <Line>called Argool.</Line>
+
+            <Line>It was founded by five</Line>
+            <Line>legendary Indora Gods.</Line>
+
+            <Line>One day Argool was attacked</Line>
+            <Line>by the cruel king Ligar.</Line>
+
+            <Line>It was then that Rygar</Line>
+            <Line>came back from the dead.</Line>
+
+            <Line>Join forces with Rygar to</Line>
+            <Line>battle the forces of evil!</Line>
+        </Lines>
+    </IntroStory>
+
     <!-- Samurai Shodown II -->
     <IntroStory>
         <Enabled>true</Enabled>
@@ -502,6 +758,28 @@
             <Line>      EMPEROR GARUDA,      </Line>
             <Line>   TWO SHADOWS APPEAR.     </Line>
             <Line> 'NINJA' THEY ARE CALLED.  </Line>
+        </Lines>
+    </IntroStory>
+
+    <!-- Skate Or Die 2: The Search for Double Trouble -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Skate Or Die 2: The Search for Double Trouble</Title>
+        <Lines>
+            <Line>It's another beautiful day</Line>
+            <Line>in the quiet town of Elwood</Line>
+
+            <Line>Perfect weather for the</Line>
+            <Line>mayor's wife...</Line>
+
+            <Line>to take her poodle Fifi</Line>
+            <Line>for a nice walk...</Line>
+
+            <Line>... and for you to take</Line>
+            <Line>your board out...</Line>
+
+            <Line>for some serious</Line>
+            <Line>sidewalk shredding!</Line>
         </Lines>
     </IntroStory>
 
@@ -621,6 +899,24 @@
         </Lines>
     </IntroStory>
 
+    <!-- Super Mario Sunshine -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Super Mario Sunshine</Title>
+        <Lines>
+            <Line>AS YOU ARE NO DOUBT AWARE,</Line>
+            <Line>SOMEONE HAS BEEN DEFACING</Line>
+            <Line>FAIR ISLE DELFINO.</Line>
+            <Line>THE TRUTH IS OBVIOUS.</Line>
+            <Line>THE GUILTY PARTY IS NONE</Line>
+            <Line>OTHER THAN MEGA MAN.</Line>
+            <Line>OBJECTION!</Line>
+            <Line>OVERRULED!!</Line>
+            <Line>I JUDGE THE DEFENDANT</Line>
+            <Line>GUILTY AS CHARGED.</Line>
+        </Lines>
+    </IntroStory>
+
     <!-- Super Metroid -->
     <IntroStory>
         <Enabled>true</Enabled>
@@ -676,6 +972,28 @@
 
             <Line>PROVE YOUR WORTH IN THE</Line>
             <Line>QUEST OF THE AVATAR!</Line>
+        </Lines>
+    </IntroStory>
+
+    <!-- Ultimate Stuntman -->
+    <IntroStory>
+        <Enabled>true</Enabled>
+        <Title>Ultimate Stuntman</Title>
+        <Lines>
+            <Line>        KIDNAPPED!        </Line>
+            <Line></Line>
+
+            <Line>Ultimate Stuntman!</Line>
+            <Line></Line>
+
+            <Line>Dr Evil has kidnapped</Line>
+            <Line>Jenny Aykroyd!</Line>
+
+            <Line>You must chase after him</Line>
+            <Line></Line>
+
+            <Line>and rescue the young</Line>
+            <Line>scientist!</Line>
         </Lines>
     </IntroStory>
 

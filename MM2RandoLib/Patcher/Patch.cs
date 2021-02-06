@@ -36,14 +36,34 @@ namespace MM2Randomizer.Patcher
             }
         }
 
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="value"></param>
+        /// <param name="note"></param>
+        public Int32 Add(Int32 in_StartAddress, Byte[] in_Value, String note = "")
+        {
+            Int32 index = 0;
+
+            foreach (Byte b in in_Value)
+            {
+                this.Add(in_StartAddress++, b, $"{note}[{index++}]");
+            }
+
+            return in_StartAddress;
+        }
+
+
         /// <summary>
         /// TODO
         /// </summary>
         /// <param name="filename"></param>
         public void ApplyRandoPatch(string filename)
         {
-            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite))
-            { 
+            using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite))
+            {
                 //GetStringSortedByAddress();
 
                 foreach (KeyValuePair<int, ChangeByteRecord> kvp in Bytes)
@@ -53,16 +73,20 @@ namespace MM2Randomizer.Patcher
                 }
             }
         }
+
+
         public string GetStringSortedByAddress()
         {
             var sortDict = from kvp in Bytes orderby kvp.Key ascending select kvp;
             return ConvertDictToString(sortDict);
         }
 
+
         public string GetString()
         {
             return ConvertDictToString((IOrderedEnumerable<KeyValuePair<int, ChangeByteRecord>>)Bytes);
         }
+
 
         /// <summary>
         /// TODO
@@ -99,6 +123,7 @@ namespace MM2Randomizer.Patcher
             int totalrepeats = 0;
             int offset = 0;
             bool keepgoing = true;
+
             while (keepgoing == true)
             {
                 offset = ipsbyte[ipson] * 0x10000 + ipsbyte[ipson + 1] * 0x100 + ipsbyte[ipson + 2];
@@ -113,8 +138,12 @@ namespace MM2Randomizer.Patcher
                     ipson++;
                     ipson++;
                     byte[] repeatbyte = new byte[totalrepeats];
+
                     for (int ontime = 0; ontime < totalrepeats; ontime++)
+                    {
                         repeatbyte[ontime] = ipsbyte[ipson];
+                    }
+
                     romstream.Seek(offset, SeekOrigin.Begin);
                     romresult = romstream.BeginWrite(repeatbyte, 0, totalrepeats, null, null);
                     romstream.EndWrite(romresult);
@@ -130,8 +159,11 @@ namespace MM2Randomizer.Patcher
                     romstream.EndWrite(romresult);
                     ipson = ipson + totalrepeats;
                 }
+
                 if (ipsbyte[ipson] == 69 && ipsbyte[ipson + 1] == 79 && ipsbyte[ipson + 2] == 70)
+                {
                     keepgoing = false;
+                }
             }
             romstream.Close();
         }

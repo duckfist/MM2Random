@@ -25,7 +25,12 @@ namespace MM2Randomizer.Randomizers
             // 0x03C298 - Item # from Crash Man
 
             List<EItemNumber> newItemOrder = new List<EItemNumber>();
-            for (byte i = 0; i < 5; i++) newItemOrder.Add(EItemNumber.None);
+
+            for (byte i = 0; i < 5; i++)
+            {
+                newItemOrder.Add(EItemNumber.None);
+            }
+
             newItemOrder.Add(EItemNumber.One);
             newItemOrder.Add(EItemNumber.Two);
             newItemOrder.Add(EItemNumber.Three);

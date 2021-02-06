@@ -90,13 +90,23 @@ namespace MM2Randomizer.Enums
         public static List<EDmgVsBoss> GetTables(bool includeBuster, bool includeTimeStopper)
         {
             List<EDmgVsBoss> tables = new List<EDmgVsBoss>();
-            if (includeBuster) tables.Add(U_DamageP);
+
+            if (includeBuster)
+            {
+                tables.Add(U_DamageP);
+            }
+
             tables.Add(U_DamageH);
             tables.Add(U_DamageA);
             tables.Add(U_DamageW);
             tables.Add(U_DamageB);
             tables.Add(U_DamageQ);
-            if (includeTimeStopper) tables.Add(U_DamageF);
+
+            if (includeTimeStopper)
+            {
+                tables.Add(U_DamageF);
+            }
+
             tables.Add(U_DamageM);
             tables.Add(U_DamageC);
             return tables;

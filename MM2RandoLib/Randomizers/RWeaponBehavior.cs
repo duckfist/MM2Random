@@ -18,22 +18,41 @@ namespace MM2Randomizer.Randomizers
         public static double GetAmmoUsage(EDmgVsEnemy weapon)
         {
             if (weapon == EDmgVsEnemy.DamageP)
+            {
                 return AmmoUsage[0];
+            }
             else if (weapon == EDmgVsEnemy.DamageH)
+            {
                 return AmmoUsage[1];
+            }
             else if (weapon == EDmgVsEnemy.DamageA)
+            {
                 return AmmoUsage[2];
+            }
             else if (weapon == EDmgVsEnemy.DamageW)
+            {
                 return AmmoUsage[3];
+            }
             else if (weapon == EDmgVsEnemy.DamageB)
+            {
                 return AmmoUsage[4];
+            }
             else if (weapon == EDmgVsEnemy.DamageQ)
+            {
                 return AmmoUsage[5];
+            }
             else if (weapon == EDmgVsEnemy.DamageM)
+            {
                 return AmmoUsage[6];
+            }
             else if (weapon == EDmgVsEnemy.DamageC)
+            {
                 return AmmoUsage[7];
-            else return 0;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         private StringBuilder debug;
@@ -150,7 +169,9 @@ namespace MM2Randomizer.Randomizers
             if (rTestChargeType < 0.8)
             {
                 for (int i = 0; i < 4; i++)
+                {
                     Patch.Add(0x03DD66 + i, 0xEA, $"(H) | Skip L2 Charge");
+                }
             }
             //0x03DD62 - H after doing the previous, change these 2 bytes to 0xEA to skip charge altogether
             if (rTestChargeType < 0.4)
@@ -203,10 +224,16 @@ namespace MM2Randomizer.Randomizers
             //  Values 0x02 and 0x03 work, but larger values behave strangely
             int numProjectiles = 0x04;
             double rTestNumProjectiles = r.NextDouble();
+
             if (rTestNumProjectiles > 0.80)
+            {
                 numProjectiles = 0x03;
+            }
             else if (rTestNumProjectiles > 0.60)
+            {
                 numProjectiles = 0x02;
+            }
+
             Patch.Add(0x03DAD6, (byte)numProjectiles, "(A) | Number of Projectiles");
 
             //0x03DADA - A projectile type, default 0x02
@@ -235,8 +262,12 @@ namespace MM2Randomizer.Randomizers
             // 15% chance to be significantly faster
             int yAccInt = 0x00;
             double rYAcc = r.NextDouble();
+
             if (rYAcc > 0.85)
+            {
                 yAccInt = 0x01;
+            }
+
             Patch.Add(0x03DE76, (byte)yAccInt, "(A) | Y-Acceleration (integer)");
 
             //0x03DE7E - A x - speed fraction projectile 1(19)
@@ -310,8 +341,12 @@ namespace MM2Randomizer.Randomizers
             //  Change to 0x20 to reverse, 50% chance
             int reverseY = 0x10;
             double rTestReverseY = r.NextDouble();
+
             if (rTestReverseY > 0.5)
+            {
                 reverseY = 0x20;
+            }
+
             Patch.Add(0x03DF64, (byte)reverseY, "(W) | Launch Y-Direction");
 
             //0x03DF72 - W ammo usage (3) (do from 1 to 3)
@@ -362,8 +397,12 @@ namespace MM2Randomizer.Randomizers
             //      Make 50% chance to be 0, or 1-5
             int xVelFall = 0x00;
             double rTestXFallSpeed = r.NextDouble();
+
             if (rTestXFallSpeed > 0.5)
+            {
                 xVelFall = r.Next(0x05) + 0x01;
+            }
+
             Patch.Add(0x03DFC0, (byte)xVelFall, "(B) | X-Velocity Fall (Integer)");
 
             //0x03DFC8 - B y - speed after falling(0xFE)
@@ -595,8 +634,12 @@ namespace MM2Randomizer.Randomizers
             // For now, 25% chance to make this move upward at 2px/fr
             int yVelExplode = 0x00;
             double rTestYVelExplode = r.NextDouble();
+
             if (rTestYVelExplode > 0.75)
+            {
                 yVelExplode = r.Next(2) + 0x01;
+            }
+
             Patch.Add(0x03D4D7, (byte)yVelExplode, "(C) | X-Velocity (Explosion)");
 
             //0x03DB99 - C ammo per shot (04) (do 1-3)
@@ -609,8 +652,12 @@ namespace MM2Randomizer.Randomizers
             // For now, 50% chance to change
             int multiExplode = 0x02;
             double rTestMultiExplode = r.NextDouble();
+
             if (rTestMultiExplode > 0.50)
+            {
                 multiExplode = 0x03;
+            }
+
             Patch.Add(0x03DB9F, (byte)multiExplode, "(C) | Explosion Type");
 
             //0x03DBA6 - C shoot sound effect (24)

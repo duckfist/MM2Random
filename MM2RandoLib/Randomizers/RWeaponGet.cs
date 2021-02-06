@@ -81,12 +81,19 @@ namespace MM2Randomizer.Randomizers
 
             // Permute portrait x/y values via the shuffled acquired-weapons array 
             byte[] cpy = new byte[8];
+
             for (int i = 0; i < 8; i++)
+            {
                 cpy[newWeaponIndex[i]] = portraitBG_y[i];
+            }
+
             Array.Copy(cpy, portraitBG_y, 8);
 
             for (int i = 0; i < 8; i++)
+            {
                 cpy[newWeaponIndex[i]] = portraitBG_x[i];
+            }
+
             Array.Copy(cpy, portraitBG_x, 8);
         }
 

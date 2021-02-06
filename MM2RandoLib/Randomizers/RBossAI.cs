@@ -247,7 +247,9 @@ namespace MM2Randomizer.Randomizers
             //0x02C553 - Number of falling leaves, 0x03. Do 0x02 20% of the time.
             rDbl = r.NextDouble();
             if (rDbl > 0.8)
+            {
                 Patch.Add(0x02C553, 0x02, "Woodman Falling Leaf Quantity");
+            }
 
             //0x02C576 - Falling leaf x-vel, 0x02. Do 0x01 or 0x02, but with a low chance for 0x00 and lower chance for 0x03
             xVels = new byte[] {
@@ -467,7 +469,9 @@ namespace MM2Randomizer.Randomizers
             //0x02CC1D - Odd change to attack behavior, 0x06, only if different than 6. Give 25% chance.
             rDbl = r.NextDouble();
             if (rDbl > 0.75)
+            {
                 Patch.Add(0x02CC1D, 0x05, "Metalman Alternate Attack Behavior");
+            }
 
             //0x02CBB5 - Jump Height 1 0x06, do from 03 - 07 ? higher than 7 bonks ceiling
             //0x02CBB6 - Jump Height 2 0x05
@@ -523,7 +527,9 @@ namespace MM2Randomizer.Randomizers
             //0x02CDD3 - Shot behavior, 0x5E, change to have him always shoot when jumping, 20% chance
             rDbl = r.NextDouble();
             if (rDbl > 0.80)
+            {
                 Patch.Add(0x02CDD3, 0x50, "Clashman Disable Single Shot");
+            }
 
             //0x02CDEE - Clash Bomber velocity, 0x06, do from 2 to 8
             rInt = r.Next(7) + 2;

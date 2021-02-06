@@ -14,7 +14,7 @@
     <CreditText>
         <Enabled>true</Enabled>
         <Value>61</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
@@ -64,12 +64,12 @@
     <CreditText>
         <Enabled>true</Enabled>
         <Value>E1</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>21</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
@@ -79,7 +79,7 @@
     <CreditText>
         <Enabled>true</Enabled>
         <Value>A1</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
@@ -119,42 +119,42 @@
     <CreditText>
         <Enabled>true</Enabled>
         <Value>E1</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>21</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>61</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>A1</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>E1</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>21</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>61</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>A1</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
@@ -168,38 +168,38 @@
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
-        <Value>A1</Value>
-        <Text>f</Text>
+        <Value>AC</Value>
+        <Text>SQUIDMAN</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
-        <Value>E1</Value>
-        <Text>f</Text>
+        <Value>EC</Value>
+        <Text>DAGIT</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>21</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>61</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>A1</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>E1</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>21</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
@@ -214,7 +214,7 @@
     <CreditText>
         <Enabled>true</Enabled>
         <Value>A1</Value>
-        <Text>f</Text>
+        <Text>`</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>

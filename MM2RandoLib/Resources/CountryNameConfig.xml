@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
+<!--
+Preposition must not exceed 3 characters
+Name must not exceed 25 characters
+-->
 <CountryNameSet>
+    <!-- Real Countries -->
     <CountryName>
         <Enabled>true</Enabled>
         <Name>AFGHANISTAN</Name>
@@ -788,5 +793,12 @@
     <CountryName>
         <Enabled>true</Enabled>
         <Name>ZIMBABWE</Name>
+    </CountryName>
+
+    <!-- Fictional Places -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Vulcan</Name>
     </CountryName>
 </CountryNameSet>

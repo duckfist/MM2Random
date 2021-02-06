@@ -11,7 +11,7 @@
         Width="550"
         Height="600"
         x:Class="RandomizerHost.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/MegaMan2Randomizer.ico"
         Title="RandomizerHost"
         x:Name="MainWindow">
 

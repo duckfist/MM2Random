@@ -33,7 +33,10 @@ namespace MM2Randomizer
             params string[] additionalProperties)
         {
             // If value hasn't changed, just return false
-            if (EqualityComparer<T>.Default.Equals(privateField, newValue)) return false;
+            if (EqualityComparer<T>.Default.Equals(privateField, newValue))
+            {
+                return false;
+            }
 
             // Value has changed, invoke propertychanged and return true
             privateField = newValue;
@@ -41,7 +44,9 @@ namespace MM2Randomizer
 
             // Notify any additional properties that might depend on this one
             foreach (string additionalProperty in additionalProperties)
+            {
                 NotifyPropertyChanged(additionalProperty);
+            }
 
             return true;
         }

@@ -214,25 +214,41 @@ namespace MM2Randomizer.Randomizers
             }
 
             if (weapon == EDmgVsBoss.U_DamageH)
+            {
                 damage += (byte)(RWeaponBehavior.AmmoUsage[1] + 1);
+            }
             else if (weapon == EDmgVsBoss.U_DamageA)
+            {
                 damage += (byte)(RWeaponBehavior.AmmoUsage[2] + 1);
+            }
             else if (weapon == EDmgVsBoss.U_DamageW)
+            {
                 damage += (byte)(RWeaponBehavior.AmmoUsage[3] + 1);
+            }
             else if (weapon == EDmgVsBoss.U_DamageF)
+            {
                 return 1;
+            }
             else if (weapon == EDmgVsBoss.U_DamageC)
+            {
                 damage += (byte)(RWeaponBehavior.AmmoUsage[7] + 1);
+            }
 
             // 50% chance to cap the minimum damage at 4, else cap minimum damage at 3
             rExtraDmg = r.NextDouble();
             if (rExtraDmg > 0.5)
             {
-                if (damage < 4) damage = 4;
+                if (damage < 4)
+                {
+                    damage = 4;
+                }
             }
             else
             {
-                if (damage < 3) damage = 3;
+                if (damage < 3)
+                {
+                    damage = 3;
+                }
             }
 
             return damage;
@@ -240,25 +256,46 @@ namespace MM2Randomizer.Randomizers
 
         private static int GetWeaponIndexFromAddress(EDmgVsBoss weaponAddress)
         {
-            if      (weaponAddress == EDmgVsBoss.U_DamageP)
+            if (weaponAddress == EDmgVsBoss.U_DamageP)
+            {
                 return 0;
+            }
             else if (weaponAddress == EDmgVsBoss.U_DamageH)
+            {
                 return 1;
+            }
             else if (weaponAddress == EDmgVsBoss.U_DamageA)
+            {
                 return 2;
+            }
             else if (weaponAddress == EDmgVsBoss.U_DamageW)
+            {
                 return 3;
+            }
             else if (weaponAddress == EDmgVsBoss.U_DamageB)
+            {
                 return 4;
+            }
             else if (weaponAddress == EDmgVsBoss.U_DamageQ)
+            {
                 return 5;
+            }
             else if (weaponAddress == EDmgVsBoss.U_DamageF)
+            {
                 return 6;
+            }
             else if (weaponAddress == EDmgVsBoss.U_DamageM)
+            {
                 return 7;
+            }
             else if (weaponAddress == EDmgVsBoss.U_DamageC)
+            {
                 return 8;
-            else return -1;
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         /// <summary>
@@ -285,8 +322,12 @@ namespace MM2Randomizer.Randomizers
                 // 25% chance to have a buster vulnerability
                 double rBuster = r.NextDouble();
                 byte busterDmg = 0x00;
+
                 if (rBuster > 0.75)
+                {
                     busterDmg = 0x01;
+                }
+
                 Patch.Add(EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Dragon, busterDmg, "Buster Damage to Dragon");
                 WilyWeaknesses[0, 0] = busterDmg;
 
@@ -363,19 +404,33 @@ namespace MM2Randomizer.Randomizers
                     if (weapon == enemyWeak1)
                     {
                         damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 10);
-                        if (damage < 2) damage = 3;
+
+                        if (damage < 2)
+                        {
+                            damage = 3;
+                        }
+
                         level = '^';
                     }
                     else if (weapon == enemyWeak2)
                     {
                         damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 6);
-                        if (damage < 2) damage = 2;
+
+                        if (damage < 2)
+                        {
+                            damage = 2;
+                        }
+
                         level = '*';
                     }
                     else if (weapon == enemyWeak3)
                     {
                         damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 3);
-                        if (damage < 2) damage = 2;
+
+                        if (damage < 2)
+                        {
+                            damage = 2;
+                        }
                     }
 
                     // If any weakness is Atomic Fire, deal 20 damage
@@ -402,8 +457,12 @@ namespace MM2Randomizer.Randomizers
                 // 25% chance to have a buster vulnerability
                 rBuster = r.NextDouble();
                 busterDmg = 0x00;
+
                 if (rBuster > 0.75)
+                {
                     busterDmg = 0x01;
+                }
+
                 Patch.Add(EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Guts, busterDmg, String.Format("Buster Damage to Guts Tank"));
                 WilyWeaknesses[2, 0] = busterDmg;
 
@@ -472,8 +531,17 @@ namespace MM2Randomizer.Randomizers
                 {
                     int totalShots = (int)(28 / RWeaponBehavior.GetAmmoUsage(wpnBarrier));
                     int numHitsPerBarrier = (int)(totalShots / 5);
-                    if (numHitsPerBarrier > 1) numHitsPerBarrier--;
-                    if (numHitsPerBarrier > 8) numHitsPerBarrier = 8;
+
+                    if (numHitsPerBarrier > 1)
+                    {
+                        numHitsPerBarrier--;
+                    }
+
+                    if (numHitsPerBarrier > 8)
+                    {
+                        numHitsPerBarrier = 8;
+                    }
+
                     dmgW4 = (int)Math.Ceiling(20d / numHitsPerBarrier);
                 }
                 for (int i = 0; i < dmgBarrierList.Count; i++)
@@ -505,8 +573,17 @@ namespace MM2Randomizer.Randomizers
                 {
                     int totalShots = (int)(28 / RWeaponBehavior.GetAmmoUsage(wpnBuebeam));
                     int numHitsPerBuebeam = (int)(totalShots / 5);
-                    if (numHitsPerBuebeam > 1) numHitsPerBuebeam--;
-                    if (numHitsPerBuebeam > 8) numHitsPerBuebeam = 8;
+
+                    if (numHitsPerBuebeam > 1)
+                    {
+                        numHitsPerBuebeam--;
+                    }
+
+                    if (numHitsPerBuebeam > 8)
+                    {
+                        numHitsPerBuebeam = 8;
+                    }
+
                     dmgW4 = (int)Math.Ceiling(20d / numHitsPerBuebeam);
                 }
 
@@ -545,8 +622,12 @@ namespace MM2Randomizer.Randomizers
                 // 75% chance to have a buster vulnerability
                 rBuster = r.NextDouble();
                 busterDmg = 0x00;
+
                 if (rBuster > 0.25)
+                {
                     busterDmg = 0x01;
+                }
+
                 Patch.Add(EDmgVsBoss.U_DamageP + EDmgVsBoss.Offset.Machine, busterDmg, String.Format("Buster Damage to Wily Machine"));
                 WilyWeaknesses[4, 0] = busterDmg;
 
@@ -591,8 +672,11 @@ namespace MM2Randomizer.Randomizers
 
                     // Get index of this weapon out of all weapons 0-8;
                     byte wIndex = (byte)(i + 1);
+
                     if (weapon == EDmgVsBoss.ClashBomber || weapon == EDmgVsBoss.MetalBlade)
+                    {
                         wIndex++;
+                    }
 
                     // Disable weakness 1 and 2 on Wily Machine Phase 1
                     if (weapon == bossWeak1)
@@ -658,7 +742,11 @@ namespace MM2Randomizer.Randomizers
                     for (int j = 0; j < WilyWeaknesses.GetLength(1); j++)
                     {
                         debug.Append(String.Format("{0}\t", WilyWeaknesses[i, j]));
-                        if (j == 5) debug.Append("X\t"); // skip flash
+
+                        if (j == 5)
+                        {
+                            debug.Append("X\t"); // skip flash
+                        }
                     }
                     string bossName = "";
                     switch (i)

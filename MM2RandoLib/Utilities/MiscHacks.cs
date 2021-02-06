@@ -1,9 +1,10 @@
-﻿using MM2Randomizer.Enums;
+﻿using System;
+using System.Linq;
+using MM2Randomizer.Enums;
+using MM2Randomizer.Extensions;
 using MM2Randomizer.Patcher;
 using MM2Randomizer.Randomizers;
 using MM2Randomizer.Randomizers.Stages;
-using System;
-using System.Linq;
 
 namespace MM2Randomizer.Utilities
 {
@@ -20,7 +21,7 @@ namespace MM2Randomizer.Utilities
             string version = assembly.GetName().Version.ToString();
             for (int i = 0; i < version.Length; i++)
             {
-                byte value = RText.IntroCipher[version[i]];
+                byte value = version[i].AsIntroCharacter();
                 p.Add(0x037407 + i, value, "Title Screen Version Number");
             }
 
@@ -28,7 +29,7 @@ namespace MM2Randomizer.Utilities
             string seedAlpha = SeedConvert.ConvertBase10To26(seed);
             for (int i = 0; i < seedAlpha.Length; i++)
             {
-                byte value = RText.IntroCipher[seedAlpha[i]];
+                byte value = seedAlpha[i].AsIntroCharacter();
                 p.Add(0x0373C7 + i, value, "Title Screen Seed");
             }
 
@@ -36,7 +37,7 @@ namespace MM2Randomizer.Utilities
             string flags = settings.GetFlagsString();
             for (int i = 0; i < flags.Length; i++)
             {
-                byte value = RText.IntroCipher[flags[i]];
+                byte value = flags[i].AsIntroCharacter();
                 if (i < 14)
                 {
                     p.Add(0x037387 + i, value, $"Title Screen Flags: {flags[i]}");
@@ -225,8 +226,10 @@ namespace MM2Randomizer.Utilities
             p.Add(0x3412E, 0x1F, "Disable Stage Select Flashing");
             p.Add(0x3596D, 0x0F, "Wily Map Flash Color");
             if (!settings.FastText)
+            {
                 // This sequence is disabled by FastText, and the patch conflicts with it.
                 p.Add(0x37C98, 0x0F, "Item Get Flash Color");
+            }
 
             p.Add(0x2CA04, 0x0F, "Flash Man Fire Flash Color");
             p.Add(0x2CC7C, 0x0F, "Metal Man Periodic Flash Color");
@@ -373,7 +376,9 @@ namespace MM2Randomizer.Utilities
         public static void FixM445PaletteGlitch(Patch p)
         {
             for (int i = 0; i < 3; i++)
+            {
                 p.Add(0x395BD + i, 0xEA, "M-445 Palette Glitch Fix");
+            }
         }
 
         /// <summary>
@@ -447,17 +452,19 @@ namespace MM2Randomizer.Utilities
             int prgOffset = 0x30010 - 0x4000;
             // Inject new jump subroutine at 0D:9296 (should be 0x352A6).
             int jsrLocation = 0x9296 + prgOffset;
-            var jsrBytes = new byte[]
+
+            Byte[] jsrBytes = new Byte[]
             {
                 0x20, 0x77, 0xBF,   // JSR $BF77
             };
+
             for(int offset = 0; offset < jsrBytes.Length; ++offset)
             {
                 p.Add(jsrLocation + offset, jsrBytes[offset], "Prevent E-Tank Use at Full Life");
             }
 
             // Subroutine to decrement E-Tank Count. Skips decrement if Life == 28.
-            var eTankSubroutineBytes = new byte[]
+            Byte[] eTankSubroutineBytes = new Byte[]
             {
                 0xAD, 0xC0, 0x06,       // LDA $06C0 ;$06C0 is Life
                 0xC9, 0x1C,             // CMP #$1C

@@ -379,6 +379,8 @@ namespace MM2Randomizer.Extensions
             { '7',  0xA7 },
             { '8',  0xA8 },
             { '9',  0xA9 },
+            { '-',  0x94 },
+
         };
 
         /// <summary>

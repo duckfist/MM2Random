@@ -40,13 +40,11 @@ namespace MM2Randomizer.Randomizers
             RText.PatchCompanyName(in_Patch, companyName);
             RText.PatchIntroVersion(in_Patch);
             RText.PatchForUse(in_Patch, in_Random);
-            RText.PatchIntroStroy(in_Patch, in_Random);
+            RText.PatchIntroStory(in_Patch, in_Random);
 
-            // Generate Weapon Names
-            IEnumerable<WeaponName> weaponNames = WeaponName.GenerateUniqueWeaponNames(in_Random, 8);
 
             // Write the new weapons names
-            RText.PatchWeaponNames(in_Patch, in_Random, weaponNames, out List<Char> newWeaponLetters);
+            RText.PatchWeaponNames(in_Patch, in_Random, out List<Char> newWeaponLetters);
 
             // This is a hack to get around the strange interdependency that
             // the randomizer interfaces have
@@ -146,7 +144,7 @@ namespace MM2Randomizer.Randomizers
         /// 27 characters per line
         /// 10 lines
         /// </remarks>
-        public static void PatchIntroStroy(Patch in_Patch, Random in_Random)
+        public static void PatchIntroStory(Patch in_Patch, Random in_Random)
         {
             const Int32 INTRO_STORY_PAGE1_ADDRESS = 0x036D56;
 
@@ -161,68 +159,98 @@ namespace MM2Randomizer.Randomizers
         }
 
 
-        public static void PatchWeaponNames(Patch in_Patch, Random in_Random, IEnumerable<WeaponName> in_WeaponNames, out List<Char> out_NewWeaponLetters)
+        public static void PatchWeaponNames(Patch in_Patch, Random in_Random, out List<Char> out_NewWeaponLetters)
         {
             const Int32 WEAPON_GET_LETTERS_ADDRESS = 0x037E22;
-            const Int32 WEAPON_GET_NAME_ADDRESS = 0x037E2E;
+            const Int32 WEAPON_GET_NAME_ADDRESS = 0x037E2C;
+            const Int32 WEAPON_GET_EXTENDED_NAME_ADDRESS = 0x037F5C;
+            const Int32 WEAPON_GET_EXTENDED_NAME_INDEX = 4;     // Quick Boomerang has an extended name
+            const Int32 WEAPON_COUNT = 8;
 
-            if (8 != in_WeaponNames.Count())
-            {
-                throw new ArgumentException("Incorrect weapon name count", nameof(in_WeaponNames));
-            }
+            WeaponNameGenerator weaponNameGenerator = new WeaponNameGenerator(in_Random);
 
-            List<WeaponName> weaponNames = in_WeaponNames.ToList();
+            List<WeaponName> weaponNames = new List<WeaponName>();
 
             // Write in new weapon names
-            for (Int32 weaponIndex = 0; weaponIndex < weaponNames.Count; ++weaponIndex)
+            for (Int32 weaponIndex = 0; weaponIndex < WEAPON_COUNT; ++weaponIndex)
             {
-                // Magic numbers?
+                // Each weapon get name is 14 bytes long with a 2 byte header
                 Int32 offsetAddress = WEAPON_GET_NAME_ADDRESS + (weaponIndex * 0x10);
-                String weaponName = weaponNames[weaponIndex].Name.PadRight(12, ' ');
 
-                Int32 characterIndex = 0;
-                foreach (Char c in weaponName)
+                if (WEAPON_GET_EXTENDED_NAME_INDEX == weaponIndex)
                 {
-                    in_Patch.Add(
-                        offsetAddress + characterIndex,
-                        c.AsPrintCharacter(),
-                        String.Format("Weapon Name {0} Char #{1}: {2}", ((EDmgVsBoss.Offset)weaponIndex).Name, characterIndex, c.ToString()));
+                    WeaponName weaponName = weaponNameGenerator.GenerateWeaponName(in_Random, true);
+                    weaponNames.Add(weaponName);
 
-                    characterIndex++;
+                    Int32 characterIndex = 0;
+                    foreach (Char c in weaponName.Name)
+                    {
+                        in_Patch.Add(
+                            offsetAddress + characterIndex,
+                            c.AsPrintCharacter(),
+                            String.Format("Weapon Name {0} Char #{1}: {2}", ((EDmgVsBoss.Offset)weaponIndex).Name, characterIndex, c.ToString()));
+
+                        characterIndex++;
+                    }
+
+                    characterIndex = 0;
+                    foreach (Char c in weaponName.ExtendedName)
+                    {
+                        in_Patch.Add(
+                            WEAPON_GET_EXTENDED_NAME_ADDRESS + characterIndex,
+                            c.AsPrintCharacter(),
+                            String.Format("Extended Weapon Name {0} Char #{1}: {2}", ((EDmgVsBoss.Offset)weaponIndex).Name, characterIndex, c.ToString()));
+
+                        characterIndex++;
+                    }
+                }
+                else
+                {
+                    WeaponName weaponName = weaponNameGenerator.GenerateWeaponName(in_Random, false);
+                    weaponNames.Add(weaponName);
+
+                    Int32 characterIndex = 0;
+                    foreach (Char c in weaponName.Name)
+                    {
+                        in_Patch.Add(
+                            offsetAddress + characterIndex,
+                            c.AsPrintCharacter(),
+                            String.Format("Weapon Name {0} Char #{1}: {2}", ((EDmgVsBoss.Offset)weaponIndex).Name, characterIndex, c.ToString()));
+
+                        characterIndex++;
+                    }
                 }
             }
 
-            // Erase "Boomerang" for now
-            // TODO: why?
-            for (Int32 i = 0; i < 10; i++)
-            {
-                in_Patch.Add(0x037f5e + i, ' '.AsPrintCharacter(), $"Quick Boomerang Name Erase Char #{i}: @");
-            }
-
-            // Pick a new weapon letter for buster
-            Char? busterWeaponLetter = WeaponName.GetUnusedWeaponLetter(in_Random, weaponNames);
-
+            // Get a list of the weapon letters
             List<Char> weaponLetters = weaponNames.Select(x => x.Letter).ToList();
-            weaponLetters.Insert(0, busterWeaponLetter ?? 'P');
 
-            // Write in new weapon letters
+            // Write in "Weapon Get" letters
+            //
+            // NOTE! There is not a space for buster because
+            // there is never a "Weapon Get" for buster
             for (Int32 weaponLetterIndex = 0; weaponLetterIndex < weaponLetters.Count; ++weaponLetterIndex)
             {
-                // Write to Weapon Get screen (note: Buster value is unused here)
                 Char weaponLetter = weaponLetters[weaponLetterIndex];
 
                 in_Patch.Add(
                     WEAPON_GET_LETTERS_ADDRESS + weaponLetterIndex,
                     weaponLetter.AsPrintCharacter(),
                     $"Weapon Get {((EDmgVsBoss.Offset)weaponLetterIndex).Name} Letter: {weaponLetter}");
+            }
+
+            // Pick a new weapon letter for buster
+            weaponLetters.Insert(0, weaponNameGenerator.GetNextLetter(false));
+
+            // Write in weapon pause menu letters
+            for (Int32 weaponLetterIndex = 0; weaponLetterIndex < weaponLetters.Count; ++weaponLetterIndex)
+            {
+                Char weaponLetter = weaponLetters[weaponLetterIndex];
 
                 // Write to pause menu
-                Byte[] pauseLetterBytes = weaponLetter.AsPauseScreenString();
-                Int32 weaponLetterAddress = PauseScreenWpnAddressByBossIndex[weaponLetterIndex];
-
                 in_Patch.Add(
-                    weaponLetterAddress,
-                    pauseLetterBytes,
+                    PauseScreenWpnAddressByBossIndex[weaponLetterIndex],
+                    weaponLetter.AsPauseScreenString(),
                     $"Pause menu weapon letter GFX for \'{weaponLetter}\'");
             }
 
@@ -359,37 +387,22 @@ namespace MM2Randomizer.Randomizers
 
         public void FixWeaponLetters(Patch in_Patch, Int32[] in_Permutation)
         {
-            const Int32 WEAPON_GET_LETTERS_ADDRESS = 0x037E22;
-
-            // Re-order the letters array to match the ordering of the shuffled weapons
-            Char[] newLettersPermutation = new Char[9];
-            newLettersPermutation[0] = this.mNewWeaponLetters[0];
-
-            for (Int32 i = 0; i < 8; i++)
-            {
-                newLettersPermutation[i + 1] = this.mNewWeaponLetters[in_Permutation[i] + 1];
-            }
-
-            // Write new weapon letters to weapon get screen
+            // Re-order the pause screen letters to match the ordering
+            // of the shuffled weapons
+            //
+            // TODO: This is done so poorly. Need to think about how to achieve
+            // this without the depencendy of on other randomizers
             for (Int32 i = 1; i < 9; i++)
             {
-                // Write to Weapon Get screen (note: Buster value is unused here)
-                in_Patch.Add(
-                    WEAPON_GET_LETTERS_ADDRESS + i - 1,
-                    newLettersPermutation[i].AsPrintCharacter(),
-                    $"Weapon Get {((EDmgVsBoss.Offset)i).Name} Letter: {this.mNewWeaponLetters[i]}");
-            }
+                Byte[] pauseLetterBytes = this.mNewWeaponLetters[i].AsPauseScreenString();
 
-            //// Write new weapon letters to pause menu
-            //for (int i = 0; i < 9; i++)
-            //{
-                //int[] pauseLetterBytes = PauseScreenCipher[newWeaponLetters[i + 1]];
-                //int wpnLetterAddress = PauseScreenWpnAddressByBossIndex[permutedIndex + 1];
-                //for (int j = 0; j < pauseLetterBytes.Length; j++)
-                //{
-                //    p.Add(wpnLetterAddress + j, (byte)pauseLetterBytes[j], $"Pause menu weapon letter GFX for \'{newWeaponLetters[permutedIndex]}\', byte #{j}");
-                //}
-            //}
+                Int32 wpnLetterAddress = PauseScreenWpnAddressByBossIndex[in_Permutation[i - 1] + 1];
+
+                for (Int32 j = 0; j < pauseLetterBytes.Length; j++)
+                {
+                    in_Patch.Add(wpnLetterAddress + j, pauseLetterBytes[j], $"Pause menu weapon letter GFX for \'{this.mNewWeaponLetters[i]}\', byte #{j}");
+                }
+            }
         }
 
         private static Char GetBossWeaknessDamageChar(Int32 dmg)

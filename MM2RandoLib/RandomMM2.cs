@@ -258,7 +258,7 @@ namespace MM2Randomizer
 
             // Create file name based on seed and game region
             string seedAlpha = SeedConvert.ConvertBase10To26(Seed);
-            string newfilename = $"MM2-RNG-{seedAlpha}.nes";
+            string newfilename = $"MM2-RNG-{seedAlpha} ({Settings.SeedString}).nes";
 
             // Apply patch and deliver the ROM; different routine for client vs. web app
             if (fromClientApp)

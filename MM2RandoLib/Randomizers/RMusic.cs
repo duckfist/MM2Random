@@ -1,13 +1,10 @@
-﻿using MM2Randomizer.Enums;
-using MM2Randomizer.Patcher;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
-using System.IO;
-using MM2Randomizer.Utilities;
+using MM2Randomizer.Enums;
+using MM2Randomizer.Extensions;
+using MM2Randomizer.Patcher;
 
 namespace MM2Randomizer.Randomizers
 {

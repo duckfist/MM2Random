@@ -153,33 +153,33 @@
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
-        <Value>A1</Value>
-        <Text>`</Text>
-    </CreditText>
-    <CreditText>
-        <Enabled>true</Enabled>
-        <Value>2A</Value>
-        <Text>RANDOMIZER BY</Text>
-    </CreditText>
-    <CreditText>
-        <Enabled>true</Enabled>
-        <Value>6C</Value>
-        <Text>DUCKFIST</Text>
-    </CreditText>
-    <CreditText>
-        <Enabled>true</Enabled>
-        <Value>AC</Value>
-        <Text>SQUIDMAN</Text>
-    </CreditText>
-    <CreditText>
-        <Enabled>true</Enabled>
-        <Value>EC</Value>
-        <Text>DAGIT</Text>
+        <Value>A5</Value>
+        <Text>RANDOMIZER BY DUCKFIST</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>21</Value>
         <Text>`</Text>
+    </CreditText>
+    <CreditText>
+        <Enabled>true</Enabled>
+        <Value>69</Value>
+        <Text>CONTRIBUTORS</Text>
+    </CreditText>
+    <CreditText>
+        <Enabled>true</Enabled>
+        <Value>AB</Value>
+        <Text>SQUIDMAN</Text>
+    </CreditText>
+    <CreditText>
+        <Enabled>true</Enabled>
+        <Value>ED</Value>
+        <Text>DAGIT</Text>
+    </CreditText>
+    <CreditText>
+        <Enabled>true</Enabled>
+        <Value>2A</Value>
+        <Text>MADEWOKHERD</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
@@ -204,12 +204,12 @@
     <CreditText>
         <Enabled>true</Enabled>
         <Value>66</Value>
-        <Text>SPECIAL THANKS TO THE</Text>
+        <Text>SPECIAL THANKS TO</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>
         <Value>A9</Value>
-        <Text>ROCKMAN 2 TEAM</Text>
+        <Text>JUSTSOMEGUY</Text>
     </CreditText>
     <CreditText>
         <Enabled>true</Enabled>

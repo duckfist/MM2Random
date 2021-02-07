@@ -1,160 +1,588 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
+<!--
+Name must not exceed 13 characters
+-->
 <CompanyNameSet>
+    <!-- # -->
     <CompanyName>
         <Enabled>true</Enabled>
-        <Name>HUDSON SOFT</Name>
+        <Name>0verflow</Name>
     </CompanyName>
+
     <CompanyName>
         <Enabled>true</Enabled>
-        <Name>NINTENDO</Name>
+        <Name>1up Studio</Name>
     </CompanyName>
+
     <CompanyName>
         <Enabled>true</Enabled>
-        <Name>TREASURE</Name>
+        <Name>2K Games</Name>
     </CompanyName>
+
     <CompanyName>
         <Enabled>true</Enabled>
-        <Name>KONAMI</Name>
+        <Name>3D Realms</Name>
     </CompanyName>
+
     <CompanyName>
         <Enabled>true</Enabled>
-        <Name>DATA EAST</Name>
+        <Name>4A Games</Name>
     </CompanyName>
+
     <CompanyName>
         <Enabled>true</Enabled>
-        <Name>SNK PLAYMORE</Name>
+        <Name>505 Games</Name>
     </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>5th Cell</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>989 Studios</Name>
+    </CompanyName>
+
+    <!-- A -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Acclaim</Name>
+    </CompanyName>
+
     <CompanyName>
         <Enabled>true</Enabled>
         <Name>ACTIVISION</Name>
     </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>JALECO</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>TECMO</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>SUNSOFT</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>TAITO</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>SONY</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>SEGA CO.LTD</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>IREM</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>COMPILE</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>KOEI</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>TENGEN</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>KEMCO</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>RARE</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>ATLUS</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>HALKEN</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>LUCASARTS</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>WESTWOOD</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>INTERPLAY</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>TOSE CO.LTD</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>NAMCO LTD.</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>NATSUME</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>SQUARE CO.LTD</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>COMCEPT</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>INTI CREATES</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>RAINBOW ARTS</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>OCEAN LTD.</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>FACTOR 5</Name>
-    </CompanyName>
-    <CompanyName>
-        <Enabled>true</Enabled>
-        <Name>VIC TOKAI</Name>
-    </CompanyName>
+
     <CompanyName>
         <Enabled>true</Enabled>
         <Name>ASCII</Name>
     </CompanyName>
+
     <CompanyName>
         <Enabled>true</Enabled>
-        <Name>THQ</Name>
+        <Name>ATLUS</Name>
     </CompanyName>
+
+    <!-- B -->
     <CompanyName>
         <Enabled>true</Enabled>
-        <Name>QUINTET</Name>
+        <Name>Bandai</Name>
     </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Banpresto</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Bethesda</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Blizzard</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Broderbund</Name>
+    </CompanyName>
+
+    <!-- C -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Chunsoft</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>COMCEPT</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>COMPILE</Name>
+    </CompanyName>
+
+    <!-- D -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>DATA EAST</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Day 1 Studios</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Disney</Name>
+    </CompanyName>
+
+    <!-- E -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>EA Games</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Eastridge</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Elite Systems</Name>
+    </CompanyName>
+
     <CompanyName>
         <Enabled>true</Enabled>
         <Name>ENIX</Name>
     </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Eurocom</Name>
+    </CompanyName>
+
+    <!-- F -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>FACTOR 5</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>FarSight</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Frontier</Name>
+    </CompanyName>
+
+    <!-- G -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Game Arts</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Game Freak</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>GameTek</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Gray Matter</Name>
+    </CompanyName>
+
+    <!-- H -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>HALKEN</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Home Data</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>HUDSON SOFT</Name>
+    </CompanyName>
+
+    <!-- I -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>ID Software</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Imagineering</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>INTI CREATES</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>INTERPLAY</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>IREM</Name>
+    </CompanyName>
+
+    <!-- J -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>JALECO</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Jupiter Corp.</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>JVC</Name>
+    </CompanyName>
+
+    <!-- K -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>KEMCO</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>KOEI</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>KONAMI</Name>
+    </CompanyName>
+
+    <!-- L -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>LJN Toys LTD.</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>LUCASARTS</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Lucasfilm</Name>
+    </CompanyName>
+
+    <!-- M -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Mattel</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Maxis</Name>
+    </CompanyName>
+
     <CompanyName>
         <Enabled>true</Enabled>
         <Name>MINDSCAPE</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>NAMCO LTD.</Name>
+    </CompanyName>
+
+    <!-- N -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>NATSUME</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Naughty Dog</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>NINTENDO</Name>
+    </CompanyName>
+
+    <!-- O -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Obsidian</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>OCEAN LTD.</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Omega Force</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Origin</Name>
+    </CompanyName>
+
+    <!-- P -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Pack In Video</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Palcom</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Pixel</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Probe</Name>
+    </CompanyName>
+
+    <!-- Q -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Q Games</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Quantic Dream</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Quest Corp.</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>QUINTET</Name>
+    </CompanyName>
+
+    <!-- R -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>RAINBOW ARTS</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>RARE</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Retro Studios</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Rockstar</Name>
+    </CompanyName>
+
+    <!-- S -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>SEGA CO.LTD</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Sierra</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>SNK PLAYMORE</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>SONY</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>SQUARE CO.LTD</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Square Enix</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>SUNSOFT</Name>
+    </CompanyName>
+
+    <!-- T -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>TAITO</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Team Cherry</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Technos</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>TECMO</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Technosoft</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>TENGEN</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>THQ</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>TOSE CO.LTD</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Tradewest</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>TREASURE</Name>
+    </CompanyName>
+
+    <!-- U -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Ubisoft</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Ultra Games</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Ultrasoft</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>US Gold</Name>
+    </CompanyName>
+
+    <!-- V -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Valve</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>VIC TOKAI</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Visco Corp.</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Vivendi Games</Name>
+    </CompanyName>
+
+    <!-- W -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>WESTWOOD</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Winkysoft</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Wolf Team</Name>
+    </CompanyName>
+
+    <!-- X -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Xpec</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>XSEED</Name>
+    </CompanyName>
+
+    <!-- Y -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Yacht Club</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Yager</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Yuke's</Name>
+    </CompanyName>
+
+    <!-- Z -->
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Zenimax</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Zippo Games</Name>
+    </CompanyName>
+
+    <CompanyName>
+        <Enabled>true</Enabled>
+        <Name>Zynga</Name>
     </CompanyName>
 </CompanyNameSet>

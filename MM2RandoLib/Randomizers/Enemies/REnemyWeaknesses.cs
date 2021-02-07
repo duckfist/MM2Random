@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using MM2Randomizer.Extensions;
 using MM2Randomizer.Patcher;
-using MM2Randomizer.Utilities;
 
 namespace MM2Randomizer.Randomizers.Enemies
 {

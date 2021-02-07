@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <!--
-Preposition must not exceed 3 characters
+Prefix must not exceed 3 characters
 Name must not exceed 25 characters
 -->
 <CountryNameSet>
-    <!-- Real Countries -->
+    <!--
+    Real Countries
+    -->
     <CountryName>
         <Enabled>true</Enabled>
         <Name>AFGHANISTAN</Name>
@@ -795,10 +797,310 @@ Name must not exceed 25 characters
         <Name>ZIMBABWE</Name>
     </CountryName>
 
-    <!-- Fictional Places -->
+
+    <!--
+        Fictional Places
+    -->
+
+    <!-- Star Wars Universe -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Alderaan</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Coruscant</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Dantooine</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Dagobah</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Hoth</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Korriban</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Mustafar</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Taris</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Yavin 4</Name>
+    </CountryName>
+
+    <!-- Star Trek Universe -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Andor</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Cardassia Prime</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Ferenginar</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Khitomer</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Qo'noS</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Risa</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Romulus</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Tellar Prime</Name>
+    </CountryName>
+
     <CountryName>
         <Enabled>true</Enabled>
         <Prefix>on</Prefix>
         <Name>Vulcan</Name>
+    </CountryName>
+
+    <!-- Babylon 5 Universe -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Centauri Prime</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Minbar</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Narn</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Z'ha'dum</Name>
+    </CountryName>
+
+    <!-- Dune Universe -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Arrakis</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Caladan</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Giedi Prime</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Salusa Secundus</Name>
+    </CountryName>
+
+    <!-- Borderlands Universe -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Pandora</Name>
+    </CountryName>
+
+    <!-- Might and Magic Universe -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Enroth</Name>
+    </CountryName>
+
+    <!-- The Elder Scrolls Universe -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>in</Prefix>
+        <Name>Cyrodiil</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>in</Prefix>
+        <Name>Hammerfell</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>in</Prefix>
+        <Name>Morrowind</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Nirn</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>in</Prefix>
+        <Name>Skyrim</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>in</Prefix>
+        <Name>The Summerset Isles</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>in</Prefix>
+        <Name>Tamriel</Name>
+    </CountryName>
+
+    <!-- Ultima Universe -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>in</Prefix>
+        <Name>Britannia</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Sosaria</Name>
+    </CountryName>
+
+    <!-- Commander Keen -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Vorticon VI</Name>
+    </CountryName>
+
+    <!-- Half-Life -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Xen</Name>
+    </CountryName>
+
+    <!-- Star Craft Universe -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Aiur</Name>
+    </CountryName>
+
+    <!-- HALO Universe -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Aleria</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Hestia V</Name>
+    </CountryName>
+
+    <!-- Mass Effect Universe -->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Tuchanka</Name>
+    </CountryName>
+
+    <!-- Metroid Universe-->
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Phaaze</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>The Pirate Homeworld</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>SR388</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Tallon IV</Name>
+    </CountryName>
+
+    <CountryName>
+        <Enabled>true</Enabled>
+        <Prefix>on</Prefix>
+        <Name>Zebes</Name>
     </CountryName>
 </CountryNameSet>

@@ -246,12 +246,12 @@ namespace MM2Randomizer
             MiscHacks.PreventETankUseAtFullLife(Patch);
             MiscHacks.SetFastBossDefeatTeleport(Patch);
 
-            if(Settings.ReduceLag)
+            if (Settings.ReduceUnderwaterLag)
             {
-                MiscHacks.ReduceLag(Patch);
+                MiscHacks.ReduceUnderwaterLag(Patch);
             }
 
-            if(Settings.DisableDelayScrolling)
+            if (Settings.DisableDelayScrolling)
             {
                 MiscHacks.DisableDelayScroll(Patch);
             }

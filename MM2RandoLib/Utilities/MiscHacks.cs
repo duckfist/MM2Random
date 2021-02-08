@@ -514,7 +514,7 @@ namespace MM2Randomizer.Utilities
         /// that just delays until an NMI occurs.
         /// </summary>
         /// <param name="p"></param>
-        public static void ReduceLag(Patch p)
+        public static void ReduceUnderwaterLag(Patch p)
         {
             p.Add((int)ESubroutineAddress.WasteAFrame, (byte)EInstruction.RTS, "Turn the 'waste a frame' subroutine into a NOP");
         }

@@ -463,7 +463,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Charging Speeds" IsEnabled="True">
+            <TabItem Header="Refill Speeds" IsEnabled="True">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -606,12 +606,15 @@
                         Grid.ColumnSpan="2"
                         Orientation="Vertical"
                       >
-                        <CheckBox Name="CheckBox_ReduceLag"
-                                  Content="Reduce lag"
-                                  IsChecked="{Binding Path=RandoSettings.ReduceLag}"/>
-                        <CheckBox Name="CheckBox_DisableDelayScrolling"
-                                  Content="Disable delay scrolling"
-                                  IsChecked="{Binding Path=RandoSettings.DisableDelayScrolling}"/>
+                        <CheckBox
+                            Name="CheckBox_ReduceUnderwaterLag"
+                            Content="Reduce underwater lag"
+                            IsChecked="{Binding Path=RandoSettings.ReduceUnderwaterLag}"/>
+
+                        <CheckBox
+                            Name="CheckBox_DisableDelayScrolling"
+                            Content="Disable delay scrolling"
+                            IsChecked="{Binding Path=RandoSettings.DisableDelayScrolling}"/>
 
                     </StackPanel>
                 </Grid>

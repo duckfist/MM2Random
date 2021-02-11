@@ -15,7 +15,7 @@ namespace MM2Randomizer.Randomizers
             this.OriginalStartAddress = in_OriginalStartAddress;
             this.SongName = in_SongName;
 
-            // Parse song bytes from hex string
+            // Parse song bytes from hex String
             List<Byte> songBytes = new List<Byte>();
             while (in_SongBytesStr.Length > 0)
             {
@@ -60,7 +60,7 @@ namespace MM2Randomizer.Randomizers
             VibratoIndex = absolutePos - OriginalStartAddressInt - 11;
 
             // Count length of vibrato section
-            int i = VibratoIndex;
+            Int32 i = VibratoIndex;
 
             while (true)
             {
@@ -322,7 +322,7 @@ namespace MM2Randomizer.Randomizers
                 for (Int32 i = 0; i < song.SongData.Count; i++)
                 {
                     // Do not parse loop pointers for vibrato
-                    // TODO: Check the length of the vibrato string, or even better, use separate lists for each channel!
+                    // TODO: Check the length of the vibrato String, or even better, use separate lists for each channel!
                     if (i >= song.VibratoIndex && i < song.VibratoLength)
                     {
                         continue;
@@ -335,7 +335,7 @@ namespace MM2Randomizer.Randomizers
                     // http://bisqwit.iki.fi/jutut/megamansource/mm2music.txt
                     switch (b0)
                     {
-                        // Two-byte encoding $00 n.  Song speed is set as n
+                        // Two-Byte encoding $00 n.  Song speed is set as n
                         // frames per tick.
                         case 0x00:
                         {
@@ -343,7 +343,7 @@ namespace MM2Randomizer.Randomizers
                             break;
                         }
 
-                        // Two-byte encoding $01 n. Adjusts vibrato parameters
+                        // Two-Byte encoding $01 n. Adjusts vibrato parameters
                         // by n. Affects all following notes.
                         case 0x01:
                         {
@@ -351,7 +351,7 @@ namespace MM2Randomizer.Randomizers
                             break;
                         }
 
-                        // Two-byte encoding $02 n. Selects duty cycle settings.
+                        // Two-Byte encoding $02 n. Selects duty cycle settings.
                         // Valid values for n: $00,$40,$80,$C0. Only applicable
                         // for squarewave channels.
                         case 0x02:
@@ -360,7 +360,7 @@ namespace MM2Randomizer.Randomizers
                             break;
                         }
 
-                        // Two-byte encoding $03 n. Selects volume and envelope
+                        // Two-Byte encoding $03 n. Selects volume and envelope
                         // settings. Value n is passed directly to the soundchip;
                         // Affects all following notes.
                         case 0x03:
@@ -369,7 +369,7 @@ namespace MM2Randomizer.Randomizers
                             break;
                         }
 
-                        // Four-byte encoding $04 n w. Ends a loop. If n=0, loop is
+                        // Four-Byte encoding $04 n w. Ends a loop. If n=0, loop is
                         // infinite. Otherwise the marked section plays for n+1 times.
                         // w is a 16-bit pointer to the beginning of the loop.
                         // Finite loops cannot be nested.
@@ -378,7 +378,7 @@ namespace MM2Randomizer.Randomizers
                             Byte origLoopPtrSmall = song.SongData[i + 2];
                             Byte origLoopPtrLarge = song.SongData[i + 3];
 
-                            // Get the loop destination pointer by converting the two bytes to a 16-bit int
+                            // Get the loop destination pointer by converting the two bytes to a 16-bit Int32
                             Int32 origLoopOffset = origLoopPtrSmall + (origLoopPtrLarge * 256);
                             // Find index of destination of the loop with respect to the start of the song
                             Int32 relLoopOffset = origLoopOffset - song.OriginalStartAddressInt;
@@ -400,7 +400,7 @@ namespace MM2Randomizer.Randomizers
                             break;
                         }
 
-                        // Two-byte encoding $05 n. Sets note base to n. Value
+                        // Two-Byte encoding $05 n. Sets note base to n. Value
                         // n is added to the note index for any notes
                         // (excluding pauses) played on this channel from now.
                         case 0x05:
@@ -409,7 +409,7 @@ namespace MM2Randomizer.Randomizers
                             break;
                         }
 
-                        // One-byte encoding $06. Dotted note: The next note will
+                        // One-Byte encoding $06. Dotted note: The next note will
                         // be played 50% longer than otherwise, i.e. 3/2 of its
                         // stated duration.
                         case 0x06:
@@ -417,8 +417,8 @@ namespace MM2Randomizer.Randomizers
                             break;
                         }
 
-                        // Three-byte encoding $07 n m. Sets volume curve settings.
-                        // Byte n controls the attack, and byte m controls the decay.
+                        // Three-Byte encoding $07 n m. Sets volume curve settings.
+                        // Byte n controls the attack, and Byte m controls the decay.
                         // Affects all following notes.
                         case 0x07:
                         {
@@ -426,7 +426,7 @@ namespace MM2Randomizer.Randomizers
                             break;
                         }
 
-                        // Two-byte encoding $08 n. Select vibrato entry n from the
+                        // Two-Byte encoding $08 n. Select vibrato entry n from the
                         // vibrato table referred to by the song header. Affects all
                         // following notes.
                         case 0x08:
@@ -435,23 +435,23 @@ namespace MM2Randomizer.Randomizers
                             break;
                         }
 
-                        // One-byte encoding $09. Ends the track. Can be omitted if
+                        // One-Byte encoding $09. Ends the track. Can be omitted if
                         // the track ends in an infinite loop instead.
                         case 0x09:
                         {
                             break;
                         }
 
-                        // One - byte encoding $20 + n.Note delay(n = 0 - 7):
+                        // One - Byte encoding $20 + n.Note delay(n = 0 - 7):
                         //      Delays the next note by n ticks, without affecting
                         //      its overall timing. (I.e.plays silence for the
                         //      first n ticks of the note.)
                         //
-                        // One - byte encoding $30.Triplet:
+                        // One - Byte encoding $30.Triplet:
                         //      The next note will be played at 2 / 3 of its
                         //      stated duration.
                         //
-                        // One - byte encoding:
+                        // One - Byte encoding:
                         //      m * 0x20 + n.Play note(m = 2..7).If n = 0, plays pause.
                         //      Otherwise, plays note n(note base is added to n). The
                         //      lowest note that can be played is C - 0(n + base = 0).
@@ -466,7 +466,7 @@ namespace MM2Randomizer.Randomizers
                 }
                 
                 // Write song data
-                foreach (byte b in song.SongData)
+                foreach (Byte b in song.SongData)
                 {
                     p.Add(songStartRom, b, $"Song Data Byte for {song.SongName}");
                     songStartRom++;
@@ -474,7 +474,7 @@ namespace MM2Randomizer.Randomizers
             }
 
             // Play a random song during wily 6
-            int w6song = r.Next(11);
+            Int32 w6song = r.Next(11);
             if (w6song == 10)
             {
                 // Wily 5 song was saved to 0x0C, don't use 0x0A  
@@ -482,7 +482,7 @@ namespace MM2Randomizer.Randomizers
             }
             else
             {
-                p.Add(0x0381ED, (byte)w6song, $"Random Wily 6 Song: Song #{w6song}, {stageSongs[w6song].SongName}");
+                p.Add(0x0381ED, (Byte)w6song, $"Random Wily 6 Song: Song #{w6song}, {stageSongs[w6song].SongName}");
             }
             debug.AppendLine($"Wily 6 stage song: {stageSongs[w6song].SongName} (#{w6song})");
 

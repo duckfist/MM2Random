@@ -10,7 +10,7 @@ namespace MM2Randomizer.Utilities
 {
     public static class MiscHacks
     {
-        public static void DrawTitleScreenChanges(Patch p, int seed, RandoSettings settings)
+        public static void DrawTitleScreenChanges(Patch p, Int32 seed, RandoSettings settings)
         {
             // Adjust cursor positions
             p.Add(0x0362D4, 0x90, "Title screen Cursor top position"); // default 0x98
@@ -18,26 +18,26 @@ namespace MM2Randomizer.Utilities
 
             // Draw version number
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(RandomMM2));
-            string version = assembly.GetName().Version.ToString();
-            for (int i = 0; i < version.Length; i++)
+            String version = assembly.GetName().Version.ToString();
+            for (Int32 i = 0; i < version.Length; i++)
             {
-                byte value = version[i].AsIntroCharacter();
+                Byte value = version[i].AsIntroCharacter();
                 p.Add(0x037407 + i, value, "Title Screen Version Number");
             }
 
             // Draw seed
-            string seedAlpha = SeedConvert.ConvertBase10To26(seed);
-            for (int i = 0; i < seedAlpha.Length; i++)
+            String seedAlpha = SeedConvert.ConvertBase10To26(seed);
+            for (Int32 i = 0; i < seedAlpha.Length; i++)
             {
-                byte value = seedAlpha[i].AsIntroCharacter();
+                Byte value = seedAlpha[i].AsIntroCharacter();
                 p.Add(0x0373C7 + i, value, "Title Screen Seed");
             }
 
             // Draw flags
-            string flags = settings.GetFlagsString();
-            for (int i = 0; i < flags.Length; i++)
+            String flags = settings.GetFlagsString();
+            for (Int32 i = 0; i < flags.Length; i++)
             {
-                byte value = flags[i].AsIntroCharacter();
+                Byte value = flags[i].AsIntroCharacter();
                 if (i < 14)
                 {
                     p.Add(0x037387 + i, value, $"Title Screen Flags: {flags[i]}");
@@ -52,30 +52,30 @@ namespace MM2Randomizer.Utilities
             if (settings.IsSpoilerFree)
             {
                 // 0x037367 = Start of row beneath "seed"
-                string flagsAlpha = "TOURNAMENT";
-                for (int i = 0; i < flagsAlpha.Length; i++)
+                String flagsAlpha = "TOURNAMENT";
+                for (Int32 i = 0; i < flagsAlpha.Length; i++)
                 {
                     char ch = flagsAlpha.ElementAt(i);
-                    byte charIndex = (byte)(Convert.ToByte(ch) - Convert.ToByte('A'));
+                    Byte charIndex = (Byte)(Convert.ToByte(ch) - Convert.ToByte('A'));
 
-                    p.Add(0x037564 + i, (byte)(0xC1 + charIndex), "Title Screen Tournament Text");
+                    p.Add(0x037564 + i, (Byte)(0xC1 + charIndex), "Title Screen Tournament Text");
                 }
 
-                string flags2Alpha = "MODE";
-                for (int i = 0; i < flags2Alpha.Length; i++)
+                String flags2Alpha = "MODE";
+                for (Int32 i = 0; i < flags2Alpha.Length; i++)
                 {
                     char ch = flags2Alpha.ElementAt(i);
-                    byte charIndex = (byte)(Convert.ToByte(ch) - Convert.ToByte('A'));
+                    Byte charIndex = (Byte)(Convert.ToByte(ch) - Convert.ToByte('A'));
 
-                    p.Add(0x03756F + i, (byte)(0xC1 + charIndex), "Title Screen Tournament Text");
+                    p.Add(0x03756F + i, (Byte)(0xC1 + charIndex), "Title Screen Tournament Text");
                 }
 
                 // Draw Hash symbols
                 // Use $B8-$BF with custom gfx, previously unused tiles after converting from MM2U to RM2
-                //p.Add(0x037367, (byte)(0xB0), "Title Screen Flags");
-                //p.Add(0x037368, (byte)(0xB1), "Title Screen Flags");
-                //p.Add(0x037369, (byte)(0xB2), "Title Screen Flags");
-                //p.Add(0x03736A, (byte)(0xB3), "Title Screen Flags");
+                //p.Add(0x037367, (Byte)(0xB0), "Title Screen Flags");
+                //p.Add(0x037368, (Byte)(0xB1), "Title Screen Flags");
+                //p.Add(0x037369, (Byte)(0xB2), "Title Screen Flags");
+                //p.Add(0x03736A, (Byte)(0xB3), "Title Screen Flags");
             }
         }
 
@@ -111,8 +111,8 @@ namespace MM2Randomizer.Utilities
         /// </summary>
         public static void SetFastWeaponGetText(Patch p)
         {
-            //int address = (jVersion) ? 0x037C51 : 0x037D4A;
-            int address = 0x037D4A;
+            //Int32 address = (jVersion) ? 0x037C51 : 0x037D4A;
+            Int32 address = 0x037D4A;
             p.Add(address, 0x04, "Weapon Get Text Write Delay");
         }
 
@@ -120,7 +120,7 @@ namespace MM2Randomizer.Utilities
         /// </summary>
         public static void SetHitPointChargingSpeed(Patch p, ChargingSpeed chargingSpeed)
         {
-            int address = 0x03831B;
+            Int32 address = 0x03831B;
             p.Add(address, (Byte)chargingSpeed, "Hit Point Charging Speed");
         }
 
@@ -128,7 +128,7 @@ namespace MM2Randomizer.Utilities
         /// </summary>
         public static void SetWeaponEnergyChargingSpeed(Patch p, ChargingSpeed chargingSpeed)
         {
-            int address = 0x03835A;
+            Int32 address = 0x03835A;
             p.Add(address, (Byte)chargingSpeed, "Weapon Energy Charging Speed");
         }
 
@@ -136,7 +136,7 @@ namespace MM2Randomizer.Utilities
         /// </summary>
         public static void SetEnergyTankChargingSpeed(Patch p, ChargingSpeed chargingSpeed)
         {
-            int address = 0x0352B2;
+            Int32 address = 0x0352B2;
             p.Add(address, (Byte)chargingSpeed, "Energy Tank Charging Speed");
         }
 
@@ -144,7 +144,7 @@ namespace MM2Randomizer.Utilities
         /// </summary>
         public static void SetRobotMasterEnergyChargingSpeed(Patch p, ChargingSpeed chargingSpeed)
         {
-            int address = 0x02C142;
+            Int32 address = 0x02C142;
             p.Add(address, (Byte)chargingSpeed, "Robot Master Energy Charging Speed");
         }
 
@@ -152,7 +152,7 @@ namespace MM2Randomizer.Utilities
         /// </summary>
         public static void SetCastleBossEnergyChargingSpeed(Patch p, ChargingSpeed chargingSpeed)
         {
-            int address = 0x02E12B;
+            Int32 address = 0x02E12B;
             p.Add(address, (Byte)chargingSpeed, "Castle Boss Energy Charging Speed");
         }
 
@@ -215,7 +215,7 @@ namespace MM2Randomizer.Utilities
             // Or TODO in the future, change to a different sound?
             //  02E0B3: A9 15      LDA #$15       // Let A = the fanfare sound value (15)
             //  02E0B5: 20 51 C0   JSR PlaySound  // Jump to "PlaySound" function, which plays the value in A
-            for (int i = 0; i < 5; i++)
+            for (Int32 i = 0; i < 5; i++)
             {
                 p.Add(0x02E0B3 + i, 0xEA, "Fast Boss Defeat Teleport: Fanfare sound NOP");
             }
@@ -283,8 +283,8 @@ namespace MM2Randomizer.Utilities
             p.Add(0x0386EF, 0x01, "Mega Man Ladder Climb Up Integer");
             p.Add(0x03872E, 0xFE, "Mega Man Ladder Climb Down Integer");
 
-            //int address = (jVersion) ? 0x03D4A4 : 0x03D4A7;
-            int address = 0x03D4A7;
+            //Int32 address = (jVersion) ? 0x03D4A4 : 0x03D4A7;
+            Int32 address = 0x03D4A7;
             p.Add(address, 0x08, "Buster Projectile X-Velocity Integer");
         }
 
@@ -321,17 +321,17 @@ namespace MM2Randomizer.Utilities
         /// which portrait to black-out. This function changes the lookup table for x and y positions
         /// of portraits to black-out based on what was randomized.
         /// </summary>
-        public static void FixPortraits(Patch Patch, bool is8StagesRandom, RStages randomStages, bool isWeaponGetRandom, RWeaponGet randomWeaponGet)
+        public static void FixPortraits(Patch Patch, Boolean is8StagesRandom, RStages randomStages, Boolean isWeaponGetRandom, RWeaponGet randomWeaponGet)
         {
             // Arrays of default values for X and Y of the black square that marks out each portrait
             // Index of arrays are stage order, e.g. Heat, Air, etc.
-            byte[] portraitBG_y = new byte[] { 0x21, 0x20, 0x21, 0x20, 0x20, 0x22, 0x22, 0x22 };
-            byte[] portraitBG_x = new byte[] { 0x86, 0x8E, 0x96, 0x86, 0x96, 0x8E, 0x86, 0x96 };
+            Byte[] portraitBG_y = new Byte[] { 0x21, 0x20, 0x21, 0x20, 0x20, 0x22, 0x22, 0x22 };
+            Byte[] portraitBG_x = new Byte[] { 0x86, 0x8E, 0x96, 0x86, 0x96, 0x8E, 0x86, 0x96 };
 
             // Adjusting the sprites is not necessary because the hacked portrait graphics ("?" images)
             // only use the background, and the sprites have been blacked out. Left in for reference.
-            //byte[] portraitSprite_x = new byte[] { 0x3C, 0x0C, 0x4C, 0x00, 0x20, 0x84, 0x74, 0xA4 };
-            //byte[] portraitSprite_y = new byte[] { 0x10, 0x14, 0x28, 0x0C, 0x1C, 0x20, 0x10, 0x18 };
+            //Byte[] portraitSprite_x = new Byte[] { 0x3C, 0x0C, 0x4C, 0x00, 0x20, 0x84, 0x74, 0xA4 };
+            //Byte[] portraitSprite_y = new Byte[] { 0x10, 0x14, 0x28, 0x0C, 0x1C, 0x20, 0x10, 0x18 };
 
             // Apply changes to portrait arrays based on shuffled stages
             if (is8StagesRandom)
@@ -346,7 +346,7 @@ namespace MM2Randomizer.Utilities
                 randomWeaponGet.FixPortraits(ref portraitBG_x, ref portraitBG_y);
             }
 
-            for (int i = 0; i < 8; i++)
+            for (Int32 i = 0; i < 8; i++)
             {
                 Patch.Add(0x034541 + i, portraitBG_y[i], $"Stage Select Portrait {i + 1} Y-Pos Fix");
                 Patch.Add(0x034549 + i, portraitBG_x[i], $"Stage Select Portrait {i + 1} X-Pos Fix");
@@ -361,7 +361,7 @@ namespace MM2Randomizer.Utilities
         // TODO;
         public static void FixWeaponLetters(Patch Patch, RWeaponGet randomWeaponGet, RStages randomStages, RText rText)
         {
-            int[] shuffledWeapons = randomWeaponGet.GetShuffleIndexPermutation();
+            Int32[] shuffledWeapons = randomWeaponGet.GetShuffleIndexPermutation();
             rText.FixWeaponLetters(Patch, shuffledWeapons);
         }
 
@@ -375,7 +375,7 @@ namespace MM2Randomizer.Utilities
 
         public static void FixM445PaletteGlitch(Patch p)
         {
-            for (int i = 0; i < 3; i++)
+            for (Int32 i = 0; i < 3; i++)
             {
                 p.Add(0x395BD + i, 0xEA, "M-445 Palette Glitch Fix");
             }
@@ -449,16 +449,16 @@ namespace MM2Randomizer.Utilities
             // $BF7E:C6 A7      DEC $00A7 ;Decrement ETankCount
             // $BF81:60         RTS 
 
-            int prgOffset = 0x30010 - 0x4000;
+            Int32 prgOffset = 0x30010 - 0x4000;
             // Inject new jump subroutine at 0D:9296 (should be 0x352A6).
-            int jsrLocation = 0x9296 + prgOffset;
+            Int32 jsrLocation = 0x9296 + prgOffset;
 
             Byte[] jsrBytes = new Byte[]
             {
                 0x20, 0x77, 0xBF,   // JSR $BF77
             };
 
-            for(int offset = 0; offset < jsrBytes.Length; ++offset)
+            for(Int32 offset = 0; offset < jsrBytes.Length; ++offset)
             {
                 p.Add(jsrLocation + offset, jsrBytes[offset], "Prevent E-Tank Use at Full Life");
             }
@@ -474,8 +474,8 @@ namespace MM2Randomizer.Utilities
             };
 
             // Start at 0D:BF77 (should be 0x37F87).
-            int etankLocation = 0xBF77 + prgOffset;
-            for(int offset = 0; offset < eTankSubroutineBytes.Length; ++offset)
+            Int32 etankLocation = 0xBF77 + prgOffset;
+            for(Int32 offset = 0; offset < eTankSubroutineBytes.Length; ++offset)
             {
                 p.Add(etankLocation + offset, eTankSubroutineBytes[offset], "Prevent E-Tank Use at Full Life");
             }
@@ -489,7 +489,7 @@ namespace MM2Randomizer.Utilities
         /// <param name="p"></param>
         /// <param name="tempFileName"></param>
         /// <param name="sprite"></param>
-        public static void SetNewMegaManSprite(Patch p, string tempFileName, PlayerSprite sprite)
+        public static void SetNewMegaManSprite(Patch p, String tempFileName, PlayerSprite sprite)
         {
             switch (sprite)
             {
@@ -516,7 +516,7 @@ namespace MM2Randomizer.Utilities
         /// <param name="p"></param>
         public static void ReduceUnderwaterLag(Patch p)
         {
-            p.Add((int)ESubroutineAddress.WasteAFrame, (byte)EInstruction.RTS, "Turn the 'waste a frame' subroutine into a NOP");
+            p.Add((Int32)ESubroutineAddress.WasteAFrame, (Byte)EInstruction.RTS, "Turn the 'waste a frame' subroutine into a NOP");
         }
 
         /// <summary>
@@ -526,8 +526,8 @@ namespace MM2Randomizer.Utilities
         /// <param name="p"></param>
         public static void DisableDelayScroll(Patch p)
         {
-            p.Add((int)ESubroutineAddress.ChangeBankBNE, (byte)EInstruction.NOP, "Disable the delayed audio processing branch");
-            p.Add((int)ESubroutineAddress.ChangeBankBNE + 1, (byte)EInstruction.NOP, "The branch instruction is 2 bytes");
+            p.Add((Int32)ESubroutineAddress.ChangeBankBNE, (Byte)EInstruction.NOP, "Disable the delayed audio processing branch");
+            p.Add((Int32)ESubroutineAddress.ChangeBankBNE + 1, (Byte)EInstruction.NOP, "The branch instruction is 2 bytes");
         }
     }
 }

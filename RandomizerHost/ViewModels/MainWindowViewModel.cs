@@ -134,7 +134,7 @@ namespace RandomizerHost.ViewModels
         {
             Int32 seed = -1;
 
-            // Check if textbox contains a valid seed string
+            // Check if textbox contains a valid seed String
             if (false == String.IsNullOrEmpty(this.RandoSettings.SeedString))
             {
                 try
@@ -182,17 +182,17 @@ namespace RandomizerHost.ViewModels
             {
                 try
                 {
-                    Process.Start("explorer.exe", string.Format("/select,\"{0}\"", RandomMM2.RecentlyCreatedFileName));
+                    Process.Start("explorer.exe", String.Format("/select,\"{0}\"", RandomMM2.RecentlyCreatedFileName));
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.ToString());
-                    Process.Start("explorer.exe", string.Format("/select,\"{0}\"", System.Reflection.Assembly.GetExecutingAssembly().Location));
+                    Process.Start("explorer.exe", String.Format("/select,\"{0}\"", System.Reflection.Assembly.GetExecutingAssembly().Location));
                 }
             }
             else
             {
-                Process.Start("explorer.exe", string.Format("/select,\"{0}\"", System.Reflection.Assembly.GetExecutingAssembly().Location));
+                Process.Start("explorer.exe", String.Format("/select,\"{0}\"", System.Reflection.Assembly.GetExecutingAssembly().Location));
             }
         }
 

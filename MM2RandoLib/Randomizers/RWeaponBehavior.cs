@@ -56,7 +56,7 @@ namespace MM2Randomizer.Randomizers
         }
 
         private StringBuilder debug;
-        public override string ToString()
+        public override String ToString()
         {
             return debug.ToString();
         }
@@ -128,10 +128,10 @@ namespace MM2Randomizer.Randomizers
         /// Get a random unique sound for a weapon to use
         /// </summary>
         /// <param name="r"></param>
-        /// <returns>Sound ID byte</returns>
+        /// <returns>Sound ID Byte</returns>
         private ESoundID GetRandomSound(Random r)
         {
-            int i = r.Next(sounds.Count);
+            Int32 i = r.Next(sounds.Count);
             ESoundID sound = sounds.ElementAt(i);
             sounds.RemoveAt(i);
 
@@ -153,12 +153,12 @@ namespace MM2Randomizer.Randomizers
             // L2 ammo cost = L1 ammo cost
             // L3 will cost 1-4 ammo
             double rTestL1Ammo = r.NextDouble();
-            byte L1Ammo = (rTestL1Ammo > 0.1) ? (byte)0 : (byte)1;
+            Byte L1Ammo = (rTestL1Ammo > 0.1) ? (Byte)0 : (Byte)1;
             Patch.Add(0x03DE55, L1Ammo, $"(H) | Shot L1 Ammo Cost: {L1Ammo}");
             Patch.Add(0x03DE56, L1Ammo, $"(H) | Shot L2 Ammo Cost: {L1Ammo}");
 
-            byte[] bytes = new byte[] { 0x01, 0x01, 0x02, 0x02, 0x02, 0x02, 0x03, 0x03, };
-            int rInt = r.Next(bytes.Length);
+            Byte[] bytes = new Byte[] { 0x01, 0x01, 0x02, 0x02, 0x02, 0x02, 0x03, 0x03, };
+            Int32 rInt = r.Next(bytes.Length);
             Patch.Add(0x03DE57, bytes[rInt], $"(H) | Shot L3 Ammo Cost: {bytes[rInt]}");
             AmmoUsage.Add(bytes[rInt]);
 
@@ -168,7 +168,7 @@ namespace MM2Randomizer.Randomizers
             //0x03DD66 - H change these 4 bytes to 0xEA to skip L2 charge
             if (rTestChargeType < 0.8)
             {
-                for (int i = 0; i < 4; i++)
+                for (Int32 i = 0; i < 4; i++)
                 {
                     Patch.Add(0x03DD66 + i, 0xEA, $"(H) | Skip L2 Charge");
                 }
@@ -184,45 +184,45 @@ namespace MM2Randomizer.Randomizers
 
             // Charge delay for L2 will be between 0x10 and 0x80 frames
             //0x03DD61 - H L2 charge delay (0x7D)
-            int chargeDelayL2 = r.Next(0x70) + 0x09;
-            Patch.Add(0x03DD61, (byte)chargeDelayL2, "(H) | L2 Charge Delay");
+            Int32 chargeDelayL2 = r.Next(0x70) + 0x09;
+            Patch.Add(0x03DD61, (Byte)chargeDelayL2, "(H) | L2 Charge Delay");
 
             // Charge delay for L3 will L2 plus a value between 0x10 and 0x40 frames
             //0x03DD67 - H L3 charge delay(0xBB)
-            int chargeDelayL3 = r.Next(0x30) + 0x09 + chargeDelayL2;
+            Int32 chargeDelayL3 = r.Next(0x30) + 0x09 + chargeDelayL2;
             if (rTestChargeType >= 0.8)
             {
-                Patch.Add(0x03DD67, (byte)chargeDelayL3, "(H) | L3 Charge Delay");
+                Patch.Add(0x03DD67, (Byte)chargeDelayL3, "(H) | L3 Charge Delay");
             }
 
             //0x03DDEC - H shot sound effect(38)
             ESoundID sound = GetRandomSound(r);
-            Patch.Add(0x03DDEC, (byte)sound, "(H) | Shot Sound");
+            Patch.Add(0x03DDEC, (Byte)sound, "(H) | Shot Sound");
 
             //0x03DDF1 - H x - speed (04, all levels)
             //    Do from 02 to 08
-            int xVel = r.Next(0x07) + 0x02;
-            Patch.Add(0x03DDF1, (byte)xVel, "(H) | X-Velocity");
+            Int32 xVel = r.Next(0x07) + 0x02;
+            Patch.Add(0x03DDF1, (Byte)xVel, "(H) | X-Velocity");
 
             //0x03DE45 - H charge sound 1(35) Unused
             //0x03DE46 - H charge sound 2(35)
             sound = GetRandomSound(r);
-            Patch.Add(0x03DE46, (byte)sound, "(H) | L1 Sound");
+            Patch.Add(0x03DE46, (Byte)sound, "(H) | L1 Sound");
 
             //0x03DE47 - H charge sound 3(36)
             sound = GetRandomSound(r);
-            Patch.Add(0x03DE47, (byte)sound, "(H) | L2 Sound");
+            Patch.Add(0x03DE47, (Byte)sound, "(H) | L2 Sound");
 
             //0x03DE48 - H charge sound 4(37)
             sound = GetRandomSound(r);
-            Patch.Add(0x03DE48, (byte)sound, "(H) | L3 Sound");
+            Patch.Add(0x03DE48, (Byte)sound, "(H) | L3 Sound");
         }
 
         protected void ChangeAir(Patch Patch, Random r)
         {
             //0x03DAD6 - A num projectiles, default 0x04
             //  Values 0x02 and 0x03 work, but larger values behave strangely
-            int numProjectiles = 0x04;
+            Int32 numProjectiles = 0x04;
             double rTestNumProjectiles = r.NextDouble();
 
             if (rTestNumProjectiles > 0.80)
@@ -234,33 +234,33 @@ namespace MM2Randomizer.Randomizers
                 numProjectiles = 0x02;
             }
 
-            Patch.Add(0x03DAD6, (byte)numProjectiles, "(A) | Number of Projectiles");
+            Patch.Add(0x03DAD6, (Byte)numProjectiles, "(A) | Number of Projectiles");
 
             //0x03DADA - A projectile type, default 0x02
             //  Can use this to change behavior completely!Buggy though.
 
             //0x03DAE6 - A sound effect (0x3F)
             ESoundID sound = GetRandomSound(r);
-            Patch.Add(0x03DAE6, (byte)sound, "(A) | Sound");
+            Patch.Add(0x03DAE6, (Byte)sound, "(A) | Sound");
 
             //0x03DAEE - A ammo used(0x02)
-            int ammoUse = r.Next(0x02) + 0x01;
-            Patch.Add(0x03DAEE, (byte)ammoUse, "(A) | Ammo Use");
+            Int32 ammoUse = r.Next(0x02) + 0x01;
+            Patch.Add(0x03DAEE, (Byte)ammoUse, "(A) | Ammo Use");
             AmmoUsage.Add(ammoUse);
 
             //0x03DE6E - A projectile y-acceleration fraction(10)
             // Do 0x02 to 0x32, where values above 0x10 are less common
-            int yAccFrac = r.Next(0x17) + 0x02;
+            Int32 yAccFrac = r.Next(0x17) + 0x02;
             if (yAccFrac > 0x10)
             {
                 // double the addition of any acceleration value chosen above 0x10
                 yAccFrac += (yAccFrac - 0x10) * 2; 
             }
-            Patch.Add(0x03DE6E, (byte)yAccFrac, "(A) | Y-Acceleration (fraction)");
+            Patch.Add(0x03DE6E, (Byte)yAccFrac, "(A) | Y-Acceleration (fraction)");
 
             //0x03DE76 - A projectile y-acceleration integer(00)
             // 15% chance to be significantly faster
-            int yAccInt = 0x00;
+            Int32 yAccInt = 0x00;
             double rYAcc = r.NextDouble();
 
             if (rYAcc > 0.85)
@@ -268,30 +268,30 @@ namespace MM2Randomizer.Randomizers
                 yAccInt = 0x01;
             }
 
-            Patch.Add(0x03DE76, (byte)yAccInt, "(A) | Y-Acceleration (integer)");
+            Patch.Add(0x03DE76, (Byte)yAccInt, "(A) | Y-Acceleration (integer)");
 
             //0x03DE7E - A x - speed fraction projectile 1(19)
             //0x03DE7F - A x - speed fraction projectile 2(99)
             //0x03DE80 - A x - speed fraction projectile 3(33)
-            for (int i = 0; i < 3; i++)
+            for (Int32 i = 0; i < 3; i++)
             {
-                int xFracSpeed = r.Next(0xFF) + 0x01;
-                Patch.Add(0x03DE7E + i, (byte)xFracSpeed, String.Format("(A) | Projectile {0} X-Velocity (fraction)", i + 1));
+                Int32 xFracSpeed = r.Next(0xFF) + 0x01;
+                Patch.Add(0x03DE7E + i, (Byte)xFracSpeed, String.Format("(A) | Projectile {0} X-Velocity (fraction)", i + 1));
             }
 
             //0x03DE81 - A x - speed integer projectile 1(01)
             //0x03DE82 - A x - speed integer projectile 2(01)
             //0x03DE83 - A x - speed integer projectile 3(02)
-            int[] xIntSpeeds = new int[] {
+            Int32[] xIntSpeeds = new Int32[] {
                 0x00, 0x01, 0x02, 0x04, 0x06
             };
-            int rIndex = 0;
-            int xIntSpeed = 0;
-            for (int i = 0; i < 3; i++)
+            Int32 rIndex = 0;
+            Int32 xIntSpeed = 0;
+            for (Int32 i = 0; i < 3; i++)
             {
                 rIndex = r.Next(xIntSpeeds.Length);
                 xIntSpeed = xIntSpeeds[rIndex];
-                Patch.Add(0x03DE81 + i, (byte)xIntSpeed, String.Format("(A) | Projectile {0} X-Velocity (integer)", i + 1));
+                Patch.Add(0x03DE81 + i, (Byte)xIntSpeed, String.Format("(A) | Projectile {0} X-Velocity (integer)", i + 1));
             }
         }
 
@@ -300,12 +300,12 @@ namespace MM2Randomizer.Randomizers
             //0x03DEDA - W deploy time (0C)
             //    Can change from 06 to 12
             //    Note: Shield glitches on odd numbers.  Use evens only.
-            int[] deployDelays = new int[] {
+            Int32[] deployDelays = new Int32[] {
                 0x00, 0x02, 0x04, 0x06, 0x08, 0x0A, 0x0C, 0x10, 0x14, 0x1C, 0x22
             };
-            int rIndex = r.Next(deployDelays.Length);
-            int deployDelay = deployDelays[rIndex];
-            Patch.Add(0x03DEDA, (byte)deployDelay, "(W) | Deploy Delay");
+            Int32 rIndex = r.Next(deployDelays.Length);
+            Int32 deployDelay = deployDelays[rIndex];
+            Patch.Add(0x03DEDA, (Byte)deployDelay, "(W) | Deploy Delay");
 
             //0x03DF0D - W spin animation? (01)
 
@@ -314,7 +314,7 @@ namespace MM2Randomizer.Randomizers
 
             //0x03DF1F - W deploy sound effect
             ESoundID sound = GetRandomSound(r);
-            Patch.Add(0x03DF1F, (byte)sound, "(W) | Deploy Sound");
+            Patch.Add(0x03DF1F, (Byte)sound, "(W) | Deploy Sound");
 
             //0x03DF41 - W which directions the shield is allowed to launch in (F0)
             //    Can prevent launching left / right, up / down, etc
@@ -334,12 +334,12 @@ namespace MM2Randomizer.Randomizers
             }
             
             //0x03DF59 - W x - speed(04) (do 0x02-0x08)
-            int launchVel = r.Next(0x06) + 0x02;
-            Patch.Add(0x03DF59, (byte)launchVel, "(W) | Launch X-Velocity Integer");
+            Int32 launchVel = r.Next(0x06) + 0x02;
+            Patch.Add(0x03DF59, (Byte)launchVel, "(W) | Launch X-Velocity Integer");
 
             //0x03DF64 - W launch y - direction(10)
             //  Change to 0x20 to reverse, 50% chance
-            int reverseY = 0x10;
+            Int32 reverseY = 0x10;
             double rTestReverseY = r.NextDouble();
 
             if (rTestReverseY > 0.5)
@@ -347,42 +347,42 @@ namespace MM2Randomizer.Randomizers
                 reverseY = 0x20;
             }
 
-            Patch.Add(0x03DF64, (byte)reverseY, "(W) | Launch Y-Direction");
+            Patch.Add(0x03DF64, (Byte)reverseY, "(W) | Launch Y-Direction");
 
             //0x03DF72 - W ammo usage (3) (do from 1 to 3)
-            int ammoUse = r.Next(0x03) + 0x01;
-            Patch.Add(0x03DF72, (byte)ammoUse, "(W) | Ammo Usage");
+            Int32 ammoUse = r.Next(0x03) + 0x01;
+            Patch.Add(0x03DF72, (Byte)ammoUse, "(W) | Ammo Usage");
             AmmoUsage.Add(ammoUse);
 
             //0x03DF7D - W y - speed(04)
-            Patch.Add(0x03DF7D, (byte)launchVel, "(W) | Launch Y-Velocity Integer");
+            Patch.Add(0x03DF7D, (Byte)launchVel, "(W) | Launch Y-Velocity Integer");
         }
 
         protected void ChangeBubble(Patch Patch, Random r)
         {
             //0x03D4AB - B x - speed on shoot (0x01) (do 1-3)
-            int xVelShoot = r.Next(0x03) + 0x01;
-            Patch.Add(0x03D4AB, (byte)xVelShoot, "(B) | X-Velocity Shoot (Integer)");
+            Int32 xVelShoot = r.Next(0x03) + 0x01;
+            Patch.Add(0x03D4AB, (Byte)xVelShoot, "(B) | X-Velocity Shoot (Integer)");
 
             //0x03D4CF - B y - speed on shoot(0x02) (do 0-6)
-            int yVelShoot = r.Next(0x06);
-            Patch.Add(0x03D4CF, (byte)yVelShoot, "(B) | Y-Velocity Shoot (Integer)");
+            Int32 yVelShoot = r.Next(0x06);
+            Patch.Add(0x03D4CF, (Byte)yVelShoot, "(B) | Y-Velocity Shoot (Integer)");
 
             //0x03DB21 - B max shots (0x03) (do 2-5, i.e. 1-4 total projectiles)
             //    Valid from 0x02 - 0x0F. Lags a bunch >= 0x06.
-            int maxShots = r.Next(0x04) + 0x02;
-            Patch.Add(0x03DB21, (byte)maxShots, "(B) | Max Shots");
+            Int32 maxShots = r.Next(0x04) + 0x02;
+            Patch.Add(0x03DB21, (Byte)maxShots, "(B) | Max Shots");
 
             //0x03DB2F - B weapon type(0x04)
             // Don't do
 
             //0x03DB34 - B sound effect
             ESoundID sound = GetRandomSound(r);
-            Patch.Add(0x03DB34, (byte)sound, "(B) | Sound");
+            Patch.Add(0x03DB34, (Byte)sound, "(B) | Sound");
 
             //0x03DB3D - B shots per ammo tick (0x02) (do 1-4)
-            int magSize = r.Next(0x04) + 0x01;
-            Patch.Add(0x03DB3D, (byte)magSize, "(B) | Shots Per Ammo Tick");
+            Int32 magSize = r.Next(0x04) + 0x01;
+            Patch.Add(0x03DB3D, (Byte)magSize, "(B) | Shots Per Ammo Tick");
             AmmoUsage.Add(1d / (double)magSize);
 
             //0x03DFA4 - B y - pos to embed in surface(0xFF)
@@ -390,12 +390,12 @@ namespace MM2Randomizer.Randomizers
 
             //0x03DFA9 - B x - speed on surface (0x02)
             //      0x01 - 0x04 ?
-            int xVelRoll = r.Next(0x04) + 0x01;
-            Patch.Add(0x03DFA9, (byte)xVelRoll, "(B) | X-Velocity Surface (Integer)");
+            Int32 xVelRoll = r.Next(0x04) + 0x01;
+            Patch.Add(0x03DFA9, (Byte)xVelRoll, "(B) | X-Velocity Surface (Integer)");
 
             //0x03DFC0 - B x - speed after falling from ledge (0x00)
             //      Make 50% chance to be 0, or 1-5
-            int xVelFall = 0x00;
+            Int32 xVelFall = 0x00;
             double rTestXFallSpeed = r.NextDouble();
 
             if (rTestXFallSpeed > 0.5)
@@ -403,47 +403,47 @@ namespace MM2Randomizer.Randomizers
                 xVelFall = r.Next(0x05) + 0x01;
             }
 
-            Patch.Add(0x03DFC0, (byte)xVelFall, "(B) | X-Velocity Fall (Integer)");
+            Patch.Add(0x03DFC0, (Byte)xVelFall, "(B) | X-Velocity Fall (Integer)");
 
             //0x03DFC8 - B y - speed after falling(0xFE)
             //      Either 0xFA - 0xFF or 0x01 - 0x06
-            int[] yFallVels = new int[] { 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 };
-            int rIndex = r.Next(yFallVels.Length);
-            int yFallVel = yFallVels[rIndex];
-            Patch.Add(0x03DFC8, (byte)yFallVel, "(B) | Y-Velocity Fall (Integer)");
+            Int32[] yFallVels = new Int32[] { 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 };
+            Int32 rIndex = r.Next(yFallVels.Length);
+            Int32 yFallVel = yFallVels[rIndex];
+            Patch.Add(0x03DFC8, (Byte)yFallVel, "(B) | Y-Velocity Fall (Integer)");
         }
 
         protected void ChangeQuick(Patch Patch, Random r)
         {
             // Q autofire delay, default 0x0B
             //    Do from 0x05 to 0x12
-            int autoFireDelay = r.Next(0x0D) + 0x05;
-            Patch.Add(0x03DB54, (byte)autoFireDelay, "(Q) | Autofire Delay");
+            Int32 autoFireDelay = r.Next(0x0D) + 0x05;
+            Patch.Add(0x03DB54, (Byte)autoFireDelay, "(Q) | Autofire Delay");
 
             // Q max shots, default 0x05
             //    Do from 0x03 to 0x07(2 to 6 shots)
-            int maxShots = r.Next(0x04) + 0x03;
-            Patch.Add(0x03DB5C, (byte)maxShots, "(Q) | Max Shots");
+            Int32 maxShots = r.Next(0x04) + 0x03;
+            Patch.Add(0x03DB5C, (Byte)maxShots, "(Q) | Max Shots");
 
             // 0x03DB6F - Q sound effect
             ESoundID sound = GetRandomSound(r);
-            Patch.Add(0x03DB6F, (byte)sound, "(Q) | Sound");
+            Patch.Add(0x03DB6F, (Byte)sound, "(Q) | Sound");
             
             // Q shots per ammo tick, default 0x08
             //    Do from 0x04 to 0x0A ?
-            int magSize = r.Next(0x06) + 0x04;
-            Patch.Add(0x03DB78, (byte)magSize, "(Q) | Shots Per Ammo Tick");
+            Int32 magSize = r.Next(0x06) + 0x04;
+            Patch.Add(0x03DB78, (Byte)magSize, "(Q) | Shots Per Ammo Tick");
             AmmoUsage.Add(1d / (double)magSize);
 
             // Q behavior, distance, default 0x12
             //    Do from 0x0A to 0x20 ?
-            int distance = r.Next(0x16) + 0x0A;
-            Patch.Add(0x03DFE2, (byte)distance, "(Q) | Travel Distance");
+            Int32 distance = r.Next(0x16) + 0x0A;
+            Patch.Add(0x03DFE2, (Byte)distance, "(Q) | Travel Distance");
 
             // Q behavior, initial angle, default 0x4B
             //    Do from 0x00 to 0x60 ?
-            int angle1 = r.Next(0x60);
-            Patch.Add(0x03DFEA, (byte)angle1, "(Q) | Initial Angle");
+            Int32 angle1 = r.Next(0x60);
+            Patch.Add(0x03DFEA, (Byte)angle1, "(Q) | Initial Angle");
 
             //0x03DFF2 - Q behavior, weird, default 0x00
             //    Don't use, but change to 0x01 for dumb effect
@@ -452,23 +452,23 @@ namespace MM2Randomizer.Randomizers
             //    0x40 - (GOOD)Normal
             //    0x80 - (GOOD / HARD) Disappears(doesn't return)
             //    0x00 - (GOOD)Sine wave
-            //    0x03 - (GOOD)Float downwards(interesting behavior when changing other byte)
+            //    0x03 - (GOOD)Float downwards(interesting behavior when changing other Byte)
             //    0x04, 05 - Float downwards(short, not different enough from 03)
             //    0x06 - Float downwards(faster)
-            int[] angle2s = new int[] { 0x40, 0x80, 0x00, 0x03 };
-            int rIndex = r.Next(angle2s.Length);
-            int angle2 = angle2s[rIndex];
-            Patch.Add(0x03DFFF, (byte)angle2, "(Q) | Secondary Angle");
+            Int32[] angle2s = new Int32[] { 0x40, 0x80, 0x00, 0x03 };
+            Int32 rIndex = r.Next(angle2s.Length);
+            Int32 angle2 = angle2s[rIndex];
+            Patch.Add(0x03DFFF, (Byte)angle2, "(Q) | Secondary Angle");
 
             // Q behavior, time before disappearing on return, default 0x23
             //    Do from 0x1E to 0x30
-            int despawnDelay = r.Next(0x12) + 0x1E;
-            Patch.Add(0x03E007, (byte)despawnDelay, "(Q) | Despawn Delay");
+            Int32 despawnDelay = r.Next(0x12) + 0x1E;
+            Patch.Add(0x03E007, (Byte)despawnDelay, "(Q) | Despawn Delay");
 
             // Q behavior, return angle, default 0x4B
             //    Do from 0x00 to 0x90
-            int angle3 = r.Next(0x90);
-            Patch.Add(0x03E013, (byte)angle3, "(Q) | Return Angle");
+            Int32 angle3 = r.Next(0x90);
+            Patch.Add(0x03E013, (Byte)angle3, "(Q) | Return Angle");
 
             //0x03E01B - Q behavior, weird, default 0x00
             //    Change to 0x01 for interesting effects
@@ -478,7 +478,7 @@ namespace MM2Randomizer.Randomizers
         {
             //0x03DC59 - F sound (21)
             ESoundID sound = GetRandomSound(r);
-            Patch.Add(0x03DC59, (byte)sound, "(F) | Sound");
+            Patch.Add(0x03DC59, (Byte)sound, "(F) | Sound");
 
             //0x03E172 - F custom subroutine for reusable weapon
             // 75% chance to occur
@@ -486,12 +486,12 @@ namespace MM2Randomizer.Randomizers
             if (rTestFChange > 0.25)
             {
                 // 0x03E175 - New ammo-usage address.
-                byte[] ammos = new byte[] { 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
-                int rIndex = r.Next(7);
-                byte ammo = ammos[rIndex];
+                Byte[] ammos = new Byte[] { 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+                Int32 rIndex = r.Next(7);
+                Byte ammo = ammos[rIndex];
                 
                 // Change ammo-tick subroutine into one that resumes time
-                byte[] sub = new byte[]
+                Byte[] sub = new Byte[]
                 {
                     0xA5, 0xA1,         // LDA ammoFlash = #$0A
                     0xE9, ammo,         // SBC {ammo use}
@@ -501,13 +501,13 @@ namespace MM2Randomizer.Randomizers
                     0x85, 0xAA,         // STA $00AA = #$00
                     0x85, 0x50,         // STA $0050 = #$00 ; we erased LDA #$01, but doesn't seem to hurt 
                 };
-                for (int i = 0; i < sub.Length; i++)
+                for (Int32 i = 0; i < sub.Length; i++)
                 {
                     Patch.Add(0x03E172 + i, sub[i], "(F) | Reusable Time-Stopper Subroutine");
                 }
 
                 // 0x03E16E and 0x03D49D is the new duration, in frames. They must both be the same value.
-                int duration = 0x01;
+                Int32 duration = 0x01;
                 switch (ammo)
                 {
                     case 0x02:
@@ -533,12 +533,12 @@ namespace MM2Randomizer.Randomizers
                         break;
                     default: break;
                 }
-                Patch.Add(0x03E16E, (byte)duration, "(F) | Freeze Duration (1)");
-                Patch.Add(0x03D49D, (byte)duration, "(F) | Freeze Duration (2)");
+                Patch.Add(0x03E16E, (Byte)duration, "(F) | Freeze Duration (1)");
+                Patch.Add(0x03D49D, (Byte)duration, "(F) | Freeze Duration (2)");
 
                 // Finally, a fix is needed to prevent ammo underflow
                 // 0x03DC41 - WpnMove_FStart
-                sub = new byte[]
+                sub = new Byte[]
                 {
                     0xA2, 0x02,         // LDX #$02
                     0xAD, 0x22, 0x04,   // LDA $0422 = #$61
@@ -547,7 +547,7 @@ namespace MM2Randomizer.Randomizers
                     0xC9, 0x07,         // CMP #$07            
                     0x90, 0x18,         // BCC WpnMove_Done    
                 };
-                for (int i = 0; i < sub.Length; i++)
+                for (Int32 i = 0; i < sub.Length; i++)
                 {
                     Patch.Add(0x03DC41 + i, sub[i], "(F) | Reusable Time-Stopper Ammo-Underflow Fix");
                 }
@@ -556,83 +556,83 @@ namespace MM2Randomizer.Randomizers
             {
                 // Standard Time Stopper, but modify the tick frequency
                 // Default 0x0F. For 28 ticks, that's 7 seconds. Modify to be 4-10 seconds, which is about 0x09 to 0x16
-                int tickDelay = r.Next(0x13) + 9;
-                Patch.Add(0x03E16E, (byte)tickDelay, "(F) | Time-Stopper Ammo Tick Delay (1)");
-                Patch.Add(0x03D49D, (byte)tickDelay, "(F) | Time-Stopper Ammo Tick Delay (2)");
+                Int32 tickDelay = r.Next(0x13) + 9;
+                Patch.Add(0x03E16E, (Byte)tickDelay, "(F) | Time-Stopper Ammo Tick Delay (1)");
+                Patch.Add(0x03D49D, (Byte)tickDelay, "(F) | Time-Stopper Ammo Tick Delay (2)");
             }
         }
 
         protected void ChangeMetal(Patch Patch, Random r)
         {
             //0x03DBB6 - M max shots (04) (change to 0x02-0x05, or 1-4)
-            int maxShots = r.Next(0x04) + 0x02;
-            Patch.Add(0x03DBB6, (byte)maxShots, "(M) | Max Shots");
+            Int32 maxShots = r.Next(0x04) + 0x02;
+            Patch.Add(0x03DBB6, (Byte)maxShots, "(M) | Max Shots");
 
             //0x03DBC9 - M sound effect(23)
             ESoundID sound = GetRandomSound(r);
-            Patch.Add(0x03DBC9, (byte)sound, "(M) | Sound");
+            Patch.Add(0x03DBC9, (Byte)sound, "(M) | Sound");
 
             //0x03DBD2 - M shots per ammo tick(04) (change to 1-5)
-            int magSize = r.Next(0x05) + 0x01;
-            Patch.Add(0x03DBD2, (byte)magSize, "(M) | Shots Per Ammo Tick");
+            Int32 magSize = r.Next(0x05) + 0x01;
+            Patch.Add(0x03DBD2, (Byte)magSize, "(M) | Shots Per Ammo Tick");
             AmmoUsage.Add(1d / magSize);
 
             // Speeds.  Change each to be 2-7.  Diagonal will be half each, rounded up.
-            int velX = r.Next(0x06) + 0x02;
-            int velY = r.Next(0x06) + 0x02;
-            int halfY = (int)Math.Ceiling((double)velY / 2d);
-            int halfX = (int)Math.Ceiling((double)velX / 2d);
+            Int32 velX = r.Next(0x06) + 0x02;
+            Int32 velY = r.Next(0x06) + 0x02;
+            Int32 halfY = (Int32)Math.Ceiling((double)velY / 2d);
+            Int32 halfX = (Int32)Math.Ceiling((double)velX / 2d);
 
             //0x03DC12 - M y - speed, holding up(04)
-            Patch.Add(0x03DC12, (byte)velY, "(M) | Y-Velocity Up");
+            Patch.Add(0x03DC12, (Byte)velY, "(M) | Y-Velocity Up");
 
             //0x03DC31 - M x - speed, no direction(04)
-            Patch.Add(0x03DC31, (byte)velX, "(M) | X-Velocity Neutral");
+            Patch.Add(0x03DC31, (Byte)velX, "(M) | X-Velocity Neutral");
 
             //0x03DC35 - M x - speed, holding left(04)
-            Patch.Add(0x03DC35, (byte)velX, "(M) | X-Velocity Left");
+            Patch.Add(0x03DC35, (Byte)velX, "(M) | X-Velocity Left");
 
             //0x03DC39 - M x - speed, holding right(04)
-            Patch.Add(0x03DC39, (byte)velX, "(M) | X-Velocity Right");
+            Patch.Add(0x03DC39, (Byte)velX, "(M) | X-Velocity Right");
 
             //0x03DC13 - M y - speed, holding down(FC)
-            Patch.Add(0x03DC13, (byte)(0x00 - (byte)velY), "(M) | Y-Velocity Down");
+            Patch.Add(0x03DC13, (Byte)(0x00 - (Byte)velY), "(M) | Y-Velocity Down");
 
             //0x03DC16 - M y - speed, holding up + left(02)
-            Patch.Add(0x03DC16, (byte)halfY, "(M) | Y-Velocity Up+Left");
+            Patch.Add(0x03DC16, (Byte)halfY, "(M) | Y-Velocity Up+Left");
 
             //0x03DC17 - M y - speed, holding down + left(FD)
-            Patch.Add(0x03DC17, (byte)(0x00 - (byte)halfY), "(M) | Y-Velocity Down+Left");
+            Patch.Add(0x03DC17, (Byte)(0x00 - (Byte)halfY), "(M) | Y-Velocity Down+Left");
 
             //0x03DC1A - M y - speed, holding up + right(02)
-            Patch.Add(0x03DC1A, (byte)halfY, "(M) | Y-Velocity Up+Right");
+            Patch.Add(0x03DC1A, (Byte)halfY, "(M) | Y-Velocity Up+Right");
 
             //0x03DC1B - M y - speed, holding down + right(FD)
-            Patch.Add(0x03DC1B, (byte)(0x00 - (byte)halfY), "(M) | Y-Velocity Down+Right");
+            Patch.Add(0x03DC1B, (Byte)(0x00 - (Byte)halfY), "(M) | Y-Velocity Down+Right");
 
             //0x03DC36 - M x - speed, holding up + left(02)
-            Patch.Add(0x03DC36, (byte)halfX, "(M) | X-Velocity Up+Left");
+            Patch.Add(0x03DC36, (Byte)halfX, "(M) | X-Velocity Up+Left");
 
             //0x03DC37 - M x - speed, holding down + left(02)
-            Patch.Add(0x03DC37, (byte)halfX, "(M) | X-Velocity Down+Left");
+            Patch.Add(0x03DC37, (Byte)halfX, "(M) | X-Velocity Down+Left");
 
             //0x03DC3A - M x - speed, holding up + right(02)
-            Patch.Add(0x03DC3A, (byte)halfX, "(M) | X-Velocity Up+Right");
+            Patch.Add(0x03DC3A, (Byte)halfX, "(M) | X-Velocity Up+Right");
 
             //0x03DC3B - M x - speed, holding down + right(02)
-            Patch.Add(0x03DC3B, (byte)halfX, "(M) | X-Velocity Down+Right");
+            Patch.Add(0x03DC3B, (Byte)halfX, "(M) | X-Velocity Down+Right");
         }
 
         protected void ChangeClash(Patch Patch, Random r)
         {
             //0x03D4AD - C x-speed on shoot (04) (do 2-7)
-            int xVel = r.Next(0x06) + 0x02;
-            Patch.Add(0x03D4AD, (byte)xVel, "(C) | X-Velocity (Integer)");
+            Int32 xVel = r.Next(0x06) + 0x02;
+            Patch.Add(0x03D4AD, (Byte)xVel, "(C) | X-Velocity (Integer)");
 
             //0x03D4D7 - C y-speed integer for explosion (up only) (0)
             // TODO: Figure how this works more to apply in all directions
             // For now, 25% chance to make this move upward at 2px/fr
-            int yVelExplode = 0x00;
+            Int32 yVelExplode = 0x00;
             double rTestYVelExplode = r.NextDouble();
 
             if (rTestYVelExplode > 0.75)
@@ -640,17 +640,17 @@ namespace MM2Randomizer.Randomizers
                 yVelExplode = r.Next(2) + 0x01;
             }
 
-            Patch.Add(0x03D4D7, (byte)yVelExplode, "(C) | X-Velocity (Explosion)");
+            Patch.Add(0x03D4D7, (Byte)yVelExplode, "(C) | X-Velocity (Explosion)");
 
             //0x03DB99 - C ammo per shot (04) (do 1-3)
-            int ammoUse = r.Next(0x03) + 0x01;
-            Patch.Add(0x03DB99, (byte)ammoUse, "(C) | Ammo Usage");
+            Int32 ammoUse = r.Next(0x03) + 0x01;
+            Patch.Add(0x03DB99, (Byte)ammoUse, "(C) | Ammo Usage");
             AmmoUsage.Add(ammoUse);
 
             // 0x03DB9F - C explosion type? (02)
             // Change to 03 to "single explosion" type. Most other values break the game.
             // For now, 50% chance to change
-            int multiExplode = 0x02;
+            Int32 multiExplode = 0x02;
             double rTestMultiExplode = r.NextDouble();
 
             if (rTestMultiExplode > 0.50)
@@ -658,47 +658,47 @@ namespace MM2Randomizer.Randomizers
                 multiExplode = 0x03;
             }
 
-            Patch.Add(0x03DB9F, (byte)multiExplode, "(C) | Explosion Type");
+            Patch.Add(0x03DB9F, (Byte)multiExplode, "(C) | Explosion Type");
 
             //0x03DBA6 - C shoot sound effect (24)
             ESoundID sound = GetRandomSound(r);
-            Patch.Add(0x03DBA6, (byte)sound, "(C) | Sound Shoot");
+            Patch.Add(0x03DBA6, (Byte)sound, "(C) | Sound Shoot");
 
             //0x03E089 - C attach sound effect (2E)
             sound = GetRandomSound(r);
-            Patch.Add(0x03E089, (byte)sound, "(C) | Sound Attach");
+            Patch.Add(0x03E089, (Byte)sound, "(C) | Sound Attach");
 
             //0x03E09C - C delay before explosion (7E) (do 01 to C0)
-            int delayExplosion = r.Next(0xBF) + 0x01;
-            Patch.Add(0x03E09C, (byte)delayExplosion, "(C) | Explode Delay");
+            Int32 delayExplosion = r.Next(0xBF) + 0x01;
+            Patch.Add(0x03E09C, (Byte)delayExplosion, "(C) | Explode Delay");
 
             //0x03E0DA - C explode sound effect
             sound = GetRandomSound(r);
-            Patch.Add(0x03E0DA, (byte)sound, "(C) | Sound Explode");
+            Patch.Add(0x03E0DA, (Byte)sound, "(C) | Sound Explode");
         }
 
         protected void ChangeItem1(Patch Patch, Random r)
         {
-            int rInt;
+            Int32 rInt;
 
             //0x03E1A0(0F:E190) - Item 1 Update Subroutine
 
             //0x03E1AC - Delay before Item 1 starts flashing 0xBB (make 0x00 for infinite) (do from 0x30 to 0xFF)
             rInt = r.Next(0xFF - 0x30 + 1) + 0x30;
-            Patch.Add(0x03E1AC, (byte)rInt, "(1) | Delay Before Flashing");
+            Patch.Add(0x03E1AC, (Byte)rInt, "(1) | Delay Before Flashing");
 
             //0x03E1BF - Delay before Item 1 disappears after flashing 0x3E (make 0x00 for infinite) (do from 0x20 to 0x70)
             rInt = r.Next(0x70 - 0x20 + 1) + 0x20;
-            Patch.Add(0x03E1BF, (byte)rInt, "(1) | Delay Before Despawn");
+            Patch.Add(0x03E1BF, (Byte)rInt, "(1) | Delay Before Despawn");
 
             //0x03E1E2 - y-pos offset for Mega Man once standing on Item 1(0x04)
             //0x03E1E7 - width of Item 1 surface for Mega Man to stand on(0x14)
             //0x03E1F0 - Distance above Item to check for despawning(0x1D)
 
             //0x03D4C2 - y-vel fraction(0x41)
-            int[] rXVelFracs = new int[] { 0x00, 0x20, 0x41, 0x50 };
+            Int32[] rXVelFracs = new Int32[] { 0x00, 0x20, 0x41, 0x50 };
             rInt = r.Next(rXVelFracs.Length);
-            Patch.Add(0x03D4C2, (byte)rXVelFracs[rInt], "(1) | Y-Velocity (Fraction)");
+            Patch.Add(0x03D4C2, (Byte)rXVelFracs[rInt], "(1) | Y-Velocity (Fraction)");
         }
 
 

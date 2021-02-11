@@ -1,32 +1,33 @@
-﻿using MM2Randomizer.Enums;
+﻿using System;
+using MM2Randomizer.Enums;
 
 namespace MM2Randomizer.Randomizers.Enemies
 {
     public class EnemyInstance
     {
-        public bool HasIDChanged
+        public Boolean HasIDChanged
         {
             get { return EnemyID != EnemyIDPrev; }
         }
 
-        public int Offset { get; set; }
-        public int StageNum { get; set; }
-        public int RoomNum { get; set; }
-        public int ScreenNum { get; set; }
-        public bool IsActive { get; set; }
-        public int EnemyID { get; set; }
-        public int EnemyIDPrev { get; set; } // for reference only
-        public int X { get; set; }
-        public int YOriginal { get; set; } // for reference only
-        public int YAir { get; set; }
-        public int YGround { get; set; }
-        public bool IsFaceRight { get; set; }
+        public Int32 Offset { get; set; }
+        public Int32 StageNum { get; set; }
+        public Int32 RoomNum { get; set; }
+        public Int32 ScreenNum { get; set; }
+        public Boolean IsActive { get; set; }
+        public Int32 EnemyID { get; set; }
+        public Int32 EnemyIDPrev { get; set; } // for reference only
+        public Int32 X { get; set; }
+        public Int32 YOriginal { get; set; } // for reference only
+        public Int32 YAir { get; set; }
+        public Int32 YGround { get; set; }
+        public Boolean IsFaceRight { get; set; }
         
-        //public bool IsRandomiziable { get; set; }
-        //public List<byte> PatternTableAddresses { get; set; }
-        //public List<int> SpriteBankRows { get; set; }
+        //public Boolean IsRandomiziable { get; set; }
+        //public List<Byte> PatternTableAddresses { get; set; }
+        //public List<Int32> SpriteBankRows { get; set; }
         
-        public EnemyInstance(int offset, int stage, int room, int screen, bool isActive, int id, int xOriginal, int yOriginal, int yAir, int yGround, bool faceRight)
+        public EnemyInstance(Int32 offset, Int32 stage, Int32 room, Int32 screen, Boolean isActive, Int32 id, Int32 xOriginal, Int32 yOriginal, Int32 yAir, Int32 yGround, Boolean faceRight)
         {
             Offset = offset;
             StageNum = stage;
@@ -42,23 +43,44 @@ namespace MM2Randomizer.Randomizers.Enemies
             IsFaceRight = faceRight;
         }
 
-        public bool HasNewActivator()
+        public Boolean HasNewActivator()
         {
-            if (!HasIDChanged) return false;
+            if (!HasIDChanged)
+            {
+                return false;
+            }
 
             switch ((EEnemyID)EnemyID)
             {
                 case EEnemyID.Pipi_Activator:
+                {
                     return true;
+                }
+
                 case EEnemyID.Mole_Activator:
+                {
                     return true;
+                }
+
                 case EEnemyID.Claw_Activator:
+                {
                     return true;
+                }
+
                 case EEnemyID.Kukku_Activator:
+                {
                     return true;
+                }
+
                 case EEnemyID.M445_Activator:
+                {
                     return true;
-                default: return false;
+                }
+
+                default:
+                {
+                    return false;
+                }
             }
         }
     }

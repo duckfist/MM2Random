@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -12,7 +13,7 @@ namespace MM2Randomizer
 
         /// <summary>Raises the property changed event. </summary>
         /// <param name="propertyName">The property name. </param>
-        protected void NotifyPropertyChanged([CallerMemberName]string propertyName = "")
+        protected void NotifyPropertyChanged([CallerMemberName]String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -26,11 +27,11 @@ namespace MM2Randomizer
         /// <param name="newValue">The property's new value to set.</param>
         /// <param name="propertyName">The name of the property (leave blank to use the caller's name)</param>
         /// <returns>True if the property has changed, false if it is still the same value.</returns>
-        protected bool SetProperty<T>(
+        protected Boolean SetProperty<T>(
             ref T privateField,
             T newValue,
-            [CallerMemberName]string propertyName = null,
-            params string[] additionalProperties)
+            [CallerMemberName]String propertyName = null,
+            params String[] additionalProperties)
         {
             // If value hasn't changed, just return false
             if (EqualityComparer<T>.Default.Equals(privateField, newValue))
@@ -43,7 +44,7 @@ namespace MM2Randomizer
             NotifyPropertyChanged(propertyName);
 
             // Notify any additional properties that might depend on this one
-            foreach (string additionalProperty in additionalProperties)
+            foreach (String additionalProperty in additionalProperties)
             {
                 NotifyPropertyChanged(additionalProperty);
             }

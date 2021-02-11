@@ -28,11 +28,11 @@ namespace MM2Randomizer.Randomizers
                 var variation = levelComponent.Variations[r.Next(levelComponent.Variations.Count)];
 
                 // Add patch for each element of the tsamap
-                int startAddress = Convert.ToInt32(levelComponent.StartAddress, 16);
-                for (int i = 0; i < variation.TsaMap.Length; i++)
+                Int32 startAddress = Convert.ToInt32(levelComponent.StartAddress, 16);
+                for (Int32 i = 0; i < variation.TsaMap.Length; i++)
                 {
-                    // Parse hex string
-                    byte tsaVal = Convert.ToByte(variation.TsaMap[i], 16);
+                    // Parse hex String
+                    Byte tsaVal = Convert.ToByte(variation.TsaMap[i], 16);
 
                     p.Add(startAddress + i, tsaVal, $"Tilemap data for {levelComponent.Name} variation \"{variation.Name}\"");
                 }
@@ -44,8 +44,8 @@ namespace MM2Randomizer.Randomizers
         private static void ChangeW4FloorsBeforeSpikes(Patch Patch, Random r)
         {
             // Choose 2 of the 5 32x32 tiles to be fake
-            int tileA = r.Next(5);
-            int tileB = r.Next(4);
+            Int32 tileA = r.Next(5);
+            Int32 tileB = r.Next(4);
 
             // Make sure 2nd tile chosen is different
             if (tileB == tileA)
@@ -53,7 +53,7 @@ namespace MM2Randomizer.Randomizers
                 tileB++;
             }
 
-            for (int i = 0; i < 5; i++)
+            for (Int32 i = 0; i < 5; i++)
             {
                 if (i == tileA || i == tileB)
                 {
@@ -69,8 +69,8 @@ namespace MM2Randomizer.Randomizers
         private static void ChangeW4FloorsSpikePit(Patch Patch, Random r)
         {
             // 5 tiles, but since two adjacent must construct a gap, 4 possible gaps.  Choose 1 random gap.
-            int gap = r.Next(4);
-            for (int i = 0; i < 4; i++)
+            Int32 gap = r.Next(4);
+            for (Int32 i = 0; i < 4; i++)
             {
                 if (i == gap)
                 {

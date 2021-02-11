@@ -20,7 +20,7 @@ namespace MM2Randomizer.Randomizers
         // Flashman  2 6 0 0 2 0 0 4 3
         // Metalman  1 4 0 0 0 0 4 A 0
         // Clashman  1 6 A 0 1 0 1 0 0
-        public static int[,] BotWeaknesses = new int[8, 9]
+        public static Int32[,] BotWeaknesses = new Int32[8, 9]
         {
             { 2, 0, 2, 0, 6, 0, 2, 1, 0, },
             { 2, 6, 0, 8, 0, 0, 2, 0, 0, },
@@ -40,7 +40,7 @@ namespace MM2Randomizer.Randomizers
         // Bueb   0 0 0 0 0 0 0 B
         // WilyM  1 E 1 0 0 1 1 4
         // Alien  X X X X 1 X X X
-        public static int[,] WilyWeaknesses = new int[6, 8]
+        public static Int32[,] WilyWeaknesses = new Int32[6, 8]
         {
             {  1,  8,  0,  0,  0,  1,  0,  1,},
             {  1,  3,  0,  0, 10,  7,  7,  0,},
@@ -53,7 +53,7 @@ namespace MM2Randomizer.Randomizers
         private char[,] WilyWeaknessInfo = new char[6, 8];
 
         private StringBuilder debug = new StringBuilder();
-        public override string ToString()
+        public override String ToString()
         {
             return debug.ToString();
         }
@@ -81,32 +81,32 @@ namespace MM2Randomizer.Randomizers
             Patch.Add(0x02E66D, 0xFF, "Atomic Fire Boss To Heal" ); // Normally "00" to indicate Heatman.
 
             // Select 4 robots to be weak against Buster
-            List<int> busterList = new List<int>(new List<int>{ 0, 1, 2, 3, 4, 5, 6, 7 }.Shuffle(r)).GetRange(0,4);
+            List<Int32> busterList = new List<Int32>(new List<Int32>{ 0, 1, 2, 3, 4, 5, 6, 7 }.Shuffle(r)).GetRange(0,4);
 
             // Select 2 robots to be very weak to some weapon
-            List<int> veryWeakBots = new List<int>(new List<int> { 0, 1, 2, 3, 4, 5, 6, 7 }.Shuffle(r)).GetRange(0, 2);
-            int bossWithGreatWeakness = veryWeakBots[0];
-            int bossWithUltimateWeakness = veryWeakBots[1];
+            List<Int32> veryWeakBots = new List<Int32>(new List<Int32> { 0, 1, 2, 3, 4, 5, 6, 7 }.Shuffle(r)).GetRange(0, 2);
+            Int32 bossWithGreatWeakness = veryWeakBots[0];
+            Int32 bossWithUltimateWeakness = veryWeakBots[1];
             // Select 2 weapons to deal great damage to the 2 bosses above (exclude buster, flash)
-            List<int> greatWeaknessWeapons = new List<int>(new List<int> { 0, 1, 2, 3, 4, 5, 6, }.Shuffle(r)).GetRange(0, 2);
-            int weaponGreatWeakness = greatWeaknessWeapons[0];
-            int weaponUltimateWeakness = greatWeaknessWeapons[1];
+            List<Int32> greatWeaknessWeapons = new List<Int32>(new List<Int32> { 0, 1, 2, 3, 4, 5, 6, }.Shuffle(r)).GetRange(0, 2);
+            Int32 weaponGreatWeakness = greatWeaknessWeapons[0];
+            Int32 weaponUltimateWeakness = greatWeaknessWeapons[1];
 
 
             // Foreach boss
-            for (int i = 0; i < 8; i++)
+            for (Int32 i = 0; i < 8; i++)
             {
                 // First, fill in special weapon tables with a 50% chance to block or do 1 damage
-                for (int j = 0; j < bossPrimaryWeaknessAddresses.Count; j++)
+                for (Int32 j = 0; j < bossPrimaryWeaknessAddresses.Count; j++)
                 {
                     double rTestImmune = r.NextDouble();
-                    byte damage = 0;
+                    Byte damage = 0;
                     if (rTestImmune > 0.5)
                     {
                         if (bossPrimaryWeaknessAddresses[j] == EDmgVsBoss.U_DamageH)
                         {
                             // ...except for Atomic Fire, which will do some more damage
-                            damage = (byte)(RWeaponBehavior.AmmoUsage[1] / 2);
+                            damage = (Byte)(RWeaponBehavior.AmmoUsage[1] / 2);
                         }
                         else if (bossPrimaryWeaknessAddresses[j] == EDmgVsBoss.U_DamageF)
                         {
@@ -122,16 +122,16 @@ namespace MM2Randomizer.Randomizers
                 }
 
                 // Write the primary weakness for this boss
-                byte dmgPrimary = GetRoboDamagePrimary(r, bossWeaknessShuffled[i]);
+                Byte dmgPrimary = GetRoboDamagePrimary(r, bossWeaknessShuffled[i]);
                 Patch.Add(bossWeaknessShuffled[i] + i, dmgPrimary, $"{bossWeaknessShuffled[i].WeaponName} Damage to {(EDmgVsBoss.Offset)i} (Primary)");
 
                 // Write the secondary weakness for this boss (next element in list)
                 // Secondary weakness will either do 2 damage or 4 if it is Atomic Fire
                 // Time Stopper cannot be a secondary weakness. Instead it will heal that boss.
                 // As a result, one Robot Master will not have a secondary weakness
-                int i2 = (i + 1 >= 8) ? 0 : i + 1;
+                Int32 i2 = (i + 1 >= 8) ? 0 : i + 1;
                 EDmgVsBoss weakWeap2 = bossWeaknessShuffled[i2];
-                byte dmgSecondary = 0x02;
+                Byte dmgSecondary = 0x02;
                 if (weakWeap2 == EDmgVsBoss.U_DamageH)
                 {
                     dmgSecondary = 0x04;
@@ -141,7 +141,7 @@ namespace MM2Randomizer.Randomizers
                     dmgSecondary = 0x00;
 
                     // Address in Time-Stopper code that normally heals Flashman, change to heal this boss instead
-                    Patch.Add(0x02C08F, (byte)i, $"Time-Stopper Heals {(EDmgVsBoss.Offset)i} (Special Code)");
+                    Patch.Add(0x02C08F, (Byte)i, $"Time-Stopper Heals {(EDmgVsBoss.Offset)i} (Special Code)");
                 }
                 Patch.Add(weakWeap2 + i, dmgSecondary, $"{weakWeap2.WeaponName} Damage to {(EDmgVsBoss.Offset)i} (Secondary)");
                         
@@ -158,9 +158,9 @@ namespace MM2Randomizer.Randomizers
                 }
 
                 // Save info
-                int weapIndexPrimary = GetWeaponIndexFromAddress(bossWeaknessShuffled[i]);
+                Int32 weapIndexPrimary = GetWeaponIndexFromAddress(bossWeaknessShuffled[i]);
                 BotWeaknesses[i, weapIndexPrimary] = dmgPrimary;
-                int weapIndexSecondary = GetWeaponIndexFromAddress(weakWeap2);
+                Int32 weapIndexSecondary = GetWeaponIndexFromAddress(weakWeap2);
                 BotWeaknesses[i, weapIndexSecondary] = dmgSecondary;
 
                 // Independently, apply a great weakness and an ultimate weakness (potentially overriding a previous weakness)
@@ -185,9 +185,9 @@ namespace MM2Randomizer.Randomizers
             debug.AppendLine("Robot Master Weaknesses:");
             debug.AppendLine("P\tH\tA\tW\tB\tQ\tF\tM\tC:");
             debug.AppendLine("--------------------------------------------");
-            for (int i = 0; i < 8; i++)
+            for (Int32 i = 0; i < 8; i++)
             {
-                for (int j = 0; j < 9; j++)
+                for (Int32 j = 0; j < 9; j++)
                 {
                     debug.Append(String.Format("{0}\t", BotWeaknesses[i, j]));
                 }
@@ -203,10 +203,10 @@ namespace MM2Randomizer.Randomizers
         /// </summary>
         /// <param name="weapon"></param>
         /// <returns></returns>
-        private static byte GetRoboDamagePrimary(Random r, EDmgVsBoss weapon)
+        private static Byte GetRoboDamagePrimary(Random r, EDmgVsBoss weapon)
         {
             // Flat 25% chance to do 2 extra damage
-            byte damage = 0;
+            Byte damage = 0;
             double rExtraDmg = r.NextDouble();
             if (rExtraDmg > 0.75)
             {
@@ -215,15 +215,15 @@ namespace MM2Randomizer.Randomizers
 
             if (weapon == EDmgVsBoss.U_DamageH)
             {
-                damage += (byte)(RWeaponBehavior.AmmoUsage[1] + 1);
+                damage += (Byte)(RWeaponBehavior.AmmoUsage[1] + 1);
             }
             else if (weapon == EDmgVsBoss.U_DamageA)
             {
-                damage += (byte)(RWeaponBehavior.AmmoUsage[2] + 1);
+                damage += (Byte)(RWeaponBehavior.AmmoUsage[2] + 1);
             }
             else if (weapon == EDmgVsBoss.U_DamageW)
             {
-                damage += (byte)(RWeaponBehavior.AmmoUsage[3] + 1);
+                damage += (Byte)(RWeaponBehavior.AmmoUsage[3] + 1);
             }
             else if (weapon == EDmgVsBoss.U_DamageF)
             {
@@ -231,7 +231,7 @@ namespace MM2Randomizer.Randomizers
             }
             else if (weapon == EDmgVsBoss.U_DamageC)
             {
-                damage += (byte)(RWeaponBehavior.AmmoUsage[7] + 1);
+                damage += (Byte)(RWeaponBehavior.AmmoUsage[7] + 1);
             }
 
             // 50% chance to cap the minimum damage at 4, else cap minimum damage at 3
@@ -254,7 +254,7 @@ namespace MM2Randomizer.Randomizers
             return damage;
         }
 
-        private static int GetWeaponIndexFromAddress(EDmgVsBoss weaponAddress)
+        private static Int32 GetWeaponIndexFromAddress(EDmgVsBoss weaponAddress)
         {
             if (weaponAddress == EDmgVsBoss.U_DamageP)
             {
@@ -321,7 +321,7 @@ namespace MM2Randomizer.Randomizers
                 // Dragon
                 // 25% chance to have a buster vulnerability
                 double rBuster = r.NextDouble();
-                byte busterDmg = 0x00;
+                Byte busterDmg = 0x00;
 
                 if (rBuster > 0.75)
                 {
@@ -333,14 +333,14 @@ namespace MM2Randomizer.Randomizers
 
                 // Choose 2 special weapon weaknesses
                 List<EDmgVsBoss> dragon = new List<EDmgVsBoss>(dmgPtrBosses);
-                int rInt = r.Next(dragon.Count);
+                Int32 rInt = r.Next(dragon.Count);
                 bossWeak1 = dragon[rInt];
                 dragon.RemoveAt(rInt);
                 rInt = r.Next(dragon.Count);
                 bossWeak2 = dragon[rInt];
 
                 // For each weapon, apply the weaknesses and immunities
-                for (int i = 0; i < dmgPtrBosses.Count; i++)
+                for (Int32 i = 0; i < dmgPtrBosses.Count; i++)
                 {
                     EDmgVsBoss weapon = dmgPtrBosses[i];
 
@@ -348,13 +348,13 @@ namespace MM2Randomizer.Randomizers
                     if (weapon == bossWeak1 || weapon == bossWeak2)
                     {
                         // Deal 1 damage with weapons that cost 1 or less ammo
-                        byte damage = 0x01;
+                        Byte damage = 0x01;
 
                         // Deal damage = ammoUsage - 1, minimum 2 damage
                         if (RWeaponBehavior.AmmoUsage[i + 1] > 1)
                         {
-                            int tryDamage = (int)RWeaponBehavior.AmmoUsage[i + 1] - 0x01;
-                            damage = (tryDamage < 2) ? (byte)0x02 : (byte)tryDamage;
+                            Int32 tryDamage = (Int32)RWeaponBehavior.AmmoUsage[i + 1] - 0x01;
+                            damage = (tryDamage < 2) ? (Byte)0x02 : (Byte)tryDamage;
                         }
                         Patch.Add(weapon + EDmgVsBoss.Offset.Dragon, damage, String.Format("{0} Damage to Dragon", weapon.WeaponName));
                         WilyWeaknesses[0, i + 1] = damage;
@@ -378,7 +378,7 @@ namespace MM2Randomizer.Randomizers
                 busterDmg = 0x00;
                 if (rBuster > 0.75)
                 {
-                    busterDmg = (byte)(r.Next(5) + 3);
+                    busterDmg = (Byte)(r.Next(5) + 3);
                 }
                 Patch.Add(EDmgVsEnemy.DamageP + EDmgVsEnemy.Offset.PicopicoKun, busterDmg, String.Format("Buster Damage to Picopico-Kun"));
                 WilyWeaknesses[1, 0] = busterDmg;
@@ -395,15 +395,15 @@ namespace MM2Randomizer.Randomizers
                 pico.RemoveAt(rInt);
                 rInt = r.Next(pico.Count);
                 enemyWeak3 = pico[rInt];
-                for (int i = 0; i < dmgPtrEnemies.Count; i++)
+                for (Int32 i = 0; i < dmgPtrEnemies.Count; i++)
                 {
                     EDmgVsEnemy weapon = dmgPtrEnemies[i];
-                    byte damage = 0x00;
+                    Byte damage = 0x00;
                     char level = ' ';
 
                     if (weapon == enemyWeak1)
                     {
-                        damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 10);
+                        damage = (Byte)(RWeaponBehavior.AmmoUsage[i + 1] * 10);
 
                         if (damage < 2)
                         {
@@ -414,7 +414,7 @@ namespace MM2Randomizer.Randomizers
                     }
                     else if (weapon == enemyWeak2)
                     {
-                        damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 6);
+                        damage = (Byte)(RWeaponBehavior.AmmoUsage[i + 1] * 6);
 
                         if (damage < 2)
                         {
@@ -425,7 +425,7 @@ namespace MM2Randomizer.Randomizers
                     }
                     else if (weapon == enemyWeak3)
                     {
-                        damage = (byte)(RWeaponBehavior.AmmoUsage[i + 1] * 3);
+                        damage = (Byte)(RWeaponBehavior.AmmoUsage[i + 1] * 3);
 
                         if (damage < 2)
                         {
@@ -474,7 +474,7 @@ namespace MM2Randomizer.Randomizers
                 rInt = r.Next(guts.Count);
                 bossWeak2 = guts[rInt];
 
-                for (int i = 0; i < dmgPtrBosses.Count; i++)
+                for (Int32 i = 0; i < dmgPtrBosses.Count; i++)
                 {
                     EDmgVsBoss weapon = dmgPtrBosses[i];
 
@@ -482,13 +482,13 @@ namespace MM2Randomizer.Randomizers
                     if (weapon == bossWeak1 || weapon == bossWeak2)
                     {
                         // Deal 1 damage with weapons that cost 1 or less ammo
-                        byte damage = 0x01;
+                        Byte damage = 0x01;
 
                         // Deal damage = ammoUsage - 1, minimum 2 damage
                         if (RWeaponBehavior.AmmoUsage[i + 1] > 1)
                         {
-                            int tryDamage = (int)RWeaponBehavior.AmmoUsage[i + 1] - 0x01;
-                            damage = (tryDamage < 2) ? (byte)0x02 : (byte)tryDamage;
+                            Int32 tryDamage = (Int32)RWeaponBehavior.AmmoUsage[i + 1] - 0x01;
+                            damage = (tryDamage < 2) ? (Byte)0x02 : (Byte)tryDamage;
                         }
                         Patch.Add(weapon + EDmgVsBoss.Offset.Guts, damage, String.Format("{0} Damage to Guts Tank", weapon.WeaponName));
                         WilyWeaknesses[2, i + 1] = damage;
@@ -522,15 +522,15 @@ namespace MM2Randomizer.Randomizers
                 }
 
                 // Get Barrier weakness
-                int rBarrierWeakness = r.Next(dmgBarrierList.Count);
+                Int32 rBarrierWeakness = r.Next(dmgBarrierList.Count);
                 EDmgVsEnemy wpnBarrier = dmgBarrierList[rBarrierWeakness];
 
                 // Scale damage to be slightly more capable than killing 5 barriers at full ammo
-                int dmgW4 = 0x01;
+                Int32 dmgW4 = 0x01;
                 if (wpnBarrier != EDmgVsEnemy.DamageP)
                 {
-                    int totalShots = (int)(28 / RWeaponBehavior.GetAmmoUsage(wpnBarrier));
-                    int numHitsPerBarrier = (int)(totalShots / 5);
+                    Int32 totalShots = (Int32)(28 / RWeaponBehavior.GetAmmoUsage(wpnBarrier));
+                    Int32 numHitsPerBarrier = (Int32)(totalShots / 5);
 
                     if (numHitsPerBarrier > 1)
                     {
@@ -542,12 +542,12 @@ namespace MM2Randomizer.Randomizers
                         numHitsPerBarrier = 8;
                     }
 
-                    dmgW4 = (int)Math.Ceiling(20d / numHitsPerBarrier);
+                    dmgW4 = (Int32)Math.Ceiling(20d / numHitsPerBarrier);
                 }
-                for (int i = 0; i < dmgBarrierList.Count; i++)
+                for (Int32 i = 0; i < dmgBarrierList.Count; i++)
                 {
                     // Deal damage with weakness, and 0 for everything else
-                    byte damage = (byte)dmgW4;
+                    Byte damage = (Byte)dmgW4;
                     EDmgVsEnemy wpn = dmgBarrierList[i];
                     if (wpn != wpnBarrier)
                     {
@@ -571,8 +571,8 @@ namespace MM2Randomizer.Randomizers
                 dmgW4 = 0x01;
                 if (wpnBuebeam != EDmgVsEnemy.DamageP)
                 {
-                    int totalShots = (int)(28 / RWeaponBehavior.GetAmmoUsage(wpnBuebeam));
-                    int numHitsPerBuebeam = (int)(totalShots / 5);
+                    Int32 totalShots = (Int32)(28 / RWeaponBehavior.GetAmmoUsage(wpnBuebeam));
+                    Int32 numHitsPerBuebeam = (Int32)(totalShots / 5);
 
                     if (numHitsPerBuebeam > 1)
                     {
@@ -584,13 +584,13 @@ namespace MM2Randomizer.Randomizers
                         numHitsPerBuebeam = 8;
                     }
 
-                    dmgW4 = (int)Math.Ceiling(20d / numHitsPerBuebeam);
+                    dmgW4 = (Int32)Math.Ceiling(20d / numHitsPerBuebeam);
                 }
 
                 // Add Buebeam damage values to patch, as well as array for use by Text and other modules later
-                for (int i = 0; i < dmgBarrierList.Count; i++)
+                for (Int32 i = 0; i < dmgBarrierList.Count; i++)
                 {
-                    byte damage = (byte)dmgW4;
+                    Byte damage = (Byte)dmgW4;
                     EDmgVsEnemy wpn = dmgBarrierList[i];
                     if (wpn != wpnBuebeam)
                     {
@@ -645,7 +645,7 @@ namespace MM2Randomizer.Randomizers
                 rInt = r.Next(machine.Count);
                 bossWeak4 = machine[rInt];
 
-                for (int i = 0; i < dmgPtrBosses.Count; i++)
+                for (Int32 i = 0; i < dmgPtrBosses.Count; i++)
                 {
                     EDmgVsBoss weapon = dmgPtrBosses[i];
 
@@ -653,12 +653,12 @@ namespace MM2Randomizer.Randomizers
                     if (weapon == bossWeak1 || weapon == bossWeak2 || weapon == bossWeak3 || weapon == bossWeak4)
                     {
                         // Deal 1 damage with weapons that cost 1 or less ammo
-                        byte damage = 0x01;
+                        Byte damage = 0x01;
 
                         // Deal damage = ammoUsage
                         if (RWeaponBehavior.AmmoUsage[i + 1] > 1)
                         {
-                            damage = (byte)RWeaponBehavior.AmmoUsage[i + 1];
+                            damage = (Byte)RWeaponBehavior.AmmoUsage[i + 1];
                         }
                         Patch.Add(weapon + EDmgVsBoss.Offset.Machine, damage, String.Format("{0} Damage to Wily Machine", weapon.WeaponName));
                         WilyWeaknesses[4, i + 1] = damage;
@@ -671,7 +671,7 @@ namespace MM2Randomizer.Randomizers
                     }
 
                     // Get index of this weapon out of all weapons 0-8;
-                    byte wIndex = (byte)(i + 1);
+                    Byte wIndex = (Byte)(i + 1);
 
                     if (weapon == EDmgVsBoss.ClashBomber || weapon == EDmgVsBoss.MetalBlade)
                     {
@@ -700,9 +700,9 @@ namespace MM2Randomizer.Randomizers
 
                 // Alien
                 // Buster Heat Air Wood Bubble Quick Clash Metal
-                byte alienDamage = 1;
+                Byte alienDamage = 1;
                 List<EDmgVsBoss> alienWeapons = EDmgVsBoss.GetTables(true, false);
-                int rWeaponIndex = r.Next(alienWeapons.Count);
+                Int32 rWeaponIndex = r.Next(alienWeapons.Count);
 
                 // Deal two damage for 1-ammo weapons (or buster)
                 if (RWeaponBehavior.AmmoUsage[rWeaponIndex] == 1)
@@ -712,11 +712,11 @@ namespace MM2Randomizer.Randomizers
                 // For 2+ ammo use weapons, deal 20% more than that in damage, rounded up
                 else if (RWeaponBehavior.AmmoUsage[rWeaponIndex] > 1)
                 {
-                    alienDamage = (byte)Math.Ceiling(RWeaponBehavior.AmmoUsage[rWeaponIndex] * 1.2);
+                    alienDamage = (Byte)Math.Ceiling(RWeaponBehavior.AmmoUsage[rWeaponIndex] * 1.2);
                 }
 
                 // Apply weakness and erase others (flash will remain 0xFF)
-                for (int i = 0; i < alienWeapons.Count; i++)
+                for (Int32 i = 0; i < alienWeapons.Count; i++)
                 {
                     EDmgVsBoss weapon = alienWeapons[i];
 
@@ -737,9 +737,9 @@ namespace MM2Randomizer.Randomizers
                 debug.AppendLine("Wily Boss Weaknesses:");
                 debug.AppendLine("P\tH\tA\tW\tB\tQ\tF\tM\tC:");
                 debug.AppendLine("--------------------------------------------");
-                for (int i = 0; i < WilyWeaknesses.GetLength(0); i++)
+                for (Int32 i = 0; i < WilyWeaknesses.GetLength(0); i++)
                 {
-                    for (int j = 0; j < WilyWeaknesses.GetLength(1); j++)
+                    for (Int32 j = 0; j < WilyWeaknesses.GetLength(1); j++)
                     {
                         debug.Append(String.Format("{0}\t", WilyWeaknesses[i, j]));
 
@@ -748,7 +748,7 @@ namespace MM2Randomizer.Randomizers
                             debug.Append("X\t"); // skip flash
                         }
                     }
-                    string bossName = "";
+                    String bossName = "";
                     switch (i)
                     {
                         case 0:

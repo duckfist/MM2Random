@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-
+﻿using System;
+using System.Collections.Generic;
 using MM2Randomizer.Enums;
 
 namespace MM2Randomizer.Randomizers.Enemies
@@ -12,20 +12,20 @@ namespace MM2Randomizer.Randomizers.Enemies
         /// Room numbers in the stage that this sprite bank applies to. Will always be sorted from least to greatest.
         /// </summary>
         public List<Room> Rooms { get; set; }
-        public int PatternAddressStart { get; set; }
+        public Int32 PatternAddressStart { get; set; }
         public List<EnemyType> NewEnemyTypes { get; set; }
 
-        public bool IsSpriteRestricted { get; set; }
-        public List<int> SpriteBankRowsRestriction { get; set; }
-        public List<byte> PatternTableAddressesRestriction { get; set; }
+        public Boolean IsSpriteRestricted { get; set; }
+        public List<Int32> SpriteBankRowsRestriction { get; set; }
+        public List<Byte> PatternTableAddressesRestriction { get; set; }
 
-        public SpriteBankRoomGroup (EStageID stage, int patternAddressStart, int[] roomNums)
+        public SpriteBankRoomGroup (EStageID stage, Int32 patternAddressStart, Int32[] roomNums)
         {
             this.Stage = stage;
             this.PatternAddressStart = patternAddressStart;
 
             Rooms = new List<Room>();
-            for (int i = 0; i < roomNums.Length; i++)
+            for (Int32 i = 0; i < roomNums.Length; i++)
             {
                 Rooms.Add(new Room(roomNums[i]));
             }
@@ -35,15 +35,15 @@ namespace MM2Randomizer.Randomizers.Enemies
             IsSpriteRestricted = false;
         }
 
-        public SpriteBankRoomGroup (EStageID stage, int patternAddressStart, int[] roomNums, int[] spriteBankRowsRestriction, byte[] patternTableAddressesRestriction/*, params EnemyInstance[] enemyInstances*/)
+        public SpriteBankRoomGroup (EStageID stage, Int32 patternAddressStart, Int32[] roomNums, Int32[] spriteBankRowsRestriction, Byte[] patternTableAddressesRestriction/*, params EnemyInstance[] enemyInstances*/)
             : this(stage, patternAddressStart, roomNums)
         {
-            SpriteBankRowsRestriction = new List<int>(spriteBankRowsRestriction);
-            PatternTableAddressesRestriction = new List<byte>(patternTableAddressesRestriction);
+            SpriteBankRowsRestriction = new List<Int32>(spriteBankRowsRestriction);
+            PatternTableAddressesRestriction = new List<Byte>(patternTableAddressesRestriction);
             IsSpriteRestricted = true;
         }
 
-        public bool ContainsRoom(int roomNum)
+        public Boolean ContainsRoom(Int32 roomNum)
         {
             foreach (Room room in Rooms)
             {

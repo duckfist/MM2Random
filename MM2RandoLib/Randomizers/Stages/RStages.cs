@@ -14,31 +14,31 @@ namespace MM2Randomizer.Randomizers.Stages
 
         public RStages() { }
 
-        public override string ToString()
+        public override String ToString()
         {
             return debug.ToString();
         }
 
-        public void FixPortraits(ref byte[] portraitBG_x, ref byte[] portraitBG_y)
+        public void FixPortraits(ref Byte[] portraitBG_x, ref Byte[] portraitBG_y)
         {
             // Get the new stage order
-            int[] newOrder = new int[8];
+            Int32[] newOrder = new Int32[8];
             foreach (StageFromSelect stage in StageSelect)
             {
                 newOrder[stage.PortraitDestinationOriginal] = stage.PortraitDestinationNew;
             }
 
             // Permute portrait x/y values via the shuffled stage-order array 
-            byte[] cpy = new byte[8];
+            Byte[] cpy = new Byte[8];
 
-            for (int i = 0; i < 8; i++)
+            for (Int32 i = 0; i < 8; i++)
             {
                 cpy[newOrder[i]] = portraitBG_y[i];
             }
 
             Array.Copy(cpy, portraitBG_y, 8);
 
-            for (int i = 0; i < 8; i++)
+            for (Int32 i = 0; i < 8; i++)
             {
                 cpy[newOrder[i]] = portraitBG_x[i];
             }
@@ -162,9 +162,9 @@ namespace MM2Randomizer.Randomizers.Stages
             });
 
 
-            List<byte> newStageOrder = new List<byte>();
+            List<Byte> newStageOrder = new List<Byte>();
 
-            for (byte i = 0; i < 8; i++)
+            for (Byte i = 0; i < 8; i++)
             {
                 newStageOrder.Add(i);
             }
@@ -172,7 +172,7 @@ namespace MM2Randomizer.Randomizers.Stages
             newStageOrder.Shuffle(r);
 
             debug.AppendLine("Stage Select:");
-            for (int i = 0; i < 8; i++)
+            for (Int32 i = 0; i < 8; i++)
             {
                 StageFromSelect stage = StageSelect[i];
 
@@ -182,26 +182,26 @@ namespace MM2Randomizer.Randomizers.Stages
                 // Erase the portrait text if StageNameHidden flag is set
                 if (RandomMM2.Settings.IsStageNameHidden)
                 {
-                    for (int k = 0; k < 6; k++)
+                    for (Int32 k = 0; k < 6; k++)
                     {
                         // Write in a blank space at each letter ('f' by my cipher)
-                        Patch.Add((int)stage.TextAddress + k, '`'.AsCreditsCharacter(), $"Hide Stage Select Portrait Text");
+                        Patch.Add((Int32)stage.TextAddress + k, '`'.AsCreditsCharacter(), $"Hide Stage Select Portrait Text");
                     }
 
-                    for (int k = 0; k < 3; k++)
+                    for (Int32 k = 0; k < 3; k++)
                     {
                         // Write in a blank space over "MAN"; 32 8-pixel tiles until the next row, 3 tiles until "MAN" text
-                        Patch.Add((int)stage.TextAddress + 32 + 3 + k, '`'.AsCreditsCharacter(), $"Hide Stage Select Portrait Text");
+                        Patch.Add((Int32)stage.TextAddress + 32 + 3 + k, '`'.AsCreditsCharacter(), $"Hide Stage Select Portrait Text");
                     }
                 }
                 // Change portrait text to match new destination
                 else
                 {
-                    string newlabel = StageSelect[newStageOrder[i]].TextValues;
-                    for (int j = 0; j < newlabel.Length; j++)
+                    String newlabel = StageSelect[newStageOrder[i]].TextValues;
+                    for (Int32 j = 0; j < newlabel.Length; j++)
                     {
                         char c = newlabel[j];
-                        Patch.Add((int)stage.TextAddress + j, c.AsCreditsCharacter(), $"Stage Select Portrait Text");
+                        Patch.Add((Int32)stage.TextAddress + j, c.AsCreditsCharacter(), $"Stage Select Portrait Text");
                     }
                 }
 
@@ -210,7 +210,7 @@ namespace MM2Randomizer.Randomizers.Stages
 
             foreach (StageFromSelect stage in StageSelect)
             {
-                Patch.Add((int)stage.PortraitAddress, (byte)stage.PortraitDestinationNew, $"Stage Select {stage.PortraitName} Destination");
+                Patch.Add((Int32)stage.PortraitAddress, (Byte)stage.PortraitDestinationNew, $"Stage Select {stage.PortraitName} Destination");
             }
         }
     }

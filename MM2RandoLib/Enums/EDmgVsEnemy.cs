@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MM2Randomizer.Enums
 {
@@ -7,17 +8,17 @@ namespace MM2Randomizer.Enums
     /// </summary>
     public sealed class EDmgVsEnemy
     {
-        public int Address
+        public Int32 Address
         {
             get; private set;
         }
 
-        public string WeaponName
+        public String WeaponName
         {
             get; private set;
         }
 
-        public static Dictionary<int, EDmgVsEnemy> Addresses { get; set; }
+        public static Dictionary<Int32, EDmgVsEnemy> Addresses { get; set; }
 
         public static readonly EDmgVsEnemy DamageP = new EDmgVsEnemy(0x03E9A8, "Buster");
         public static readonly EDmgVsEnemy DamageH = new EDmgVsEnemy(0x03EA24, "Atomic Fire");
@@ -30,7 +31,7 @@ namespace MM2Randomizer.Enums
 
         static EDmgVsEnemy()
         {
-            Addresses = new Dictionary<int, EDmgVsEnemy>()
+            Addresses = new Dictionary<Int32, EDmgVsEnemy>()
             {
                 { DamageP.Address, DamageP },
                 { DamageH.Address, DamageH },
@@ -43,47 +44,47 @@ namespace MM2Randomizer.Enums
             };
         }
 
-        private EDmgVsEnemy(int address, string name)
+        private EDmgVsEnemy(Int32 address, String name)
         {
             this.Address = address;
             this.WeaponName = name;
         }
 
-        public static implicit operator int (EDmgVsEnemy eDmgVsEnemy)
+        public static implicit operator Int32 (EDmgVsEnemy eDmgVsEnemy)
         {
             return eDmgVsEnemy.Address;
         }
 
-        public static implicit operator EDmgVsEnemy(int eDmgVsEnemy)
+        public static implicit operator EDmgVsEnemy(Int32 eDmgVsEnemy)
         {
             return Addresses[eDmgVsEnemy];
         }
 
-        public static bool operator ==(EDmgVsEnemy a, EDmgVsEnemy b)
+        public static Boolean operator ==(EDmgVsEnemy a, EDmgVsEnemy b)
         {
             return (a.Address == b.Address);
         }
 
-        public static bool operator !=(EDmgVsEnemy a, EDmgVsEnemy b)
+        public static Boolean operator !=(EDmgVsEnemy a, EDmgVsEnemy b)
         {
             return (a.Address != b.Address);
         }
-        public static bool operator ==(int a, EDmgVsEnemy b)
+        public static Boolean operator ==(Int32 a, EDmgVsEnemy b)
         {
             return (a == b.Address);
         }
 
-        public static bool operator !=(int a, EDmgVsEnemy b)
+        public static Boolean operator !=(Int32 a, EDmgVsEnemy b)
         {
             return (a != b.Address);
         }
 
-        public override bool Equals(object obj)
+        public override Boolean Equals(Object obj)
         {
             return base.Equals(obj);
         }
 
-        public override int GetHashCode()
+        public override Int32 GetHashCode()
         {
             return base.GetHashCode();
         }
@@ -92,7 +93,7 @@ namespace MM2Randomizer.Enums
         /// 
         /// </summary>
         /// <returns></returns>
-        public static List<EDmgVsEnemy> GetTables(bool includeBuster)
+        public static List<EDmgVsEnemy> GetTables(Boolean includeBuster)
         {
             List<EDmgVsEnemy> list = new List<EDmgVsEnemy>()
             {
@@ -118,7 +119,7 @@ namespace MM2Randomizer.Enums
         /// </summary>
         public class Offset
         {
-            public int Value
+            public Int32 Value
             {
                 get; private set;
             }
@@ -138,42 +139,42 @@ namespace MM2Randomizer.Enums
                 Buebeam             = new Offset(0x6D);
             }
 
-            private Offset(int offset)
+            private Offset(Int32 offset)
             {
                 this.Value = offset;
             }
 
-            public static implicit operator int (Offset offset)
+            public static implicit operator Int32 (Offset offset)
             {
                 return offset.Value;
             }
 
-            public static bool operator ==(Offset a, Offset b)
+            public static Boolean operator ==(Offset a, Offset b)
             {
                 return (a.Value == b.Value);
             }
 
-            public static bool operator !=(Offset a, Offset b)
+            public static Boolean operator !=(Offset a, Offset b)
             {
                 return (a.Value != b.Value);
             }
 
-            public static bool operator ==(int a, Offset b)
+            public static Boolean operator ==(Int32 a, Offset b)
             {
                 return (a == b.Value);
             }
 
-            public static bool operator !=(int a, Offset b)
+            public static Boolean operator !=(Int32 a, Offset b)
             {
                 return (a != b.Value);
             }
 
-            public override bool Equals(object obj)
+            public override Boolean Equals(Object obj)
             {
                 return base.Equals(obj);
             }
 
-            public override int GetHashCode()
+            public override Int32 GetHashCode()
             {
                 return base.GetHashCode();
             }

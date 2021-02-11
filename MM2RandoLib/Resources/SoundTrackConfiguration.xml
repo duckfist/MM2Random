@@ -3,9 +3,9 @@
 <!--
     Mega Man 2 Sound Track Config File
 
-    SongName = Any string to identify the song, such as the name and what game/hack it comes from
-    OriginalStartAddress = The address of the first byte of the song's header (value 0F) in the song's original ROM
-    SongData = Stream of bytes representing the song, each byte a pair of adjacent characters in the string
+    SongName = Any String to identify the song, such as the name and what game/hack it comes from
+    OriginalStartAddress = The address of the first Byte of the song's header (value 0F) in the song's original ROM
+    SongData = Stream of bytes representing the song, each Byte a pair of adjacent characters in the String
 
     The 11 songs chosen for stages should not exceed 9438 (0x24DE) total bytes. Don't make too long of songs.
 -->

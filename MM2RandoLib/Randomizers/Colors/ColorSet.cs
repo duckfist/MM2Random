@@ -8,9 +8,9 @@ namespace MM2Randomizer.Randomizers.Colors
 {
     public class ColorSet
     {
-        public int[] addresses;
+        public Int32[] addresses;
         public List<EColorsHex[]> ColorBytes;
-        public int Index; 
+        public Int32 Index; 
 
         public ColorSet()
         {
@@ -18,13 +18,13 @@ namespace MM2Randomizer.Randomizers.Colors
             Index = 0;
         }
 
-        public void RandomizeAndWrite(Patch patch, Random rand, int setNumber)
+        public void RandomizeAndWrite(Patch patch, Random rand, Int32 setNumber)
         {
             Index = rand.Next(ColorBytes.Count);
 
-            for (int i = 0; i < addresses.Length; i++)
+            for (Int32 i = 0; i < addresses.Length; i++)
             {
-                patch.Add(addresses[i], (byte)ColorBytes[Index][i], String.Format("Color Set {0} (Index Chosen: {1}) Value #{2}", setNumber, Index, i));
+                patch.Add(addresses[i], (Byte)ColorBytes[Index][i], String.Format("Color Set {0} (Index Chosen: {1}) Value #{2}", setNumber, Index, i));
             }
         }
     }

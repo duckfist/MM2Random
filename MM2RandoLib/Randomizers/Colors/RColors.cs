@@ -13,11 +13,11 @@ namespace MM2Randomizer.Randomizers.Colors
     /// </summary>
     public class RColors : IRandomizer
     {
-        private static int MegaManColorAddressU = 0x03d314;
+        private static Int32 MegaManColorAddressU = 0x03d314;
 
-        private bool flashing_disabled;
+        private Boolean flashing_disabled;
 
-        public RColors(bool flashing_disabled) {
+        public RColors(Boolean flashing_disabled) {
             this.flashing_disabled = flashing_disabled;
         }
 
@@ -35,7 +35,7 @@ namespace MM2Randomizer.Randomizers.Colors
             List<ColorSet> StageSelectColorSets = new List<ColorSet>()
             {
                 new ColorSet() { // Start/Password background color data
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x036f0b, 0x036f0c
                     },
                     ColorBytes = new List<EColorsHex[]>() {
@@ -115,7 +115,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Stage Select and Credits Panel background color sets
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x0344ab, 0x0344ac,
                         0x0344af, 0x0344b0,
                         0x0344b3, 0x0344b4,
@@ -220,7 +220,7 @@ namespace MM2Randomizer.Randomizers.Colors
             // Boss Intro Panel color set, use the similar formatted Start/Password colorbytes
             StageSelectColorSets.Add(new ColorSet()
             {
-                addresses = new int[] { 0x34186, 0x3418B },
+                addresses = new Int32[] { 0x34186, 0x3418B },
                 ColorBytes = new List<EColorsHex[]>(StageSelectColorSets[0].ColorBytes),
             });
 
@@ -228,7 +228,7 @@ namespace MM2Randomizer.Randomizers.Colors
             // Wily Map color set: Blue sky, castle walls, radar dish, shadows
             ColorSet wilyMap1 = new ColorSet()
             {
-                addresses = new int[] {
+                addresses = new Int32[] {
                     0x035E99, 0x035EA5, // dark 1, 2 ($01)
                     0x035EB9, 0x035EBA, // mid 1, 2  ($11)
                     0x035EC5, 0x035EDA, 0x035BA6, // mid 3-5  ($11)
@@ -245,7 +245,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     },
                 }
             };
-            for (int i = 0; i < 12; i++)
+            for (Int32 i = 0; i < 12; i++)
             {
                 // Add the standard range of palette color shades (starting with default blue)
                 wilyMap1.ColorBytes.Add(new EColorsHex[]
@@ -262,7 +262,7 @@ namespace MM2Randomizer.Randomizers.Colors
             // Wily Map color set: Roofs, turret
             ColorSet wilyMap2 = new ColorSet()
             {
-                addresses = new int[] {
+                addresses = new Int32[] {
                     0x035EA1, // dark orange, $06 (fade in only)
                     0x035EC1, // mid orange, $16 (fade in only)
                     0x035EE1, 0x035BAD, // lite orange, $26
@@ -272,7 +272,7 @@ namespace MM2Randomizer.Randomizers.Colors
 
                 ColorBytes = new List<EColorsHex[]>() { }
             };
-            for (int i = 1; i <= 12; i++)
+            for (Int32 i = 1; i <= 12; i++)
             {
                 // Add the standard range of palette color shades (i = 0 is default colors)
                 wilyMap2.ColorBytes.Add(new EColorsHex[]
@@ -290,7 +290,7 @@ namespace MM2Randomizer.Randomizers.Colors
             // Wily Map color set: Wily logo
             ColorSet wilyMap3 = new ColorSet()
             {
-                addresses = new int[] {
+                addresses = new Int32[] {
                     0x035EA9, // dark green 1 ($09)
                     0x035EEA, // dark green 2 ($09)
                     0x035BB6, // dark green 3 ($09)
@@ -308,7 +308,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     },
                 }
             };
-            for (int i = 1; i <= 12; i++)
+            for (Int32 i = 1; i <= 12; i++)
             {
                 // Add the standard range of palette color shades (starting with default)
                 wilyMap3.ColorBytes.Add(new EColorsHex[]
@@ -324,7 +324,7 @@ namespace MM2Randomizer.Randomizers.Colors
             // Wily Map color set: Wily logo stroke
             ColorSet wilyMap4 = new ColorSet()
             {
-                addresses = new int[] {
+                addresses = new Int32[] {
                     0x035EC8,           // dark orange
                     0x035EE8, 0x035BB4, // mid orange
                 },
@@ -337,7 +337,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     },
                 }
             };
-            for (int i = 1; i <= 12; i++)
+            for (Int32 i = 1; i <= 12; i++)
             {
                 // Add the standard range of palette color shades (starting with default)
                 wilyMap4.ColorBytes.Add(new EColorsHex[]
@@ -352,7 +352,7 @@ namespace MM2Randomizer.Randomizers.Colors
             // Wily Map color set: Ground/cliffs
             ColorSet wilyMap5 = new ColorSet()
             {
-                addresses = new int[] {
+                addresses = new Int32[] {
                     0x035EC4, 0x035EE6, 0x035BD2, 0x035BB2, // dark brown
                     0x035EE4, 0x035BD0, 0x035BB0, // mid brown
                 },
@@ -365,7 +365,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     },
                 }
             };
-            for (int i = 1; i <= 12; i++)
+            for (Int32 i = 1; i <= 12; i++)
             {
                 // Add the standard range of palette color shades (starting with default)
                 wilyMap5.ColorBytes.Add(new EColorsHex[]
@@ -380,7 +380,7 @@ namespace MM2Randomizer.Randomizers.Colors
             // Wily Map color set: Palette flash
             ColorSet wilyMap6 = new ColorSet()
             {
-                addresses = new int[] {
+                addresses = new Int32[] {
                     0x035BC4, 0x035BC8, 0x035BCC, 0x035BC5, 0x035BC9, 0x035BCD, 0x035BC6, 0x035BCA, 0x035BCE, 0x035BD1
                 },
 
@@ -391,7 +391,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     },
                 }
             };
-            for (int i = 1; i <= 12; i++)
+            for (Int32 i = 1; i <= 12; i++)
             {
                 wilyMap6.ColorBytes.Add(
                     new EColorsHex[]{
@@ -413,7 +413,7 @@ namespace MM2Randomizer.Randomizers.Colors
             // Wily Map color set: Line path
             ColorSet wilyMap7 = new ColorSet()
             {
-                addresses = new int[] {
+                addresses = new Int32[] {
                     0x035BC2, 0x035BE2
                 },
 
@@ -424,7 +424,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     },
                 }
             };
-            for (int i = 1; i <= 12; i++)
+            for (Int32 i = 1; i <= 12; i++)
             {
                 wilyMap7.ColorBytes.Add(new EColorsHex[] {
                     (EColorsHex)(0x10 + i),
@@ -435,7 +435,7 @@ namespace MM2Randomizer.Randomizers.Colors
 
 
             // Execute randomization
-            for (int i = 0; i < StageSelectColorSets.Count; i++)
+            for (Int32 i = 0; i < StageSelectColorSets.Count; i++)
             {
                 ColorSet set = StageSelectColorSets[i];
                 set.RandomizeAndWrite(p, r, i);
@@ -445,17 +445,17 @@ namespace MM2Randomizer.Randomizers.Colors
         private void RandomizeWeaponColors(Patch p, Random r)
         {
             // Create lists of possible colors to choose from and shuffle them
-            List<byte> PossibleDarkColors = new List<byte>();
-            List<byte> PossibleLightColors = new List<byte>();
+            List<Byte> PossibleDarkColors = new List<Byte>();
+            List<Byte> PossibleLightColors = new List<Byte>();
 
-            for (byte i = 0x01; i <= 0x0C; i++)
+            for (Byte i = 0x01; i <= 0x0C; i++)
             {
                 // Add first two rows of colors to dark list (except black/white/gray)
                 PossibleDarkColors.Add(i);
-                PossibleDarkColors.Add((byte)(i + 0x10));
+                PossibleDarkColors.Add((Byte)(i + 0x10));
                 // Add third and fourth rows to light list (except black/white/gray)
-                PossibleLightColors.Add((byte)(i + 0x20));
-                PossibleLightColors.Add((byte)(i + 0x30));
+                PossibleLightColors.Add((Byte)(i + 0x20));
+                PossibleLightColors.Add((Byte)(i + 0x30));
             }
             // Add black and dark-gray to dark list, white and light-gray to light list
             PossibleDarkColors.Add(0x0F);
@@ -466,20 +466,20 @@ namespace MM2Randomizer.Randomizers.Colors
             // Randomize lists, and pick the first 9 and 8 elements to use as new colors
             PossibleDarkColors.Shuffle(r);
             PossibleLightColors.Shuffle(r);
-            Queue<byte> DarkColors = new Queue<byte>(PossibleDarkColors.GetRange(0, 9));
-            Queue<byte> LightColors = new Queue<byte>(PossibleLightColors.GetRange(0, 8));
+            Queue<Byte> DarkColors = new Queue<Byte>(PossibleDarkColors.GetRange(0, 9));
+            Queue<Byte> LightColors = new Queue<Byte>(PossibleLightColors.GetRange(0, 8));
 
             // Get starting address depending on game version
-            //int startAddress = (RandomMM2.Settings.IsJapanese) ? MegaManColorAddressJ : MegaManColorAddressU;
-            int startAddress = MegaManColorAddressU;
+            //Int32 startAddress = (RandomMM2.Settings.IsJapanese) ? MegaManColorAddressJ : MegaManColorAddressU;
+            Int32 startAddress = MegaManColorAddressU;
 
             // Change 8 robot master weapon colors
-            for (int i = 0; i < 8; i++)
+            for (Int32 i = 0; i < 8; i++)
             {
-                byte dark = DarkColors.Dequeue();
-                byte light = LightColors.Dequeue();
+                Byte dark = DarkColors.Dequeue();
+                Byte light = LightColors.Dequeue();
 
-                int pos = startAddress + 0x04 + i * 0x04;
+                Int32 pos = startAddress + 0x04 + i * 0x04;
                 p.Add(pos, light, String.Format("{0} Weapon Color Light", ((EDmgVsBoss.Offset)i).ToString()));
                 p.Add(pos+1, dark, String.Format("{0} Weapon Color Dark", ((EDmgVsBoss.Offset)i).ToString()));
 
@@ -496,8 +496,8 @@ namespace MM2Randomizer.Randomizers.Colors
             }
 
             // Change 3 Item colors
-            byte itemColor = DarkColors.Dequeue();
-            for (int i = 0; i < 3; i++)
+            Byte itemColor = DarkColors.Dequeue();
+            for (Int32 i = 0; i < 3; i++)
             {
                 p.Add(startAddress + 0x25 + i * 0x04, itemColor, String.Format("Item {0} Dark Color", i+1));
             }
@@ -506,27 +506,27 @@ namespace MM2Randomizer.Randomizers.Colors
         private void RandomizeBossColors(Patch p, Random r)
         {
             //// Robot Master Color Palettes
-            List<int> SolidColorSolo = new List<int>
+            List<Int32> SolidColorSolo = new List<Int32>
             {
                 0x00B4EA, // Wood leaf color 0x29
                 //0x01B4A1, // Metal blade color 0x30 // WARNING: This should be synchronized with some stage BG colors, or else can appear invisible.
             };
 
-            List<int> SolidColorPair1Main = new List<int> {
+            List<Int32> SolidColorPair1Main = new List<Int32> {
                 0x01F4ED, // Clash red color 0x16
                 0x0174B7, // Flash blue color 0x12
                 0x0074B4, // Air projectile blue color 0x11
                 0x00B4ED, // Wood orange color 0x17
             };
 
-            List<int> SolidColorPair1White = new List<int> {
+            List<Int32> SolidColorPair1White = new List<Int32> {
                 0x01F4EC, // Clash white color 0x30
                 0x0174B6, // Flash white color 0x30
                 0x0074B3, // Air projectile white color 0x30
                 0x00B4EC, // Wood white color 0x36
             };
 
-            List<int> SolidColorPair2Dark = new List<int> {
+            List<Int32> SolidColorPair2Dark = new List<Int32> {
                 0x0034B4, // Heat projectile red color 0x15
                 0x0034B7, // Heat red color 0x15
                 0x0074B7, // Air blue color 0x11
@@ -536,7 +536,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 0x00F4B7, // Bubble green color 0x19
             };
 
-            List<int> SolidColorPair2Light = new List<int> {
+            List<Int32> SolidColorPair2Light = new List<Int32> {
                 0x0034B3, // Heat projectile yellow color 0x28
                 0x0034B6, // Heat yellow color 0x28
                 0x0074B6, // Air yellow color 0x28
@@ -547,59 +547,59 @@ namespace MM2Randomizer.Randomizers.Colors
             };
 
             // Colors for bosses with 1 solid color and 1 white
-            List<byte> goodSolidColors = new List<byte>()
+            List<Byte> goodSolidColors = new List<Byte>()
             {
                 0x0F,0x20,0x31,0x22,0x03,0x23,0x14,0x05,0x15,0x16,0x07,0x27,0x28,0x09,0x1A,0x2A,0x0B,0x2B,0x0C,0x1C,
             };
 
             // Colors for bosses with a dark and a light color
-            List<byte> goodDarkColors = new List<byte>()
+            List<Byte> goodDarkColors = new List<Byte>()
             {
                 0x01,0x12,0x03,0x04,0x05,0x16,0x07,0x18,0x09,0x1A,0x0B,0x0C,0x0F,0x00,
             };
-            List<byte> goodLightColors = new List<byte>()
+            List<Byte> goodLightColors = new List<Byte>()
             {
                 0x21,0x32,0x23,0x34,0x15,0x26,0x27,0x28,0x29,0x3A,0x1B,0x2C,0x10,0x20,
             };
 
             // Dark colors only
-            List<byte> darkOnly = new List<byte>()
+            List<Byte> darkOnly = new List<Byte>()
             {
                 0x0F,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C
             };
             // Medium colors only
-            List<byte> mediumOnly = new List<byte>()
+            List<Byte> mediumOnly = new List<Byte>()
             {
                 0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,0x1A,0x1B,0x1C
             };
             // Light colors only
-            List<byte> lightOnly = new List<byte>()
+            List<Byte> lightOnly = new List<Byte>()
             {
                 0x21,0x22,0x23,0x24,0x25,0x26,0x27,0x28,0x29,0x2A,0x2B,0x2C
             };
 
-            int rColor = 0;
-            for (int i = 0; i < SolidColorSolo.Count; i++)
+            Int32 rColor = 0;
+            for (Int32 i = 0; i < SolidColorSolo.Count; i++)
             {
                 rColor = r.Next(goodSolidColors.Count);
                 p.Add(SolidColorSolo[i], goodSolidColors[rColor], String.Format("Robot Master Color"));
             }
 
-            for (int i = 0; i < SolidColorPair1Main.Count; i++)
+            for (Int32 i = 0; i < SolidColorPair1Main.Count; i++)
             {
                 p.Add(SolidColorPair1Main[i], goodSolidColors[rColor], String.Format("Robot Master Color"));
 
                 // Make 2nd color brighter. If already bright, make white.
                 rColor = r.Next(goodSolidColors.Count);
-                int lightColor = goodSolidColors[rColor] + 0x10;
+                Int32 lightColor = goodSolidColors[rColor] + 0x10;
                 if (lightColor > 0x3C)
                 {
                     lightColor = 0x30;
                 }
-                p.Add(SolidColorPair1White[i], (byte)lightColor, String.Format("Robot Master Color"));
+                p.Add(SolidColorPair1White[i], (Byte)lightColor, String.Format("Robot Master Color"));
             }
 
-            for (int i = 0; i < SolidColorPair2Dark.Count; i++)
+            for (Int32 i = 0; i < SolidColorPair2Dark.Count; i++)
             {
                 rColor = r.Next(SolidColorPair2Dark.Count);
                 p.Add(SolidColorPair2Dark[i], goodDarkColors[rColor], String.Format("Robot Master Color"));
@@ -612,11 +612,15 @@ namespace MM2Randomizer.Randomizers.Colors
             // Wily Machine
             // choose main body color
             rColor = r.Next(darkOnly.Count);
-            byte shade0 = darkOnly[rColor];
-            byte shade1 = (byte)(shade0 + 0x10);
+            Byte shade0 = darkOnly[rColor];
+            Byte shade1 = (Byte)(shade0 + 0x10);
+
             if (shade0 == 0x0F)
+            {
                 shade1 = 0x00; // Dark gray up from black
-            byte shade2 = (byte)(shade1 + 0x10);
+            }
+
+            Byte shade2 = (Byte)(shade1 + 0x10);
 
             p.Add(0x02D7D5, shade2, "Wily Machine Light-Gold Color"); // 0x27
             p.Add(0x02D7D2, shade1, "Wily Machine Gold 1 Color"); // 0x17
@@ -628,8 +632,8 @@ namespace MM2Randomizer.Randomizers.Colors
             // choose front color
             rColor = r.Next(mediumOnly.Count);
             shade0 = mediumOnly[rColor];
-            shade1 = (byte)(shade0 + 0x10);
-            shade2 = (byte)(shade1 + 0x20);
+            shade1 = (Byte)(shade0 + 0x10);
+            shade2 = (Byte)(shade1 + 0x20);
 
             p.Add(0x02D7D1, shade0, "Wily Machine Red 1 Color"); // 0x15
             p.Add(0x02D7D9, shade0, "Wily Machine Red 2 Color"); // 0x15
@@ -644,11 +648,15 @@ namespace MM2Randomizer.Randomizers.Colors
             // choose orange replacement
             rColor = r.Next(darkOnly.Count);
             shade0 = darkOnly[rColor];
-            shade1 = (byte)(shade0 + 0x10);
+            shade1 = (Byte)(shade0 + 0x10);
+
             if (shade0 == 0x0F)
+            {
                 shade1 = 0x00; // Dark gray up from black
-            shade2 = (byte)(shade1 + 0x10);
-            byte shade3 = (byte)(shade2 + 0x10);
+            }
+
+            shade2 = (Byte)(shade1 + 0x10);
+            Byte shade3 = (Byte)(shade2 + 0x10);
             p.Add(0x02CF8F, shade2, "Dragon Orange Color 1");
             p.Add(0x02CF97, shade2, "Dragon Orange Color 2");
             p.Add(0x0034C6, shade3, "Dragon Orange Mouth");
@@ -662,10 +670,14 @@ namespace MM2Randomizer.Randomizers.Colors
             // Choose green replacement
             rColor = r.Next(darkOnly.Count);
             shade0 = darkOnly[rColor];
-            shade1 = (byte)(shade0 + 0x10);
+            shade1 = (Byte)(shade0 + 0x10);
+
             if (shade0 == 0x0F)
+            {
                 shade1 = 0x00; // Dark gray up from black
-            shade2 = (byte)(shade1 + 0x10);
+            }
+
+            shade2 = (Byte)(shade1 + 0x10);
             p.Add(0x02CF8C, shade2, "Dragon Light Green 1");
             p.Add(0x02CF8D, shade1, "Dragon Dark Green 1");
             p.Add(0x02CF98, shade2, "Dragon Light Green 2");
@@ -677,20 +689,28 @@ namespace MM2Randomizer.Randomizers.Colors
             // choose blue replacement
             rColor = r.Next(darkOnly.Count);
             shade0 = darkOnly[rColor];
-            shade1 = (byte)(shade0 + 0x10);
+            shade1 = (Byte)(shade0 + 0x10);
+
             if (shade0 == 0x0F)
+            {
                 shade1 = 0x00; // Dark gray up from black
-            shade2 = (byte)(shade1 + 0x10);
+            }
+
+            shade2 = (Byte)(shade1 + 0x10);
             p.Add(0x02CF90, shade1, "Dragon Blue Color 1");
 
             // Gutsdozer
             // Choose red replacement
             rColor = r.Next(darkOnly.Count);
             shade0 = darkOnly[rColor];
-            shade1 = (byte)(shade0 + 0x10);
+            shade1 = (Byte)(shade0 + 0x10);
+
             if (shade0 == 0x0F)
+            {
                 shade1 = 0x00; // Dark gray up from black
-            shade2 = (byte)(shade1 + 0x10);
+            }
+
+            shade2 = (Byte)(shade1 + 0x10);
             p.Add(0x00BF40, shade0, "Guts Dark Red 1");
             p.Add(0x00BF41, shade1, "Guts Light Red 1");
             p.Add(0x00BF50, shade0, "Guts Dark Red 2");
@@ -703,21 +723,29 @@ namespace MM2Randomizer.Randomizers.Colors
             // Choose blue replacement
             rColor = r.Next(darkOnly.Count);
             shade0 = darkOnly[rColor];
-            shade1 = (byte)(shade0 + 0x10);
+            shade1 = (Byte)(shade0 + 0x10);
+
             if (shade0 == 0x0F)
+            {
                 shade1 = 0x00; // Dark gray up from black
-            shade2 = (byte)(shade1 + 0x10);
+            }
+
+            shade2 = (Byte)(shade1 + 0x10);
             p.Add(0x00BF38, shade1, "Guts Blue 1");
             p.Add(0x00BF48, shade1, "Guts Blue 2");
 
             // Choose orange replacement
             rColor = r.Next(darkOnly.Count);
             shade0 = darkOnly[rColor];
-            shade1 = (byte)(shade0 + 0x10);
+            shade1 = (Byte)(shade0 + 0x10);
+
             if (shade0 == 0x0F)
+            {
                 shade1 = 0x00; // Dark gray up from black
-            shade2 = (byte)(shade1 + 0x10);
-            shade3 = (byte)(shade2 + 0x10);
+            }
+
+            shade2 = (Byte)(shade1 + 0x10);
+            shade3 = (Byte)(shade2 + 0x10);
             p.Add(0x00BF3F, shade2, "Guts Light Orange Color 1");
             p.Add(0x00BF4F, shade2, "Guts Light Orange Color 2");
             p.Add(0x00BF37, shade2, "Guts Light Orange Color 3");
@@ -735,7 +763,7 @@ namespace MM2Randomizer.Randomizers.Colors
             //0x02DC74(3 bytes) Alien Body, static   0x16 0x29 0x19
             //0x02DC78(3 bytes) Alien Head, static   0x16 0x29 0x19
             // Looks good as 4 separate color groups, should be easy. Save the animations for later.
-            List<byte> mediumAndLight = new List<byte>(mediumOnly);
+            List<Byte> mediumAndLight = new List<Byte>(mediumOnly);
             mediumAndLight.AddRange(lightOnly);
 
             rColor = r.Next(mediumAndLight.Count);
@@ -750,14 +778,14 @@ namespace MM2Randomizer.Randomizers.Colors
             shade0 = mediumOnly[rColor];
             p.Add(0x02DC76, shade0, String.Format("Alien Body Dark Color"));
 
-            shade1 = (byte)(shade0 + 0x10);
+            shade1 = (Byte)(shade0 + 0x10);
             p.Add(0x02DC75, shade1, String.Format("Alien Body Light Color"));
 
             rColor = r.Next(mediumOnly.Count);
             shade0 = mediumOnly[rColor];
             p.Add(0x02DC7A, shade0, String.Format("Alien Body Dark Color"));
 
-            shade1 = (byte)(shade0 + 0x10);
+            shade1 = (Byte)(shade0 + 0x10);
             p.Add(0x02DC79, shade1, String.Format("Alien Head Light Color"));
         }
 
@@ -766,7 +794,7 @@ namespace MM2Randomizer.Randomizers.Colors
             List<ColorSet> IntroColorSets = new List<ColorSet>()
             {
                 new ColorSet() { // Building 1
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x36a62,                    // partial 1
                         0x36a81, 0x36a82,           // partial 2
                         0x36aa0, 0x36aa1, 0x36aa2 },// full
@@ -821,7 +849,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Building 2
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x36a6a,                    // partial 1
                         0x36a89, 0x36a8a,           // partial 2
                         0x36aa8, 0x36aa9, 0x36aaa },// full
@@ -874,7 +902,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     }
                 },
                 new ColorSet() { // Mountain Sky
-                    addresses = new int[] { 0x36aa5, 0x36aa6 },
+                    addresses = new Int32[] { 0x36aa5, 0x36aa6 },
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] { // default blue
                             (EColorsHex)0x11, (EColorsHex)0x0C
@@ -919,7 +947,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
             };
 
-            for (int i = 0; i < IntroColorSets.Count; i++)
+            for (Int32 i = 0; i < IntroColorSets.Count; i++)
             {
                 ColorSet set = IntroColorSets[i];
                 set.RandomizeAndWrite(p, r, i);
@@ -933,7 +961,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 01 Heatman
 
                 new ColorSet() { // Heat | River 
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x3e1f, 0x3e20, 0x3e21, // default BG
                         0x3e3f, 0x3e4f, 0x3e5f, // animated BG
                         0x3e40, 0x3e50, 0x3e60,
@@ -966,7 +994,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     }
                 },
                 new ColorSet() { // Heat | Background
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x3e1b, 0x3e1c, 0x3e1d,  // default BG
                         0x3e3b, 0x3e4b, 0x3e5b,  // animated BG1
                         0x3e3c, 0x3e4c, 0x3e5c,  // animated BG2
@@ -1005,7 +1033,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     }
                 },
                 new ColorSet() { // Heat | Foreground
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x3e13, 0x3e14, 0x3e15,  // default BG
                         0x3e33, 0x3e43, 0x3e53,  // animated BG1
                         0x3e34, 0x3e44, 0x3e54,  // animated BG2
@@ -1038,7 +1066,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     }
                 },
                 new ColorSet() { // Heat | Foreground2
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x3e17, 0x3e18, 0x3e19,  // default BG
                         0x3e37, 0x3e47, 0x3e57,  // animated BG1
                         0x3e38, 0x3e48, 0x3e58,  // animated BG2
@@ -1076,7 +1104,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 01 Wily 1
 
                 new ColorSet() { // Wily 1 | Solid Background and Clouds
-                    addresses = new int[] {0x3f15, 0x3f17, 0x3f18, 0x3f19,},
+                    addresses = new Int32[] {0x3f15, 0x3f17, 0x3f18, 0x3f19,},
                     ColorBytes = new List<EColorsHex[]>() {
                         // Default Dark Cyan
                         new EColorsHex[] {(EColorsHex)0x0C,(EColorsHex)0x1C,(EColorsHex)0x0C,(EColorsHex)0x0C},
@@ -1093,7 +1121,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 1 | Building Exterior Walls
-                    addresses = new int[] {0x3f13, 0x3f14,},
+                    addresses = new Int32[] {0x3f13, 0x3f14,},
                     ColorBytes = new List<EColorsHex[]>() {
                         // Default Gray
                         new EColorsHex[] {(EColorsHex)0x20,(EColorsHex)0x10},
@@ -1109,7 +1137,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 1 | Ground and Building Interior Walls
-                    addresses = new int[] {0x3f1b, 0x3f1c, 0x3f1d,},
+                    addresses = new Int32[] {0x3f1b, 0x3f1c, 0x3f1d,},
                     ColorBytes = new List<EColorsHex[]>() {
                         // Default Gold3
                         new EColorsHex[] {(EColorsHex)0x38,(EColorsHex)0x27,(EColorsHex)0x07},
@@ -1127,7 +1155,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 1 | Building Background
-                    addresses = new int[] {0x3f1f, 0x3f20, 0x3f21,},
+                    addresses = new Int32[] {0x3f1f, 0x3f20, 0x3f21,},
                     ColorBytes = new List<EColorsHex[]>() {
                         // Default Teal
                         new EColorsHex[] {(EColorsHex)0x2c,(EColorsHex)0x1b,(EColorsHex)0x0c},
@@ -1146,7 +1174,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 02 Airman
 
                 new ColorSet() { // Air | Platforms
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x7e17, 0x7e18, 0x7e19,
                         0x7e37, 0x7e47, 0x7e57, 0x7e67,
                         0x7e38, 0x7e48, 0x7e58, 0x7e68,
@@ -1185,7 +1213,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     }
                 },
                 new ColorSet() { // Air | Clouds 
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x7e13, 0x7e14, 0x7e15,
                         0x7e33, 0x7e43, 0x7e53, 0x7e63,
                         0x7e34, 0x7e44, 0x7e54, 0x7e64,
@@ -1248,7 +1276,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     }
                 },
                 new ColorSet() { // Air | Sky 
-                    addresses = new int[] { 0x7e22 },
+                    addresses = new Int32[] { 0x7e22 },
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] {  EColorsHex.LightBlue },
                         new EColorsHex[] {  EColorsHex.LightPurple },
@@ -1268,7 +1296,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 02 Wily 2
 
                 new ColorSet() { // Wily 2 | Ground
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x7f13, 0x7f14, 0x7f15,
                         0x7f33, 0x7f34, 0x7f35,
                         0x7f43, 0x7f44, 0x7f45,
@@ -1357,7 +1385,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
                 
                 new ColorSet() { // Wily 2 | Background
-                    addresses = new int[] { 0x7f18, 0x7f38, 0x7f48, 0x7f58, 0x7f68, },
+                    addresses = new Int32[] { 0x7f18, 0x7f38, 0x7f48, 0x7f58, 0x7f68, },
                     ColorBytes = new List<EColorsHex[]>() {
                         // Wood | Leaves | Default
                         new EColorsHex[] {(EColorsHex)0x07,(EColorsHex)0x07, (EColorsHex)0x07, (EColorsHex)0x07, (EColorsHex)0x07,},
@@ -1372,7 +1400,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 2 | Fan
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x7f1f, 0x7f20,
                         0x7f3f, 0x7f40,
                         0x7f50, 0x7f51,
@@ -1433,7 +1461,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 2 | Boss Room
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x7f1b, 0x7f1c, 0x7f1d,
                         0x7f3b, 0x7f3c, 0x7f3d,
                         0x7f4b, 0x7f4c, 0x7f4d,
@@ -1504,7 +1532,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 03 Woodman
 
                 new ColorSet() {
-                    addresses = new int[] { 0xbe13, 0xbe14, },
+                    addresses = new Int32[] { 0xbe13, 0xbe14, },
                     ColorBytes = new List<EColorsHex[]>() {
                         // Wood | Leaves | Default
                         new EColorsHex[] {  EColorsHex.Lemon, EColorsHex.Grass,},
@@ -1526,7 +1554,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() {
-                    addresses = new int[] { 0xbe17, 0xbe18, },
+                    addresses = new Int32[] { 0xbe17, 0xbe18, },
                     ColorBytes = new List<EColorsHex[]>() {
                         // Wood | Trunk | Default
                         new EColorsHex[] {  EColorsHex.Yellow,  EColorsHex.GoldenRod },
@@ -1544,7 +1572,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() {
-                    addresses = new int[] { 0xbe1b,0xbe1c,0xbe1d,},
+                    addresses = new Int32[] { 0xbe1b,0xbe1c,0xbe1d,},
                     ColorBytes = new List<EColorsHex[]>() {
                         // Wood | Floor | Default
                         new EColorsHex[] {  EColorsHex.YellowOrange, EColorsHex.Tangerine, EColorsHex.DarkRed,},
@@ -1562,7 +1590,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() {
-                    addresses = new int[] { 0xbe1f, 0x03a118, 0x03a11b, },
+                    addresses = new Int32[] { 0xbe1f, 0x03a118, 0x03a11b, },
                     ColorBytes = new List<EColorsHex[]>() {
                         // Wood | UndergroundBG | Default
                         new EColorsHex[] {  EColorsHex.Brown,  EColorsHex.Brown,  EColorsHex.Brown },
@@ -1582,7 +1610,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() {
-                    addresses = new int[] { 0xbe15,0xbe19,},
+                    addresses = new Int32[] { 0xbe15,0xbe19,},
                     ColorBytes = new List<EColorsHex[]>() {
                         // Wood | SkyBG | Default
                         new EColorsHex[] {  EColorsHex.LightCyan,  EColorsHex.LightCyan },
@@ -1606,7 +1634,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 03 Wily 3
 
                 new ColorSet() { // Wily 3 | Underwater Walls
-                    addresses = new int[] { 0xbf13, 0xbf14, 0xbf15},
+                    addresses = new Int32[] { 0xbf13, 0xbf14, 0xbf15},
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] {(EColorsHex)0x28,(EColorsHex)0x17,(EColorsHex)0x18,},
                         new EColorsHex[] {(EColorsHex)0x27,(EColorsHex)0x16,(EColorsHex)0x17,},
@@ -1623,7 +1651,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 3 | Walls
-                    addresses = new int[] { 0xbf17, 0xbf18, 0xbf19},
+                    addresses = new Int32[] { 0xbf17, 0xbf18, 0xbf19},
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] {(EColorsHex)0x29,(EColorsHex)0x18,(EColorsHex)0x07,},
                         new EColorsHex[] {(EColorsHex)0x28,(EColorsHex)0x17,(EColorsHex)0x06,},
@@ -1640,7 +1668,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 3 | Water
-                    addresses = new int[] { 0xbf1c, 0xbf1d,},
+                    addresses = new Int32[] { 0xbf1c, 0xbf1d,},
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] {(EColorsHex)0x28,(EColorsHex)0x18,},
                         new EColorsHex[] {(EColorsHex)0x27,(EColorsHex)0x17,},
@@ -1657,7 +1685,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 3 | Background
-                    addresses = new int[] { 0xbf1f, 0xbf20, 0xbf21},
+                    addresses = new Int32[] { 0xbf1f, 0xbf20, 0xbf21},
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] {(EColorsHex)0x0a,(EColorsHex)0x08,(EColorsHex)0x0b,},
                         new EColorsHex[] {(EColorsHex)0x08,(EColorsHex)0x06,(EColorsHex)0x09,},
@@ -1675,7 +1703,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 04 Bubbleman
 
                 new ColorSet() { // Bubble | White Floors
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0xfe17,0xfe18, // default BG
                         0xfe37,0xfe38, // frame 1
                         0xfe47,0xfe48, // frame 2
@@ -1752,7 +1780,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Bubble | Underwater Floors
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0xfe13,0xfe14, // default BG
                         0xfe33,0xfe34, // frame 1
                         0xfe43,0xfe44, // frame 2
@@ -1818,7 +1846,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Bubble | Waterfall
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0xfe1f,0xfe20,0xfe21, // default BG
                         0xfe3f,0xfe40,0xfe41, // frame 1
                         0xfe4f,0xfe50,0xfe51, // frame 2
@@ -1889,7 +1917,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Bubble | Water
-                    addresses = new int[] { 0xfe22,
+                    addresses = new Int32[] { 0xfe22,
                         0xfe1b, 0xfe1c, 0xfe1d,
                         0xfe3b, 0xfe3c, 0xfe3d,
                         0xfe4b, 0xfe4c, 0xfe4d,
@@ -1943,7 +1971,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 04 Wily 4
 
                 new ColorSet() { // Wily 4 | Walls
-                    addresses = new int[] { 0xff13, 0xff14, 0xff15, },
+                    addresses = new Int32[] { 0xff13, 0xff14, 0xff15, },
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] {(EColorsHex)0x10,(EColorsHex)0x14,(EColorsHex)0x03,},
                         new EColorsHex[] {(EColorsHex)0x10,(EColorsHex)0x13,(EColorsHex)0x02,},
@@ -1960,7 +1988,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 4 | Background
-                    addresses = new int[] { 0xff18, },
+                    addresses = new Int32[] { 0xff18, },
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] {(EColorsHex)0x02, },
                         new EColorsHex[] {(EColorsHex)0x04, },
@@ -1974,7 +2002,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 4 | Track
-                    addresses = new int[] { 0xff1B, 0xff1C, 0xff1d, },
+                    addresses = new Int32[] { 0xff1B, 0xff1C, 0xff1d, },
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] {(EColorsHex)0x20,(EColorsHex)0x10,(EColorsHex)0x00,},
                         new EColorsHex[] {(EColorsHex)0x21,(EColorsHex)0x11,(EColorsHex)0x01,},
@@ -1991,7 +2019,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 05 Quickman
 
                 new ColorSet() { // Quick | Walls
-                    addresses = new int[] { 0x013e13, 0x013e14, 0x013e15, },
+                    addresses = new Int32[] { 0x013e13, 0x013e14, 0x013e15, },
                     ColorBytes = new List<EColorsHex[]>() {
                         // Default
                         new EColorsHex[] {(EColorsHex)0x2C,(EColorsHex)0x10,(EColorsHex)0x1C, },
@@ -2017,7 +2045,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Quick | Beams and Background
-                    addresses = new int[] {0x013e17, 0x013e18, 0x013e19, 0x013e1b, 0x013e1c, 0x013e1d},
+                    addresses = new Int32[] {0x013e17, 0x013e18, 0x013e19, 0x013e1b, 0x013e1c, 0x013e1d},
                     ColorBytes = new List<EColorsHex[]>() {
                         // Default
                         new EColorsHex[] {(EColorsHex)0x37,(EColorsHex)0x27,(EColorsHex)0x07,(EColorsHex)0x28,(EColorsHex)0x16,(EColorsHex)0x07, },
@@ -2044,7 +2072,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 05 Wily 5
 
                 new ColorSet() { // Wily 5 | Walls
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x013f13, 0x013f14, 0x013f15,
                         0x013f33, 0x013f34, 0x013f35,
                         0x013f43, 0x013f44, 0x013f45,
@@ -2126,7 +2154,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 5 | Teleporters
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x013f13, 0x013f14, 0x013f15,
                         0x013f33, 0x013f34, 0x013f35,
                         0x013f43, 0x013f44, 0x013f45,
@@ -2194,7 +2222,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 5 | Computers 1
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x013f1b, 0x013f1c,
                         0x013f3b, 0x013f3c,
                         0x013f4b, 0x013f4c,
@@ -2262,7 +2290,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 5 | Computers 2
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x013f1d,
                         0x013f3d,
                         0x013f4d,
@@ -2316,7 +2344,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 5 | Computers 3
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x013f1f, 0x013f20, 0x013f21,
                         0x013f3f, 0x013f40, 0x013f41,
                         0x013f4f, 0x013f50, 0x013f51,
@@ -2388,7 +2416,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 06 Flashman
 
                 new ColorSet() { // Flash | Background
-                    addresses = new int[] { 0x017e14, 0x017e15,            // default BG colors
+                    addresses = new Int32[] { 0x017e14, 0x017e15,            // default BG colors
                                             0x017e34, 0x017e44, 0x017e54,  // animated BG frame 1
                                             0x017e35, 0x017e45, 0x017e55 },// animated BG frame 2 
                     ColorBytes = new List<EColorsHex[]>() {
@@ -2427,7 +2455,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 new ColorSet() { // Flash | Foreground
                     // Note: 3 color sets are used for the flashing blocks.
                     // I've kept them grouped here for common color themes.
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x017e17, 0x017e18, 0x017e19, 0x017e1b, 0x017e1c, 0x017e1d, 0x017e1f, 0x017e20, 0x017e21, // default BG colors
                         0x017e37, 0x017e47, 0x017e57, // animated BG block 1 frame 1
                         0x017e38, 0x017e48, 0x017e58, // animated BG block 1 frame 2
@@ -2531,7 +2559,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 06 Wily 6
 
                 new ColorSet() { // Wily 6 | Walls
-                    addresses = new int[] { 0x017f13, 0x017f14, 0x017f15, },
+                    addresses = new Int32[] { 0x017f13, 0x017f14, 0x017f15, },
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] { (EColorsHex)0x27,(EColorsHex)0x18,(EColorsHex)0x0a },
                         new EColorsHex[] { (EColorsHex)0x28,(EColorsHex)0x19,(EColorsHex)0x0b },
@@ -2548,7 +2576,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Wily 6 | Background
-                    addresses = new int[] { 0x017f18, },
+                    addresses = new Int32[] { 0x017f18, },
                     ColorBytes = new List<EColorsHex[]>() {
                         new EColorsHex[] {(EColorsHex)0x0b,},
                         new EColorsHex[] {(EColorsHex)0x08, },
@@ -2567,7 +2595,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 #region 07 Metalman
 
                 new ColorSet() { // Metal | Platforms
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x01be13, 0x01be14, 0x01be15,
                         0x01be33, 0x01be34, 0x01be35,
                         0x01be43, 0x01be44, 0x01be45,
@@ -2628,7 +2656,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 //new ColorSet() { // Metal | Solid Background
-                //    addresses = new int[] {
+                //    addresses = new Int32[] {
                 //        0x01be21, 0x01be22,
                 //        0x01be41, 0x01be51,
                 //        0x01b260, 0x01be70,
@@ -2642,7 +2670,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 //},
 
                 new ColorSet() { // Metal | Background Gears
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x01be1f, 0x01be20,0x01be3f, 0x01be40,0x01be4f, 0x01be50,0x01be5f, 0x01be61,0x01be6f, 0x01be71,
                     },
                     ColorBytes = new List<EColorsHex[]>() {
@@ -2666,7 +2694,7 @@ namespace MM2Randomizer.Randomizers.Colors
                 },
 
                 new ColorSet() { // Metal | Conveyor Animation
-                    addresses = new int[] {
+                    addresses = new Int32[] {
                         0x01be1c, 0x01be1d,
                         0x01be3c, 0x01be3d,
                         0x01be4c, 0x01be4d,
@@ -2725,7 +2753,7 @@ namespace MM2Randomizer.Randomizers.Colors
 
                 // TODO: Comment later, missing a color in boss corridor
                 new ColorSet() {
-                    addresses = new int[] { 0x01fe13, 0x01fe14, 0x03b63a, 0x03b63b, 0x03b642, 0x03b643, 0x03b646, 0x03b647, 0x03b64a, 0x03b64b, 0x03b64e, 0x03b64f, 0x039188, 0x039189, 0x03918c, 0x03918d, },
+                    addresses = new Int32[] { 0x01fe13, 0x01fe14, 0x03b63a, 0x03b63b, 0x03b642, 0x03b643, 0x03b646, 0x03b647, 0x03b64a, 0x03b64b, 0x03b64e, 0x03b64f, 0x039188, 0x039189, 0x03918c, 0x03918d, },
                     ColorBytes = new List<EColorsHex[]>() {
                         // Clash | Border1 | Default
                         new EColorsHex[] {  EColorsHex.PastelLemon, EColorsHex.GoldenRod, EColorsHex.PastelLemon, EColorsHex.GoldenRod, EColorsHex.PastelLemon, EColorsHex.GoldenRod, EColorsHex.PastelLemon, EColorsHex.GoldenRod, EColorsHex.PastelLemon, EColorsHex.GoldenRod, EColorsHex.PastelLemon, EColorsHex.GoldenRod, EColorsHex.PastelLemon, EColorsHex.GoldenRod, EColorsHex.PastelLemon, EColorsHex.GoldenRod,},
@@ -2740,7 +2768,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     }
                 },
                 new ColorSet() {
-                    addresses = new int[] { 0x01fe15,0x01fe17,0x03b63c,0x03b644,0x03b648,0x03b64c,0x03b650,},
+                    addresses = new Int32[] { 0x01fe15,0x01fe17,0x03b63c,0x03b644,0x03b648,0x03b64c,0x03b650,},
                     ColorBytes = new List<EColorsHex[]>() {
                         // Clash | Background | Default
                         new EColorsHex[] {  EColorsHex.Blue, EColorsHex.Blue, EColorsHex.RoyalBlue, EColorsHex.RoyalBlue, EColorsHex.Black2, EColorsHex.Black2, EColorsHex.Black2,},
@@ -2755,7 +2783,7 @@ namespace MM2Randomizer.Randomizers.Colors
                     }
                 },
                 new ColorSet() {
-                    addresses = new int[] { 0x01fe18,0x01fe19, },
+                    addresses = new Int32[] { 0x01fe18,0x01fe19, },
                     ColorBytes = new List<EColorsHex[]>() {
                         // Clash | Doodads | Default
                         new EColorsHex[] {  EColorsHex.YellowOrange, EColorsHex.NearWhite,},
@@ -2775,7 +2803,7 @@ namespace MM2Randomizer.Randomizers.Colors
             #endregion
             };
 
-            for (int i = 0; i < StagesColorSets.Count; i++)
+            for (Int32 i = 0; i < StagesColorSets.Count; i++)
             {
                 ColorSet set = StagesColorSets[i];
                 set.RandomizeAndWrite(p, r, i);

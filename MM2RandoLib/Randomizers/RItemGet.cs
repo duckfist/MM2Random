@@ -26,7 +26,7 @@ namespace MM2Randomizer.Randomizers
 
             List<EItemNumber> newItemOrder = new List<EItemNumber>();
 
-            for (byte i = 0; i < 5; i++)
+            for (Byte i = 0; i < 5; i++)
             {
                 newItemOrder.Add(EItemNumber.None);
             }
@@ -36,9 +36,9 @@ namespace MM2Randomizer.Randomizers
             newItemOrder.Add(EItemNumber.Three);
             newItemOrder.Shuffle(r);
 
-            for (int i = 0; i < 8; i++)
+            for (Int32 i = 0; i < 8; i++)
             {
-                patch.Add((int)EItemStageAddress.HeatMan + i, (byte)newItemOrder[i], String.Format("{0}man Item Get", ((EDmgVsBoss.Offset)i).ToString()));
+                patch.Add((Int32)EItemStageAddress.HeatMan + i, (Byte)newItemOrder[i], String.Format("{0}man Item Get", ((EDmgVsBoss.Offset)i).ToString()));
             }
         }
     }

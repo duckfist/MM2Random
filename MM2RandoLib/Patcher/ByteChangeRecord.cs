@@ -1,12 +1,14 @@
-﻿namespace MM2Randomizer.Patcher
+﻿using System;
+
+namespace MM2Randomizer.Patcher
 {
     public class ChangeByteRecord
     {
-        public int Address { get; set; }
-        public byte Value { get; set; }
-        public string Note { get; set; }
+        public Int32 Address { get; set; }
+        public Byte Value { get; set; }
+        public String Note { get; set; }
 
-        public ChangeByteRecord(int address, byte value, string note = "")
+        public ChangeByteRecord(Int32 address, Byte value, String note = "")
         {
             Address = address;
             Value = value;

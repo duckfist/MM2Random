@@ -114,7 +114,7 @@ namespace MM2Randomizer.Randomizers
                 }
                 // If the combined length of the first and second parts does
                 // not exceed the length of the name field, put both parts
-                // in one name, and assign an empty string to the extended name
+                // in one name, and assign an empty String to the extended name
                 else
                 {
                     Char separator = ((in_Random.Next() & 1) > 0) ? '-' : ' ';
@@ -133,7 +133,7 @@ namespace MM2Randomizer.Randomizers
             {
                 // Get the first part name set based on the first letter parameter
                 //
-                // If this is not an extended name, make sure there is room in the string
+                // If this is not an extended name, make sure there is room in the String
                 // for at least a letter for the second part
                 IEnumerable<String> firstNameSet = WeaponNameGenerator.mFirstNameLookup[key].Where(x => x.Length <= WeaponNameGenerator.WEAPON_FIRST_PART_MAXLENGTH);
 

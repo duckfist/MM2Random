@@ -1,25 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MM2Randomizer.Enums
 {
     public sealed class EDmgVsBoss
     {
-        public string WeaponName
+        public String WeaponName
         {
             get; private set;
         }
 
-        public int Address
+        public Int32 Address
         {
             get; private set;
         }
 
-        public int Index
+        public Int32 Index
         {
             get; private set;
         }
 
-        public static Dictionary<int, EDmgVsBoss> Addresses;
+        public static Dictionary<Int32, EDmgVsBoss> Addresses;
 
         //Japanese
         public static readonly EDmgVsBoss Buster          = new EDmgVsBoss(0, 0x02E933, "Buster");
@@ -45,7 +46,7 @@ namespace MM2Randomizer.Enums
 
         static EDmgVsBoss()
         {
-            Addresses = new Dictionary<int, EDmgVsBoss>()
+            Addresses = new Dictionary<Int32, EDmgVsBoss>()
             {
                 { U_DamageP.Address, U_DamageP },
                 { U_DamageH.Address, U_DamageH },
@@ -59,24 +60,24 @@ namespace MM2Randomizer.Enums
             };
         }
 
-        private EDmgVsBoss(int index, int address, string name)
+        private EDmgVsBoss(Int32 index, Int32 address, String name)
         {
             this.Address = address;
             this.WeaponName = name;
             this.Index = index;
         }
 
-        public static implicit operator int (EDmgVsBoss eDmgVsBoss)
+        public static implicit operator Int32 (EDmgVsBoss eDmgVsBoss)
         {
             return eDmgVsBoss.Address;
         }
 
-        public static implicit operator EDmgVsBoss (int eDmgVsBoss)
+        public static implicit operator EDmgVsBoss (Int32 eDmgVsBoss)
         {
             return Addresses[eDmgVsBoss];
         }
 
-        public override string ToString()
+        public override String ToString()
         {
             return WeaponName;
         }
@@ -87,7 +88,7 @@ namespace MM2Randomizer.Enums
         /// <param name="includeBuster"></param>
         /// <param name="includeTimeStopper"></param>
         /// <returns></returns>
-        public static List<EDmgVsBoss> GetTables(bool includeBuster, bool includeTimeStopper)
+        public static List<EDmgVsBoss> GetTables(Boolean includeBuster, Boolean includeTimeStopper)
         {
             List<EDmgVsBoss> tables = new List<EDmgVsBoss>();
 
@@ -117,17 +118,17 @@ namespace MM2Randomizer.Enums
         /// </summary>
         public class Offset
         {
-            public string Name
+            public String Name
             {
                 get; private set;
             }
 
-            public int Value
+            public Int32 Value
             {
                 get; private set;
             }
 
-            public static Dictionary<int, Offset> Offsets;
+            public static Dictionary<Int32, Offset> Offsets;
 
             public static readonly Offset Dragon    = new Offset(0x08, "Dragon");
             public static readonly Offset Guts      = new Offset(0x0A, "Guts");
@@ -144,7 +145,7 @@ namespace MM2Randomizer.Enums
 
             static Offset()
             {
-                Offsets = new Dictionary<int, Offset>()
+                Offsets = new Dictionary<Int32, Offset>()
                 {
                     { Dragon.Value  , Dragon  },
                     { Guts.Value    , Guts    },
@@ -161,23 +162,23 @@ namespace MM2Randomizer.Enums
                 };
             }
 
-            private Offset(int offset, string name)
+            private Offset(Int32 offset, String name)
             {
                 this.Name = name;
                 this.Value = offset;
             }
 
-            public static implicit operator int (Offset offset)
+            public static implicit operator Int32 (Offset offset)
             {
                 return offset.Value;
             }
 
-            public static implicit operator Offset(int offset)
+            public static implicit operator Offset(Int32 offset)
             {
                 return Offsets[offset];
             }
 
-            public override string ToString()
+            public override String ToString()
             {
                 return Name;
             }

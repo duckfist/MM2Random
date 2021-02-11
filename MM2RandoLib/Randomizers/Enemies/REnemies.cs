@@ -13,27 +13,27 @@ namespace MM2Randomizer.Randomizers.Enemies
     /// </summary>
     public class REnemies : IRandomizer
     {
-        private static readonly int Stage0EnemyYAddress = 0x3810;
-        private static readonly int Stage0EnemyIDAddress = 0x3910;
-        private static readonly int StageLength = 0x4000;
+        private static readonly Int32 Stage0EnemyYAddress = 0x3810;
+        private static readonly Int32 Stage0EnemyIDAddress = 0x3910;
+        private static readonly Int32 StageLength = 0x4000;
         private static readonly double CHANCE_MOLE = 0.25;
         private static readonly double CHANCE_PIPI = 0.4;
         private static readonly double CHANCE_M445 = 0.4;
         private static readonly double CHANCE_SHRINKSPAWNER = 0.25;
         private static readonly double CHANCE_SPRINGER = 0.10;
         private static readonly double CHANCE_TELLY = 0.15;
-        private static readonly int MAX_MOLES = 2;
-        private static readonly int MAX_PIPIS = 5;
-        private static readonly int MAX_M445S = 7;
+        private static readonly Int32 MAX_MOLES = 2;
+        private static readonly Int32 MAX_PIPIS = 5;
+        private static readonly Int32 MAX_M445S = 7;
 
         private List<EnemyType> EnemyTypes { get; set; } = new List<EnemyType>();
         private List<EnemyInstance> EnemyInstances { get; set; } = new List<EnemyInstance>();
         private Dictionary<EEnemyID, EnemyType> EnemiesByType { get; set; } = new Dictionary<EEnemyID, EnemyType>();
         private List<SpriteBankRoomGroup> RoomGroups { get; set; } = new List<SpriteBankRoomGroup>();
 
-        private int numMoles = 0;
-        private int numPipis = 0;
-        private int numM445s = 0;
+        private Int32 numMoles = 0;
+        private Int32 numPipis = 0;
+        private Int32 numM445s = 0;
 
         public REnemies() { }
 
@@ -99,16 +99,16 @@ namespace MM2Randomizer.Randomizers.Enemies
                 }
 
                 // For each enemy ID (in the room, in the room-group), change to a random enemy from the new set
-                for (int i = 0; i < sbrg.Rooms.Count; i++)
+                for (Int32 i = 0; i < sbrg.Rooms.Count; i++)
                 {
                     Room room = sbrg.Rooms[i];
-                    for (int j = 0; j < room.EnemyInstances.Count; j++)
+                    for (Int32 j = 0; j < room.EnemyInstances.Count; j++)
                     {
                         EnemyInstance instance = room.EnemyInstances[j];
 
-                        int randomIndex = r.Next(newEnemies.Count);
+                        Int32 randomIndex = r.Next(newEnemies.Count);
                         EnemyType newEnemyType = newEnemies[randomIndex];
-                        byte newId = (byte)newEnemyType.ID;
+                        Byte newId = (Byte)newEnemyType.ID;
 
                         // When placing the last enemy, If room contains an activator, manually change the last spawn in the room to be its deactivator
                         if (j == room.EnemyInstances.Count - 1)
@@ -116,7 +116,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                             EEnemyID? activator = room.GetActivatorIfOneHasBeenAdded();
                             if (activator != null)
                             {
-                                newId = (byte)EnemyType.GetCorrespondingDeactivator((EEnemyID)activator);
+                                newId = (Byte)EnemyType.GetCorrespondingDeactivator((EEnemyID)activator);
                             }
 
                             // Also, if this last instance is an activator, try to replace it
@@ -127,7 +127,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                                 // Update the new enemy type because it may require different graphics
                                 if (!EnemyType.CheckIsDeactivator(newId))
                                 {
-                                    newEnemyType = newEnemies.Where(x => (byte)x.ID == newId).First();
+                                    newEnemyType = newEnemies.Where(x => (Byte)x.ID == newId).First();
                                 }
                             }
                         }
@@ -149,63 +149,63 @@ namespace MM2Randomizer.Randomizers.Enemies
                                 double randomSpawner = r.NextDouble();
                                 if (randomSpawner < CHANCE_SHRINKSPAWNER)
                                 {
-                                    newId = (byte)EEnemyID.Shrink_Spawner;
+                                    newId = (Byte)EEnemyID.Shrink_Spawner;
                                 }
                                 break;
                             case EEnemyID.Shotman_Left:
                                 if (instance.IsFaceRight)
                                 {
-                                    newId = (byte)EEnemyID.Shotman_Right;
+                                    newId = (Byte)EEnemyID.Shotman_Right;
                                 }
                                 break;
                             default: break;
                         }
 
-                        // Update object with new ID for future use
+                        // Update Object with new ID for future use
                         room.EnemyInstances[j].EnemyID = newId;
 
                         // Change the enemy ID in the ROM
-                        int IDposition = Stage0EnemyIDAddress +
+                        Int32 IDposition = Stage0EnemyIDAddress +
                             instance.StageNum * StageLength +
                             instance.Offset;
 
                         Patch.Add(IDposition, newId, $"{sbrg.Stage.ToString("G")} Stage Enemy #{instance.Offset} ID (Room {instance.RoomNum}) {((EEnemyID)instance.EnemyID).ToString("G")}");
 
                         // Change the enemy Y pos based on Air or Ground category
-                        int newY = newEnemyType.YAdjust;
+                        Int32 newY = newEnemyType.YAdjust;
                         newY += (newEnemyType.IsYPosAir) ? instance.YAir : instance.YGround;
                         IDposition = Stage0EnemyYAddress +
                             instance.StageNum * StageLength +
                             instance.Offset;
-                        Patch.Add(IDposition, (byte)newY, $"{sbrg.Stage.ToString("G")} Stage Enemy #{instance.Offset} Y (Room {instance.RoomNum}) {((EEnemyID)instance.EnemyID).ToString("G")}");
+                        Patch.Add(IDposition, (Byte)newY, $"{sbrg.Stage.ToString("G")} Stage Enemy #{instance.Offset} Y (Room {instance.RoomNum}) {((EEnemyID)instance.EnemyID).ToString("G")}");
                     }
                 }
 
                 // Change sprite banks for the room
                 foreach (EnemyType e in sbrg.NewEnemyTypes)
                 {
-                    for (int i = 0; i < e.SpriteBankRows.Count; i++)
+                    for (Int32 i = 0; i < e.SpriteBankRows.Count; i++)
                     {
-                        int rowInSlotAddress = sbrg.PatternAddressStart + e.SpriteBankRows[i] * 2;
-                        int patternTblPtr1 = e.PatternTableAddresses[2 * i];
-                        int patternTblPtr2 = e.PatternTableAddresses[2 * i + 1];
+                        Int32 rowInSlotAddress = sbrg.PatternAddressStart + e.SpriteBankRows[i] * 2;
+                        Int32 patternTblPtr1 = e.PatternTableAddresses[2 * i];
+                        Int32 patternTblPtr2 = e.PatternTableAddresses[2 * i + 1];
 
-                        Patch.Add(rowInSlotAddress,     (byte)patternTblPtr1, $"{sbrg.Stage.ToString("G")} Stage Sprite Bank Slot ? Row {e.SpriteBankRows[i]} Indirect Address 1");
-                        Patch.Add(rowInSlotAddress + 1, (byte)patternTblPtr2, $"{sbrg.Stage.ToString("G")} Stage Sprite Bank Slot ? Row {e.SpriteBankRows[i]} Indirect Address 2");
+                        Patch.Add(rowInSlotAddress,     (Byte)patternTblPtr1, $"{sbrg.Stage.ToString("G")} Stage Sprite Bank Slot ? Row {e.SpriteBankRows[i]} Indirect Address 1");
+                        Patch.Add(rowInSlotAddress + 1, (Byte)patternTblPtr2, $"{sbrg.Stage.ToString("G")} Stage Sprite Bank Slot ? Row {e.SpriteBankRows[i]} Indirect Address 2");
                     }
                 }
             } // end foreach sbrg
         }
 
-        public byte TryReplaceActivator(List<EnemyType> newEnemies, byte id)
+        public Byte TryReplaceActivator(List<EnemyType> newEnemies, Byte id)
         {
-            byte newId = id;
-            bool foundNonActivator = false;
+            Byte newId = id;
+            Boolean foundNonActivator = false;
             foreach (EnemyType enemyType in newEnemies)
             {
                 if (!enemyType.IsActivator)
                 {
-                    newId = (byte)enemyType.ID;
+                    newId = (Byte)enemyType.ID;
                     foundNonActivator = true;
                     break;
                 }
@@ -214,16 +214,16 @@ namespace MM2Randomizer.Randomizers.Enemies
             // Otherwise, switch to its corresponding deactivator(room will appear empty)
             if (!foundNonActivator)
             {
-                newId = (byte)EnemyType.GetCorrespondingDeactivator(id);
+                newId = (Byte)EnemyType.GetCorrespondingDeactivator(id);
             }
 
             return newId;
         }
 
-        public bool CheckEnemySpriteFitInBank(List<EnemyType> currentSprites, EnemyType spriteToAdd)
+        public Boolean CheckEnemySpriteFitInBank(List<EnemyType> currentSprites, EnemyType spriteToAdd)
         {
-            List<int> currentRows = new List<int>();
-            List<int> currentAddresses = new List<int>();
+            List<Int32> currentRows = new List<Int32>();
+            List<Int32> currentAddresses = new List<Int32>();
             
             foreach (EnemyType e in currentSprites)
             {
@@ -236,19 +236,19 @@ namespace MM2Randomizer.Randomizers.Enemies
                 // Return false if the room restricts changing 
 
                 // Add the candidate enemy's sprite bank rows and pattern table addresses to their owns lists
-                for (int i = 0; i < e.SpriteBankRows.Count; i++)
+                for (Int32 i = 0; i < e.SpriteBankRows.Count; i++)
                 {
                     currentRows.Add(e.SpriteBankRows[i]);
                 }
-                for (int i = 0; i < e.PatternTableAddresses.Count; i++)
+                for (Int32 i = 0; i < e.PatternTableAddresses.Count; i++)
                 {
                     currentAddresses.Add(e.PatternTableAddresses[i]);
                 }
             }
             
-            for (int i = 0; i < currentRows.Count; i++)
+            for (Int32 i = 0; i < currentRows.Count; i++)
             {
-                for (int j = 0; j < spriteToAdd.SpriteBankRows.Count; j++)
+                for (Int32 j = 0; j < spriteToAdd.SpriteBankRows.Count; j++)
                 {
                     if (currentRows[i] == spriteToAdd.SpriteBankRows[j])
                     {
@@ -271,132 +271,132 @@ namespace MM2Randomizer.Randomizers.Enemies
         public void InitializeEnemies()
         {
             EnemyTypes.Add(new EnemyType(EEnemyID.Claw_Activator,
-                new List<byte>() { 0x9D, 0x03 },
-                new List<int>() { 3 },
+                new List<Byte>() { 0x9D, 0x03 },
+                new List<Int32>() { 3 },
                 true,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Tanishi,
-                new List<byte>() { 0x9B, 0x03, 0x9C, 0x03 },
-                new List<int>() { 0, 1 },
+                new List<Byte>() { 0x9B, 0x03, 0x9C, 0x03 },
+                new List<Int32>() { 0, 1 },
                 false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Kerog,
-                new List<byte>() { 0x9B, 0x02, 0x9C, 0x02, 0x9D, 0x02 },
-                new List<int>() { 0, 1, 2 },
+                new List<Byte>() { 0x9B, 0x02, 0x9C, 0x02, 0x9D, 0x02 },
+                new List<Int32>() { 0, 1, 2 },
                 false,
                 false,
                 -4));
             EnemyTypes.Add(new EnemyType(EEnemyID.Batton,
-                new List<byte>() { 0x94, 0x02, 0x93, 0x02 },
-                new List<int>() { 3, 4 },
+                new List<Byte>() { 0x94, 0x02, 0x93, 0x02 },
+                new List<Int32>() { 3, 4 },
                 false,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Robbit,
-                new List<byte>() { 0x98, 0x02, 0x99, 0x02, 0x9A, 0x02 },
-                new List<int>() { 0, 1, 2 },
+                new List<Byte>() { 0x98, 0x02, 0x99, 0x02, 0x9A, 0x02 },
+                new List<Int32>() { 0, 1, 2 },
                 false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Monking,
-                new List<byte>() { 0x98, 0x01, 0x99, 0x01, 0x9A, 0x01, 0x9B, 0x01 },
-                new List<int>() { 0, 1, 2, 3 },
+                new List<Byte>() { 0x98, 0x01, 0x99, 0x01, 0x9A, 0x01, 0x9B, 0x01 },
+                new List<Int32>() { 0, 1, 2, 3 },
                 false)); // TODO
             EnemyTypes.Add(new EnemyType(EEnemyID.Kukku_Activator,
-                new List<byte>() { 0x90, 0x01, 0x91, 0x01, 0x92, 0x01, 0x93, 0x01 },
-                new List<int>() { 0, 1, 2, 3 },
+                new List<Byte>() { 0x90, 0x01, 0x91, 0x01, 0x92, 0x01, 0x93, 0x01 },
+                new List<Int32>() { 0, 1, 2, 3 },
                 true,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Telly,
-                new List<byte>() { 0x93, 0x01 },
-                new List<int>() { 4 },
+                new List<Byte>() { 0x93, 0x01 },
+                new List<Int32>() { 4 },
                 false,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.ChangkeyMaker,
-                new List<byte>() { 0x90, 0x04, 0x91, 0x04, 0x92, 0x04, 0x93, 0x04 },
-                new List<int>() { 0, 1, 2, 4 },
+                new List<Byte>() { 0x90, 0x04, 0x91, 0x04, 0x92, 0x04, 0x93, 0x04 },
+                new List<Int32>() { 0, 1, 2, 4 },
                 false,
                 false,
                 -4));
             EnemyTypes.Add(new EnemyType(EEnemyID.Pierrobot,
-                new List<byte>() { 0x96, 0x01, 0x97, 0x01 },
-                new List<int>() { 0, 1 },
+                new List<Byte>() { 0x96, 0x01, 0x97, 0x01 },
+                new List<Int32>() { 0, 1 },
                 false));
             EnemyTypes.Add(new EnemyType(EEnemyID.FlyBoy,
-                new List<byte>() { 0x94, 0x01, 0x95, 0x01 },
-                new List<int>() { 0, 1 },
+                new List<Byte>() { 0x94, 0x01, 0x95, 0x01 },
+                new List<Int32>() { 0, 1 },
                 false,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Press,
-                new List<byte>() { 0x9E, 0x04 },
-                new List<int>() { 3 },
+                new List<Byte>() { 0x9E, 0x04 },
+                new List<Int32>() { 3 },
                 false,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Blocky,
-                new List<byte>() { 0x9E, 0x03 },
-                new List<int>() { 3 },
+                new List<Byte>() { 0x9E, 0x03 },
+                new List<Int32>() { 3 },
                 false,
                 false,
                 -32));
             EnemyTypes.Add(new EnemyType(EEnemyID.NeoMetall,
-                new List<byte>() { 0x92, 0x02, 0x9A, 0x03 },
-                new List<int>() { 2, 3 },
+                new List<Byte>() { 0x92, 0x02, 0x9A, 0x03 },
+                new List<Int32>() { 2, 3 },
                 false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Matasaburo,
-                new List<byte>() { 0x90, 0x02, 0x91, 0x02, 0x92, 0x02 },
-                new List<int>() { 0, 1, 2 },
+                new List<Byte>() { 0x90, 0x02, 0x91, 0x02, 0x92, 0x02 },
+                new List<Int32>() { 0, 1, 2 },
                 false,
                 false,
                 -4));
             EnemyTypes.Add(new EnemyType(EEnemyID.Pipi_Activator,
-                new List<byte>() { 0x9C, 0x01 },
-                new List<int>() { 4 },
+                new List<Byte>() { 0x9C, 0x01 },
+                new List<Int32>() { 4 },
                 true,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.LightningGoro,
-                new List<byte>() { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01 },
-                new List<int>() { 0, 1, 2 },
+                new List<Byte>() { 0x9D, 0x01, 0x9E, 0x01, 0x9F, 0x01 },
+                new List<Int32>() { 0, 1, 2 },
                 false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Mole_Activator,
-                new List<byte>() { 0x90, 0x03 },
-                new List<int>() { 4 },
+                new List<Byte>() { 0x90, 0x03 },
+                new List<Int32>() { 4 },
                 true,
                 true));
             EnemyTypes.Add(new EnemyType(EEnemyID.Shotman_Left,
-                new List<byte>() { 0x98, 0x03, 0x99, 0x03 },
-                new List<int>() { 0, 1 },
+                new List<Byte>() { 0x98, 0x03, 0x99, 0x03 },
+                new List<Int32>() { 0, 1 },
                 false));
             EnemyTypes.Add(new EnemyType(EEnemyID.SniperArmor,
-                new List<byte>() { 0x91, 0x03, 0x92, 0x03, 0x93, 0x03, 0x94, 0x03, 0x95, 0x03 },
-                new List<int>() { 0, 1, 2, 3, 4 },
+                new List<Byte>() { 0x91, 0x03, 0x92, 0x03, 0x93, 0x03, 0x94, 0x03, 0x95, 0x03 },
+                new List<Int32>() { 0, 1, 2, 3, 4 },
                 false,
                 false,
                 -16));
             EnemyTypes.Add(new EnemyType(EEnemyID.SniperJoe,
-                new List<byte>() { 0x94, 0x03, 0x95, 0x03 },
-                new List<int>() { 3, 4 },
+                new List<Byte>() { 0x94, 0x03, 0x95, 0x03 },
+                new List<Int32>() { 3, 4 },
                 false));
             EnemyTypes.Add(new EnemyType(EEnemyID.Scworm,
-                new List<byte>() { 0x9E, 0x04 },
-                new List<int>() { 3 },
+                new List<Byte>() { 0x9E, 0x04 },
+                new List<Int32>() { 3 },
                 false,
                 false,
                 8));
             EnemyTypes.Add(new EnemyType(EEnemyID.Springer,
-                new List<byte>() { 0x9F, 0x03 },
-                new List<int>() { 5 },
+                new List<Byte>() { 0x9F, 0x03 },
+                new List<Int32>() { 5 },
                 false,
                 false,
                 4));
             //EnemyTypes.Add(new EnemyType(EEnemyID.PetitGoblin,
-            //    new List<byte>() { 0x96, 0x03 },
-            //    new List<int>() { 5 }));
+            //    new List<Byte>() { 0x96, 0x03 },
+            //    new List<Int32>() { 5 }));
             EnemyTypes.Add(new EnemyType(EEnemyID.Shrink,
-                new List<byte>() { 0x9E, 0x02, 0x9F, 0x02 },
-                new List<int>() { 0, 1 },
+                new List<Byte>() { 0x9E, 0x02, 0x9F, 0x02 },
+                new List<Int32>() { 0, 1 },
                 false));
             //EnemyTypes.Add(new EnemyType(EEnemyID.BigFish,
-            //    new List<byte>() { 0x94, 0x04, 0x95, 0x04, 0x96, 0x04, 0x97, 0x04 },
-            //    new List<int>() { 0, 1, 2, 3 }));
+            //    new List<Byte>() { 0x94, 0x04, 0x95, 0x04, 0x96, 0x04, 0x97, 0x04 },
+            //    new List<Int32>() { 0, 1, 2, 3 }));
             EnemyTypes.Add(new EnemyType(EEnemyID.M445_Activator,
-                new List<byte>() { 0x97, 0x02 },
-                new List<int>() { 2 },
+                new List<Byte>() { 0x97, 0x02 },
+                new List<Int32>() { 2 },
                 true,
                 true));
 
@@ -426,81 +426,81 @@ namespace MM2Randomizer.Randomizers.Enemies
             
             // Heatman & Wily 1 stage enemies
             // NOTE: Can only use sprite banks 0-5
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003470, new int[] { 0, 12 })); // Bank 0
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003482, new int[] { 3, 8, 9, 10 })); // Bank 1
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003494, new int[] { 1, 2 },    // Bank 2
-                new int[] { 3 }, new byte[] { 0x97, 0x03 })); // Force Yoku blocks
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003470, new Int32[] { 0, 12 })); // Bank 0
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003482, new Int32[] { 3, 8, 9, 10 })); // Bank 1
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x003494, new Int32[] { 1, 2 },    // Bank 2
+                new Int32[] { 3 }, new Byte[] { 0x97, 0x03 })); // Force Yoku blocks
             // Heat Bank 3 - Heat fight 0x0034A6
             // Heat Bank 4 - Dragon fight
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x0034ca, new int[] { 7 })); // Bank 5
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.HeatW1, 0x0034ca, new Int32[] { 7 })); // Bank 5
 
             // Airman & Wily 2 stage enemies
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007470, new int[] { 0 })); // Bank 0 - Lightning Goro room
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007482, new int[] { 2 })); // Bank 1
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007494, new int[] { 1 })); // Bank 2
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007470, new Int32[] { 0 })); // Bank 0 - Lightning Goro room
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007482, new Int32[] { 2 })); // Bank 1
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x007494, new Int32[] { 1 })); // Bank 2
             // Air Bank 3 - Air fight 0x0074A6
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074b8, new int[] { 5 })); // Bank 4
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074ca, new int[] { 7 })); // Bank 5
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074dc, new int[] { 9 })); // Bank 6
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074b8, new Int32[] { 5 })); // Bank 4
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074ca, new Int32[] { 7 })); // Bank 5
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.AirW2, 0x0074dc, new Int32[] { 9 })); // Bank 6
             // Air Bank 7 - Picopico-kun fight
 
             // Woodman & Wily 3 stage enemies
             // NOTE: Access to sprite banks 0-7, plus extra banks 0x90 and 0xA2
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00b470, new int[] { 10, 22 })); // Bank 0; Moved Room 10 from bank 3
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B482, new int[] { 1, 6 })); // Bank 1
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B494, new int[] { 7 })); // Bank 2
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B4A6, new int[] { 0 })); // Bank 3
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B4B8, new int[] { 11 })); // Bank 4
-            // Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B4CA, new int[] { 2, 3, 4 })); // Bank 5 - Friender rooms
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00b470, new Int32[] { 10, 22 })); // Bank 0; Moved Room 10 from bank 3
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B482, new Int32[] { 1, 6 })); // Bank 1
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B494, new Int32[] { 7 })); // Bank 2
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B4A6, new Int32[] { 0 })); // Bank 3
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00B4B8, new Int32[] { 11 })); // Bank 4
+            // Rooms.Add(new EnemyRoom(EStageID.WoodW3, 0x00B4CA, new Int32[] { 2, 3, 4 })); // Bank 5 - Friender rooms
             // Wood Bank 6 - Wood fight 0x00B4DC
             // Wood Bank 7 - Gutsdozer fight
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00b500, new int[] { 8, 16 })); // Bank ? (0x90); Moved Room 8 from bank 3
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00b512, new int[] { 9, 17 })); // Bank ? (0xA2); Moved Room 9 from bank 3
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00b500, new Int32[] { 8, 16 })); // Bank ? (0x90); Moved Room 8 from bank 3
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.WoodW3, 0x00b512, new Int32[] { 9, 17 })); // Bank ? (0xA2); Moved Room 9 from bank 3
 
             // Bubbleman & Wily 4 stage enemies
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F470, new int[] { 0, 5 }, // Bank 0
-                new int[] { 2 }, new byte[] { 0x9D, 0x02 })); // Falling platform sprite
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F482, new int[] { 1, 2, 3 })); // Bank 1
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F494, new int[] { 4 }, // Bank 2
-                new int[] { 0, 1 }, new byte[] { 0x9E, 0x02, 0x9F, 0x02 })); // Shrimp sprites
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F470, new Int32[] { 0, 5 }, // Bank 0
+                new Int32[] { 2 }, new Byte[] { 0x9D, 0x02 })); // Falling platform sprite
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F482, new Int32[] { 1, 2, 3 })); // Bank 1
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00F494, new Int32[] { 4 }, // Bank 2
+                new Int32[] { 0, 1 }, new Byte[] { 0x9E, 0x02, 0x9F, 0x02 })); // Shrimp sprites
             // Bubble Bank 3 - Bubbleman fight 0x00F4A6
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4b8, new int[] { 9, 10, 13 })); // Bank 4
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4ca, new int[] { 15, 17 }, // Bank 5
-                new int[] { 3 }, new byte[] { 0x95, 0x03 })); // Moving platform sprite
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4dc, new int[] { 19 })); // Bank 6
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4b8, new Int32[] { 9, 10, 13 })); // Bank 4
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4ca, new Int32[] { 15, 17 }, // Bank 5
+                new Int32[] { 3 }, new Byte[] { 0x95, 0x03 })); // Moving platform sprite
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.BubbleW4, 0x00f4dc, new Int32[] { 19 })); // Bank 6
 
             // Quick
             // Quick Bank 0 - Used in empty room only
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x013482, new int[] { 7 })); // Bank 1
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x013494, new int[] { 15 })); // Bank 2
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x0134A6, new int[] { 3, 4, 5, 8, 9, 10, 11, 12, 13, 14 })); // Bank 3
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x013482, new Int32[] { 7 })); // Bank 1
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x013494, new Int32[] { 15 })); // Bank 2
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x0134A6, new Int32[] { 3, 4, 5, 8, 9, 10, 11, 12, 13, 14 })); // Bank 3
             // Quick Bank 4 - Quick fight // 0x0134B8
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x0134CA, new int[] { 1, 2 })); // Bank 5
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.QuickW5, 0x0134CA, new Int32[] { 1, 2 })); // Bank 5
             // Quick Bank 6 - W5 Teleporters
             // Quick Bank 7 - Wily Machine
 
             // Flash
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017470, new int[] { 0, 3, 5 })); // Bank 0
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017482, new int[] { 1, 6, 7 })); // Bank 1
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017494, new int[] { 2, 4 })); // Bank 2; Moved room 2 from bank 0
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017470, new Int32[] { 0, 3, 5 })); // Bank 0
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017482, new Int32[] { 1, 6, 7 })); // Bank 1
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.FlashW6, 0x017494, new Int32[] { 2, 4 })); // Bank 2; Moved room 2 from bank 0
             // Flash Bank 3: Flashman fight 0x0174A6
             // Flash Bank 4: W6 Alien fight
             // Flash Bank 5: Wily defeated cutscene?
             // Flash Bank 6: Droplets
 
             // Metal
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Metal, 0x01B470, new int[] { 0, 1 }));
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Metal, 0x01B482, new int[] { 2 }));
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Metal, 0x01B470, new Int32[] { 0, 1 }));
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Metal, 0x01B482, new Int32[] { 2 }));
             // Metal fight 0x01B494
 
             // Clash
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f494, new int[] { 0, 3, 4, 5 },
-                new int[] { 3 }, new byte[] { 0x95, 0x03 })); // Moving platform sprites
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f482, new int[] { 2, 8, 9 }));
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f4a6, new int[] { 6, 7 }));
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f470, new int[] { 10, 11, 12 }));
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f4b8, new int[] { 1 })); // Slot 4, changed from empty room 13 to room 1
-            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f4ca, new int[] { 14 }));
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f494, new Int32[] { 0, 3, 4, 5 },
+                new Int32[] { 3 }, new Byte[] { 0x95, 0x03 })); // Moving platform sprites
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f482, new Int32[] { 2, 8, 9 }));
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f4a6, new Int32[] { 6, 7 }));
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f470, new Int32[] { 10, 11, 12 }));
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f4b8, new Int32[] { 1 })); // Slot 4, changed from empty room 13 to room 1
+            RoomGroups.Add(new SpriteBankRoomGroup(EStageID.Clash, 0x01f4ca, new Int32[] { 14 }));
             // Clash fight 0x01F4DC
 
             // Get copy of enemy spawn list to save time
@@ -512,10 +512,10 @@ namespace MM2Randomizer.Randomizers.Enemies
             // that are reserved (i.e. Yoku blocks in Heat, beams in Quick).
             foreach (SpriteBankRoomGroup sbrg in RoomGroups)
             {
-                int stageNum = (int)sbrg.Stage;
+                Int32 stageNum = (Int32)sbrg.Stage;
 
                 // Find index of first enemy instance in the stage
-                int i = 0;
+                Int32 i = 0;
 
                 for (i = 0; i < usedInstances.Count; i++)
                 {
@@ -526,12 +526,12 @@ namespace MM2Randomizer.Randomizers.Enemies
                 }
 
                 // Check each applicable room number for this room group
-                for (int roomIndex = 0; roomIndex < sbrg.Rooms.Count; roomIndex++)
+                for (Int32 roomIndex = 0; roomIndex < sbrg.Rooms.Count; roomIndex++)
                 {
                     Room room = sbrg.Rooms[roomIndex];
 
                     // Find first occurrence of this room num in enemy list (starting at this stage)
-                    int j = 0;
+                    Int32 j = 0;
                     while (i + j < usedInstances.Count)
                     {
                         EnemyInstance checkEnemy = usedInstances.ElementAt(i + j);
@@ -569,8 +569,8 @@ namespace MM2Randomizer.Randomizers.Enemies
             // Create a random enemy set
             List<EnemyType> NewEnemies = new List<EnemyType>();
             List<EnemyType> PotentialEnemies = new List<EnemyType>();
-            bool done = false;
-            bool hasActivator = false;
+            Boolean done = false;
+            Boolean hasActivator = false;
             while (!done)
             {
                 foreach (EnemyType en in EnemyTypes)
@@ -799,14 +799,14 @@ namespace MM2Randomizer.Randomizers.Enemies
                     if (sbrg.IsSpriteRestricted)
                     {
                         // Check if this enemy uses the restricted row in the sprite bank
-                        List<int> commonRows = en.SpriteBankRows.Intersect(sbrg.SpriteBankRowsRestriction).ToList();
+                        List<Int32> commonRows = en.SpriteBankRows.Intersect(sbrg.SpriteBankRowsRestriction).ToList();
                         if (commonRows.Count != 0)
                         {
-                            bool reject = false;
-                            for (int i = 0; i < en.SpriteBankRows.Count; i++)
+                            Boolean reject = false;
+                            for (Int32 i = 0; i < en.SpriteBankRows.Count; i++)
                             {
-                                int enemyRow = en.SpriteBankRows[i];
-                                int indexOfRow = sbrg.SpriteBankRowsRestriction.IndexOf(enemyRow);
+                                Int32 enemyRow = en.SpriteBankRows[i];
+                                Int32 indexOfRow = sbrg.SpriteBankRowsRestriction.IndexOf(enemyRow);
 
                                 // For a restricted sprite bank row, see if enemy uses the same sprite pattern
                                 if (indexOfRow > -1)

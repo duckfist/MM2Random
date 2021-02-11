@@ -13,18 +13,18 @@ namespace MM2Randomizer.Randomizers
         {
             // This seems to be every table necessary to shuffle for getting a boss
             // to function and display properly in a different boss room.
-            public byte IntroValue { get; set; }    // 0F 0F 0B 05 09 07 05 03
-            public byte AIPtrByte1 { get; set; }    // C5 E3 FB 56 9E 56 20 C3
-            public byte AIPtrByte2 { get; set; }    // 80 82 84 86 87 89 8B 8C
-            public byte GfxFix1 { get; set; }       // 50 66 6C 60 54 5A 63 69
-            public byte GfxFix2 { get; set; }       // 51 67 6D 61 55 5C 64 6A
-            public byte YPosFix1 { get; set; }      // 09 0C 0F 0A 09 09 08 08
-            public byte YPosFix2 { get; set; }      // 0C 10 10 0C 0C 0C 0C 0C
-            public byte[] SpriteBankSlotRowsBytes { get; set; }
-            public int OriginalBossIndex { get; set; }
+            public Byte IntroValue { get; set; }    // 0F 0F 0B 05 09 07 05 03
+            public Byte AIPtrByte1 { get; set; }    // C5 E3 FB 56 9E 56 20 C3
+            public Byte AIPtrByte2 { get; set; }    // 80 82 84 86 87 89 8B 8C
+            public Byte GfxFix1 { get; set; }       // 50 66 6C 60 54 5A 63 69
+            public Byte GfxFix2 { get; set; }       // 51 67 6D 61 55 5C 64 6A
+            public Byte YPosFix1 { get; set; }      // 09 0C 0F 0A 09 09 08 08
+            public Byte YPosFix2 { get; set; }      // 0C 10 10 0C 0C 0C 0C 0C
+            public Byte[] SpriteBankSlotRowsBytes { get; set; }
+            public Int32 OriginalBossIndex { get; set; }
             // ...and maybe room layout???
 
-            public BossRoomRandomComponent(int original, byte introValue, byte aiPtr1, byte aiPtr2, byte gfxfix1, byte gfxfix2, byte yFix1, byte yFix2, byte[] spriteBankSlotRows)
+            public BossRoomRandomComponent(Int32 original, Byte introValue, Byte aiPtr1, Byte aiPtr2, Byte gfxfix1, Byte gfxfix2, Byte yFix1, Byte yFix2, Byte[] spriteBankSlotRows)
             {
                 this.IntroValue = introValue;
                 this.AIPtrByte1 = aiPtr1;
@@ -51,7 +51,7 @@ namespace MM2Randomizer.Randomizers
                     gfxfix2: 0x51, // 0x02C166
                     yFix1: 0x09, // 0x02C14E
                     yFix2: 0x0C, // 0x02C156
-                    spriteBankSlotRows: new byte[] {
+                    spriteBankSlotRows: new Byte[] {
                         0x98, 0x06,
                         0x99, 0x06,
                         0x9A, 0x06,
@@ -69,7 +69,7 @@ namespace MM2Randomizer.Randomizers
                     gfxfix2: 0x67,
                     yFix1: 0x0C,
                     yFix2: 0x10,
-                    spriteBankSlotRows: new byte[] {
+                    spriteBankSlotRows: new Byte[] {
                         0xAB, 0x05,
                         0xAC, 0x05,
                         0xAD, 0x05,
@@ -87,7 +87,7 @@ namespace MM2Randomizer.Randomizers
                     gfxfix2: 0x6D,
                     yFix1: 0x0F,
                     yFix2: 0x10,
-                    spriteBankSlotRows: new byte[] {
+                    spriteBankSlotRows: new Byte[] {
                         0xAC, 0x06,
                         0xAD, 0x06,
                         0xAE, 0x06,
@@ -105,7 +105,7 @@ namespace MM2Randomizer.Randomizers
                     gfxfix2: 0x61,
                     yFix1: 0x0A,
                     yFix2: 0x0C,
-                    spriteBankSlotRows: new byte[] {
+                    spriteBankSlotRows: new Byte[] {
                         0x98, 0x07,
                         0x99, 0x07,
                         0x9A, 0x07,
@@ -123,7 +123,7 @@ namespace MM2Randomizer.Randomizers
                     gfxfix2: 0x55,
                     yFix1: 0x09,
                     yFix2: 0x0C,
-                    spriteBankSlotRows: new byte[] {
+                    spriteBankSlotRows: new Byte[] {
                         0x90, 0x07,
                         0x91, 0x07,
                         0x92, 0x07,
@@ -141,7 +141,7 @@ namespace MM2Randomizer.Randomizers
                     gfxfix2: 0x5C,
                     yFix1: 0x09,
                     yFix2: 0x0C,
-                    spriteBankSlotRows: new byte[] {
+                    spriteBankSlotRows: new Byte[] {
                         0x9E, 0x06,
                         0x9F, 0x06,
                         0x96, 0x07,
@@ -159,7 +159,7 @@ namespace MM2Randomizer.Randomizers
                     gfxfix2: 0x64,
                     yFix1: 0x08,
                     yFix2: 0x0C,
-                    spriteBankSlotRows: new byte[] {
+                    spriteBankSlotRows: new Byte[] {
                         0xB0, 0x03,
                         0xB1, 0x03,
                         0xB2, 0x03,
@@ -177,7 +177,7 @@ namespace MM2Randomizer.Randomizers
                     gfxfix2: 0x6A,
                     yFix1: 0x08,
                     yFix2: 0x0C,
-                    spriteBankSlotRows: new byte[] {
+                    spriteBankSlotRows: new Byte[] {
                         0xAE, 0x05,
                         0xAF, 0x05,
                         0xB0, 0x05,
@@ -212,7 +212,7 @@ namespace MM2Randomizer.Randomizers
             //Components.Insert(3, BubbleManComponent);
 
             // Write in new boss positions
-            for (int i = 0; i < 8; i++)
+            for (Int32 i = 0; i < 8; i++)
             {
                 var bossroom = Components[i];
                 Patch.Add(0x02C15E + i, bossroom.IntroValue, $"Boss Intro Value for Boss Room {i}");
@@ -225,7 +225,7 @@ namespace MM2Randomizer.Randomizers
             }
 
             // Adjust sprite banks for each boss room
-            int[] spriteBankBossRoomAddresses = new int[]
+            Int32[] spriteBankBossRoomAddresses = new Int32[]
             {
                 0x0034A6, // Heat room
                 0x0074A6, // Air room
@@ -236,9 +236,9 @@ namespace MM2Randomizer.Randomizers
                 0x01B494, // Metal room
                 0x01F4DC, // Clash room
             };
-            for (int i = 0; i < spriteBankBossRoomAddresses.Length; i++)
+            for (Int32 i = 0; i < spriteBankBossRoomAddresses.Length; i++)
             {
-                for (int j = 0; j < Components[i].SpriteBankSlotRowsBytes.Length; j++)
+                for (Int32 j = 0; j < Components[i].SpriteBankSlotRowsBytes.Length; j++)
                 {
                     Patch.Add(spriteBankBossRoomAddresses[i] + j, 
                         Components[i].SpriteBankSlotRowsBytes[j], 
@@ -247,10 +247,10 @@ namespace MM2Randomizer.Randomizers
             }
 
             // Undo shuffling of damage values for each boss room
-            int contactDmgTbl = 0x2E9C2;
-            byte[] originalDmgVals = new byte[] { 08,08,08,04,04,04,06,04 };
-            byte[] newDmgVals = new byte[8];
-            for (int i = 0; i < Components.Count; i++)
+            Int32 contactDmgTbl = 0x2E9C2;
+            Byte[] originalDmgVals = new Byte[] { 08,08,08,04,04,04,06,04 };
+            Byte[] newDmgVals = new Byte[8];
+            for (Int32 i = 0; i < Components.Count; i++)
             {
                 newDmgVals[i] = originalDmgVals[Components[i].OriginalBossIndex];
                 Patch.Add(contactDmgTbl + i, newDmgVals[i]);

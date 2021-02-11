@@ -8,11 +8,11 @@ namespace MM2Randomizer.Patcher
 {
     public class Patch
     {
-        public Dictionary<int, ChangeByteRecord> Bytes { get; set; }
+        public Dictionary<Int32, ChangeByteRecord> Bytes { get; set; }
 
         public Patch()
         {
-            Bytes = new Dictionary<int, ChangeByteRecord>();
+            Bytes = new Dictionary<Int32, ChangeByteRecord>();
         }
 
         /// <summary>
@@ -21,11 +21,11 @@ namespace MM2Randomizer.Patcher
         /// <param name="address"></param>
         /// <param name="value"></param>
         /// <param name="note"></param>
-        public void Add(int address, byte value, string note = "")
+        public void Add(Int32 address, Byte value, String note = "")
         {
             ChangeByteRecord newByte = new ChangeByteRecord(address, value, note);
 
-            // Either replace the byte at the given address, or add it if it doesn't exist
+            // Either replace the Byte at the given address, or add it if it doesn't exist
             if (Bytes.ContainsKey(address))
             {
                 Bytes[address] = newByte;
@@ -60,13 +60,13 @@ namespace MM2Randomizer.Patcher
         /// TODO
         /// </summary>
         /// <param name="filename"></param>
-        public void ApplyRandoPatch(string filename)
+        public void ApplyRandoPatch(String filename)
         {
             using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite))
             {
                 //GetStringSortedByAddress();
 
-                foreach (KeyValuePair<int, ChangeByteRecord> kvp in Bytes)
+                foreach (KeyValuePair<Int32, ChangeByteRecord> kvp in Bytes)
                 {
                     stream.Position = kvp.Key;
                     stream.WriteByte(kvp.Value.Value);
@@ -75,16 +75,18 @@ namespace MM2Randomizer.Patcher
         }
 
 
-        public string GetStringSortedByAddress()
+        public String GetStringSortedByAddress()
         {
-            var sortDict = from kvp in Bytes orderby kvp.Key ascending select kvp;
+            IOrderedEnumerable<KeyValuePair<Int32, ChangeByteRecord>> sortDict =
+                from kvp in Bytes orderby kvp.Key ascending select kvp;
+
             return ConvertDictToString(sortDict);
         }
 
 
-        public string GetString()
+        public String GetString()
         {
-            return ConvertDictToString((IOrderedEnumerable<KeyValuePair<int, ChangeByteRecord>>)Bytes);
+            return ConvertDictToString((IOrderedEnumerable<KeyValuePair<Int32, ChangeByteRecord>>)Bytes);
         }
 
 
@@ -93,10 +95,10 @@ namespace MM2Randomizer.Patcher
         /// </summary>
         /// <param name="dict"></param>
         /// <returns></returns>
-        private string ConvertDictToString(IOrderedEnumerable<KeyValuePair<int, ChangeByteRecord>> dict)
+        private String ConvertDictToString(IOrderedEnumerable<KeyValuePair<Int32, ChangeByteRecord>> dict)
         {
             StringBuilder sb = new StringBuilder();
-            foreach (KeyValuePair<int, ChangeByteRecord> kvp in dict)
+            foreach (KeyValuePair<Int32, ChangeByteRecord> kvp in dict)
             {
                 ChangeByteRecord b = kvp.Value;
                 sb.Append($"0x{b.Address:X6}\t{b.Value:X2}\t{b.Note}");
@@ -110,19 +112,19 @@ namespace MM2Randomizer.Patcher
         /// </summary>
         /// <param name="romname"></param>
         /// <param name="patchBytes"></param>
-        public void ApplyIPSPatch(string romname, byte[] patchBytes)
+        public void ApplyIPSPatch(String romname, Byte[] patchBytes)
         {
             // Noobish Noobsicle wrote this IPS patching code
             // romname is the original ROM, patchname is the patch to apply
             FileStream romstream = new FileStream(romname, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-            int lint = patchBytes.Length;
-            byte[] ipsbyte = patchBytes;
-            byte[] rombyte = new byte[romstream.Length];
+            Int32 lint = patchBytes.Length;
+            Byte[] ipsbyte = patchBytes;
+            Byte[] rombyte = new Byte[romstream.Length];
             IAsyncResult romresult;
-            int ipson = 5;
-            int totalrepeats = 0;
-            int offset = 0;
-            bool keepgoing = true;
+            Int32 ipson = 5;
+            Int32 totalrepeats = 0;
+            Int32 offset = 0;
+            Boolean keepgoing = true;
 
             while (keepgoing == true)
             {
@@ -137,9 +139,9 @@ namespace MM2Randomizer.Patcher
                     totalrepeats = ipsbyte[ipson] * 256 + ipsbyte[ipson + 1];
                     ipson++;
                     ipson++;
-                    byte[] repeatbyte = new byte[totalrepeats];
+                    Byte[] repeatbyte = new Byte[totalrepeats];
 
-                    for (int ontime = 0; ontime < totalrepeats; ontime++)
+                    for (Int32 ontime = 0; ontime < totalrepeats; ontime++)
                     {
                         repeatbyte[ontime] = ipsbyte[ipson];
                     }

@@ -25,7 +25,7 @@ namespace MM2Randomizer.Randomizers
 
             Int32 currentLine = 0;
 
-            // Add lines from the config object
+            // Add lines from the config Object
             if (null != this.Lines)
             {
                 foreach (String line in this.Lines)

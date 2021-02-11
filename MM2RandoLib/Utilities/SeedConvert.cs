@@ -6,24 +6,24 @@ namespace MM2Randomizer.Utilities
 {
     public static class SeedConvert
     {
-        public static string ConvertBase10To26(int n)
+        public static String ConvertBase10To26(Int32 n)
         {
-            string hexavigesimal = IntToString(n,
+            String hexavigesimal = IntToString(n,
             Enumerable.Range('A', 26).Select(x => (char)x).ToArray());
             return hexavigesimal;
         }
 
-        public static int ConvertBase26To10(string n)
+        public static Int32 ConvertBase26To10(String n)
         {
-            int base10 = StringToInt(n,
+            Int32 base10 = StringToInt(n,
                 Enumerable.Range('A', 26).Select(x => (char)x).ToArray());
             return base10;
         }
 
-        public static string IntToString(int value, char[] baseChars)
+        public static String IntToString(Int32 value, char[] baseChars)
         {
-            string result = string.Empty;
-            int targetBase = baseChars.Length;
+            String result = String.Empty;
+            Int32 targetBase = baseChars.Length;
 
             do
             {
@@ -35,20 +35,20 @@ namespace MM2Randomizer.Utilities
             return result;
         }
 
-        public static int StringToInt(string value, char[] baseChars)
+        public static Int32 StringToInt(String value, char[] baseChars)
         {
-            int result = 0;
-            int targetBase = baseChars.Length;
+            Int32 result = 0;
+            Int32 targetBase = baseChars.Length;
             List<char> baseCharsList = new List<char>(baseChars);
             char[] valueChars = value.ToCharArray();
 
-            for (int i = 0; i < valueChars.Length; i++)
+            for (Int32 i = 0; i < valueChars.Length; i++)
             {
-                // Starting from the right of the string, get the index of the character
-                int index = baseCharsList.IndexOf(valueChars[valueChars.Length - 1 - i]);
+                // Starting from the right of the String, get the index of the character
+                Int32 index = baseCharsList.IndexOf(valueChars[valueChars.Length - 1 - i]);
 
                 // Add the product of each digit with its place value
-                result = result + index * (int)Math.Pow(targetBase, i);
+                result = result + index * (Int32)Math.Pow(targetBase, i);
             }
             return result;
         }

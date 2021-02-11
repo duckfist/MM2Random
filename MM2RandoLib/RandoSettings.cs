@@ -52,7 +52,7 @@ namespace MM2Randomizer
         //
 
         /// <summary>
-        /// Alphabetical string representation of the RandomMM2.Seed integer of the most
+        /// Alphabetical String representation of the RandomMM2.Seed integer of the most
         /// recently generated ROM.
         /// </summary>
         public String SeedString
@@ -244,7 +244,7 @@ namespace MM2Randomizer
         /// </summary>
         public Boolean IsWeaponNamesRandom { get; set; }
 
-        public bool IsFlashingDisabled { get; set; }
+        public Boolean IsFlashingDisabled { get; set; }
 
         /// <summary>
         /// TODO

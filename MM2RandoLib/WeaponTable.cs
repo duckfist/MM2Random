@@ -1,21 +1,22 @@
-﻿using MM2Randomizer.Enums;
+﻿using System;
+using MM2Randomizer.Enums;
 
 namespace MM2Randomizer
 {
     /// <summary>
-    /// This object encapsulates 
+    /// This Object encapsulates 
     /// </summary>
     public class WeaponTable
     {
         /// <summary>
         /// The name of the weapon.
         /// </summary>
-        public string Name { get; set; }
+        public String Name { get; set; }
 
         /// <summary>
         /// The unique ID of the weapon, which is referred to by the rest of the ROM.
         /// </summary>
-        public int ID { get; set; }
+        public Int32 ID { get; set; }
 
         /// <summary>
         /// Pointer to the damage table for this weapon.  This exact address refers to the
@@ -44,7 +45,7 @@ namespace MM2Randomizer
         ///   [6] = Metal
         ///   [7] = Clash
         /// </summary>
-        public int[] RobotMasters { get; set; }
+        public Int32[] RobotMasters { get; set; }
 
 
     }

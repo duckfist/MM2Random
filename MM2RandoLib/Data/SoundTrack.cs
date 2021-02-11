@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace MM2Randomizer.Randomizers
+namespace MM2Randomizer.Data
 {
     [Serializable]
     public class SoundTrack
@@ -20,6 +20,7 @@ namespace MM2Randomizer.Randomizers
         [XmlElement("TrackData")]
         public String TrackData { get; set; }
     }
+
 
     [Serializable]
     [XmlRoot("SoundTrackSet")]

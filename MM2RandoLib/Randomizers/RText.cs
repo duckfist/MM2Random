@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MM2Randomizer.Data;
 using MM2Randomizer.Enums;
 using MM2Randomizer.Extensions;
 using MM2Randomizer.Patcher;
+using MM2Randomizer.Utilities;
 
 namespace MM2Randomizer.Randomizers
 {
@@ -285,7 +287,7 @@ namespace MM2Randomizer.Randomizers
 
             for (Int32 i = 0; i < creditsSb.Length; i++)
             {
-                in_Patch.Add(startChar, creditsSb[i].AsCreditsCharacter(), $"Credits char #{i}");
+                in_Patch.Add(startChar, creditsSb[i].AsCreditsCharacter(), $"Credits Char #{i}");
                 startChar++;
             }
 
@@ -294,7 +296,7 @@ namespace MM2Randomizer.Randomizers
 
             for (Int32 i = 0; i < companyName.Length; i++)
             {
-                in_Patch.Add(startChar, companyName[i].AsCreditsCharacter(), $"Credits company char #{i}");
+                in_Patch.Add(startChar, companyName[i].AsCreditsCharacter(), $"Credits company Char #{i}");
                 startChar++;
             }
 
@@ -356,7 +358,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     in_Patch.Add(txtRobos[i] + j,
                         rowString[j].AsCreditsCharacter(),
-                        $"Credits robo weakness table char #{j + i * rowString.Length}");
+                        $"Credits robo weakness table Char #{j + i * rowString.Length}");
                 }
             }
 
@@ -378,7 +380,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     in_Patch.Add(txtWilys[i] + j,
                         rowString[j].AsCreditsCharacter(),
-                        $"Credits wily weakness table char #{j + i * rowString.Length}");
+                        $"Credits wily weakness table Char #{j + i * rowString.Length}");
                 }
             }
         }

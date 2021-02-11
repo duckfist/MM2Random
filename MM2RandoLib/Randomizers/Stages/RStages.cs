@@ -200,7 +200,7 @@ namespace MM2Randomizer.Randomizers.Stages
                     String newlabel = StageSelect[newStageOrder[i]].TextValues;
                     for (Int32 j = 0; j < newlabel.Length; j++)
                     {
-                        char c = newlabel[j];
+                        Char c = newlabel[j];
                         Patch.Add((Int32)stage.TextAddress + j, c.AsCreditsCharacter(), $"Stage Select Portrait Text");
                     }
                 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using MM2Randomizer.Extensions;
 
-namespace MM2Randomizer.Randomizers
+namespace MM2Randomizer.Data
 {
     [Serializable]
     public class CountryName
@@ -39,8 +39,8 @@ namespace MM2Randomizer.Randomizers
 
         private const Int32 MAX_PREFIX_LENGTH = 3;
         private const Int32 MAX_NAME_LENGTH = 25;
-
     }
+
 
     [Serializable]
     [XmlRoot("CountryNameSet")]

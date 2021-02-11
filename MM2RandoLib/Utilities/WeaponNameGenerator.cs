@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MM2Randomizer.Randomizers
+namespace MM2Randomizer.Utilities
 {
     public class WeaponNameGenerator
     {

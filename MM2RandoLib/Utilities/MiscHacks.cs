@@ -55,7 +55,7 @@ namespace MM2Randomizer.Utilities
                 String flagsAlpha = "TOURNAMENT";
                 for (Int32 i = 0; i < flagsAlpha.Length; i++)
                 {
-                    char ch = flagsAlpha.ElementAt(i);
+                    Char ch = flagsAlpha.ElementAt(i);
                     Byte charIndex = (Byte)(Convert.ToByte(ch) - Convert.ToByte('A'));
 
                     p.Add(0x037564 + i, (Byte)(0xC1 + charIndex), "Title Screen Tournament Text");
@@ -64,7 +64,7 @@ namespace MM2Randomizer.Utilities
                 String flags2Alpha = "MODE";
                 for (Int32 i = 0; i < flags2Alpha.Length; i++)
                 {
-                    char ch = flags2Alpha.ElementAt(i);
+                    Char ch = flags2Alpha.ElementAt(i);
                     Byte charIndex = (Byte)(Convert.ToByte(ch) - Convert.ToByte('A'));
 
                     p.Add(0x03756F + i, (Byte)(0xC1 + charIndex), "Title Screen Tournament Text");

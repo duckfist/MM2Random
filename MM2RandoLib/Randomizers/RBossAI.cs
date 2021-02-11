@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
 using MM2Randomizer.Patcher;
 
 namespace MM2Randomizer.Randomizers
@@ -69,7 +66,7 @@ namespace MM2Randomizer.Randomizers
         protected void ChangeAir(Patch Patch, Random r)
         {
             Int32 rInt = 0;
-            double rDbl = 0;
+            Double rDbl = 0;
 
             // Airman AI 0x02C2F3 - 0x02C50A
 
@@ -219,7 +216,7 @@ namespace MM2Randomizer.Randomizers
         protected void ChangeWood(Patch Patch, Random r)
         {
             Int32 rInt = 0;
-            double rDbl = 0.0;
+            Double rDbl = 0.0;
             Byte[] xVels;
 
             // Woodman AI
@@ -454,7 +451,7 @@ namespace MM2Randomizer.Randomizers
         protected void ChangeMetal(Patch Patch, Random r)
         {
             Int32 rInt;
-            double rDbl;
+            Double rDbl;
 
             // Unused addresses
             //0x02CC2D - Projectile type
@@ -489,10 +486,10 @@ namespace MM2Randomizer.Randomizers
         protected void ChangeClash(Patch Patch, Random r)
         {
             Int32 rInt;
-            double rDbl;
+            Double rDbl;
 
             // Unused addresses
-            //0x02CDAF - Jump velocity fraction? 0x44 double check
+            //0x02CDAF - Jump velocity fraction? 0x44 Double check
 
             // Clashman AI
 

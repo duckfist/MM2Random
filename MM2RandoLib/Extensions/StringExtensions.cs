@@ -236,7 +236,7 @@ namespace MM2Randomizer.Extensions
         };
 
 
-        public static Dictionary<char, Byte> CreditsCharacterLookup = new Dictionary<char, Byte>()
+        public static Dictionary<Char, Byte> CreditsCharacterLookup = new Dictionary<Char, Byte>()
         {
             { ' ',  0x00},
             { 'a',  0x01},

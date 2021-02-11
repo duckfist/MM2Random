@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-using MM2Randomizer.Enums;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
+using MM2Randomizer.Enums;
 using MM2Randomizer.Patcher;
 
 namespace MM2Randomizer.Randomizers
@@ -50,7 +48,7 @@ namespace MM2Randomizer.Randomizers
             {255,255,255,255,  1,255,255,255,},
         };
 
-        private char[,] WilyWeaknessInfo = new char[6, 8];
+        private Char[,] WilyWeaknessInfo = new Char[6, 8];
 
         private StringBuilder debug = new StringBuilder();
         public override String ToString()
@@ -99,7 +97,7 @@ namespace MM2Randomizer.Randomizers
                 // First, fill in special weapon tables with a 50% chance to block or do 1 damage
                 for (Int32 j = 0; j < bossPrimaryWeaknessAddresses.Count; j++)
                 {
-                    double rTestImmune = r.NextDouble();
+                    Double rTestImmune = r.NextDouble();
                     Byte damage = 0;
                     if (rTestImmune > 0.5)
                     {
@@ -207,7 +205,7 @@ namespace MM2Randomizer.Randomizers
         {
             // Flat 25% chance to do 2 extra damage
             Byte damage = 0;
-            double rExtraDmg = r.NextDouble();
+            Double rExtraDmg = r.NextDouble();
             if (rExtraDmg > 0.75)
             {
                 damage = 2;
@@ -320,7 +318,7 @@ namespace MM2Randomizer.Randomizers
 
                 // Dragon
                 // 25% chance to have a buster vulnerability
-                double rBuster = r.NextDouble();
+                Double rBuster = r.NextDouble();
                 Byte busterDmg = 0x00;
 
                 if (rBuster > 0.75)
@@ -399,7 +397,7 @@ namespace MM2Randomizer.Randomizers
                 {
                     EDmgVsEnemy weapon = dmgPtrEnemies[i];
                     Byte damage = 0x00;
-                    char level = ' ';
+                    Char level = ' ';
 
                     if (weapon == enemyWeak1)
                     {

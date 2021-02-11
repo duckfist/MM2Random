@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace MM2Randomizer.Randomizers
+namespace MM2Randomizer.Data
 {
     [Serializable]
     public class EnemyWeakness
@@ -41,6 +41,7 @@ namespace MM2Randomizer.Randomizers
         [XmlElement("Metal")]
         public String Metal { get; set; }
     }
+
 
     [Serializable]
     [XmlRoot("EnemyWeaknessSet")]

@@ -9,18 +9,18 @@ namespace MM2Randomizer.Utilities
         public static String ConvertBase10To26(Int32 n)
         {
             String hexavigesimal = IntToString(n,
-            Enumerable.Range('A', 26).Select(x => (char)x).ToArray());
+            Enumerable.Range('A', 26).Select(x => (Char)x).ToArray());
             return hexavigesimal;
         }
 
         public static Int32 ConvertBase26To10(String n)
         {
             Int32 base10 = StringToInt(n,
-                Enumerable.Range('A', 26).Select(x => (char)x).ToArray());
+                Enumerable.Range('A', 26).Select(x => (Char)x).ToArray());
             return base10;
         }
 
-        public static String IntToString(Int32 value, char[] baseChars)
+        public static String IntToString(Int32 value, Char[] baseChars)
         {
             String result = String.Empty;
             Int32 targetBase = baseChars.Length;
@@ -35,12 +35,12 @@ namespace MM2Randomizer.Utilities
             return result;
         }
 
-        public static Int32 StringToInt(String value, char[] baseChars)
+        public static Int32 StringToInt(String value, Char[] baseChars)
         {
             Int32 result = 0;
             Int32 targetBase = baseChars.Length;
-            List<char> baseCharsList = new List<char>(baseChars);
-            char[] valueChars = value.ToCharArray();
+            List<Char> baseCharsList = new List<Char>(baseChars);
+            Char[] valueChars = value.ToCharArray();
 
             for (Int32 i = 0; i < valueChars.Length; i++)
             {

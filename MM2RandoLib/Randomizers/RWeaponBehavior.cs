@@ -1,10 +1,9 @@
-﻿using MM2Randomizer.Enums;
-using MM2Randomizer.Patcher;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MM2Randomizer.Enums;
+using MM2Randomizer.Patcher;
 
 namespace MM2Randomizer.Randomizers
 {
@@ -13,9 +12,9 @@ namespace MM2Randomizer.Randomizers
         private List<ESoundID> sounds;
 
         // Buster Heat Air Wood Bubble Quick Metal Clash
-        public static List<double> AmmoUsage;
+        public static List<Double> AmmoUsage;
 
-        public static double GetAmmoUsage(EDmgVsEnemy weapon)
+        public static Double GetAmmoUsage(EDmgVsEnemy weapon)
         {
             if (weapon == EDmgVsEnemy.DamageP)
             {
@@ -101,7 +100,7 @@ namespace MM2Randomizer.Randomizers
         {
             debug = new StringBuilder();
             sounds = GetSoundList();
-            AmmoUsage = new List<double>();
+            AmmoUsage = new List<Double>();
             AmmoUsage.Add(0); // Buster is free
 
             ChangeHeat(p, r);
@@ -117,7 +116,7 @@ namespace MM2Randomizer.Randomizers
             debug.AppendLine("Ammo Usage");
             debug.AppendLine("P     H     A     W     B     Q     M     C");
             debug.AppendLine("-----------------------------------------------");
-            foreach (double w in AmmoUsage)
+            foreach (Double w in AmmoUsage)
             {
                 debug.Append(String.Format("{0:0.00}  ", w));
             }
@@ -152,7 +151,7 @@ namespace MM2Randomizer.Randomizers
             // 90% chance for L1 to be free, else cost 1 ammo
             // L2 ammo cost = L1 ammo cost
             // L3 will cost 1-4 ammo
-            double rTestL1Ammo = r.NextDouble();
+            Double rTestL1Ammo = r.NextDouble();
             Byte L1Ammo = (rTestL1Ammo > 0.1) ? (Byte)0 : (Byte)1;
             Patch.Add(0x03DE55, L1Ammo, $"(H) | Shot L1 Ammo Cost: {L1Ammo}");
             Patch.Add(0x03DE56, L1Ammo, $"(H) | Shot L2 Ammo Cost: {L1Ammo}");
@@ -164,7 +163,7 @@ namespace MM2Randomizer.Randomizers
 
             // Charge Behavior
             // 20% to have old charge behavior, 40% to skip 1 level, 40% to shoot L3 immediately
-            double rTestChargeType = r.NextDouble();
+            Double rTestChargeType = r.NextDouble();
             //0x03DD66 - H change these 4 bytes to 0xEA to skip L2 charge
             if (rTestChargeType < 0.8)
             {
@@ -223,7 +222,7 @@ namespace MM2Randomizer.Randomizers
             //0x03DAD6 - A num projectiles, default 0x04
             //  Values 0x02 and 0x03 work, but larger values behave strangely
             Int32 numProjectiles = 0x04;
-            double rTestNumProjectiles = r.NextDouble();
+            Double rTestNumProjectiles = r.NextDouble();
 
             if (rTestNumProjectiles > 0.80)
             {
@@ -253,7 +252,7 @@ namespace MM2Randomizer.Randomizers
             Int32 yAccFrac = r.Next(0x17) + 0x02;
             if (yAccFrac > 0x10)
             {
-                // double the addition of any acceleration value chosen above 0x10
+                // Double the addition of any acceleration value chosen above 0x10
                 yAccFrac += (yAccFrac - 0x10) * 2; 
             }
             Patch.Add(0x03DE6E, (Byte)yAccFrac, "(A) | Y-Acceleration (fraction)");
@@ -261,7 +260,7 @@ namespace MM2Randomizer.Randomizers
             //0x03DE76 - A projectile y-acceleration integer(00)
             // 15% chance to be significantly faster
             Int32 yAccInt = 0x00;
-            double rYAcc = r.NextDouble();
+            Double rYAcc = r.NextDouble();
 
             if (rYAcc > 0.85)
             {
@@ -325,7 +324,7 @@ namespace MM2Randomizer.Randomizers
             //0x03DF50 - W launch x - direction subroutine
             //    50% chance to have inverted x controls
             //    Change "LSR AND #40" (4A 29 40) to simply "AND #40" to implement
-            double rTestReverseX = r.NextDouble();
+            Double rTestReverseX = r.NextDouble();
             if (rTestReverseX > 0.5)
             {
                 Patch.Add(0x03DF50, 0x29, "(W) | Reverse X-Direction Code AND");
@@ -340,7 +339,7 @@ namespace MM2Randomizer.Randomizers
             //0x03DF64 - W launch y - direction(10)
             //  Change to 0x20 to reverse, 50% chance
             Int32 reverseY = 0x10;
-            double rTestReverseY = r.NextDouble();
+            Double rTestReverseY = r.NextDouble();
 
             if (rTestReverseY > 0.5)
             {
@@ -383,7 +382,7 @@ namespace MM2Randomizer.Randomizers
             //0x03DB3D - B shots per ammo tick (0x02) (do 1-4)
             Int32 magSize = r.Next(0x04) + 0x01;
             Patch.Add(0x03DB3D, (Byte)magSize, "(B) | Shots Per Ammo Tick");
-            AmmoUsage.Add(1d / (double)magSize);
+            AmmoUsage.Add(1d / (Double)magSize);
 
             //0x03DFA4 - B y - pos to embed in surface(0xFF)
             // Dumb
@@ -396,7 +395,7 @@ namespace MM2Randomizer.Randomizers
             //0x03DFC0 - B x - speed after falling from ledge (0x00)
             //      Make 50% chance to be 0, or 1-5
             Int32 xVelFall = 0x00;
-            double rTestXFallSpeed = r.NextDouble();
+            Double rTestXFallSpeed = r.NextDouble();
 
             if (rTestXFallSpeed > 0.5)
             {
@@ -433,7 +432,7 @@ namespace MM2Randomizer.Randomizers
             //    Do from 0x04 to 0x0A ?
             Int32 magSize = r.Next(0x06) + 0x04;
             Patch.Add(0x03DB78, (Byte)magSize, "(Q) | Shots Per Ammo Tick");
-            AmmoUsage.Add(1d / (double)magSize);
+            AmmoUsage.Add(1d / (Double)magSize);
 
             // Q behavior, distance, default 0x12
             //    Do from 0x0A to 0x20 ?
@@ -482,7 +481,7 @@ namespace MM2Randomizer.Randomizers
 
             //0x03E172 - F custom subroutine for reusable weapon
             // 75% chance to occur
-            double rTestFChange = r.NextDouble();
+            Double rTestFChange = r.NextDouble();
             if (rTestFChange > 0.25)
             {
                 // 0x03E175 - New ammo-usage address.
@@ -580,8 +579,8 @@ namespace MM2Randomizer.Randomizers
             // Speeds.  Change each to be 2-7.  Diagonal will be half each, rounded up.
             Int32 velX = r.Next(0x06) + 0x02;
             Int32 velY = r.Next(0x06) + 0x02;
-            Int32 halfY = (Int32)Math.Ceiling((double)velY / 2d);
-            Int32 halfX = (Int32)Math.Ceiling((double)velX / 2d);
+            Int32 halfY = (Int32)Math.Ceiling((Double)velY / 2d);
+            Int32 halfX = (Int32)Math.Ceiling((Double)velX / 2d);
 
             //0x03DC12 - M y - speed, holding up(04)
             Patch.Add(0x03DC12, (Byte)velY, "(M) | Y-Velocity Up");
@@ -633,7 +632,7 @@ namespace MM2Randomizer.Randomizers
             // TODO: Figure how this works more to apply in all directions
             // For now, 25% chance to make this move upward at 2px/fr
             Int32 yVelExplode = 0x00;
-            double rTestYVelExplode = r.NextDouble();
+            Double rTestYVelExplode = r.NextDouble();
 
             if (rTestYVelExplode > 0.75)
             {
@@ -651,7 +650,7 @@ namespace MM2Randomizer.Randomizers
             // Change to 03 to "single explosion" type. Most other values break the game.
             // For now, 50% chance to change
             Int32 multiExplode = 0x02;
-            double rTestMultiExplode = r.NextDouble();
+            Double rTestMultiExplode = r.NextDouble();
 
             if (rTestMultiExplode > 0.50)
             {

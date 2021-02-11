@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MM2Randomizer.Data;
 using MM2Randomizer.Extensions;
 using MM2Randomizer.Patcher;
 

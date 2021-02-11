@@ -2,9 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using MM2Randomizer.Extensions;
 
-namespace MM2Randomizer.Randomizers
+namespace MM2Randomizer.Data
 {
     [Serializable]
     public class CompanyName
@@ -25,6 +24,7 @@ namespace MM2Randomizer.Randomizers
 
         private const Int32 MAX_NAME_LENGTH = 13;
     }
+
 
     [Serializable]
     [XmlRoot("CompanyNameSet")]

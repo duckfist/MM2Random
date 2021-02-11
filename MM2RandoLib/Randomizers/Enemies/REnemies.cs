@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MM2Randomizer.Data;
 using MM2Randomizer.Enums;
 using MM2Randomizer.Extensions;
 using MM2Randomizer.Patcher;
@@ -16,12 +17,12 @@ namespace MM2Randomizer.Randomizers.Enemies
         private static readonly Int32 Stage0EnemyYAddress = 0x3810;
         private static readonly Int32 Stage0EnemyIDAddress = 0x3910;
         private static readonly Int32 StageLength = 0x4000;
-        private static readonly double CHANCE_MOLE = 0.25;
-        private static readonly double CHANCE_PIPI = 0.4;
-        private static readonly double CHANCE_M445 = 0.4;
-        private static readonly double CHANCE_SHRINKSPAWNER = 0.25;
-        private static readonly double CHANCE_SPRINGER = 0.10;
-        private static readonly double CHANCE_TELLY = 0.15;
+        private static readonly Double CHANCE_MOLE = 0.25;
+        private static readonly Double CHANCE_PIPI = 0.4;
+        private static readonly Double CHANCE_M445 = 0.4;
+        private static readonly Double CHANCE_SHRINKSPAWNER = 0.25;
+        private static readonly Double CHANCE_SPRINGER = 0.10;
+        private static readonly Double CHANCE_TELLY = 0.15;
         private static readonly Int32 MAX_MOLES = 2;
         private static readonly Int32 MAX_PIPIS = 5;
         private static readonly Int32 MAX_M445S = 7;
@@ -146,7 +147,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                         switch ((EEnemyID)newId)
                         {
                             case EEnemyID.Shrink:
-                                double randomSpawner = r.NextDouble();
+                                Double randomSpawner = r.NextDouble();
                                 if (randomSpawner < CHANCE_SHRINKSPAWNER)
                                 {
                                     newId = (Byte)EEnemyID.Shrink_Spawner;
@@ -578,7 +579,7 @@ namespace MM2Randomizer.Randomizers.Enemies
                     // 1. Skip enemies that have exceeded the type's maximum
                     // 2. Reduce the overall chance of certain types appearing by randomly skipping them
                     // 3. Limit a room set to having at most one Activator enemy type
-                    double chance = 0.0;
+                    Double chance = 0.0;
                     switch (en.ID)
                     {
                         case EEnemyID.Pipi_Activator:

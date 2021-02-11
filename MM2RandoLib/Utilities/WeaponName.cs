@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MM2Randomizer.Randomizers
+namespace MM2Randomizer.Utilities
 {
     public class WeaponName
     {

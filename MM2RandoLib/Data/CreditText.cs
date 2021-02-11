@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace MM2Randomizer.Randomizers
+namespace MM2Randomizer.Data
 {
     [Serializable]
     public class CreditText
@@ -17,6 +17,7 @@ namespace MM2Randomizer.Randomizers
         [XmlElement("Text")]
         public String Text { get; set; }
     }
+
 
     [Serializable]
     [XmlRoot("CreditTextSet")]
